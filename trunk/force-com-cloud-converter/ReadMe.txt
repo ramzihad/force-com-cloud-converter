@@ -1,0 +1,61 @@
+CloudConverter by Model Metrics, Inc.
+Converts dirt bound JDBC/ODBC to cloud based Force.com.
+
+Last Update: 12/26/2008
+
+###################################################################
+CONTACT:
+
+Reid Carlberg, Model Metrics, Inc.
+rcarlberg@modelmetrics.com
+
+###################################################################
+INTRODUCTION:
+
+You should read AT LEAST the BASIC FLOW and IMPORTANT NOTES section.
+
+Look in the package "com.modelmetrics.cloudconverter" for the classes you might want to run.
+
+###################################################################
+BASIC FLOW:
+
+1. Inspect dirt based data store to grab metadata.
+2. Create object in Force.com based on that metadata.  
+2.1 - All fields
+2.2 - Fields will be added to the default layout
+2.3 - Will create a tab for this object
+3. Move the data.
+
+###################################################################
+IMPORTANT NOTES: 
+
+When complete, you will have to turn on access to the tab for your profile. If 
+you don't know how to do this, talk to your SFDC administrator.
+
+(Hint - when logged in to SFDC, visit -- Setup > Administration > Manage Users > Profiles.  
+Click "edit" next to the profile that should see the tab. Locate the tab.  Change from 
+to "default on".)
+
+CloudConverter will attempt to create an object based on the table name.  If this 
+object already exists, it will fail. 
+
+The sample script includes a few different database types -- Apache Derby, MySQL, 
+and Notes.  Derby is included with the distribution.  Notes requires some additional
+client configuration.
+
+###################################################################
+HOW TO:
+
+Get Started -- use a toy database and a dev org to get used to the general flow of 
+the app.  
+
+
+###################################################################
+HISTORY:
+
+2009-01-05
+
+* Intial upload.
+* If you checkout into Eclipse, you should have you classpath, etc., all set for you.
+* Everything is text based.  Run com.modelmetrics.cloudconverter.CloudConverter.main.
+* If you want to convert something other than MySQL or Notes, you'll need 
