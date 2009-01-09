@@ -30,19 +30,29 @@ package com.modelmetrics.cloudconverter.dirtdb;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-
 public class DirtConnectionSampleDerbyOneImpl implements DirtConnectionIF {
 
 	private Connection connection;
 
 	private String sql;
-	
-	public DirtConnectionSampleDerbyOneImpl(DatabaseCredentials dbCreds)
-	{
+
+	public DirtConnectionSampleDerbyOneImpl() {
+		DatabaseCredentials databaseCredentials = DatabaseCredentialsBuilder
+				.getSetInfo("derby", "./src/sampledbs/derby/sample1", "sa", "",
+						"Select * from mytable");
+		this.initialize(databaseCredentials);
+	}
+
+	public DirtConnectionSampleDerbyOneImpl(DatabaseCredentials dbCreds) {
+		this.initialize(dbCreds);
+	}
+
+	public void initialize(DatabaseCredentials dbCreds) {
 		try {
 			Class.forName(DirtConnectionIF.DRIVER_DERBY).newInstance();
-			Connection con = DriverManager.getConnection(
-					"jdbc:derby:"+dbCreds.getDatabaseName(), dbCreds.getUsername(), dbCreds.getPassword());
+			Connection con = DriverManager.getConnection("jdbc:derby:"
+					+ dbCreds.getDatabaseName(), dbCreds.getUsername(), dbCreds
+					.getPassword());
 
 			this.connection = con;
 
