@@ -47,7 +47,8 @@ public class MigrationEngineFactory {
 			ret2.setEngineConnectorIF(new DirtConnectionSampleHsqlOneImpl());
 
 		} else if (type.startsWith("derby")) {
-			throw new RuntimeException("DERBY only buildable with db creds");
+//			throw new RuntimeException("DERBY only buildable with db creds");
+			ret2.setEngineConnectorIF(new DirtConnectionSampleDerbyOneImpl());
 			
 		} else {
 			ret2.setEngineConnectorIF(new DirtConnectionSampleMySqlImpl());
