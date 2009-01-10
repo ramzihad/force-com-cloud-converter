@@ -1,7 +1,7 @@
 CloudConverter by Model Metrics, Inc.
 Converts dirt bound JDBC/ODBC to cloud based Force.com.
 
-Last Update: 12/26/2008
+Last Update: 2009-01-10
 
 ###################################################################
 CONTACT:
@@ -29,8 +29,9 @@ BASIC FLOW:
 ###################################################################
 IMPORTANT NOTES: 
 
-When complete, you will have to turn on access to the tab for your profile. If 
-you don't know how to do this, talk to your SFDC administrator.
+When complete, you will have to turn on access to the newly created tab for your profile. 
+Do this in setup > manage users > profiles > edit - next to your profile.  Change visibility
+to "Default On".  If you don't know how to do this, talk to your SFDC administrator.
 
 (Hint - when logged in to SFDC, visit -- Setup > Administration > Manage Users > Profiles.  
 Click "edit" next to the profile that should see the tab. Locate the tab.  Change from 
@@ -52,6 +53,10 @@ the app.
 
 ###################################################################
 HISTORY:
+
+2009-01-10
+
+* minor changes for improved logging
 
 2009-01-05
 

@@ -144,6 +144,6 @@ public class CloudConverter {
 			log.error("Error executing migration", e);
 		}
 
-		log.debug("Sample migration runner complete.");
+		log.debug("Cloud Converter execution complete.");
 	}
 }
