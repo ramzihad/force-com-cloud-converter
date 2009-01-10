@@ -68,6 +68,8 @@ public class UpdateExecutor {
 
 	public void execute() throws Exception {
 
+		log.debug("Executing update for ... " + metadata[0].getMetadata().getFullName()); 
+				
 		if (this.metadata == null) {
 			throw new RuntimeException("no metadata to work with");
 		}

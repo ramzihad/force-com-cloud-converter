@@ -52,6 +52,7 @@ public class CreateExecutor {
 
 	public void execute() throws Exception 
 	{
+		log.debug("Executing create for ... " + metadata[0].getFullName() );
 		int metadataIndex = -1;
 		int metadataChunkIndex = -1;
 
