@@ -1,7 +1,7 @@
 CloudConverter by Model Metrics, Inc.
 Converts dirt bound JDBC/ODBC to cloud based Force.com.
 
-Last Update: 2009-01-10
+Last Update: 2009-02-17 (See history below for details.)
 
 ###################################################################
 CONTACT:
@@ -15,6 +15,10 @@ INTRODUCTION:
 You should read AT LEAST the BASIC FLOW and IMPORTANT NOTES section.
 
 Look in the package "com.modelmetrics.cloudconverter" for the classes you might want to run.
+
+###################################################################
+PROJECT STATUS:
+Undergoing active development. Looking for contributors.
 
 ###################################################################
 BASIC FLOW:
@@ -47,12 +51,21 @@ client configuration.
 ###################################################################
 HOW TO:
 
-Get Started -- use a toy database and a dev org to get used to the general flow of 
-the app.  
+Get Started -- use a toy database (for example, use the one included in this) and a 
+dev org to get used to the general flow of the app.  
 
 
 ###################################################################
 HISTORY:
+
+2009-02-17
+
+* refactored database connection to be parameter driven.
+* added support for Lookup fields, external id fields and picklists.
+* added support for automatic external id based foreign key resolution for lookup relationships.
+* added a larger sample database with more robust sample data.
+* split the CloudConverterScript into a Script with dummy setup and a template for your own use.
+* expanded test coverage.
 
 2009-01-10
 
