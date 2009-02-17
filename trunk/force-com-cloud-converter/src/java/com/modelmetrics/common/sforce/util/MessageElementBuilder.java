@@ -49,7 +49,7 @@ public class MessageElementBuilder {
 		
 		me = new MessageElement(e);
 
-		log.debug("Message element is: " + me.getAsString());
+//		log.debug("Message element is: " + me.getAsString());
 		
 		return me;
 	}
