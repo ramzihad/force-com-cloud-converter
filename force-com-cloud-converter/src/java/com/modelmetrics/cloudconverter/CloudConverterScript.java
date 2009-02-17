@@ -72,7 +72,7 @@ public class CloudConverterScript {
 
 		try {
 			script.execute("reid_carlberg@modelmetrics.com",
-					"jollygreat55WbFIEpETsatNKBnvjaE5PQ1P");
+					"");
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
