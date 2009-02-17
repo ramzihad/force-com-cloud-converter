@@ -29,11 +29,14 @@ package com.modelmetrics.cloudconverter.engine;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.util.Collection;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
+import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
@@ -54,13 +57,31 @@ public class MigrationContext {
 	
 	private CustomField[] customFields;
 	
+	private CustomField[] customLookupFields;
+	
 	private String[] customFieldShortNames;
 	
 	private ResultSet resultSet;
 	
 	private ResultSetMetaData resultSetMetaData;
 	
+	private DirtConnectionIF dirtConnection;
 	
+	private Map<String, String> picklistFields;
+	
+	private Map<String, LookupSettings> lookupFields;
+	
+	private Collection<String> externalIds;
+	
+	private String externalIdForUpsert;
+
+	public String getExternalIdForUpsert() {
+		return externalIdForUpsert;
+	}
+
+	public void setExternalIdForUpsert(String externalIdForUpsert) {
+		this.externalIdForUpsert = externalIdForUpsert;
+	}
 
 	public ResultSetMetaData getResultSetMetaData() {
 		return resultSetMetaData;
@@ -137,5 +158,45 @@ public class MigrationContext {
 
 	public void setCustomFieldShortNames(String[] customFieldShortNames) {
 		this.customFieldShortNames = customFieldShortNames;
+	}
+
+	public Map<String, String> getPicklistFields() {
+		return picklistFields;
+	}
+
+	public void setPicklistFields(Map<String, String> picklistFields) {
+		this.picklistFields = picklistFields;
+	}
+
+	public Map<String, LookupSettings> getLookupFields() {
+		return lookupFields;
+	}
+
+	public void setLookupFields(Map<String, LookupSettings> lookupFields) {
+		this.lookupFields = lookupFields;
+	}
+
+	public Collection<String> getExternalIds() {
+		return externalIds;
+	}
+
+	public void setExternalIds(Collection<String> externalIds) {
+		this.externalIds = externalIds;
+	}
+
+	public DirtConnectionIF getDirtConnection() {
+		return dirtConnection;
+	}
+
+	public void setDirtConnection(DirtConnectionIF dirtConnection) {
+		this.dirtConnection = dirtConnection;
+	}
+
+	public CustomField[] getCustomLookupFields() {
+		return customLookupFields;
+	}
+
+	public void setCustomLookupFields(CustomField[] customLookupFields) {
+		this.customLookupFields = customLookupFields;
 	}
 }

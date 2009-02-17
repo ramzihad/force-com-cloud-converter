@@ -33,6 +33,10 @@ public class DatabaseCredentials
 
 	
 	
+	public static final String DRIVER_DERBY = "org.apache.derby.jdbc.EmbeddedDriver";
+	public static final String DRIVER_JDBC_ODBC = "sun.jdbc.odbc.JdbcOdbcDriver";
+	public static final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
+	
 	private String databaseType;
 	private String driverName;
 	private String databaseName;
@@ -40,6 +44,26 @@ public class DatabaseCredentials
 	private String password;
 	private String sql;
 	
+	public DatabaseCredentials() {
+		
+	}
+	
+	public DatabaseCredentials(String databaseType, String databaseName, String username, String password, String sql) {
+		this.setDatabaseType(databaseType);
+		this.setDatabaseName(databaseName);
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setSql(sql);
+	}
+	
+	public DatabaseCredentials(String databaseType, String driverName, String databaseName, String username, String password, String sql) {
+		this.setDatabaseType(databaseType);
+		this.setDriverName(driverName);
+		this.setDatabaseName(databaseName);
+		this.setUsername(username);
+		this.setPassword(password);
+		this.setSql(sql);
+	}
 	
 	public String getSql() {
 		return sql;
@@ -52,6 +76,15 @@ public class DatabaseCredentials
 	public void setDatabaseType(String _databaseType)
 	{
 		this.databaseType = _databaseType;
+		if (_databaseType.equalsIgnoreCase("derby")) {
+			this.setDriverName(DatabaseCredentials.DRIVER_DERBY);
+		} else if (_databaseType.equalsIgnoreCase("odbc") || _databaseType.equalsIgnoreCase("notes")) {
+			this.setDriverName(DatabaseCredentials.DRIVER_JDBC_ODBC);
+		} else if (_databaseType.equalsIgnoreCase("mysql")) {
+			this.setDriverName(DatabaseCredentials.DRIVER_MYSQL);
+		} else {
+			throw new RuntimeException("unsupported database type -- if you know the driver name, set the driver name and ignore database type.");
+		}
 	}
 	
 	public void setDatabaseName(String _databaseName)
@@ -87,6 +120,14 @@ public class DatabaseCredentials
 	public String getPassword()
 	{
 		return password;
+	}
+
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
 	}
 
 }

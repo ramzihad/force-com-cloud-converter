@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.forceutil;
 
-import com.modelmetrics.cloudconverter.util.AbstractMigrationContextAware;
+import com.modelmetrics.cloudconverter.engine.AbstractMigrationContextAware;
 import com.sforce.soap._2006._04.metadata.Layout;
 import com.sforce.soap._2006._04.metadata.LayoutColumn;
 import com.sforce.soap._2006._04.metadata.LayoutItem;
@@ -76,7 +76,7 @@ public class LayoutBuilder extends AbstractMigrationContextAware {
 
 		layoutColumnsOne = new LayoutColumn[2];
 		
-		LayoutItem[] newFields = new LayoutItem[this.getMigrationContext().getCustomFields().length];
+		LayoutItem[] newFields = new LayoutItem[this.getMigrationContext().getCustomFieldShortNames().length];
 		
 		for (int i = 0; i < this.getMigrationContext().getCustomFieldShortNames().length; i++) {
 			newFields[i] = this.getLayoutItem(UiBehavior.Edit, this.getMigrationContext().getCustomFieldShortNames()[i]);

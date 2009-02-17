@@ -30,7 +30,11 @@ package com.modelmetrics.cloudconverter.dirtdb;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-
+/**
+ * @deprecated should need this as of 1/20/09.
+ * @author reidcarlberg
+ *
+ */
 public class DirtConnectionSampleHsqlOneImpl implements DirtConnectionIF {
 
 	private Connection connection;

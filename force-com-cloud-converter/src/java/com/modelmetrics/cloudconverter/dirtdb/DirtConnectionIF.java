@@ -31,10 +31,6 @@ import java.sql.Connection;
 
 public interface DirtConnectionIF {
 
-	static final String DRIVER_DERBY = "org.apache.derby.jdbc.EmbeddedDriver";
-	static final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";
-	static final String DRIVER_JDBC_ODBC = "sun.jdbc.odbc.JdbcOdbcDriver";
-
 	public Connection getConnection();
 
 	public String getSql();

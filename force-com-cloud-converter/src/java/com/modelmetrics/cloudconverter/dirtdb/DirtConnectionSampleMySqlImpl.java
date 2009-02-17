@@ -40,7 +40,7 @@ public class DirtConnectionSampleMySqlImpl implements DirtConnectionIF {
 	public DirtConnectionSampleMySqlImpl() {
 
 		try {
-			Class.forName(DirtConnectionIF.DRIVER_MYSQL).newInstance();
+			Class.forName(DatabaseCredentials.DRIVER_MYSQL).newInstance();
 			Connection con = DriverManager.getConnection(
 					"jdbc:mysql://localhost/test", "root", "");
 

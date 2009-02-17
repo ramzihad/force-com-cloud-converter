@@ -39,6 +39,7 @@ import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
 import com.sforce.soap.partner.SoapBindingStub;
+import com.sforce.soap.partner.UpsertResult;
 import com.sforce.soap.partner.sobject.SObject;
 
 public class SalesforceDAO extends AbstractSalesforceSessionAware {
@@ -48,6 +49,10 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 	private static String INSERT = "insert";
 
 	private static String UPDATE = "update";
+
+	private static String UPSERT = "upsert";
+
+	private String externalIdFieldForUpsert;
 
 	public Sproxy querySingle(String soql) throws SalesforceDaoException {
 
@@ -156,12 +161,12 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 	public Collection<SproxySaveResult> updateAll(Collection<Sproxy> toUpdate)
 			throws SalesforceDaoException {
 
-
 		return this.saveAll(toUpdate, SalesforceDAO.INSERT);
-		
+
 	}
-	
-	private Collection<SproxySaveResult> saveAll(Collection<Sproxy> toSave, String operation) throws SalesforceDaoException {
+
+	private Collection<SproxySaveResult> saveAll(Collection<Sproxy> toSave,
+			String operation) throws SalesforceDaoException {
 		Collection<SproxySaveResult> errors = new ArrayList<SproxySaveResult>();
 
 		int totalCountSoFar = 0;
@@ -176,8 +181,8 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			totalCountSoFar++;
 
 			if (batchCount == 100) {
-				Collection<SproxySaveResult> batchErrors = this
-						.save(batchToUpdate, operation);
+				Collection<SproxySaveResult> batchErrors = this.save(
+						batchToUpdate, operation);
 				errors.addAll(batchErrors);
 				batchCount = 0;
 				batchToUpdate = new ArrayList<Sproxy>();
@@ -187,7 +192,8 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 		}
 
 		if (batchToUpdate.size() > 0) {
-			Collection<SproxySaveResult> batchErrors = this.update(batchToUpdate);
+			Collection<SproxySaveResult> batchErrors = this
+					.update(batchToUpdate);
 			errors.addAll(batchErrors);
 		}
 
@@ -205,6 +211,16 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 		return this.save(toInsert, SalesforceDAO.INSERT);
 	}
 
+	public Collection<SproxySaveResult> upsert(String externalIdForUpsert,
+			Collection<Sproxy> toInsert) throws SalesforceDaoException {
+		if (externalIdForUpsert == null) {
+			throw new RuntimeException(
+					"External ID field is required for upsert.");
+		}
+		this.externalIdFieldForUpsert = externalIdForUpsert;
+		return this.save(toInsert, SalesforceDAO.UPSERT);
+	}
+
 	private Collection<SproxySaveResult> save(Collection<Sproxy> toSave,
 			String operation) throws SalesforceDaoException {
 
@@ -217,7 +233,8 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			throw new SalesforceDaoException(e);
 		}
 
-		SaveResult[] results;
+		SaveResult[] results = null;
+		UpsertResult[] upsertResults = null;
 		try {
 			if (operation == SalesforceDAO.UPDATE) {
 				results = this.getSalesforceSession().getSalesforceService()
@@ -225,6 +242,10 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			} else if (operation == SalesforceDAO.INSERT) {
 				results = this.getSalesforceSession().getSalesforceService()
 						.create(saveTargets);
+			} else if (operation == SalesforceDAO.UPSERT) {
+				upsertResults = this.getSalesforceSession()
+						.getSalesforceService().upsert(
+								this.externalIdFieldForUpsert, saveTargets);
 			} else {
 				throw new SalesforceDaoException("invalid operation! "
 						+ operation);
@@ -233,22 +254,43 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			throw new SalesforceDaoException(e);
 		}
 
-		try
-		{
-			for (int i = 0; i < results.length; i++) {
-				if (!results[i].isSuccess()) {
-					SproxySaveResult sproxySaveResult = new SproxySaveResult();
-					sproxySaveResult.setSproxy(new SproxyBuilder()
-							.build(saveTargets[i]));
-					sproxySaveResult.setSaveResult(results[i]);
-					errors.add(sproxySaveResult);
-					log.info(results[i].getErrors());
+		if (operation == SalesforceDAO.UPSERT) {
+			try {
+				for (int i = 0; i < upsertResults.length; i++) {
+					if (!upsertResults[i].isSuccess()) {
+						SproxySaveResult sproxySaveResult = new SproxySaveResult();
+						sproxySaveResult.setSproxy(new SproxyBuilder()
+								.build(saveTargets[i]));
+						//sproxySaveResult.setSaveResult(upsertResults[i]);
+						errors.add(sproxySaveResult);
+						for (int j = 0; j < upsertResults[i].getErrors().length; j++) {
+							log.info(upsertResults[i].getErrors()[j].getMessage());
+						}
+						// log.info(results[i].getErrors());
+					}
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e);
 			}
-		}
-		catch(Exception e)
-		{
-			log.error(e);
+		} else {
+			try {
+				for (int i = 0; i < results.length; i++) {
+					if (!results[i].isSuccess()) {
+						SproxySaveResult sproxySaveResult = new SproxySaveResult();
+						sproxySaveResult.setSproxy(new SproxyBuilder()
+								.build(saveTargets[i]));
+						sproxySaveResult.setSaveResult(results[i]);
+						errors.add(sproxySaveResult);
+						for (int j = 0; j < results[i].getErrors().length; j++) {
+							log.info(results[i].getErrors()[j].getMessage());
+						}
+						// log.info(results[i].getErrors());
+					}
+				}
+			} catch (Exception e) {
+				log.error(e);
+			}
 		}
 
 		return errors;
