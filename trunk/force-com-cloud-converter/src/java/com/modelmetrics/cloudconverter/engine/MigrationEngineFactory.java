@@ -28,48 +28,30 @@ THE SOFTWARE.
 package com.modelmetrics.cloudconverter.engine;
 
 import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionFactory;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleDerbyOneImpl;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleHsqlOneImpl;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleMySqlImpl;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleNotesImpl;
 
+/**
+ * builds migration engines. as of 2009-01-21 this may not be necessary since
+ * there's only one migration engine type.  open ot input either way.
+ * 
+ * @author reidcarlberg
+ * 
+ */
 public class MigrationEngineFactory {
 
-	public MigrationEngineIF build(String type) {
-		
-
-		MigrationEngineStandardImpl ret2 = new MigrationEngineStandardImpl();
-		
-		if (type.startsWith("notes")) {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleNotesImpl());
-			
-		} else if (type.startsWith("hsql")) {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleHsqlOneImpl());
-
-		} else if (type.startsWith("derby")) {
-//			throw new RuntimeException("DERBY only buildable with db creds");
-			ret2.setEngineConnectorIF(new DirtConnectionSampleDerbyOneImpl());
-			
-		} else {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleMySqlImpl());
-		}
-		
-		return ret2;
-		
+	public MigrationEngineIF build() {
+		return new MigrationEngineStandardImpl();
 	}
-	
-	public MigrationEngineIF build(DatabaseCredentials dbCreds)
-	{
-		MigrationEngineStandardImpl ret2 = new MigrationEngineStandardImpl();
-		
-		if (dbCreds.getDatabaseType().equalsIgnoreCase("notes")) {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleNotesImpl(dbCreds));
-		} else if (dbCreds.getDatabaseType().equalsIgnoreCase("derby")) {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleDerbyOneImpl(dbCreds));
-		} else {
-			ret2.setEngineConnectorIF(new DirtConnectionSampleMySqlImpl(dbCreds));
-		}
-		
-		return ret2;
-	}
+
+//	public MigrationEngineIF build(DatabaseCredentials dbCreds) {
+//		MigrationEngineStandardImpl ret2 = new MigrationEngineStandardImpl();
+//
+//		ret2.setDirtConnection(new DirtConnectionFactory().build(dbCreds));
+//
+//		return ret2;
+//	}
 }

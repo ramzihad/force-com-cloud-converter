@@ -49,10 +49,10 @@ public class SobjectBuilder {
 
 		ret.setId(target.getId());
 
-		//determine non-null size
+		// determine non-null size
 		int nonNullSize = 0;
 		for (Iterator iter = target.getValueKeys().iterator(); iter.hasNext();) {
-			if (target.hasValue((String)iter.next())) {
+			if (target.hasValue((String) iter.next())) {
 				nonNullSize++;
 			}
 		}
@@ -71,9 +71,23 @@ public class SobjectBuilder {
 			// Doubles.
 
 			if (target.getValue(element) != null) {
-				elements[count] = MessageElementBuilder.getMessageElement(
-						element, target.getValue(element));
+
+				if (element.indexOf(":") > -1) {
+					 String[] names = element.split(":");
+					
+					Sproxy child =new  SproxyBuilder().buildEmpty(names[1]);
+					child.setValue(names[2], target.getValue(element));
+					
+					SObject childSobject = this.build(child);
+					
+					elements[count] = MessageElementBuilder.getMessageElement(names[0], childSobject);
+				} else {
+					elements[count] = MessageElementBuilder.getMessageElement(
+							element, target.getValue(element));
+				}
+
 				count++;
+
 			} else {
 				target.getNullKeys().add(element);
 			}
@@ -84,11 +98,12 @@ public class SobjectBuilder {
 			// elements[count] = MessageElementBuilder.getMessageElement(
 			// element, target.getValue(element));
 			// }
-//			count++;
+			// count++;
 
 		}
 
 		ret.set_any(elements);
+		
 
 		String[] nullKeys = {};
 

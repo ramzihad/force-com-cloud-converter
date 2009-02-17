@@ -52,7 +52,7 @@ public class DirtConnectionSampleNotesImpl implements DirtConnectionIF {
 		
 		try {
 	       Class.forName
-	        (DirtConnectionIF.DRIVER_JDBC_ODBC).newInstance();
+	        (DatabaseCredentials.DRIVER_JDBC_ODBC).newInstance();
 	       Connection con = DriverManager.getConnection(
 	        "jdbc:odbc:NotesVacation","Reid Carlberg/modelmetrics","blah1234"
 	         );

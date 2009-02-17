@@ -40,11 +40,13 @@ import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
-public class InsertExecutor {
+public class InsertExecutor implements DataExecutor {
 
 	private static final Log log = LogFactory.getLog(InsertExecutor.class);
 	
 	public void execute(MigrationContext migrationContext) throws Exception {
+		
+		log.debug("starting data transfer (insert)...");
 		
 		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(migrationContext.getSalesforceSession());
@@ -73,7 +75,11 @@ public class InsertExecutor {
 			
 		}
 		
+		log.debug("starting the insert...");
+		
 		dao.insert(toInsert);
+		
+		log.debug("insert complete...");
 		
 		
 	}

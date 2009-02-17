@@ -46,6 +46,8 @@ import javax.xml.rpc.ServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentialsBuilder;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
@@ -71,7 +73,7 @@ public class CloudConverter {
 		System.out
 				.println("This utility offered AS IS without warranty or support of any kind.\n\n");
 		System.out
-				.println("*****\nThis is an example script. Edit the class CloudConverterScript to create your own.\nBe sure to read ReadMe.txt.\n*****\n");
+				.println("*****\nThis is an example script. Review the class CloudConverterScript and then edit CloudConverterScriptTemplate to create your own.\nBe sure to read ReadMe.txt.\n*****\n");
 
 		CloudConverter samples1 = new CloudConverter();
 
@@ -82,7 +84,8 @@ public class CloudConverter {
 		}
 	}
 
-	// RSC 2009-01-04 This is included from the original SFDC provided sample file.
+	// RSC 2009-01-04 This is included from the original SFDC provided sample
+	// file.
 	// The sample client application retrieves the user's login credentials.
 	// Helper function for retrieving user input from the console
 	String getUserInput(String prompt) {
@@ -101,7 +104,7 @@ public class CloudConverter {
 	private MigrationContext getMigrationContextWithSalesforceSession()
 			throws ServiceException {
 		System.out
-				.println("Force.com credentials - first time you're running this? You should start with a DEV org.\n");
+				.println("Force.com credentials - first time you're running this? You should start with a DEV org.\nIf your IP isn't white listed, you'll need your security token to go with your password (passwordSECURITYTOKEN).\n");
 
 		String userName = getUserInput("Enter username: ");
 		String password = getUserInput("Enter password: ");
@@ -130,13 +133,27 @@ public class CloudConverter {
 
 		log.debug("Migration context initialized...");
 
-		String runType = getUserInput("Enter dirt db type (Fist time? Use 'derby'.) ('derby', 'hsql', 'notes','mysql'): ");
+		System.out
+				.println("Cloud Converter can help you work with an JDBC compatible database -- see CloudConverterScript for details.\nThis sample moves items from the included sample DBs to Force.com.");
 
-		// MigrationEngine engine = new MigrationEngine();
-		MigrationEngineIF engine = new MigrationEngineFactory().build(runType);
+		String runType = getUserInput("Enter SAMPLE dirt db type (Fist time? Use 'derby') ('derby','complex'): ");
+
+		if (runType.equalsIgnoreCase("derby")) {
+			migrationContext.setDirtConnection(new DirtConnectionFactory()
+					.build(DatabaseCredentialsBuilder.getDerbySample()));
+		} else if (runType.equalsIgnoreCase("complex")) {
+			migrationContext.setDirtConnection(new DirtConnectionFactory()
+					.build(DatabaseCredentialsBuilder.getDerbySampleComplex()));
+		} else {
+			throw new RuntimeException("you entered an invalid runtype");
+		}
+
+		MigrationEngineIF engine = new MigrationEngineFactory().build();
 
 		engine.setMigrationContext(migrationContext);
 
+		
+		
 		try {
 
 			engine.execute();

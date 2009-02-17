@@ -67,111 +67,111 @@ public class ConverterSettingsUI implements ConverterStatusListenerIF {
 
 	}
 
-	public void initialize() {
-
-		display = new Display();
-		shell = new Shell(display);
-		shell.setText("JDBC to Force.com Converter");
-		shell.setSize(600, 1000);
-		GridLayout gridLayout = new GridLayout();
-		gridLayout.numColumns = 3;
-		shell.setLayout(gridLayout);
-
-		Group loginInfo = new Group(shell, SWT.NONE);
-		loginInfo.setText("Salesforce Login Info");
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		loginInfo.setLayout(gridLayout);
-		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalSpan = 4;
-		loginInfo.setLayoutData(gridData);
-
-		new Label(loginInfo, SWT.NONE).setText("Username:");
-		username = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
-		username.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		new Label(loginInfo, SWT.NONE).setText("Password+Token:");
-		password = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
-		password.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		Group ownerInfo = new Group(shell, SWT.NONE);
-		ownerInfo.setText("Please select JDBC Source");
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		ownerInfo.setLayout(gridLayout);
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalSpan = 2;
-		ownerInfo.setLayoutData(gridData);
-
-		new Label(ownerInfo, SWT.NONE).setText("Please Select JDBC Type: ");
-
-		selections = new Combo(ownerInfo, SWT.READ_ONLY);
-		selections.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		selections.add("mysql");
-		selections.add("notes (requires NoteSQL)");
-		selections.add("MS SQL Server (*)");
-		selections.add("Oracle (*)");
-		selections.add("DB2 (*)");
-
-		loginInfo = new Group(shell, SWT.NONE);
-		loginInfo.setText("Database Login Info");
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		loginInfo.setLayout(gridLayout);
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalSpan = 4;
-		loginInfo.setLayoutData(gridData);
-
-		new Label(loginInfo, SWT.NONE).setText("Database Username:");
-		datausername = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
-		datausername.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		new Label(loginInfo, SWT.NONE).setText("Database Password:");
-		datapassword = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
-		datapassword.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		new Label(loginInfo, SWT.NONE).setText("Database Name:");
-		databasename = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
-		databasename.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		statuslabel = new Label(shell, SWT.NONE);
-		statuslabel.setText("Click 'Start Conversion' to begin.");
-		statuslabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalSpan = 4;
-		statuslabel.setLayoutData(gridData);
-
-		pb1 = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
-		pb1.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
-		pb1.setMinimum(0);
-		pb1.setMaximum(100);
-		gridLayout = new GridLayout();
-		gridLayout.numColumns = 2;
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalSpan = 4;
-		pb1.setLayoutData(gridData);
-
-		Button ok = new Button(shell, SWT.PUSH);
-		ok.setText("Start Conversion");
-		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		gridData.horizontalIndent = 5;
-		ok.setLayoutData(gridData);
-		ok.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				model.intializeProcess();
-
-			}
-		});
-
-		shell.pack();
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch())
-				display.sleep();
-		}
-	}
+//	public void initialize() {
+//
+//		display = new Display();
+//		shell = new Shell(display);
+//		shell.setText("JDBC to Force.com Converter");
+//		shell.setSize(600, 1000);
+//		GridLayout gridLayout = new GridLayout();
+//		gridLayout.numColumns = 3;
+//		shell.setLayout(gridLayout);
+//
+//		Group loginInfo = new Group(shell, SWT.NONE);
+//		loginInfo.setText("Salesforce Login Info");
+//		gridLayout = new GridLayout();
+//		gridLayout.numColumns = 2;
+//		loginInfo.setLayout(gridLayout);
+//		GridData gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalSpan = 4;
+//		loginInfo.setLayoutData(gridData);
+//
+//		new Label(loginInfo, SWT.NONE).setText("Username:");
+//		username = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
+//		username.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//
+//		new Label(loginInfo, SWT.NONE).setText("Password+Token:");
+//		password = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
+//		password.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//
+//		Group ownerInfo = new Group(shell, SWT.NONE);
+//		ownerInfo.setText("Please select JDBC Source");
+//		gridLayout = new GridLayout();
+//		gridLayout.numColumns = 2;
+//		ownerInfo.setLayout(gridLayout);
+//		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalSpan = 2;
+//		ownerInfo.setLayoutData(gridData);
+//
+//		new Label(ownerInfo, SWT.NONE).setText("Please Select JDBC Type: ");
+//
+//		selections = new Combo(ownerInfo, SWT.READ_ONLY);
+//		selections.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//		selections.add("mysql");
+//		selections.add("notes (requires NoteSQL)");
+//		selections.add("MS SQL Server (*)");
+//		selections.add("Oracle (*)");
+//		selections.add("DB2 (*)");
+//
+//		loginInfo = new Group(shell, SWT.NONE);
+//		loginInfo.setText("Database Login Info");
+//		gridLayout = new GridLayout();
+//		gridLayout.numColumns = 2;
+//		loginInfo.setLayout(gridLayout);
+//		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalSpan = 4;
+//		loginInfo.setLayoutData(gridData);
+//
+//		new Label(loginInfo, SWT.NONE).setText("Database Username:");
+//		datausername = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
+//		datausername.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//
+//		new Label(loginInfo, SWT.NONE).setText("Database Password:");
+//		datapassword = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
+//		datapassword.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//
+//		new Label(loginInfo, SWT.NONE).setText("Database Name:");
+//		databasename = new Text(loginInfo, SWT.SINGLE | SWT.BORDER);
+//		databasename.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+//
+//		statuslabel = new Label(shell, SWT.NONE);
+//		statuslabel.setText("Click 'Start Conversion' to begin.");
+//		statuslabel.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
+//		gridLayout = new GridLayout();
+//		gridLayout.numColumns = 2;
+//		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalSpan = 4;
+//		statuslabel.setLayoutData(gridData);
+//
+//		pb1 = new ProgressBar(shell, SWT.HORIZONTAL | SWT.SMOOTH);
+//		pb1.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
+//		pb1.setMinimum(0);
+//		pb1.setMaximum(100);
+//		gridLayout = new GridLayout();
+//		gridLayout.numColumns = 2;
+//		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalSpan = 4;
+//		pb1.setLayoutData(gridData);
+//
+//		Button ok = new Button(shell, SWT.PUSH);
+//		ok.setText("Start Conversion");
+//		gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+//		gridData.horizontalIndent = 5;
+//		ok.setLayoutData(gridData);
+//		ok.addSelectionListener(new SelectionAdapter() {
+//			public void widgetSelected(SelectionEvent e) {
+//				model.intializeProcess();
+//
+//			}
+//		});
+//
+//		shell.pack();
+//		shell.open();
+//		while (!shell.isDisposed()) {
+//			if (!display.readAndDispatch())
+//				display.sleep();
+//		}
+//	}
 
 	public void setLabelAndBar(final String text, final int value) {
 

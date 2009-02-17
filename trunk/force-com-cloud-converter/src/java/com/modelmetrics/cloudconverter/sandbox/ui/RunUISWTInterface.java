@@ -27,21 +27,19 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.sandbox.ui;
 
-import javax.xml.rpc.ServiceException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.CloudConverter;
 import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
-import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentialsBuilder;
-import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
-import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
-import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
-import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 
+/**
+ * this is on the //TODO list and is commented out for now.
+ * 
+ * @author reidcarlberg
+ *
+ */
 public final class RunUISWTInterface implements ConverterStatusListenerIF {
 
 	private static final Log log = LogFactory.getLog(CloudConverter.class);
@@ -59,73 +57,73 @@ public final class RunUISWTInterface implements ConverterStatusListenerIF {
 
 	}
 
-	public void intializeProcess() {
-		try {
-			if (ui.getUsername().getText().length() > 0
-					&& ui.getPassword().getText().length() > 0) {
-				salesforceCredentials = new SalesforceCredentialsBuilder().getAnyOrg(
-						ui.getUsername().getText(), ui.getPassword().getText());
-			} else {
-				// salesforceCredentials = SalesforceCredentialsBuilder
-				// .getReidsDevOrg();
-			}
-			if (ui.getSelections().getText().length() > 0) {
-				if (ui.getDatausername().getText().length() > 0
-						&& ui.getDatabasename().getText().length() > 0) {
-					dbCredentials = DatabaseCredentialsBuilder.getSetInfo(ui
-							.getSelections().getText(), ui.getDatabasename()
-							.getText(), ui.getDatausername().getText(), ui
-							.getDatapassword().getText(), null);
-					runProcess(dbCredentials, salesforceCredentials);
-				} else {
-					dbCredentials = DatabaseCredentialsBuilder.getDefaultInfo();
-					runProcess(dbCredentials, salesforceCredentials);
-				}
-			}
-
-		} catch (ServiceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-
-	private void runProcess(DatabaseCredentials dbCredentials,
-			SalesforceCredentials sfCredentials) throws ServiceException {
-
-		// setLabelAndBar("Logging into SFDC.....", 4);
-		MigrationContext migrationContext = new MigrationContextFactory()
-				.buildMigrationContext(sfCredentials);
-		// setLabelAndBar("Logged into SFDC", 8);
-		log.debug("Migration context initialized...");
-
-		try {
-			// MigrationEngine engine = new MigrationEngine();
-			// setLabelAndBar("Logging into Database....", 12);
-			final MigrationEngineIF engine = new MigrationEngineFactory()
-					.build(dbCredentials);
-			// setLabelAndBar("Setting Migration Variables", 16);
-			engine.setMigrationContext(migrationContext);
-			// engine.execute();
-			new Thread() {
-				public void run() {
-					try {
-						engine.execute();
-						// setLabelAndBar("Done", 100);
-						log.debug("Sample migration runner complete.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						if (!Thread.currentThread().isInterrupted())
-							Thread.currentThread().interrupt();
-					}
-				}
-			}.start();
-
-		} catch (Exception e) {
-			log.error("Error executing migration", e);
-		}
-	}
+	// public void intializeProcess() {
+	// try {
+	// if (ui.getUsername().getText().length() > 0
+	// && ui.getPassword().getText().length() > 0) {
+	// salesforceCredentials = new SalesforceCredentialsBuilder().getAnyOrg(
+	// ui.getUsername().getText(), ui.getPassword().getText());
+	// } else {
+	// // salesforceCredentials = SalesforceCredentialsBuilder
+	// // .getReidsDevOrg();
+	// }
+	// if (ui.getSelections().getText().length() > 0) {
+	// if (ui.getDatausername().getText().length() > 0
+	// && ui.getDatabasename().getText().length() > 0) {
+	// dbCredentials = DatabaseCredentialsBuilder.getSetInfo(ui
+	// .getSelections().getText(), ui.getDatabasename()
+	// .getText(), ui.getDatausername().getText(), ui
+	// .getDatapassword().getText(), null);
+	// runProcess(dbCredentials, salesforceCredentials);
+	// } else {
+	// dbCredentials = DatabaseCredentialsBuilder.getDefaultInfo();
+	// runProcess(dbCredentials, salesforceCredentials);
+	// }
+	// }
+	//
+	// } catch (ServiceException e1) {
+	// // TODO Auto-generated catch block
+	// e1.printStackTrace();
+	// }
+	// }
+	//
+	// private void runProcess(DatabaseCredentials dbCredentials,
+	// SalesforceCredentials sfCredentials) throws ServiceException {
+	//
+	// // setLabelAndBar("Logging into SFDC.....", 4);
+	// MigrationContext migrationContext = new MigrationContextFactory()
+	// .buildMigrationContext(sfCredentials);
+	// // setLabelAndBar("Logged into SFDC", 8);
+	// log.debug("Migration context initialized...");
+	//
+	// try {
+	// // MigrationEngine engine = new MigrationEngine();
+	// // setLabelAndBar("Logging into Database....", 12);
+	// final MigrationEngineIF engine = new MigrationEngineFactory()
+	// .build(dbCredentials);
+	// // setLabelAndBar("Setting Migration Variables", 16);
+	// engine.setMigrationContext(migrationContext);
+	// // engine.execute();
+	// new Thread() {
+	// public void run() {
+	// try {
+	// engine.execute();
+	// // setLabelAndBar("Done", 100);
+	// log.debug("Sample migration runner complete.");
+	// } catch (Exception e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } finally {
+	// if (!Thread.currentThread().isInterrupted())
+	// Thread.currentThread().interrupt();
+	// }
+	// }
+	// }.start();
+	//
+	// } catch (Exception e) {
+	// log.error("Error executing migration", e);
+	// }
+	// }
 
 	public void setStatus(String status) {
 		this.ui.setLabelAndBar(status, 26);

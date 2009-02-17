@@ -3,7 +3,7 @@ package com.modelmetrics.cloudconverter.sandbox;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.modelmetrics.cloudconverter.util.AbstractMigrationContextAware;
+import com.modelmetrics.cloudconverter.engine.AbstractMigrationContextAware;
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.Metadata;
 import com.sforce.soap._2006._04.metadata.RetrieveRequest;

@@ -25,21 +25,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-package com.modelmetrics.cloudconverter.util;
+package com.modelmetrics.cloudconverter.engine;
 
-import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.cloudconverter.engine.MigrationContextAwareIF;
 
-public abstract class AbstractMigrationContextAware implements MigrationContextAwareIF {
-
-	private MigrationContext migrationContext;
-
-	public MigrationContext getMigrationContext() {
-		return migrationContext;
-	}
-
-	public void setMigrationContext(MigrationContext migrationContext) {
-		this.migrationContext = migrationContext;
-	}
+public abstract class AbstractMigrationEngine extends AbstractMigrationContextAware implements MigrationEngineIF {
+	
+	
 
 }

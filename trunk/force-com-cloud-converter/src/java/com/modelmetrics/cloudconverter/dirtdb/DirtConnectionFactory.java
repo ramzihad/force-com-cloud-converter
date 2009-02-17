@@ -6,10 +6,8 @@ public class DirtConnectionFactory {
 		
 		DirtConnectionIF ret = null;
 		
-		if (databaseCredentials.getDatabaseType().equalsIgnoreCase("derby")) {
-			ret= new DirtConnectionSampleDerbyOneImpl(databaseCredentials);
-		} else if (databaseCredentials.getDatabaseType().equalsIgnoreCase("mysql")) {
-			ret = new DirtConnectionSampleMySqlImpl(databaseCredentials);
+		if (databaseCredentials.getDriverName() != null) {
+			ret = new DirtConnectionStandardImpl(databaseCredentials);
 		} else {
 			throw new RuntimeException("database type not recognized -- " + databaseCredentials.getDatabaseType());
 		}

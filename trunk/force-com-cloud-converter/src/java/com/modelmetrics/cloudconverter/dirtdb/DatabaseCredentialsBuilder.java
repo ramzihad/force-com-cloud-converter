@@ -28,21 +28,27 @@ THE SOFTWARE.
 package com.modelmetrics.cloudconverter.dirtdb;
 
 public class DatabaseCredentialsBuilder {
-	public static DatabaseCredentials getDefaultInfo() {
-		DatabaseCredentials dbCreds = new DatabaseCredentials();
-		dbCreds.setDatabaseName("test");
-		dbCreds.setDatabaseType("mysql");
-		dbCreds.setUsername("root");
-		dbCreds.setPassword("");
-		return dbCreds;
-	}
+//	public static DatabaseCredentials getMysqlSample() {
+//		DatabaseCredentials dbCreds = new DatabaseCredentials();
+//		dbCreds.setDatabaseName("test");
+//		dbCreds.setDatabaseType("mysql");
+//		dbCreds.setUsername("root");
+//		dbCreds.setPassword("");
+//		return dbCreds;
+//	}
 
 	public static DatabaseCredentials getDerbySample() {
 		return DatabaseCredentialsBuilder.getSetInfo("derby",
-				"./src/sampledbs/derby/sample1", "sa", "",
+				"jdbc:derby:./src/sampledbs/derby/sample1", "sa", "",
 				"Select * from mytable");
 	}
 
+	public static DatabaseCredentials getDerbySampleComplex() {
+		return DatabaseCredentialsBuilder.getSetInfo("derby",
+				"jdbc:derby:./src/sampledbs/derby/sample2", "sa", "",
+				"Select * from mytable");
+	}
+	
 	public static DatabaseCredentials getSetInfo(String type, String name,
 			String username, String password, String sql) {
 		DatabaseCredentials dbCreds = new DatabaseCredentials();

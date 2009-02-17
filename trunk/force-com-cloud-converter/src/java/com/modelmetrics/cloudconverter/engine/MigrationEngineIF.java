@@ -27,8 +27,14 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
+
 public interface MigrationEngineIF extends MigrationContextAwareIF {
 
 	public void execute() throws Exception;
+	
+//	public DirtConnectionIF getDirtConnection();
+//	
+//	public void setDirtConnection(DirtConnectionIF dirtConnection);
+	
 	
 }

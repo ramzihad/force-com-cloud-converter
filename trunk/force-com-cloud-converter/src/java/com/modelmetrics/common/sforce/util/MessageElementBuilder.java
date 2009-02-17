@@ -28,10 +28,14 @@ THE SOFTWARE.
 package com.modelmetrics.common.sforce.util;
 
 import org.apache.axis.message.MessageElement;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.w3c.dom.Element;
 
 public class MessageElementBuilder {
 
+	private static final Log log = LogFactory.getLog(MessageElementBuilder.class);
+	
 	public static MessageElement getMessageElement(String name, Object value)
 			throws Exception {
 	
@@ -42,11 +46,10 @@ public class MessageElementBuilder {
 		e.removeAttribute("xmlns:ns1");
 		e.removeAttribute("xmlns:xsd");
 		e.removeAttribute("xmlns:xsi");
-	
-		
 		
 		me = new MessageElement(e);
-		
+
+		log.debug("Message element is: " + me.getAsString());
 		
 		return me;
 	}
