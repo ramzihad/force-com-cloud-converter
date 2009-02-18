@@ -18,7 +18,10 @@ Look in the package "com.modelmetrics.cloudconverter" for the classes you might 
 
 ###################################################################
 PROJECT STATUS:
-Undergoing active development. Looking for contributors.
+
+Undergoing active development.  Expect the code to continue to evolve in significant ways. 
+
+Looking for contributors.
 
 ###################################################################
 BASIC FLOW:
@@ -60,7 +63,7 @@ HISTORY:
 
 2009-02-17
 
-* refactored database connection to be parameter driven.
+* refactored database connection to be parameter driven.  See script and app for an example.
 * added support for Lookup fields, external id fields and picklists.
 * added support for automatic external id based foreign key resolution for lookup relationships.
 * added a larger sample database with more robust sample data.
@@ -76,4 +79,14 @@ HISTORY:
 * Intial upload.
 * If you checkout into Eclipse, you should have you classpath, etc., all set for you.
 * Everything is text based.  Run com.modelmetrics.cloudconverter.CloudConverter.main.
-* If you want to convert something other than MySQL or Notes, you'll need 
+* If you want to convert something other than MySQL or Notes, you'll need to configure it.
+
+###################################################################
+ROAD MAP:
+
+* Update to Spring 09 APIs (after all pods are updated)
+* Test with larger sample data sets
+* Use "Profile Tab Visibility" to make the custom tab visible by default.
+* Record ownership rule engine
+* Automate configuration
+* Add a UI
