@@ -15,7 +15,7 @@ import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
 public class DataUpsertExecutor implements DataExecutor {
 
-	private static final Log log = LogFactory.getLog(InsertExecutor.class);
+	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
 
 	public void execute(MigrationContext migrationContext) throws Exception {
 

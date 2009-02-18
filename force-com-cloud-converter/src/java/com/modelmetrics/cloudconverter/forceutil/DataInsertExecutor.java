@@ -40,9 +40,9 @@ import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
-public class InsertExecutor implements DataExecutor {
+public class DataInsertExecutor implements DataExecutor {
 
-	private static final Log log = LogFactory.getLog(InsertExecutor.class);
+	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
 	
 	public void execute(MigrationContext migrationContext) throws Exception {
 		
