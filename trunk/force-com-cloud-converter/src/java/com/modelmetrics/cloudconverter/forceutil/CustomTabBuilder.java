@@ -40,6 +40,10 @@ public class CustomTabBuilder {
 		customTab.setDescription("Created automatically ");
 		customTab.setFullName(customObject.getFullName());
 		customTab.setLabel(customObject.getLabel());
+		/*
+		 * RSC 2009-02-17 Oh yeah this is a hack.  
+		 */
+		// TODO fix this.
 		customTab.setMotif("Custom70: Handsaw");
 		
 		return customTab;

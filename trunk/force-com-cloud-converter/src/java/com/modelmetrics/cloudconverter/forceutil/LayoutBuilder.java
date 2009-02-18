@@ -44,6 +44,12 @@ public class LayoutBuilder extends AbstractMigrationContextAware {
 			throw new RuntimeException("missing Migration Context");
 		}
 
+		/*
+		 * 2009-02-17 RSC This is a bit of a hack.  Rather than editing the default,
+		 * I build one from scratch, give it the same unique name as the default one
+		 * SFDC created when I built the object.  I then call the metadata "update" 
+		 * instead of a "create".
+		 */
 		Layout layout = new Layout();
 
 		LayoutSection[] layoutSections = new LayoutSection[4];

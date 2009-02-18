@@ -40,7 +40,7 @@ import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
-import com.modelmetrics.cloudconverter.forceutil.InsertExecutor;
+import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.sandbox.DefaultPageLayoutFinder;
@@ -131,7 +131,7 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		try {
 			if (this.getMigrationContext().getExternalIdForUpsert() == null) {
-				new InsertExecutor().execute(this.getMigrationContext());
+				new DataInsertExecutor().execute(this.getMigrationContext());
 			} else {
 				new DataUpsertExecutor().execute(this.getMigrationContext());
 			}

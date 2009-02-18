@@ -3,6 +3,7 @@ package com.modelmetrics.cloudconverter;
 import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
+import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
@@ -15,7 +16,7 @@ import com.sforce.soap.partner.Field;
  * @author reidcarlberg
  *
  */
-public class CloudConverterScriptTest extends TestCaseWithDevOrg {
+public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 
 
 	private String sampleObject = "mytable__c";
@@ -61,7 +62,7 @@ public class CloudConverterScriptTest extends TestCaseWithDevOrg {
 
 	public void testCreatesObject() throws Exception {
 
-		CloudConverterScript script = new CloudConverterScript();
+		CloudConverterScript_Sample script = new CloudConverterScript_Sample();
 
 		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
 				.build(salesforceCredentials);

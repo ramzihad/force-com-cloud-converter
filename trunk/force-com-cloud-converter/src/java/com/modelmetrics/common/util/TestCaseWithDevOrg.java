@@ -1,7 +1,6 @@
-package com.modelmetrics.cloudconverter;
+package com.modelmetrics.common.util;
 
 import com.modelmetrics.common.sforce.SalesforceCredentials;
-import com.modelmetrics.common.util.TestCaseWithLog;
 
 public class TestCaseWithDevOrg extends TestCaseWithLog {
 
