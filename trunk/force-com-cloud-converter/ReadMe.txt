@@ -63,6 +63,7 @@ HISTORY:
 
 2009-02-17
 
+* updated to version 15 of both the standard and metadata API.
 * refactored database connection to be parameter driven.  See script and app for an example.
 * added support for Lookup fields, external id fields and picklists.
 * added support for automatic external id based foreign key resolution for lookup relationships.

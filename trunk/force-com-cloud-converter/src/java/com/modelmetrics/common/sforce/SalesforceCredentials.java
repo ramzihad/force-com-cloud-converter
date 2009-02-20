@@ -36,9 +36,9 @@ import org.springframework.util.StringUtils;
 
 public class SalesforceCredentials {
 
-	private String productionUrl = "https://www.salesforce.com/services/Soap/u/14.0";
+	private String productionUrl = "https://www.salesforce.com/services/Soap/u/15.0";
 	
-	private String sandboxUrl = "https://test.salesforce.com/services/Soap/u/14.0";
+	private String sandboxUrl = "https://test.salesforce.com/services/Soap/u/15.0";
 	
 	private String wsdlUrl = null;
 	
