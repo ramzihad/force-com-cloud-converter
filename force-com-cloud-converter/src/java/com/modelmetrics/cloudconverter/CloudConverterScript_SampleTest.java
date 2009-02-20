@@ -41,7 +41,7 @@ public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 
 		log.debug("starting clean up");
 
-		//this.handleCustomObjectKill(this.sampleObject);
+		this.handleCustomObjectKill(this.sampleObject);
 
 		log.debug("clean up complete");
 	}
