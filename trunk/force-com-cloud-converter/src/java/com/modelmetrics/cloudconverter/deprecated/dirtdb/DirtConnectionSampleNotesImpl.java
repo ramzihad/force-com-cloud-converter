@@ -36,10 +36,13 @@ THE SOFTWARE.
  */
 
 
-package com.modelmetrics.cloudconverter.dirtdb;
+package com.modelmetrics.cloudconverter.deprecated.dirtdb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+
+import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 
 
 public class DirtConnectionSampleNotesImpl implements DirtConnectionIF {

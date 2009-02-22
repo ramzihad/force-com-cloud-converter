@@ -25,43 +25,51 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-package com.modelmetrics.cloudconverter.dirtdb;
+package com.modelmetrics.cloudconverter.deprecated.dirtdb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
+
 /**
- * @deprecated shouldn't need this any more as of 1/20/09.
+ * @deprecated should need this as of 1/20/09.
  * @author reidcarlberg
  *
  */
-public class DirtConnectionSampleDerbyOneImpl implements DirtConnectionIF {
+public class DirtConnectionSampleHsqlOneImpl implements DirtConnectionIF {
 
 	private Connection connection;
 
 	private String sql;
 
-	public DirtConnectionSampleDerbyOneImpl() {
-		DatabaseCredentials databaseCredentials = DatabaseCredentialsBuilder
-				.getSetInfo("derby", "./src/sampledbs/derby/sample1", "sa", "",
-						"Select * from mytable");
-		this.initialize(databaseCredentials);
-	}
+	public DirtConnectionSampleHsqlOneImpl() {
 
-	public DirtConnectionSampleDerbyOneImpl(DatabaseCredentials dbCreds) {
-		this.initialize(dbCreds);
-	}
-
-	public void initialize(DatabaseCredentials dbCreds) {
 		try {
-			Class.forName(DatabaseCredentials.DRIVER_DERBY).newInstance();
-			Connection con = DriverManager.getConnection("jdbc:derby:"
-					+ dbCreds.getDatabaseName(), dbCreds.getUsername(), dbCreds
-					.getPassword());
+			Class.forName("org.hsqldb.jdbcDriver").newInstance();
+			Connection con = DriverManager.getConnection(
+					"jdbc:hsqldb:file:./src/sample-hsql-dbs/sample1/sampledb1", "sa", "");
 
 			this.connection = con;
 
-			this.sql = dbCreds.getSql();
+			this.sql = "Select * from sample1";
+
+		} catch (Exception e) {
+			throw new RuntimeException("failed to initialize in constrcutor", e);
+		}
+	}
+	
+	public DirtConnectionSampleHsqlOneImpl(DatabaseCredentials dbCreds)
+	{
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Connection con = DriverManager.getConnection(
+					"jdbc:mysql://localhost/"+dbCreds.getDatabaseName(), dbCreds.getUsername(), dbCreds.getPassword());
+
+			this.connection = con;
+
+			this.sql = "Select * from table1";
 
 		} catch (Exception e) {
 			throw new RuntimeException("failed to initialize in constrcutor", e);

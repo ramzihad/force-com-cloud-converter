@@ -36,11 +36,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
-import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
-public class DataInsertExecutor implements DataExecutor {
+public class DataInsertExecutor extends AbstractDataExecutor {
 
 	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
 	
@@ -48,16 +46,13 @@ public class DataInsertExecutor implements DataExecutor {
 		
 		log.debug("starting data transfer (insert)...");
 		
-		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(migrationContext.getSalesforceSession());
 		
 		Collection<Sproxy> toInsert = new ArrayList<Sproxy>();
 		
 		ResultSet rs = migrationContext.getResultSet();
 		ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
-		
-		SproxyBuilder sproxyBuilder = new SproxyBuilder();
-		
+				
 		if (rs == null) {
 			log.info("result set is null");
 		}
@@ -70,9 +65,11 @@ public class DataInsertExecutor implements DataExecutor {
 				current.setValue(migrationContext.getFieldMap().get(rsmd.getColumnName(i+1)), rs.getObject(i+1));
 			}
 		
-			toInsert.add(current);
-			
-			
+			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
+				dao.insert(toInsert);
+				toInsert = new ArrayList<Sproxy>();
+			}
+
 		}
 		
 		log.debug("starting the insert...");

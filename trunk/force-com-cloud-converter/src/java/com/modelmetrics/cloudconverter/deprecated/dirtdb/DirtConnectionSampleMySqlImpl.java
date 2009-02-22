@@ -25,39 +25,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
 
-package com.modelmetrics.cloudconverter.dirtdb;
+package com.modelmetrics.cloudconverter.deprecated.dirtdb;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-/**
- * @deprecated should need this as of 1/20/09.
- * @author reidcarlberg
- *
- */
-public class DirtConnectionSampleHsqlOneImpl implements DirtConnectionIF {
+import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
+
+
+public class DirtConnectionSampleMySqlImpl implements DirtConnectionIF {
 
 	private Connection connection;
 
 	private String sql;
 
-	public DirtConnectionSampleHsqlOneImpl() {
+	public DirtConnectionSampleMySqlImpl() {
 
 		try {
-			Class.forName("org.hsqldb.jdbcDriver").newInstance();
+			Class.forName(DatabaseCredentials.DRIVER_MYSQL).newInstance();
 			Connection con = DriverManager.getConnection(
-					"jdbc:hsqldb:file:./src/sample-hsql-dbs/sample1/sampledb1", "sa", "");
+					"jdbc:mysql://localhost/test", "root", "");
 
 			this.connection = con;
 
-			this.sql = "Select * from sample1";
+			this.sql = "Select * from table1";
 
 		} catch (Exception e) {
 			throw new RuntimeException("failed to initialize in constrcutor", e);
 		}
 	}
 	
-	public DirtConnectionSampleHsqlOneImpl(DatabaseCredentials dbCreds)
+	public DirtConnectionSampleMySqlImpl(DatabaseCredentials dbCreds)
 	{
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
