@@ -13,7 +13,7 @@ import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
-public class DataUpsertExecutor implements DataExecutor {
+public class DataUpsertExecutor extends AbstractDataExecutor {
 
 	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
 
@@ -21,15 +21,12 @@ public class DataUpsertExecutor implements DataExecutor {
 
 		log.debug("starting data transfer (upsert)...");
 		
-		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(migrationContext.getSalesforceSession());
 		
 		Collection<Sproxy> toUpsert = new ArrayList<Sproxy>();
 		
 		ResultSet rs = migrationContext.getResultSet();
 		ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
-		
-		SproxyBuilder sproxyBuilder = new SproxyBuilder();
 		
 		if (rs == null) {
 			log.info("result set is null");
@@ -44,7 +41,11 @@ public class DataUpsertExecutor implements DataExecutor {
 			}
 		
 			toUpsert.add(current);
-			
+
+			if (toUpsert.size() == MAX_SPROXY_BATCH_SIZE) {
+				dao.upsert(migrationContext.getExternalIdForUpsert(), toUpsert);
+				toUpsert = new ArrayList<Sproxy>();
+			}
 			
 		}
 		

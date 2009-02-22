@@ -27,12 +27,6 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
-import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionFactory;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleDerbyOneImpl;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleHsqlOneImpl;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleMySqlImpl;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionSampleNotesImpl;
 
 /**
  * builds migration engines. as of 2009-01-21 this may not be necessary since

@@ -69,9 +69,10 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 	}
 
 	private void createCustomObject() throws Exception {
-		if (this.getMigrationContext().getDirtConnection() == null)
-			log.debug("Connecting to source...");
 
+		/*
+		 * start by getting the basic DB connection
+		 */
 		Statement statement = this.getMigrationContext().getDirtConnection()
 				.getConnection().createStatement();
 
@@ -82,17 +83,23 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		ResultSetMetaData rsmd = rs.getMetaData();
 
-		CustomObject co = new CustomObjectBuilder().build(rsmd);
-
 		this.getMigrationContext().setResultSetMetaData(rsmd);
 
 		this.getMigrationContext().setResultSet(rs);
 
-		this.getMigrationContext().setCustomObject(co);
+		/*
+		 * build the basic custom object
+		 */
+		CustomObject co = new CustomObjectBuilder().build(rsmd);
 
+		this.getMigrationContext().setCustomObject(co);
+		
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomObject[] { co }).execute();
 
+		/*
+		 * create custom fields
+		 */
 		CustomField[] fields = new CustomFieldBuilder().build(this
 				.getMigrationContext());
 
@@ -110,6 +117,9 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 					.getMigrationContext().getCustomLookupFields()).execute();
 		}
 
+		/*
+		 * Custom Tab
+		 */
 		CustomTab customTab = new CustomTabBuilder().build(co);
 		log.debug("CustomTab - local definition complete - "
 				+ customTab.getFullName());
@@ -117,6 +127,9 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomTab[] { customTab }).execute();
 
+		/*
+		 * update the layout
+		 */
 		LayoutBuilder layoutBuilder = new LayoutBuilder();
 		layoutBuilder.setMigrationContext(this.getMigrationContext());
 		Layout layout = layoutBuilder.build();
@@ -129,6 +142,9 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		this.getMigrationContext().resetSession();
 
+		/*
+		 * Move the data
+		 */
 		try {
 			if (this.getMigrationContext().getExternalIdForUpsert() == null) {
 				new DataInsertExecutor().execute(this.getMigrationContext());

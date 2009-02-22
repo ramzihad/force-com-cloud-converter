@@ -43,6 +43,10 @@ import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 
+/**
+ * Tracks information about the migration.
+ * 
+ */
 public class MigrationContext {
 
 	private static final Log log = LogFactory.getLog(MigrationContext.class);
