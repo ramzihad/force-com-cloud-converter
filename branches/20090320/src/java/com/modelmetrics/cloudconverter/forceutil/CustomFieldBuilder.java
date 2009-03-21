@@ -62,6 +62,8 @@ public class CustomFieldBuilder {
 		List<MetadataProxy> metadataProxies = migrationContext
 				.getMetadataProxies();
 
+		//2009-03-21 RSC probably needs some MetadataProxy style refactoring as well.
+		//built in migration engine
 		CustomObject newCustomObject = migrationContext.getCustomObject();
 
 		// standard fields
@@ -74,6 +76,11 @@ public class CustomFieldBuilder {
 
 		migrationContext.setFieldMap(fieldMap);
 
+		/*
+		 * 2009-03-20 RSC Will need to find a way to handle External ID, Lookups, etc., with
+		 * non-SQL datasources (Excel).  For now, we can just leave these collections empty and
+		 * the rest of the engine will ignore them.
+		 */
 		for (Iterator<MetadataProxy> iterator = metadataProxies.iterator(); iterator
 				.hasNext();) {
 			MetadataProxy current = (MetadataProxy) iterator.next();
