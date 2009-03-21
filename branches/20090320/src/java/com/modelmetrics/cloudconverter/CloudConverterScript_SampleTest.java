@@ -16,6 +16,8 @@ import com.sforce.soap.partner.Field;
  * @author reidcarlberg
  *
  */
+
+//SuperClass has SFDC creds.  Optional.
 public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 
 
