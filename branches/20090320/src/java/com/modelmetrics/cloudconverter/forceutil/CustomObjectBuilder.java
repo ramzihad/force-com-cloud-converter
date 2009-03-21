@@ -37,13 +37,21 @@ import com.sforce.soap._2006._04.metadata.SharingModel;
 
 public class CustomObjectBuilder {
 
+	/*
+	 * 2009-03-21 RSC Refactored so it could be independent of RSMD
+	 * 
+	 */
 	public CustomObject build(ResultSetMetaData rsmd) throws Exception {
 		
 		String objectName = null;
 		for (int i = 0; i < rsmd.getColumnCount(); i++) {
 			objectName = rsmd.getTableName(i + 1);
 		}
-		
+
+		return this.build(objectName);
+	}
+	
+	public CustomObject build(String objectName) throws Exception {
 		CustomObject co = new CustomObject();
 		String name = objectName;
 		co.setFullName(objectName + "__c");
