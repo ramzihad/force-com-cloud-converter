@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Random;
 
+import com.modelmetrics.common.util.ContentGenerator;
 import com.modelmetrics.common.util.TestCaseWithLog;
 
 /**
@@ -16,17 +17,17 @@ import com.modelmetrics.common.util.TestCaseWithLog;
  */
 public class SampleDbBuilderTest extends TestCaseWithLog {
 
-	Random rand = new Random();
-	
-	String largeSampleTable = "Create table mytable (myid SMALLINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1000, INCREMENT BY 3), myname varchar(20), mynumber int, mypicklist varchar(25), mydate date, mytimestamp timestamp, mylongtext long varchar, mylookup varchar(20))";
-	
-	String[] names = new String[] {"Reid", "Bob", "Jerry", "Adam", "John", "Susan", "Amisha", "Libby", "Alta", "Lauren", "Phineas", "Mike", "Lydia", "Arnold", "Betty","Veronica","Alec","Billy"};
-	
-	String[] colors = new String[] {"red","yellow","beige","green","black"};
-	
-	String[] words = new String[] {"lorem", "wonderful", "lake", "house", "ruse", "model", "game", "dearth", "rabid", "chilly", "surprising", "enjoyable", "summer", "ipsum", "cute", "monolithic", "abnormal", "rock on", "airplane", "paragraph"};
-	
-	String[] lookups = new String[] {"CC001", "CC002"};
+//	Random rand = new Random();
+//	
+//	String largeSampleTable = "Create table mytable (myid SMALLINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1000, INCREMENT BY 3), myname varchar(20), mynumber int, mypicklist varchar(25), mydate date, mytimestamp timestamp, mylongtext long varchar, mylookup varchar(20))";
+//	
+//	String[] names = new String[] {"Reid", "Bob", "Jerry", "Adam", "John", "Susan", "Amisha", "Libby", "Alta", "Lauren", "Phineas", "Mike", "Lydia", "Arnold", "Betty","Veronica","Alec","Billy"};
+//	
+//	String[] colors = new String[] {"red","yellow","beige","green","black"};
+//	
+//	String[] words = new String[] {"lorem", "wonderful", "lake", "house", "ruse", "model", "game", "dearth", "rabid", "chilly", "surprising", "enjoyable", "summer", "ipsum", "cute", "monolithic", "abnormal", "rock on", "airplane", "paragraph"};
+//	
+//	String[] lookups = new String[] {"CC001", "CC002"};
 	
 	String[] smallSampleBuilder = new String[] {
 			"Create table mytable (myid SMALLINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), myname varchar(10), mynumber int, mypicklist varchar(25), mydate date, mytimestamp timestamp, mylongtext long varchar)",
@@ -36,12 +37,12 @@ public class SampleDbBuilderTest extends TestCaseWithLog {
 
 	//TODO 2009-01-21 need to do this so we have  more meaningful sample
 	
-	public int getRandom(int length) {
-		return rand.nextInt(length);
-	}
+//	public int getRandom(int length) {
+//		return rand.nextInt(length);
+//	}
 	
 	public String getNonZeroRandomAsZeroPaddedString(int maxvalue, int left) {
-		String ret = ""+(1+this.getRandom(maxvalue));
+		String ret = ""+(1+ContentGenerator.getRandom(maxvalue));
 		if (ret.length() < left) {
 			ret = "0" + ret;
 		}
@@ -62,39 +63,39 @@ public class SampleDbBuilderTest extends TestCaseWithLog {
 
 		Statement s = c.createStatement();
 
-		s.execute(largeSampleTable);
+		s.execute(ContentGenerator.largeSampleTable);
 		
 		for (int i = 0; i < 100; i++) {
 			
 			String sql = "INSERT INTO mytable (myname, mynumber, mypicklist, mydate, mytimestamp, mylongtext, mylookup) VALUES (";
 			
 			//name
-			sql += "'" + names[this.getRandom(names.length)] + i + "', ";
+			sql += "'" + ContentGenerator.names[ContentGenerator.getRandom(ContentGenerator.names.length)] + i + "', ";
 			
 			//number
-			sql += this.getRandom(10000) + ", ";
+			sql += ContentGenerator.getRandom(10000) + ", ";
 			
 			//picklist
-			sql += "'" + colors[this.getRandom(colors.length)] + "', ";
+			sql += "'" + ContentGenerator.colors[ContentGenerator.getRandom(ContentGenerator.colors.length)] + "', ";
 			
 			//date
-			sql += "'" + (1900 + getRandom(125)) + "-" + (getNonZeroRandomAsZeroPaddedString(12,2)) + "-" + (getNonZeroRandomAsZeroPaddedString(25,2)) + "', ";
+			sql += "'" + (1900 + ContentGenerator.getRandom(125)) + "-" + (getNonZeroRandomAsZeroPaddedString(12,2)) + "-" + (getNonZeroRandomAsZeroPaddedString(25,2)) + "', ";
 			
 			//timestamp
-			sql += "'" + (1900 + getRandom(125)) + "-" + (getNonZeroRandomAsZeroPaddedString(12,2)) + "-" + (getNonZeroRandomAsZeroPaddedString(25,2)) + " " + getNonZeroRandomAsZeroPaddedString(23,2) + ":" + getNonZeroRandomAsZeroPaddedString(59,2) + ":00.0', ";
+			sql += "'" + (1900 + ContentGenerator.getRandom(125)) + "-" + (getNonZeroRandomAsZeroPaddedString(12,2)) + "-" + (getNonZeroRandomAsZeroPaddedString(25,2)) + " " + getNonZeroRandomAsZeroPaddedString(23,2) + ":" + getNonZeroRandomAsZeroPaddedString(59,2) + ":00.0', ";
 			
 			//longtext
-			int maxWords = this.getRandom(100);
+			int maxWords = ContentGenerator.getRandom(100);
 			String longText = "";
 			for (int j = 0; j < maxWords; j++) {
-				longText += words[this.getRandom(words.length)] + " ";
+				longText += ContentGenerator.words[ContentGenerator.getRandom(ContentGenerator.words.length)] + " ";
 			}			
 			
 			
 			sql += "'" + longText + "', ";
 			
 			//lookup
-			sql += "'" + lookups[this.getRandom(lookups.length)] + "') ";
+			sql += "'" + ContentGenerator.lookups[ContentGenerator.getRandom(ContentGenerator.lookups.length)] + "') ";
 
 			log.info(sql);
 			

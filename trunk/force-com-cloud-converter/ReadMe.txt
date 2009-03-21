@@ -2,7 +2,8 @@ CloudConverter by Model Metrics, Inc.
 Converts dirt bound JDBC/ODBC to cloud based Force.com.
 
 IMPORTANT: This software is provided AS IS without warranty or 
-support of any kind. 
+support of any kind. If you would like paid support, please
+contact rcarlberg@modelmetrics.com.
 
 Last Update: 2009-02-17 (See history below for details.)
 
@@ -16,9 +17,12 @@ rcarlberg@modelmetrics.com
 ###################################################################
 INTRODUCTION:
 
+Watch the intro video: http://www.youtube.com/watch?v=yGAuTzrf8OM
+
 You should read AT LEAST the BASIC FLOW and IMPORTANT NOTES section.
 
 Look in the package "com.modelmetrics.cloudconverter" for the classes you might want to run.
+This package is in 
 
 ###################################################################
 PROJECT STATUS:

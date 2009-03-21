@@ -8,7 +8,7 @@ public class TestCaseWithDevOrg extends TestCaseWithLog {
 
 	protected String sampleSfdcUsername = "reid_carlberg@modelmetrics.com";
 
-	protected String sampleSfdcPassword = "";
+	protected String sampleSfdcPassword = "muddlehump69YkxGGJm5ghPAsPC0H7XUCN8sO";
 
 	private String sampleObject = "mytable__c";
 
