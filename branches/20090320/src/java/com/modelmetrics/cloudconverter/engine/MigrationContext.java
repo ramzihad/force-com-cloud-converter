@@ -30,6 +30,7 @@ package com.modelmetrics.cloudconverter.engine;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -37,6 +38,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
+import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
@@ -78,6 +80,8 @@ public class MigrationContext {
 	private Collection<String> externalIds;
 	
 	private String externalIdForUpsert;
+	
+	private List<MetadataProxy> metadataProxies;
 
 	public String getExternalIdForUpsert() {
 		return externalIdForUpsert;
@@ -202,5 +206,13 @@ public class MigrationContext {
 
 	public void setCustomLookupFields(CustomField[] customLookupFields) {
 		this.customLookupFields = customLookupFields;
+	}
+
+	public List<MetadataProxy> getMetadataProxies() {
+		return metadataProxies;
+	}
+
+	public void setMetadataProxies(List<MetadataProxy> metadataProxies) {
+		this.metadataProxies = metadataProxies;
 	}
 }

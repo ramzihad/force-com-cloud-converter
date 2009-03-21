@@ -35,12 +35,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
+import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.FieldType;
@@ -54,7 +56,12 @@ public class CustomFieldBuilder {
 	public CustomField[] build(MigrationContext migrationContext)
 			throws Exception {
 
-		ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
+		// 2009-03-21 RSC Refactoring to MetadataProxy
+		// ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
+
+		List<MetadataProxy> metadataProxies = migrationContext
+				.getMetadataProxies();
+
 		CustomObject newCustomObject = migrationContext.getCustomObject();
 
 		// standard fields
@@ -67,19 +74,21 @@ public class CustomFieldBuilder {
 
 		migrationContext.setFieldMap(fieldMap);
 
-		for (int i = 0; i < rsmd.getColumnCount(); i++) {
+		for (Iterator<MetadataProxy> iterator = metadataProxies.iterator(); iterator
+				.hasNext();) {
+			MetadataProxy current = (MetadataProxy) iterator.next();
 
-			boolean isPicklist = migrationContext.getPicklistFields() != null && migrationContext.getPicklistFields()
-					.containsKey(rsmd.getColumnName(i + 1));
+			boolean isPicklist = migrationContext.getPicklistFields() != null
+					&& migrationContext.getPicklistFields().containsKey(
+							current.getName());
 
 			CustomField field = new CustomField();
-			String sfdcColumnName = rsmd.getColumnName(i + 1)
-					+ "__c".toLowerCase();
+			String sfdcColumnName = current.getName() + "__c".toLowerCase();
 			customFieldShortNames.add(sfdcColumnName);
 			field = new CustomField();
 			field.setFullName(newCustomObject.getFullName() + "."
 					+ sfdcColumnName);
-			field.setLabel(rsmd.getColumnName(i + 1));
+			field.setLabel(current.getName());
 
 			// rsc need this for later use with DAO / Sproxy
 			// fieldMap.put(rsmd.getColumnName(i+1), sfdcColumnName);
@@ -99,7 +108,7 @@ public class CustomFieldBuilder {
 							.getConnection().createStatement();
 
 					String sql = (String) migrationContext.getPicklistFields()
-							.get(rsmd.getColumnName(i + 1));
+							.get(current.getName());
 
 					log.info("Picklist sql: " + sql);
 
@@ -138,26 +147,28 @@ public class CustomFieldBuilder {
 				} catch (Exception e) {
 					e.printStackTrace();
 					throw new Exception("Couldn't generate picklist info for "
-							+ rsmd.getColumnName(i + 1), e);
+							+ current.getName(), e);
 				}
 
 				field.setPicklist(picklist);
 				customFieldsCollection.add(field);
-				fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-			} else if (migrationContext.getExternalIds() != null && migrationContext.getExternalIds().contains(
-					rsmd.getColumnName(i + 1))) {
+				fieldMap.put(current.getName(), sfdcColumnName);
+			} else if (migrationContext.getExternalIds() != null
+					&& migrationContext.getExternalIds().contains(
+							current.getName())) {
 
 				field.setType(FieldType.Text);
 				field.setExternalId(Boolean.TRUE);
 				field.setUnique(Boolean.TRUE);
-				field.setLength(rsmd.getPrecision(i + 1));
+				field.setLength(current.getPrecision());
 				field.setCaseSensitive(Boolean.FALSE);
 				customFieldsCollection.add(field);
-				fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-			} else if (migrationContext.getLookupFields() != null && migrationContext.getLookupFields().containsKey(
-					rsmd.getColumnName(i + 1))) {
+				fieldMap.put(current.getName(), sfdcColumnName);
+			} else if (migrationContext.getLookupFields() != null
+					&& migrationContext.getLookupFields().containsKey(
+							current.getName())) {
 				LookupSettings lookupSettings = migrationContext
-						.getLookupFields().get(rsmd.getColumnName(i + 1));
+						.getLookupFields().get(current.getName());
 				field.setType(FieldType.Lookup);
 				field.setReferenceTo(lookupSettings.getRelationshipObject());
 				field.setRelationshipName("AAAs");
@@ -183,231 +194,263 @@ public class CustomFieldBuilder {
 				// + lookupSettings.getRelationshipObject());
 
 				customLookupFieldsCollection.add(field);
-				fieldMap.put(rsmd.getColumnName(i + 1), lookupSettings.getRelationshipFields());
+				fieldMap.put(current.getName(), lookupSettings
+						.getRelationshipFields());
 			} else {
-				switch (rsmd.getColumnType(i + 1)) {
-				case Types.BIGINT:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
 
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
+				field.setType(current.getType());
 
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.BINARY:
-					field.setType(FieldType.Checkbox);
-					field.setDefaultValue("false");
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.BOOLEAN:
-					field.setType(FieldType.Checkbox);
-					field.setDefaultValue("false");
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.CHAR:
-					field.setType(FieldType.Text);
-					field.setLength(rsmd.getPrecision(i + 1));
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.DATE:
-					field.setType(FieldType.Date);
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.DOUBLE:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.DECIMAL:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.FLOAT:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.INTEGER:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.LONGVARBINARY:
-					field.setType(FieldType.Checkbox);
-					field.setDefaultValue("false");
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.LONGVARCHAR:
-					field.setType(FieldType.LongTextArea);
-					// rsc don't need precision for textarea, do for a
-					// longtextarea
-					field.setLength(32000);
-					field.setVisibleLines(5); // rsc hard coding for now since
-					// this isn't metadata driven
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.REAL:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.NUMERIC:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.SMALLINT:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.TIME:
-					field.setType(FieldType.DateTime);
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.TIMESTAMP:
-					field.setType(FieldType.DateTime);
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.TINYINT:
-					field.setType(FieldType.Number);
-					field.setPrecision(rsmd.getPrecision(i + 1));
-
-					if (field.getPrecision() > 18)
-						field.setPrecision(18);
-
-					field.setScale(rsmd.getScale(i + 1));
-
-					if (field.getPrecision() < field.getScale())
-						field.setScale(field.getPrecision() - 1);
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
-				case Types.VARCHAR:
-					field.setType(FieldType.Text);
-					field.setLength(rsmd.getPrecision(i + 1));
-
-					// 2008-12-28 RSC double check the value
-					if (field.getLength().intValue() > 255) {
-						throw new RuntimeException(
-								"value of the field length is too large.  Max is 255 but the DB metadata shows "
-										+ rsmd.getPrecision(i + 1));
-					}
-
-					// customFieldsCollection.add(field);
-					// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
-					break;
-
+				if (current.getType() != FieldType.Text
+						&& current.getType() != FieldType.Date
+						&& current.getType() != FieldType.DateTime
+						&& current.getType() != FieldType.Checkbox
+						&& current.getType() != FieldType.TextArea
+						&& current.getType() != FieldType.LongTextArea) {
+					field.setPrecision(current.getPrecision());
+					field.setScale(current.getScale());
 				}
+
+				if (current.getType() == FieldType.Text
+						|| current.getType() == FieldType.LongTextArea
+						|| current.getType() == FieldType.TextArea) {
+					field.setLength(current.getLength());
+				}
+
+				if (current.getType() == FieldType.Checkbox) {
+					field.setDefaultValue(current.getDefaultValue());
+				}
+
+				if (current.getLength() == 32000) {
+					field.setVisibleLines(5);
+				}
+
+				// /*
+				// * 2009-03-21 RSC Refactored to work with metadata proxy
+				// */
+				// switch (rsmd.getColumnType(i + 1)) {
+				// case Types.BIGINT:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.BINARY:
+				// field.setType(FieldType.Checkbox);
+				// field.setDefaultValue("false");
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.BOOLEAN:
+				// field.setType(FieldType.Checkbox);
+				// field.setDefaultValue("false");
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.CHAR:
+				// field.setType(FieldType.Text);
+				// field.setLength(rsmd.getPrecision(i + 1));
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.DATE:
+				// field.setType(FieldType.Date);
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.DOUBLE:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.DECIMAL:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.FLOAT:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.INTEGER:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.LONGVARBINARY:
+				// field.setType(FieldType.Checkbox);
+				// field.setDefaultValue("false");
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.LONGVARCHAR:
+				// field.setType(FieldType.LongTextArea);
+				// // rsc don't need precision for textarea, do for a
+				// // longtextarea
+				// field.setLength(32000);
+				// field.setVisibleLines(5); // rsc hard coding for now since
+				// // this isn't metadata driven
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.REAL:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.NUMERIC:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.SMALLINT:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.TIME:
+				// field.setType(FieldType.DateTime);
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.TIMESTAMP:
+				// field.setType(FieldType.DateTime);
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.TINYINT:
+				// field.setType(FieldType.Number);
+				// field.setPrecision(rsmd.getPrecision(i + 1));
+				//
+				// if (field.getPrecision() > 18)
+				// field.setPrecision(18);
+				//
+				// field.setScale(rsmd.getScale(i + 1));
+				//
+				// if (field.getPrecision() < field.getScale())
+				// field.setScale(field.getPrecision() - 1);
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// case Types.VARCHAR:
+				// field.setType(FieldType.Text);
+				// field.setLength(rsmd.getPrecision(i + 1));
+				//
+				// // 2008-12-28 RSC double check the value
+				// if (field.getLength().intValue() > 255) {
+				// throw new RuntimeException(
+				// "value of the field length is too large. Max is 255 but the
+				// DB metadata shows "
+				// + rsmd.getPrecision(i + 1));
+				// }
+				//
+				// // customFieldsCollection.add(field);
+				// // fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				// break;
+				//
+				// }
 				customFieldsCollection.add(field);
-				fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+				fieldMap.put(current.getName(), sfdcColumnName);
 			}
 
-			//fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
+			// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
 
 		}
 

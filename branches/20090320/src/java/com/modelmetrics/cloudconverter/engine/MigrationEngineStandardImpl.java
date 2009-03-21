@@ -30,6 +30,7 @@ package com.modelmetrics.cloudconverter.engine;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,6 +45,8 @@ import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.sandbox.DefaultPageLayoutFinder;
+import com.modelmetrics.cloudconverter.util.MetadataProxy;
+import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
@@ -83,8 +86,22 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		ResultSetMetaData rsmd = rs.getMetaData();
 
+		/*
+		 * 2009-03-21 RSC Eventually we'll want to avoid this -- right now we probably need to keep it.
+		 */
 		this.getMigrationContext().setResultSetMetaData(rsmd);
 
+		/*
+		 * 2009-03-21 RSC Convert that over to a MetadataProxy
+		 */
+		List<MetadataProxy> metadataProxies = new MetadataProxyCollectionBuilder().build(rsmd);
+		
+		this.getMigrationContext().setMetadataProxies(metadataProxies);
+		
+		/*
+		 *2009-03-21 RSC //TODO rs should probably be a little more generic as well but not changing for right now.
+		 */
+		
 		this.getMigrationContext().setResultSet(rs);
 
 		/*
@@ -99,6 +116,7 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		/*
 		 * create custom fields
+		 * 2009-03-21 RSC This has the migration context so it is now aware of the metadata proxy collection
 		 */
 		CustomField[] fields = new CustomFieldBuilder().build(this
 				.getMigrationContext());
