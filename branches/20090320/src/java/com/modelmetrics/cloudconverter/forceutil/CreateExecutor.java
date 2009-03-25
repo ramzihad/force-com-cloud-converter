@@ -30,6 +30,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sforce.soap._2006._04.metadata.AsyncRequestState;
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.Metadata;
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
@@ -37,7 +38,7 @@ import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
 public class CreateExecutor {
 
 	private static final Log log = LogFactory.getLog(CreateExecutor.class);
-	
+
 	private static final int ONE_SECOND = 2000;
 
 	MetadataBindingStub metadatabinding;
@@ -50,9 +51,8 @@ public class CreateExecutor {
 		this.metadata = metadatas;
 	}
 
-	public void execute() throws Exception 
-	{
-		log.debug("Executing create for ... " + metadata[0].getFullName() );
+	public void execute() throws Exception {
+		log.debug("Executing create for ... " + metadata[0].getFullName());
 		int metadataIndex = -1;
 		int metadataChunkIndex = -1;
 
@@ -67,18 +67,18 @@ public class CreateExecutor {
 					metadataIndex++;
 					metadataChunkIndex++;
 
-					if(metadataIndex < metadata.length)
+					if (metadataIndex < metadata.length)
 						metadataChunk[metadataChunkIndex] = metadata[metadataIndex];
-					
-					if (metadataChunkIndex == 9 || metadataIndex == metadata.length - 1) 
-					{
+
+					if (metadataChunkIndex == 9
+							|| metadataIndex == metadata.length - 1) {
 						break;
 					}
 				}
-				
-				if(metadataChunk.length > 0 && metadataChunk[0] != null)
-				{
-					System.out.println("metadataChunk.length" + metadataChunk.length);
+
+				if (metadataChunk.length > 0 && metadataChunk[0] != null) {
+					System.out.println("metadataChunk.length"
+							+ metadataChunk.length);
 					this.handleExecute(metadataChunk);
 				}
 			}
@@ -89,9 +89,11 @@ public class CreateExecutor {
 
 	private void handleExecute(Metadata[] metadataChunk) {
 
-//		log.debug("the type of Metadata is " + metadataChunk[0].getClass().getName());
-//		System.out.println("the type of Metadata is " + metadataChunk[0].getFullName());
-		
+		// log.debug("the type of Metadata is " +
+		// metadataChunk[0].getClass().getName());
+		// System.out.println("the type of Metadata is " +
+		// metadataChunk[0].getFullName());
+
 		try {
 			AsyncResult[] ars = metadatabinding.create(metadataChunk);
 			if (ars == null) {
@@ -118,17 +120,22 @@ public class CreateExecutor {
 				}
 				done = arsStatus[0].isDone();
 				if (arsStatus[0].getStatusCode() != null) {
-//					RunUISWTInterface.setLabelAndBar(arsStatus[0].getStatusCode().toString(), 0);
+					// RunUISWTInterface.setLabelAndBar(arsStatus[0].getStatusCode().toString(),
+					// 0);
 					log.debug("Error status code: "
 							+ arsStatus[0].getStatusCode());
-					log.debug("Error message: "
-							+ arsStatus[0].getMessage());
+					log.debug("Error message: " + arsStatus[0].getMessage());
 				}
 				Thread.sleep(waitTimeMilliSecs);
 				// double the wait time for the next iteration
 				waitTimeMilliSecs *= 2;
-				log.debug("The object state is "
-						+ arsStatus[0].getState());
+				log.debug("The object state is " + arsStatus[0].getState());
+
+				if (arsStatus[0].getState() == AsyncRequestState.Error) {
+					throw new RuntimeException(
+							"AsyncRequestState is 'Error' - Create not completed. Message is ["
+									+ arsStatus[0].getMessage() + "] (backets added)");
+				}
 			}
 
 			log.debug("The ID for the created object is "
@@ -137,7 +144,7 @@ public class CreateExecutor {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new RuntimeException("failed! ");
-			
+
 		}
 
 	}

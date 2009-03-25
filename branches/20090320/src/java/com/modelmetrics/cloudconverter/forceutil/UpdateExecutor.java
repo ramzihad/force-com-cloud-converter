@@ -30,6 +30,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sforce.soap._2006._04.metadata.AsyncRequestState;
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.Metadata;
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
@@ -150,6 +151,11 @@ public class UpdateExecutor {
 				waitTimeMilliSecs *= 2;
 				log.debug("The object state is " + arsStatus[0].getState());
 				log.debug("The message is " + arsStatus[0].getMessage());
+				if (arsStatus[0].getState() == AsyncRequestState.Error) {
+					throw new RuntimeException(
+							"AsyncRequestState is 'Error' - Create not completed. Message is ["
+									+ arsStatus[0].getMessage() + "] (backets added)");
+				}
 			}
 
 			log.debug("The ID for the created object is "
