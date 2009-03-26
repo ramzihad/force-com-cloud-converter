@@ -95,7 +95,7 @@
 		<war basedir="src/web/ui" destfile="${dist.war}" webxml="src/web/conf/web.xml">
 			<classes dir="${build}" />
 			<webinf dir="src/web/WEB-INF" />
-			<lib dir="lib/dist" />
+			<lib dir="lib" />
 		</war>
 	</target>
 
@@ -119,7 +119,7 @@
 		<war basedir="src/web/ui" destfile="${tomcat.webapp.war}" webxml="src/web/conf/web.xml">
 			<classes dir="${build}" />
 			<webinf dir="src/web/WEB-INF" />
-			<lib dir="lib/dist" />
+			<lib dir="lib" />
 		</war>
 	</target>
 
