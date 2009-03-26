@@ -1,6 +1,11 @@
 <project name="webapptemplate" default="localPackage" basedir=".">
 
+	
 	<property name="warname" value="mmimport" />
+	<!--RSC-->	
+	<property name="tomcat.home" location="/Applications/apache-tomcat-6.0.18" />
+	<!--MC-->
+	<!--<property name="tomcat.home" location="/Applications/apache-tomcat-6.0.18" />-->
 	
 	<property name="src" location="src/java" />
 	<property name="src-non-java" location="src/non-java" />
@@ -121,6 +126,13 @@
 			<webinf dir="src/web/WEB-INF" />
 			<lib dir="lib" />
 		</war>
+		
+		<delete dir="${build}" />
+		<delete dir="${test}" />
+		<delete dir="${dist}" />
+		<delete dir="${reports.test}" />
+		<delete dir="${reports}" />
+		<delete dir="${reports.html}" />
 	</target>
 
 	
