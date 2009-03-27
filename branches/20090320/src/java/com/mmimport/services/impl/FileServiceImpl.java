@@ -22,9 +22,9 @@ import com.mmimport.services.FileService;
 import com.mmimport.utils.Constants;
 import com.mmimport.utils.StringUtils;
 
-public class POIService implements FileService {
+public class FileServiceImpl implements FileService {
 
-	private static final Log log = LogFactory.getLog(POIService.class);
+	private static final Log log = LogFactory.getLog(FileServiceImpl.class);
 
 	/**
 	 * Parses an XLS file into a WrapperBean

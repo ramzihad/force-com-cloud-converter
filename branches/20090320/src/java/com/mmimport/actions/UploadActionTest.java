@@ -3,7 +3,7 @@ package com.mmimport.actions;
 import java.io.File;
 
 import com.mmimport.beans.WrapperBean;
-import com.mmimport.services.impl.POIService;
+import com.mmimport.services.impl.FileServiceImpl;
 import com.mmimport.test.utils.SpringUtils;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
@@ -75,7 +75,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		/*
 		 * OK now this is to make sure we get everything set here.
 		 */
-		POIService poService = new POIService();
+		FileServiceImpl poService = new FileServiceImpl();
 		
 		WrapperBean wrapperBean = poService.parseXLS(new File(fileName));
 		
