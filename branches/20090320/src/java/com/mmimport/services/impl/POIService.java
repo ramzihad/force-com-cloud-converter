@@ -25,18 +25,19 @@ import com.mmimport.utils.StringUtils;
 public class POIService implements FileService {
 
 	private static final Log log = LogFactory.getLog(POIService.class);
-	
+
 	/**
 	 * Parses an XLS file into a WrapperBean
+	 * 
 	 * @param file
 	 * @return WrapperBean
 	 */
 	@SuppressWarnings("unchecked")
 	public WrapperBean parseXLS(File file) throws ParseException {
 
-//		DateFormat finalTimeFormat = new SimpleDateFormat(
-//				"yyyy-MM-dd'T'HH:mm:ssZ");
-//		DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
+		// DateFormat finalTimeFormat = new SimpleDateFormat(
+		// "yyyy-MM-dd'T'HH:mm:ssZ");
+		// DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		WrapperBean bean = new WrapperBean();
 		bean.setNames(new ArrayList<String>());
@@ -47,11 +48,10 @@ public class POIService implements FileService {
 
 			Workbook workbook = Workbook.getWorkbook(file);
 
-			
 			Sheet sheet = workbook.getSheet(0);
 
-			bean.setSheetName(sheet.getName());
-			
+			bean.setSheetName(StringUtils.applyConstraints(sheet.getName()));
+
 			int totalRows = sheet.getRows();
 			for (int i = 0; i < totalRows; i++) {
 				Cell[] cells = sheet.getRow(i);
@@ -60,13 +60,15 @@ public class POIService implements FileService {
 				for (int j = 0; j < cells.length; j++) {
 
 					Cell c = cells[j];
-					
-//					log.debug("cell format is: (i,j) (" + i + ", " + j + "): " + c.getCellFormat().getFormat().getFormatString());
-					
+
+					// log.debug("cell format is: (i,j) (" + i + ", " + j + "):
+					// " + c.getCellFormat().getFormat().getFormatString());
+
 					String value = c.getContents();
 					if (i == 0) {
 						// parse column names
-						bean.getNames().add(value);
+						bean.getNames()
+								.add(StringUtils.applyConstraints(value));
 					}
 					if (i == 1) {
 						// parse data types
@@ -84,14 +86,13 @@ public class POIService implements FileService {
 								bean.getTypes().add(Constants.EMAIL);
 							} else if (StringUtils.isPhoneNumber(value)) {
 								bean.getTypes().add(Constants.PHONE_NUMBER);
-							} else if (value.contains("www")) {
-								//TODO this could be a bit more robust
+							} else if (StringUtils.isURL(value)) {
 								bean.getTypes().add(Constants.URL);
 							} else {
 								bean.getTypes().add(Constants.STRING);
 							}
 						} else if (type.equals(CellType.NUMBER)) {
-							
+
 							if (value.contains("%")) {
 								bean.getTypes().add(Constants.FLOAT);
 							} else if (value.contains(",")
@@ -108,32 +109,32 @@ public class POIService implements FileService {
 						CellType type = c.getType();
 						if (type.equals(CellType.DATE)) {
 							// parse date value
-//							if (value.contains(":")) {
-//								Date aux = ((DateCell) c).getDate();
-//
-//								list.add(aux);
-//							} else {
-								Date aux = ((DateCell) c).getDate();
-//								String date = finalCommonFormat.format(aux);
-								list.add(aux);
-//							}
+							// if (value.contains(":")) {
+							// Date aux = ((DateCell) c).getDate();
+							//
+							// list.add(aux);
+							// } else {
+							Date aux = ((DateCell) c).getDate();
+							// String date = finalCommonFormat.format(aux);
+							list.add(aux);
+							// }
 						} else if (type.equals(CellType.LABEL)) {
 							// parse string value
 							list.add(value);
 						} else if (type.equals(CellType.NUMBER)) {
 							// parse numeric value
-//							
-//							if (value.contains("%")) {
-////								value = value.replace("%", "");
-////								value = "0." + value;
-//								list.add(((NumberCell) c).getValue());
-//								list.add(value);
-//							} else if (value.contains(",")) {
-//								value = value.replace(",", ".");
-//								list.add(value);
-//							} else {
-								list.add(((NumberCell) c).getValue());
-//							}
+							//							
+							// if (value.contains("%")) {
+							// // value = value.replace("%", "");
+							// // value = "0." + value;
+							// list.add(((NumberCell) c).getValue());
+							// list.add(value);
+							// } else if (value.contains(",")) {
+							// value = value.replace(",", ".");
+							// list.add(value);
+							// } else {
+							list.add(((NumberCell) c).getValue());
+							// }
 						}
 					}
 				}

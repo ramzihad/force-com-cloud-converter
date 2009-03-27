@@ -12,6 +12,10 @@ public class Constants {
 
 	public static final String FLOAT = "float";
 	
+	public static final String CURRENCY = "currency";
+	
+	public static final String PERCENTAGE = "percentage";
+	
 	public static final String DOUBLE = "double";
 	
 	public static final String EMAIL = "Email";

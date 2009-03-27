@@ -5,25 +5,21 @@
 <struts>
 
 	<constant name="struts.objectFactory" value="spring" />
-    <constant name="struts.devMode" value="false" />
-	
+	<constant name="struts.devMode" value="false" />
+
 	<!-- Configuration for the default package. -->
 	<package name="default" extends="struts-default">
-		<action name="init" class="uploadAction" method="init">			
-			<result name="input">
-				/WEB-INF/jsp/upload.jsp
-			</result>
+
+		<action name="init" class="uploadAction" method="init">
+			<result name="input">/WEB-INF/jsp/upload.jsp</result>
 		</action>
-		<action name="upload" class="uploadAction" method="upload">			
-			<result name="success">
-				/WEB-INF/jsp/view.jsp
-			</result>
-			<result name="error">
-				/WEB-INF/jsp/error.jsp
-			</result>
-			<result name="input">
-				/WEB-INF/jsp/upload.jsp
-			</result>
+		<action name="upload" class="uploadAction" method="upload">
+			<result name="success">/WEB-INF/jsp/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/upload.jsp</result>
+			<result name="wait">/WEB-INF/jsp/wait.jsp</result>
+			<interceptor-ref name="completeStack" />
+			<interceptor-ref name="execAndWait" />
 		</action>
 	</package>
 </struts>

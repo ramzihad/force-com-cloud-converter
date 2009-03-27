@@ -27,6 +27,8 @@ public class UploadAction extends ActionSupport {
 	private String password;
 
 	private String username;
+	
+	private Boolean override;
 
 	private String uploadFileName;
 
@@ -71,8 +73,8 @@ public class UploadAction extends ActionSupport {
 
 
 			bean = fileService.parseXLS(upload);
+			bean.setOverride(override);
 			
-			bean.setFileName(uploadFileName);
 			log.info("File uploaded successfully");
 
 			log.info("Generating Salesforce object now...");
@@ -90,6 +92,8 @@ public class UploadAction extends ActionSupport {
 			return ERROR;
 		}
 	}
+	
+
 
 	public File getUpload() {
 		return upload;
@@ -154,5 +158,15 @@ public class UploadAction extends ActionSupport {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public Boolean getOverride() {
+		return override;
+	}
+
+	public void setOverride(Boolean override) {
+		this.override = override;
+	}
+
+
 
 }

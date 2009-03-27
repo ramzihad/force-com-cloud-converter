@@ -224,7 +224,8 @@ public class CustomFieldBuilder {
 				if (current.getType() == FieldType.Checkbox) {
 					field.setDefaultValue(current.getDefaultValue());
 				}
-
+				
+				
 				if (current.getLength() == 32000) {
 					field.setVisibleLines(5);
 				}

@@ -12,16 +12,17 @@ public class WrapperBean {
 
 	private List<List<Object>> objects;
 
-	private String fileName;
 
 	private String type;
 
-	public String getFileName() {
-		return fileName;
+	private Boolean override;
+
+	public Boolean getOverride() {
+		return override;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setOverride(Boolean override) {
+		this.override = override;
 	}
 
 	public String getType() {
