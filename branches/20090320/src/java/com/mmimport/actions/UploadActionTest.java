@@ -2,6 +2,8 @@ package com.mmimport.actions;
 
 import java.io.File;
 
+import com.mmimport.beans.WrapperBean;
+import com.mmimport.services.impl.POIService;
 import com.mmimport.test.utils.SpringUtils;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,7 +25,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 
 	}
 	
-	public void testSampleUpload_Sheet4WithNames() throws Exception {
+	public void testSampleUpload_Sheet1() throws Exception {
 	
 		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
 		
@@ -37,7 +39,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setOverride(Boolean.TRUE);
 		
-		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v4.xls"));
+		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
 		
 		String s = action.upload();
 		
@@ -45,7 +47,12 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 	}
 	
-	public void testSampleUpload_Sheet5() throws Exception {
+	/*
+	 * functional test
+	 */
+	public void testSampleUpload_TestSheet1() throws Exception {
+		
+		String fileName = "TestSpreadsheet-DoNotChange-v1.xls";
 		
 		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
 		
@@ -59,11 +66,25 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setOverride(Boolean.TRUE);
 		
-		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet5.xls"));
+		action.setUpload(new File(fileName));
 		
 		String s = action.upload();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
+		
+		/*
+		 * OK now this is to make sure we get everything set here.
+		 */
+		POIService poService = new POIService();
+		
+		WrapperBean wrapperBean = poService.parseXLS(new File(fileName));
+		
+		assertEquals("sheet1", wrapperBean.getSheetName());
+		
+		
+		
+		
+		
 		
 	}
 	
