@@ -121,9 +121,9 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 
 		WrapperBean wrapperBean = migrationContext.getWrapperBean();
 
-		for (Iterator<List<String>> iterator = wrapperBean.getObjects()
+		for (Iterator<List<Object>> iterator = wrapperBean.getObjects()
 				.iterator(); iterator.hasNext();) {
-			List<String> type = (List<String>) iterator.next();
+			List<Object> type = (List<Object>) iterator.next();
 			Sproxy current = sproxyBuilder.buildEmpty(migrationContext
 					.getCustomObject().getFullName());
 			int i = 0;

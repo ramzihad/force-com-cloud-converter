@@ -1,21 +1,20 @@
 package com.mmimport.services.impl;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.validator.GenericValidator;
-
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
+import jxl.NumberCell;
 import jxl.Sheet;
 import jxl.Workbook;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.commons.validator.GenericValidator;
 
 import com.mmimport.beans.WrapperBean;
 import com.mmimport.exceptions.ParseException;
@@ -35,26 +34,29 @@ public class POIService implements FileService {
 	@SuppressWarnings("unchecked")
 	public WrapperBean parseXLS(File file) throws ParseException {
 
-		DateFormat finalTimeFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ssZ");
-		DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
+//		DateFormat finalTimeFormat = new SimpleDateFormat(
+//				"yyyy-MM-dd'T'HH:mm:ssZ");
+//		DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		WrapperBean bean = new WrapperBean();
 		bean.setNames(new ArrayList<String>());
 		bean.setTypes(new ArrayList<String>());
-		bean.setObjects(new ArrayList<List<String>>());
+		bean.setObjects(new ArrayList<List<Object>>());
 
 		try {
 
 			Workbook workbook = Workbook.getWorkbook(file);
 
+			
 			Sheet sheet = workbook.getSheet(0);
 
+			bean.setSheetName(sheet.getName());
+			
 			int totalRows = sheet.getRows();
 			for (int i = 0; i < totalRows; i++) {
 				Cell[] cells = sheet.getRow(i);
 
-				List<String> list = new ArrayList<String>();
+				List<Object> list = new ArrayList<Object>();
 				for (int j = 0; j < cells.length; j++) {
 
 					Cell c = cells[j];
@@ -83,6 +85,7 @@ public class POIService implements FileService {
 							} else if (StringUtils.isPhoneNumber(value)) {
 								bean.getTypes().add(Constants.PHONE_NUMBER);
 							} else if (value.contains("www")) {
+								//TODO this could be a bit more robust
 								bean.getTypes().add(Constants.URL);
 							} else {
 								bean.getTypes().add(Constants.STRING);
@@ -105,30 +108,32 @@ public class POIService implements FileService {
 						CellType type = c.getType();
 						if (type.equals(CellType.DATE)) {
 							// parse date value
-							if (value.contains(":")) {
+//							if (value.contains(":")) {
+//								Date aux = ((DateCell) c).getDate();
+//
+//								list.add(aux);
+//							} else {
 								Date aux = ((DateCell) c).getDate();
-
-								list.add(finalTimeFormat.format(aux));
-							} else {
-								Date aux = ((DateCell) c).getDate();
-								String date = finalCommonFormat.format(aux);
-								list.add(date);
-							}
+//								String date = finalCommonFormat.format(aux);
+								list.add(aux);
+//							}
 						} else if (type.equals(CellType.LABEL)) {
 							// parse string value
 							list.add(value);
 						} else if (type.equals(CellType.NUMBER)) {
 							// parse numeric value
-							if (value.contains("%")) {
-								value = value.replace("%", "");
-								value = "0." + value;
-								list.add(value);
-							} else if (value.contains(",")) {
-								value = value.replace(",", ".");
-								list.add(value);
-							} else {
-								list.add(value);
-							}
+//							
+//							if (value.contains("%")) {
+////								value = value.replace("%", "");
+////								value = "0." + value;
+//								list.add(((NumberCell) c).getValue());
+//								list.add(value);
+//							} else if (value.contains(",")) {
+//								value = value.replace(",", ".");
+//								list.add(value);
+//							} else {
+								list.add(((NumberCell) c).getValue());
+//							}
 						}
 					}
 				}

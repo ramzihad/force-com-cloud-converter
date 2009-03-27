@@ -8,7 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadActionTest extends TestCaseWithDevOrg {
 
-	private String sampleObject = "myobj__c";
+	private String sampleObject = "sheet1__c";
 
 	@Override
 	protected void setUp() throws Exception {

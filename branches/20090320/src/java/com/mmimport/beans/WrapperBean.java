@@ -4,11 +4,13 @@ import java.util.List;
 
 public class WrapperBean {
 
+	private String sheetName;
+	
 	private List<String> names;
 
 	private List<String> types;
 
-	private List<List<String>> objects;
+	private List<List<Object>> objects;
 
 	private String fileName;
 
@@ -50,11 +52,19 @@ public class WrapperBean {
 		this.types = types;
 	}
 
-	public List<List<String>> getObjects() {
+	public List<List<Object>> getObjects() {
 		return objects;
 	}
 
-	public void setObjects(List<List<String>> objects) {
+	public void setObjects(List<List<Object>> objects) {
 		this.objects = objects;
+	}
+
+	public String getSheetName() {
+		return sheetName;
+	}
+
+	public void setSheetName(String sheetName) {
+		this.sheetName = sheetName;
 	}
 }

@@ -54,7 +54,8 @@ public class CustomObjectBuilder {
 
 	public CustomObject build(WrapperBean bean) throws Exception {
 		//TODO this needs to come from the excel file.
-		String objectName = "MyObj";
+//		String objectName = "MyObj";
+		String objectName = bean.getSheetName();
 		return this.build(objectName);
 	}
 

@@ -33,31 +33,38 @@ THE SOFTWARE.
 package com.modelmetrics.common.sforce.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
+import org.omg.CORBA.DATA_CONVERSION;
+
 public abstract class AbstractSproxy implements Sproxy {
 
-	private static final SimpleDateFormat FORCE_DATE= new SimpleDateFormat("yyyy-MM-dd");
-	
-	private static final SimpleDateFormat FORCE_DATETIME = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'-06:00'");
-	
+	private static final SimpleDateFormat FORCE_DATE = new SimpleDateFormat(
+			"yyyy-MM-dd");
+
+	private static final SimpleDateFormat FORCE_DATETIME = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss'-06:00'");
+
 	protected Map<String, Object> map = new HashMap<String, Object>();
-	
+
 	protected Collection<String> nullFields = new TreeSet<String>();
-	
+
 	protected String type;
-	
+
 	protected String id;
-	
+
 	protected Sproxy parent;
-	
-	protected Map<String, Sproxy> children = new HashMap<String,Sproxy>();
+
+	protected Map<String, Sproxy> children = new HashMap<String, Sproxy>();
 
 	protected boolean dirty;
-	
+
 	public Map<String, Object> getValues() {
 		return map;
 	}
@@ -83,40 +90,61 @@ public abstract class AbstractSproxy implements Sproxy {
 	}
 
 	/**
-	 * requires a little effort to be sure we return data in a format suitable for Force.com.
+	 * requires a little effort to be sure we return data in a format suitable
+	 * for Force.com.
 	 */
 	public String getValue(String key) {
 		key = key.toLowerCase();
-		
+
 		String ret = null;
-		
+
 		Object value = this.getValues().get(key);
-		
+
 		if (value instanceof java.sql.Timestamp) {
-			//2008-12-30 need to be sure the datetime comes up in format useful to FORCE.COM
-			//2009-01-04 Timestamp is before Date since Timestamp is a subclass of date.
+			// 2008-12-30 need to be sure the datetime comes up in format useful
+			// to FORCE.COM
+			// 2009-01-04 Timestamp is before Date since Timestamp is a subclass
+			// of date.
 			ret = FORCE_DATETIME.format(value);
-			
-		} else if (value instanceof java.util.Date || value instanceof java.sql.Date) { 
-			ret = FORCE_DATE.format(value);
-			
+
+		} else if (value instanceof java.util.Date
+				|| value instanceof java.sql.Date) {
+			Date dateValue = (Date) value;
+
+			Calendar c = GregorianCalendar.getInstance();
+			c.setTime(dateValue);
+
+			if (c.get(Calendar.HOUR) == 0 && c.get(Calendar.MINUTE) == 0
+					&& c.get(Calendar.SECOND) == 0
+					&& c.get(Calendar.MILLISECOND) == 0) {
+
+				ret = FORCE_DATE.format(value);
+
+			} else {
+				ret = FORCE_DATETIME.format(value);
+			}
+
+//			ret = FORCE_DATE.format(value);
+
 		} else if (value instanceof java.lang.Double) {
-			//2008-12-30 rsc specially called out since we had some trouble with Doubles early on.
+			// 2008-12-30 rsc specially called out since we had some trouble
+			// with Doubles early on.
 			ret = ((Double) value).toString();
-			
+
 		} else {
 			ret = value.toString();
 		}
-		
+
 		return ret;
 
 	}
 
-	//2008-12-30 RSC removed to clean up code since we shouldn't need this any more.
-//	public Object getValueObject(String key) {
-//		key = key.toLowerCase();
-//		return this.getValues().get(key);
-//	}
+	// 2008-12-30 RSC removed to clean up code since we shouldn't need this any
+	// more.
+	// public Object getValueObject(String key) {
+	// key = key.toLowerCase();
+	// return this.getValues().get(key);
+	// }
 
 	public void removeValue(String key) {
 		key = key.toLowerCase();
@@ -128,7 +156,6 @@ public abstract class AbstractSproxy implements Sproxy {
 		this.getNullKeys().remove(key);
 	}
 
-	
 	public void setNull(String key) {
 		key = key.toLowerCase();
 		if (this.map.containsKey(key)) {
@@ -142,31 +169,31 @@ public abstract class AbstractSproxy implements Sproxy {
 	}
 
 	/*
-	 * 2007-06-27
-	 * keys within null and value sets are exclusive.
+	 * 2007-06-27 keys within null and value sets are exclusive.
 	 */
 	public void setValue(String key, Object value) {
-		
+
 		key = key.toLowerCase();
-		
+
 		if (key.equalsIgnoreCase("id")) {
 			this.setId(value.toString());
 		} else {
 			if (this.nullFields.contains(key)) {
 				this.nullFields.remove(key);
 			}
-			if (this.getValueKeys().contains(key) && this.getValues().get(key) != null) {
+			if (this.getValueKeys().contains(key)
+					&& this.getValues().get(key) != null) {
 				if (this.getValues().get(key).equals(value)) {
-					//do nothing, do not mark as dirty
+					// do nothing, do not mark as dirty
 					return;
 				}
 			}
 			this.getValues().put(key, value);
 		}
-		
+
 		/*
-		 * the builder sets this to false when originally constructing.
-		 * any other setValue should mark as dirty.
+		 * the builder sets this to false when originally constructing. any
+		 * other setValue should mark as dirty.
 		 */
 		this.setDirty(true);
 	}
@@ -184,12 +211,12 @@ public abstract class AbstractSproxy implements Sproxy {
 	public Collection<Sproxy> getChildren() {
 		return children.values();
 	}
-	
+
 	public Sproxy getChild(String key) {
 		key = key.toLowerCase();
 		return children.get(key);
 	}
-	
+
 	public void putChild(String key, Sproxy sproxy) {
 		key = key.toLowerCase();
 		children.put(key, sproxy);
@@ -199,16 +226,14 @@ public abstract class AbstractSproxy implements Sproxy {
 		return parent;
 	}
 
-
-
 	void setParent(Sproxy parent) {
 		this.parent = parent;
 	}
-	
+
 	public boolean hasParent() {
 		return this.parent != null;
 	}
-	
+
 	public boolean hasChildren() {
 		return this.children.size() > 0;
 	}
@@ -226,7 +251,8 @@ public abstract class AbstractSproxy implements Sproxy {
 	}
 
 	public boolean hasValue(String key) {
-		return this.getValueKeys().contains(key) && this.getValues().get(key) != null;
+		return this.getValueKeys().contains(key)
+				&& this.getValues().get(key) != null;
 	}
-	
+
 }
