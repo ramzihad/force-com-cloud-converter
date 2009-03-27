@@ -1,6 +1,6 @@
-package com.mmimport.services;
+package com.modelmetrics.cloudconverter.mmimport.services;
 
-import com.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 
 public interface SalesforceService {
 

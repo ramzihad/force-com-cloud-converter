@@ -27,7 +27,7 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
-import com.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 
 public interface MigrationEngineIF extends MigrationContextAwareIF {
 

@@ -1,4 +1,4 @@
-package com.mmimport.actions;
+package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.mmimport.beans.WrapperBean;
-import com.mmimport.exceptions.ParseException;
-import com.mmimport.services.FileService;
-import com.mmimport.services.SalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
+import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadAction extends ActionSupport implements ServletRequestAware {

@@ -1,4 +1,4 @@
-package com.mmimport.services.impl;
+package com.modelmetrics.cloudconverter.mmimport.services.impl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
 
-import com.mmimport.beans.WrapperBean;
-import com.mmimport.exceptions.ParseException;
-import com.mmimport.services.FileService;
-import com.mmimport.utils.Constants;
-import com.mmimport.utils.StringUtils;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
+import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.utils.Constants;
+import com.modelmetrics.cloudconverter.mmimport.utils.StringUtils;
 
 public class FileServiceImpl implements FileService {
 

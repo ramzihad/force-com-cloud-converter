@@ -1,4 +1,4 @@
-package com.mmimport.test.services;
+package com.modelmetrics.cloudconverter.mmimport.test.services;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,9 +7,9 @@ import java.io.OutputStream;
 
 import junit.framework.TestCase;
 
-import com.mmimport.beans.WrapperBean;
-import com.mmimport.services.FileService;
-import com.mmimport.test.utils.SpringUtils;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.test.utils.SpringUtils;
 
 public class POIServiceTest extends TestCase {
 

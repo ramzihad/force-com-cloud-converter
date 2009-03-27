@@ -1,4 +1,4 @@
-package com.mmimport.test.utils;
+package com.modelmetrics.cloudconverter.mmimport.test.utils;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;

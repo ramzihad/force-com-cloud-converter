@@ -1,12 +1,12 @@
-package com.mmimport.actions;
+package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
 import org.apache.log4j.Logger;
 
-import com.mmimport.beans.WrapperBean;
-import com.mmimport.exceptions.ParseException;
-import com.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
+import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadActionCC extends ActionSupport {

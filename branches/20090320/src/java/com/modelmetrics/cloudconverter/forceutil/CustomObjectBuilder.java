@@ -29,7 +29,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
-import com.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;

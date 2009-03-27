@@ -1,4 +1,4 @@
-package com.mmimport.beans;
+package com.modelmetrics.cloudconverter.mmimport.beans;
 
 import java.util.List;
 

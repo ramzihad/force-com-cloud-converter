@@ -1,4 +1,4 @@
-package com.mmimport.utils;
+package com.modelmetrics.cloudconverter.mmimport.utils;
 
 public class Constants {
 
