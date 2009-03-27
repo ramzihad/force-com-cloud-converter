@@ -23,7 +23,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 
 	}
 	
-	public void testSampleUpload() throws Exception {
+	public void testSampleUpload_Sheet4WithNames() throws Exception {
 	
 		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
 		
@@ -35,7 +35,9 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setPassword(this.sampleSfdcPassword);
 		
-		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v4.xls"));
 		
 		String s = action.upload();
 		
