@@ -15,4 +15,6 @@ public class StringUtilsTest extends TestCase {
 		assertFalse(testOneApplied.contains("#"));
 
 	}
+	
+
 }

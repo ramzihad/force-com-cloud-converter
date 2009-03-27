@@ -8,9 +8,6 @@ public class StringUtils {
 
 	public static final char UNDERSCORE = '_';
 
-	//hyphen is not legal for SFDC
-//	public static final char UPPERSCORE = '-';
-
 	public static final String URL_PREFIX_WWW = "www";
 
 	/**

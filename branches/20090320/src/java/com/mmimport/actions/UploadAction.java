@@ -2,7 +2,10 @@ package com.mmimport.actions;
 
 import java.io.File;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.mmimport.beans.WrapperBean;
 import com.mmimport.exceptions.ParseException;
@@ -10,11 +13,13 @@ import com.mmimport.services.FileService;
 import com.mmimport.services.SalesforceService;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UploadAction extends ActionSupport {
+public class UploadAction extends ActionSupport implements ServletRequestAware {
 
 	private static final Logger log = Logger.getLogger(UploadAction.class);
 
 	private static final long serialVersionUID = 1760991341958287065L;
+
+	private HttpServletRequest request;
 
 	private FileService fileService;
 
@@ -27,12 +32,22 @@ public class UploadAction extends ActionSupport {
 	private String password;
 
 	private String username;
-	
+
 	private Boolean override;
 
 	private String uploadFileName;
 
 	private WrapperBean bean;
+
+	private String message;
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	/**
 	 * initializes form input page
@@ -71,29 +86,63 @@ public class UploadAction extends ActionSupport {
 				return INPUT;
 			}
 
-
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
-			
+
 			log.info("File uploaded successfully");
 
-			log.info("Generating Salesforce object now...");
-			salesforceService.execute(bean, username, password);
+			boolean containsObject = salesforceService.checkObject(bean,
+					username, password);
+			if (containsObject) {
+				// TODO: make this action of scope:session and avoid this
+				request.getSession().setAttribute("username", username);
+				request.getSession().setAttribute("password", password);
+				request.getSession().setAttribute("bean", bean);
+				return "override";
+			} else {
+				log.info("Generating Salesforce object now...");
+				bean.setOverride(Boolean.FALSE);
+				salesforceService.execute(bean, username, password);
+			}
 			log.info("Object sent successfully");
 
 			return SUCCESS;
 		} catch (ParseException e) {
-			log.error("There has been a problem uploading the file", e);
+			message = "There has been a problem uploading the file";
+			log.error(message, e);
+			request.setAttribute("exception", e);
 			return ERROR;
 
 		} catch (Exception e) {
-			log.error("There has been a problem generating salesforce objects",
-					e);
+			message = "There has been a problem generating salesforce objects";
+			log.error(message, e);
+			request.setAttribute("exception", e);
 			return ERROR;
 		}
 	}
-	
 
+	public String override() {
+		try {
+			log.info("Generating Salesforce object now...");
+			bean = (WrapperBean) request.getSession().getAttribute(
+					"bean");
+			bean.setOverride(Boolean.TRUE);
+			salesforceService.execute(bean, (String) request.getSession()
+					.getAttribute("username"), (String) request.getSession()
+					.getAttribute("password"));
+			request.getSession().removeAttribute("username");
+			request.getSession().removeAttribute("password");
+			request.getSession().removeAttribute("bean");
+			
+			log.info("Object sent successfully");
+			return SUCCESS;
+		} catch (Exception e) {
+			message = "There has been a problem generating salesforce objects";
+			log.error(message, e);
+			request.setAttribute("exception", e);
+			return ERROR;
+		}
+	}
 
 	public File getUpload() {
 		return upload;
@@ -138,7 +187,7 @@ public class UploadAction extends ActionSupport {
 	public void setSalesforceService(SalesforceService salesforceService) {
 		this.salesforceService = salesforceService;
 	}
-	
+
 	public SalesforceService getSalesforceService() {
 		return this.salesforceService;
 	}
@@ -167,6 +216,12 @@ public class UploadAction extends ActionSupport {
 		this.override = override;
 	}
 
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
+	public HttpServletRequest getServletRequest() {
+		return request;
+	}
 
 }

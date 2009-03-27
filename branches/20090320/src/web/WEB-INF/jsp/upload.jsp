@@ -33,11 +33,6 @@
 						<s:file name="upload" label="File" />
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<s:checkbox name="override" label="Replace this object if it already exists" />
-					</td>
-				</tr>
 				
 				<tr>
 					<td>

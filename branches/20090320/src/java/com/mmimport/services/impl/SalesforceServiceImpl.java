@@ -22,8 +22,6 @@ public class SalesforceServiceImpl implements SalesforceService {
 		salesforceCredentials.setUsername(username);
 		salesforceCredentials.setPassword(password);
 		
-		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
-		.build(salesforceCredentials);
 
 		MigrationContext migrationContext = new MigrationContextFactory()
 				.buildMigrationContext(salesforceCredentials);
@@ -34,15 +32,24 @@ public class SalesforceServiceImpl implements SalesforceService {
 				.build();
 
 		migrationEngineIF.setMigrationContext(migrationContext);
-
-		//check if it needs overriding
-		bean.setOverride(bean.getOverride().booleanValue() && containsObject(salesforceSession, bean.getSheetName()));
 		
 		// execute it.
 		migrationEngineIF.execute(bean);
 	}
+	
+	public boolean checkObject(WrapperBean bean, String username,
+			String password) throws Exception{
+		
+		salesforceCredentials.setUsername(username);
+		salesforceCredentials.setPassword(password);
+		
+		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
+		.build(salesforceCredentials);
+		return containsObject(salesforceSession, bean.getSheetName());
 
-	public boolean containsObject(SalesforceSession salesforceSession,
+	}
+
+	private boolean containsObject(SalesforceSession salesforceSession,
 			String objectName) throws Exception {
 		DescribeGlobalResult result = salesforceSession.getSalesforceService()
 				.describeGlobal();
