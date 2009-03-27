@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UploadActionCC extends ActionSupport {
 
 	/**
-	 * 
+	 * jhjh
 	 */
 	private static final long serialVersionUID = 1L;
 
