@@ -2,15 +2,16 @@ package com.mmimport.utils;
 
 public class StringUtils {
 
-	public static final String PREFIX_ONE = "http:";
+	public static final String URL_PREFIX_HTTP = "http:";
 
-	public static final String PREFIX_TWO = "https:";
+	public static final String URL_PREFIX_HTTPS = "https:";
 
 	public static final char UNDERSCORE = '_';
 
-	public static final char UPPERSCORE = '-';
+	//hyphen is not legal for SFDC
+//	public static final char UPPERSCORE = '-';
 
-	public static final String PREFIX_THREE = "www";
+	public static final String URL_PREFIX_WWW = "www";
 
 	/**
 	 * checks if a string matches a regular expresion for phones with format:
@@ -35,8 +36,8 @@ public class StringUtils {
 	 */
 	public static boolean isURL(String url) {
 
-		if (url.startsWith(PREFIX_ONE) || url.startsWith(PREFIX_TWO)
-				|| url.startsWith(PREFIX_THREE)) {
+		if (url.startsWith(URL_PREFIX_HTTP) || url.startsWith(URL_PREFIX_HTTPS)
+				|| url.startsWith(URL_PREFIX_WWW)) {
 			return true;
 		}
 		return false;
@@ -54,7 +55,7 @@ public class StringUtils {
 		for (int i = 0; i < name.length(); i++) {
 			char ch = name.charAt(i);
 			if (Character.isDigit(ch) || Character.isLetter(ch)
-					|| ch == UNDERSCORE || ch == UPPERSCORE) {
+					|| ch == UNDERSCORE ) {
 				buffer.append(ch);
 			}
 		}

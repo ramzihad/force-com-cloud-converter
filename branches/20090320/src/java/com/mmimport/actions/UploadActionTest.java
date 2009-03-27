@@ -45,4 +45,26 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 	}
 	
+	public void testSampleUpload_Sheet5() throws Exception {
+		
+		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
+		
+		assertNotNull(action.getFileService());
+		
+		assertNotNull(action.getSalesforceService());
+		
+		action.setUsername(this.sampleSfdcUsername);
+		
+		action.setPassword(this.sampleSfdcPassword);
+		
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet5.xls"));
+		
+		String s = action.upload();
+		
+		assertEquals(ActionSupport.SUCCESS, s);
+		
+	}
+	
 }
