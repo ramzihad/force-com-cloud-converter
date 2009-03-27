@@ -7,6 +7,7 @@
 	<constant name="struts.objectFactory" value="spring" />
 	<constant name="struts.devMode" value="false" />
 
+
 	<!-- Configuration for the default package. -->
 	<package name="default" extends="struts-default">
 
@@ -18,8 +19,11 @@
 			<result name="error">/WEB-INF/jsp/error.jsp</result>
 			<result name="input">/WEB-INF/jsp/upload.jsp</result>
 			<result name="wait">/WEB-INF/jsp/wait.jsp</result>
-			<interceptor-ref name="completeStack" />
-			<interceptor-ref name="execAndWait" />
+			<!-- interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait">
+		        <param name="delay">5000</param>
+		    </interceptor-ref-->
+
 		</action>
 	</package>
 </struts>

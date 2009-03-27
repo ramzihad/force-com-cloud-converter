@@ -36,13 +36,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.mmimport.beans.WrapperBean;
-import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
 import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
+import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
@@ -56,16 +56,6 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 	private static final Log log = LogFactory
 			.getLog(MigrationEngineStandardImpl.class);
-
-	private DirtConnectionIF dirtConnection;
-
-	// public DirtConnectionIF getDirtConnection() {
-	// return dirtConnection;
-	// }
-	//
-	// public void setDirtConnection(DirtConnectionIF engineConnectorIF) {
-	// this.dirtConnection = engineConnectorIF;
-	// }
 
 	public void execute() throws Exception {
 		this.createCustomObject();
@@ -84,6 +74,17 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 				.build(bean);
 
 		this.getMigrationContext().setMetadataProxies(metadataProxies);
+
+		// check if it needs overriding
+		if (bean.getOverride().booleanValue()) {
+			// delete object here
+			CustomObject co = new CustomObject();
+			co.setFullName(bean.getSheetName()+"__c");
+			new DeleteExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService())
+					.executeSimpleDelete(co);
+			log.info("Deleting object "+bean.getSheetName()+" from salesforce...");
+		}
 
 		/*
 		 * 2009-03-21 RSC //TODO rs should probably be a little more generic as

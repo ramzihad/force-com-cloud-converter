@@ -34,7 +34,7 @@ public class WrapperBean {
 	}
 
 	public String toString() {
-		return "Names: " + names + "\n Types: " + types;
+		return "Names: " + names + "\nTypes: " + types;
 	}
 
 	public List<String> getNames() {

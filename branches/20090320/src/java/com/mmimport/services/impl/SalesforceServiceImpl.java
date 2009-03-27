@@ -18,12 +18,12 @@ public class SalesforceServiceImpl implements SalesforceService {
 	public void execute(WrapperBean bean, String username, String password)
 			throws Exception {
 
-		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
-		.build(salesforceCredentials);
-
 		
 		salesforceCredentials.setUsername(username);
 		salesforceCredentials.setPassword(password);
+		
+		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
+		.build(salesforceCredentials);
 
 		MigrationContext migrationContext = new MigrationContextFactory()
 				.buildMigrationContext(salesforceCredentials);
@@ -36,9 +36,7 @@ public class SalesforceServiceImpl implements SalesforceService {
 		migrationEngineIF.setMigrationContext(migrationContext);
 
 		//check if it needs overriding
-		if (bean.getOverride().booleanValue() && containsObject(salesforceSession, bean.getSheetName())){
-			//delete object here
-		}
+		bean.setOverride(bean.getOverride().booleanValue() && containsObject(salesforceSession, bean.getSheetName()));
 		
 		// execute it.
 		migrationEngineIF.execute(bean);
@@ -50,7 +48,7 @@ public class SalesforceServiceImpl implements SalesforceService {
 				.describeGlobal();
 
 		boolean foundType = false;
-
+		objectName+="__c";
 		for (int i = 0; i < result.getTypes().length; i++) {
 			String name = result.getTypes(i);
 			if (name.equalsIgnoreCase(objectName)) {

@@ -121,7 +121,11 @@ public class POIService implements FileService {
 						} else if (type.equals(CellType.LABEL)) {
 							// parse string value
 							list.add(value);
-						} else if (type.equals(CellType.NUMBER)) {
+						} else if (type.equals(CellType.EMPTY)) {
+							// parse string value
+							list.add(null);
+						}  
+						else if (type.equals(CellType.NUMBER)) {
 							// parse numeric value
 							//							
 							// if (value.contains("%")) {
