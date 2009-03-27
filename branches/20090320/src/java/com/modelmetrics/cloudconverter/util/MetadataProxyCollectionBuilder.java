@@ -5,25 +5,31 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.validator.GenericValidator;
+
+import com.mmimport.beans.WrapperBean;
+import com.mmimport.utils.Constants;
+import com.mmimport.utils.StringUtils;
 import com.sforce.soap._2006._04.metadata.FieldType;
 
 public class MetadataProxyCollectionBuilder {
 
 	/*
-	 * 2009-03-21 RSC added so we could get this out of the custom field builder.
-	 *
+	 * 2009-03-21 RSC added so we could get this out of the custom field
+	 * builder.
+	 * 
 	 */
-	//TODO add some tests.
+	// TODO add some tests.
 	public List<MetadataProxy> build(ResultSetMetaData rsmd) throws Exception {
-		
+
 		List<MetadataProxy> ret = new ArrayList<MetadataProxy>();
-		
+
 		for (int i = 0; i < rsmd.getColumnCount(); i++) {
-			
+
 			MetadataProxy field = new MetadataProxy();
-			
+
 			field.setName(rsmd.getColumnName(i + 1));
-			
+
 			switch (rsmd.getColumnType(i + 1)) {
 			case Types.BIGINT:
 				field.setType(FieldType.Number);
@@ -144,7 +150,7 @@ public class MetadataProxyCollectionBuilder {
 				// rsc don't need precision for textarea, do for a
 				// longtextarea
 				field.setLength(32000);
-				//field.setVisibleLines(5); // rsc hard coding for now since
+				// field.setVisibleLines(5); // rsc hard coding for now since
 				// this isn't metadata driven
 				// customFieldsCollection.add(field);
 				// fieldMap.put(rsmd.getColumnName(i + 1), sfdcColumnName);
@@ -242,11 +248,49 @@ public class MetadataProxyCollectionBuilder {
 				break;
 
 			}
-			
+
 			ret.add(field);
-			
+
 		}
-		
+
+		return ret;
+	}
+
+	public List<MetadataProxy> build(WrapperBean bean) throws Exception {
+
+		List<MetadataProxy> ret = new ArrayList<MetadataProxy>();
+		for (int i = 0; i < bean.getNames().size(); i++) {
+			MetadataProxy field = new MetadataProxy();
+
+			field.setName(bean.getNames().get(i));
+			String value = bean.getTypes().get(i);
+			if (Constants.STRING.equals(value)) {
+				field.setType(FieldType.Text);
+				field.setLength(255);
+			} else if (Constants.EMAIL.equals(value)) {
+				field.setType(FieldType.Email);
+			} else if (Constants.PHONE_NUMBER.equals(value)) {
+				field.setType(FieldType.Phone);
+				field.setLength(15);
+			} else if (Constants.INT.equals(value)) {
+				field.setType(FieldType.Number);
+				field.setScale(0);
+				field.setPrecision(18);
+			} else if (Constants.DOUBLE.equals(value)) {
+				field.setType(FieldType.Number);
+				field.setScale(8);
+				field.setPrecision(10);
+			} else if (Constants.FLOAT.equals(value)) {
+				field.setType(FieldType.Number);
+				field.setScale(8);
+				field.setPrecision(10);
+			} else if (Constants.DATE.equals(value)) {
+				field.setType(FieldType.Date);
+			} else if (Constants.DATETIME.equals(value)) {
+				field.setType(FieldType.DateTime);
+			}
+			ret.add(field);
+		}
 		return ret;
 	}
 }

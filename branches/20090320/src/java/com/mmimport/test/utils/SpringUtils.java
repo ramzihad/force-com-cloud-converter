@@ -12,7 +12,7 @@ public class SpringUtils {
 
 		if (beanFactory == null) {
 			beanFactory = new XmlBeanFactory(new ClassPathResource(
-					"applicationContext.xml"));
+					"spring-config.xml"));
 		}
 		return beanFactory.getBean(name);
 	}

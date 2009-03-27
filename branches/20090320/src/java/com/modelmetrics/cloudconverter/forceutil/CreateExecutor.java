@@ -131,10 +131,18 @@ public class CreateExecutor {
 				waitTimeMilliSecs *= 2;
 				log.debug("The object state is " + arsStatus[0].getState());
 
-				if (arsStatus[0].getState() == AsyncRequestState.Error) {
-					throw new RuntimeException(
-							"AsyncRequestState is 'Error' - Create not completed. Message is ["
-									+ arsStatus[0].getMessage() + "] (backets added)");
+				
+				StringBuffer errors = new StringBuffer();
+				for (int i = 0; i < arsStatus.length; i++) {
+					if (arsStatus[i].getState() == AsyncRequestState.Error) {
+						errors.append(
+								"AsyncRequestState is 'Error' - Create not completed. Message is ["
+										+ arsStatus[0].getMessage() + "] (backets added)");
+					}
+				}
+				
+				if (errors.length() > 0) {
+					throw new RuntimeException(errors.toString());
 				}
 			}
 

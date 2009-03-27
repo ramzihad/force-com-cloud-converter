@@ -28,9 +28,7 @@ THE SOFTWARE.
 package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -81,10 +79,8 @@ public class CustomFieldBuilder {
 		 * non-SQL datasources (Excel).  For now, we can just leave these collections empty and
 		 * the rest of the engine will ignore them.
 		 */
-		for (Iterator<MetadataProxy> iterator = metadataProxies.iterator(); iterator
-				.hasNext();) {
-			MetadataProxy current = (MetadataProxy) iterator.next();
-
+		for (MetadataProxy current : metadataProxies) {
+			
 			boolean isPicklist = migrationContext.getPicklistFields() != null
 					&& migrationContext.getPicklistFields().containsKey(
 							current.getName());
@@ -92,7 +88,6 @@ public class CustomFieldBuilder {
 			CustomField field = new CustomField();
 			String sfdcColumnName = current.getName() + "__c".toLowerCase();
 			customFieldShortNames.add(sfdcColumnName);
-			field = new CustomField();
 			field.setFullName(newCustomObject.getFullName() + "."
 					+ sfdcColumnName);
 			field.setLabel(current.getName());
@@ -212,7 +207,10 @@ public class CustomFieldBuilder {
 						&& current.getType() != FieldType.DateTime
 						&& current.getType() != FieldType.Checkbox
 						&& current.getType() != FieldType.TextArea
-						&& current.getType() != FieldType.LongTextArea) {
+						&& current.getType() != FieldType.LongTextArea
+						&& current.getType() != FieldType.Url
+						&& current.getType() != FieldType.Email
+						&& current.getType() != FieldType.Phone) {
 					field.setPrecision(current.getPrecision());
 					field.setScale(current.getScale());
 				}

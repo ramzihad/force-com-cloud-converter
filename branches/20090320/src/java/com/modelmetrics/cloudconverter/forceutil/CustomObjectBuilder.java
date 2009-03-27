@@ -29,6 +29,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
+import com.mmimport.beans.WrapperBean;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.DeploymentStatus;
@@ -42,7 +43,7 @@ public class CustomObjectBuilder {
 	 * 
 	 */
 	public CustomObject build(ResultSetMetaData rsmd) throws Exception {
-		
+
 		String objectName = null;
 		for (int i = 0; i < rsmd.getColumnCount(); i++) {
 			objectName = rsmd.getTableName(i + 1);
@@ -50,19 +51,27 @@ public class CustomObjectBuilder {
 
 		return this.build(objectName);
 	}
-	
+
+	public CustomObject build(WrapperBean bean) throws Exception {
+		//TODO this needs to come from the excel file.
+		String objectName = "MyObj";
+		return this.build(objectName);
+	}
+
 	public CustomObject build(String objectName) throws Exception {
 		CustomObject co = new CustomObject();
 		String name = objectName;
 		co.setFullName(objectName + "__c");
 		co.setDeploymentStatus(DeploymentStatus.Deployed);
-		co.setDescription("Created by the CloudConverter from http://ModelMetrics.com");
+		co
+				.setDescription("Created by the CloudConverter from http://ModelMetrics.com");
 		co.setEnableActivities(true);
 		co.setLabel(name);
 		co.setPluralLabel(co.getLabel() + "s");
 		co.setSharingModel(SharingModel.ReadWrite);
 
-		//just putting this in for now -- no technical reason although we always need a name
+		// just putting this in for now -- no technical reason although we
+		// always need a name
 		CustomField nf = new CustomField();
 		nf.setType(FieldType.AutoNumber);
 		nf.setStartingNumber(0);
@@ -71,10 +80,9 @@ public class CustomObjectBuilder {
 				.setDescription("The custom object identifier on page layouts, related lists, etc.");
 		nf.setLabel(name + " Name");
 		nf.setFullName(objectName + " __c");
-		
 
 		co.setNameField(nf);
-		
+
 		return co;
 	}
 }

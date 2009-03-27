@@ -213,8 +213,8 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 
 	public Collection<SproxySaveResult> upsert(String externalIdForUpsert,
 			Collection<Sproxy> toInsert) throws SalesforceDaoException {
-		if (externalIdForUpsert == null) {
-			throw new RuntimeException(
+		if (externalIdForUpsert == null || externalIdForUpsert.length() == 0) {
+			throw new SalesforceDaoException(
 					"External ID field is required for upsert.");
 		}
 		this.externalIdFieldForUpsert = externalIdForUpsert;
@@ -272,6 +272,7 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			} catch (Exception e) {
 				e.printStackTrace();
 				log.error(e);
+				throw new SalesforceDaoException(e);
 			}
 		} else {
 			try {
@@ -290,6 +291,7 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 				}
 			} catch (Exception e) {
 				log.error(e);
+				throw new SalesforceDaoException(e);
 			}
 		}
 

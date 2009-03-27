@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
 
 import jxl.Cell;
@@ -23,6 +25,7 @@ import com.mmimport.utils.StringUtils;
 
 public class POIService implements FileService {
 
+	private static final Log log = LogFactory.getLog(POIService.class);
 	
 	/**
 	 * Parses an XLS file into a WrapperBean
@@ -33,7 +36,7 @@ public class POIService implements FileService {
 	public WrapperBean parseXLS(File file) throws ParseException {
 
 		DateFormat finalTimeFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss Z");
+				"yyyy-MM-dd'T'HH:mm:ssZ");
 		DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		WrapperBean bean = new WrapperBean();
@@ -55,6 +58,9 @@ public class POIService implements FileService {
 				for (int j = 0; j < cells.length; j++) {
 
 					Cell c = cells[j];
+					
+//					log.debug("cell format is: (i,j) (" + i + ", " + j + "): " + c.getCellFormat().getFormat().getFormatString());
+					
 					String value = c.getContents();
 					if (i == 0) {
 						// parse column names
@@ -82,6 +88,7 @@ public class POIService implements FileService {
 								bean.getTypes().add(Constants.STRING);
 							}
 						} else if (type.equals(CellType.NUMBER)) {
+							
 							if (value.contains("%")) {
 								bean.getTypes().add(Constants.FLOAT);
 							} else if (value.contains(",")

@@ -32,10 +32,23 @@
 
 			<table>
 				<tr>
+					
+					<td>
+						<s:textfield name="username" label="Username"/>
+					</td>
+				</tr>
+				<tr>
+					
+					<td>
+						<s:password name="password" label="Password" />
+					</td>
+				</tr>
+				<tr>
 					<td>
 						<s:file name="upload" label="File" />
 					</td>
 				</tr>
+				
 				<tr>
 					<td>
 						<s:submit value="Upload" id="butSubmit" onclick="showLoader()" />

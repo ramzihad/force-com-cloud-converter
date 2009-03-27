@@ -48,19 +48,7 @@ public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 		log.debug("clean up complete");
 	}
 
-	protected void handleCustomObjectKill(String objectName) throws Exception {
-		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
-				.build(salesforceCredentials);
 
-		if (this.containsTestObject(salesforceSession, objectName)) {
-			CustomObject co = new CustomObject();
-			co.setFullName(objectName);
-
-			new DeleteExecutor(salesforceSession.getMetadataService())
-					.executeSimpleDelete(co);
-		}
-
-	}
 
 	public void testCreatesObject() throws Exception {
 
@@ -103,20 +91,5 @@ public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 		// good enough time to clean up
 	}
 
-	public boolean containsTestObject(SalesforceSession salesforceSession,
-			String testObjectName) throws Exception {
-		DescribeGlobalResult result = salesforceSession.getSalesforceService()
-				.describeGlobal();
 
-		boolean foundType = false;
-
-		for (int i = 0; i < result.getTypes().length; i++) {
-			String name = result.getTypes(i);
-			if (name.equalsIgnoreCase(testObjectName)) {
-				foundType = true;
-			}
-		}
-
-		return foundType;
-	}
 }

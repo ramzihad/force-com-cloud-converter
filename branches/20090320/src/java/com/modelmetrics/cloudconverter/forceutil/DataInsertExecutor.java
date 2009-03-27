@@ -28,56 +28,127 @@ THE SOFTWARE.
 package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
+import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 
 public class DataInsertExecutor extends AbstractDataExecutor {
 
 	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
-	
+
 	public void execute(MigrationContext migrationContext) throws Exception {
-		
-		log.debug("starting data transfer (insert)...");
-		
-		dao.setSalesforceSession(migrationContext.getSalesforceSession());
-		
-		Collection<Sproxy> toInsert = new ArrayList<Sproxy>();
-		
-		ResultSet rs = migrationContext.getResultSet();
-		ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
-				
-		if (rs == null) {
-			log.info("result set is null");
-		}
-		
-		while (rs.next()) {
-			
-			Sproxy current = sproxyBuilder.buildEmpty(migrationContext.getCustomObject().getFullName());
-			
-			for (int i = 0; i < rsmd.getColumnCount(); i++) {
-				current.setValue(migrationContext.getFieldMap().get(rsmd.getColumnName(i+1)), rs.getObject(i+1));
+		try {
+			if (migrationContext.getResultSet() == null
+					&& migrationContext.getWrapperBean() == null) {
+				throw new RuntimeException(
+						"no result set and no wrapper bean ERGO no sproxy building bonanza.");
+			} else if (migrationContext.getResultSet() != null) {
+				this.executeWithResultSet(migrationContext);
+			} else {
+				this.executeWithWrapper(migrationContext);
 			}
-		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw (e);
+		}
+
+	}
+
+	public void executeWithResultSet(MigrationContext migrationContext)
+			throws Exception {
+
+		log.debug("starting data transfer (insert)...");
+
+		dao.setSalesforceSession(migrationContext.getSalesforceSession());
+
+		Collection<Sproxy> toInsert = new ArrayList<Sproxy>();
+
+		ResultSet rs = migrationContext.getResultSet();
+		// ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
+
+		while (rs.next()) {
+
+			Sproxy current = sproxyBuilder.buildEmpty(migrationContext
+					.getCustomObject().getFullName());
+
+			for (Iterator<MetadataProxy> iterator = migrationContext
+					.getMetadataProxies().iterator(); iterator.hasNext();) {
+				MetadataProxy metadataProxy = iterator.next();
+				current.setValue(migrationContext.getFieldMap().get(
+						metadataProxy.getName()), rs.getObject(metadataProxy
+						.getName()));
+			}
+			// for (int i = 0; i < rsmd.getColumnCount(); i++) {
+			// current.setValue(migrationContext.getFieldMap().get(rsmd.getColumnName(i+1)),
+			// rs.getObject(i+1));
+			// }
+
 			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
 				dao.insert(toInsert);
 				toInsert = new ArrayList<Sproxy>();
 			}
 
 		}
-		
+
 		log.debug("starting the insert...");
-		
+
 		dao.insert(toInsert);
-		
+
 		log.debug("insert complete...");
-		
-		
+
 	}
+
+	public void executeWithWrapper(MigrationContext migrationContext)
+			throws Exception {
+
+		log.debug("starting data transfer (insert)...");
+
+		dao.setSalesforceSession(migrationContext.getSalesforceSession());
+
+		Collection<Sproxy> toInsert = new ArrayList<Sproxy>();
+
+		// ResultSet rs = migrationContext.getResultSet();
+		// ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
+
+		WrapperBean wrapperBean = migrationContext.getWrapperBean();
+
+		for (Iterator<List<String>> iterator = wrapperBean.getObjects()
+				.iterator(); iterator.hasNext();) {
+			List<String> type = (List<String>) iterator.next();
+			Sproxy current = sproxyBuilder.buildEmpty(migrationContext
+					.getCustomObject().getFullName());
+			int i = 0;
+			for (Iterator<MetadataProxy> iterator2 = migrationContext
+					.getMetadataProxies().iterator(); iterator2.hasNext();) {
+				MetadataProxy metadataProxy = iterator2.next();
+				current.setValue(migrationContext.getFieldMap().get(
+						metadataProxy.getName()), type.get(i++));
+			}
+			
+			toInsert.add(current);
+
+		}
+
+		if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
+			dao.insert(toInsert);
+			toInsert = new ArrayList<Sproxy>();
+		}
+
+		log.debug("starting the insert...");
+
+		dao.insert(toInsert);
+
+		log.debug("insert complete...");
+
+	}
+
 }

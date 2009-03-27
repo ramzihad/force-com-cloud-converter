@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.mmimport.beans.WrapperBean;
 import com.mmimport.exceptions.ParseException;
 import com.mmimport.services.FileService;
+import com.mmimport.services.SalesforceService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadAction extends ActionSupport {
@@ -17,14 +18,19 @@ public class UploadAction extends ActionSupport {
 
 	private FileService fileService;
 
+	private SalesforceService salesforceService;
+
 	private File upload;
 
 	private String uploadContentType;
 
+	private String password;
+
+	private String username;
+
 	private String uploadFileName;
 
 	private WrapperBean bean;
-
 
 	/**
 	 * initializes form input page
@@ -38,24 +44,49 @@ public class UploadAction extends ActionSupport {
 	}
 
 	/**
-	 * Uploads the XLS and transformes it to a WrapperBean 
-	 * object to be sent to view 
+	 * Uploads the XLS and transformes it to a WrapperBean object to be sent to
+	 * view
+	 * 
 	 * @return
 	 */
 	public String upload() {
 
 		try {
+			boolean error = false;
+			if ("".equals(username)) {
+				addActionMessage("Username is required");
+				error = true;
+			}
+			if ("".equals(password)) {
+				addActionMessage("Password is required");
+				error = true;
+			}
 			if (upload == null) {
 				addActionMessage("Please select a file");
+				error = true;
+			}
+			if (error) {
 				return INPUT;
 			}
 
-			bean = fileService.parseXLS(upload);
 
+			bean = fileService.parseXLS(upload);
+			
+			bean.setFileName(uploadFileName);
 			log.info("File uploaded successfully");
+
+			log.info("Generating Salesforce object now...");
+			salesforceService.execute(bean, username, password);
+			log.info("Object sent successfully");
+
 			return SUCCESS;
 		} catch (ParseException e) {
 			log.error("There has been a problem uploading the file", e);
+			return ERROR;
+
+		} catch (Exception e) {
+			log.error("There has been a problem generating salesforce objects",
+					e);
 			return ERROR;
 		}
 	}
@@ -98,6 +129,30 @@ public class UploadAction extends ActionSupport {
 
 	public void setBean(WrapperBean bean) {
 		this.bean = bean;
+	}
+
+	public void setSalesforceService(SalesforceService salesforceService) {
+		this.salesforceService = salesforceService;
+	}
+	
+	public SalesforceService getSalesforceService() {
+		return this.salesforceService;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

@@ -36,6 +36,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
@@ -83,6 +84,8 @@ public class MigrationContext {
 	
 	private List<MetadataProxy> metadataProxies;
 
+	private WrapperBean wrapperBean;
+	
 	public String getExternalIdForUpsert() {
 		return externalIdForUpsert;
 	}
@@ -214,5 +217,13 @@ public class MigrationContext {
 
 	public void setMetadataProxies(List<MetadataProxy> metadataProxies) {
 		this.metadataProxies = metadataProxies;
+	}
+
+	public WrapperBean getWrapperBean() {
+		return wrapperBean;
+	}
+
+	public void setWrapperBean(WrapperBean wrapperBean) {
+		this.wrapperBean = wrapperBean;
 	}
 }

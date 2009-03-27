@@ -118,6 +118,9 @@
 		<copy todir="${build}">
 			<fileset dir="src/non-java" />
 		</copy>
+		
+		<delete file="src/non-java/log4j.properties" />
+		<copyfile dest="src/non-java/log4j.properties" src="src/non-java/log4j.properties.war"/>
 	
 		<echo message="Deploying the Web app...." />
 

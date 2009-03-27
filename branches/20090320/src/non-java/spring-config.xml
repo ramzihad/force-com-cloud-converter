@@ -8,7 +8,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 
 
-	<!--  spring.properties includes all the parameters listed below.  -->
+		<!--  spring.properties includes all the parameters listed below.  -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -16,15 +16,28 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		</property>
 	</bean>
 
-
-
-
-
 	<!-- SALESFORCE -->
 	<bean id="salesforceSession"
 		class="com.modelmetrics.common.sforce.SalesforceSessionNewImpl"
 		scope="prototype" />
 
+	<bean id="salesforceService"
+		class="com.mmimport.services.impl.SalesforceServiceImpl" >
+		<property name="salesforceCredentials" ref="salesforceCredentials" />
+	</bean>
+	
+	<bean id="fileService"
+		class="com.mmimport.services.impl.POIService" />
+	
+	<bean id="salesforceCredentials"
+		class="com.modelmetrics.common.sforce.SalesforceCredentials" >
+	</bean>
+
+	<bean id="uploadAction" scope="prototype"
+		class="com.mmimport.actions.UploadAction">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
 
 </beans>
