@@ -133,7 +133,9 @@ public class CreateExecutor {
 
 				
 				StringBuffer errors = new StringBuffer();
+				log.debug("arsStatus Length is " + arsStatus.length);
 				for (int i = 0; i < arsStatus.length; i++) {
+					log.debug("arsStatus element: " + i + ", done? " + arsStatus[i].isDone());
 					if (arsStatus[i].getState() == AsyncRequestState.Error) {
 						errors.append(
 								"AsyncRequestState is 'Error' - Create not completed. Message is ["

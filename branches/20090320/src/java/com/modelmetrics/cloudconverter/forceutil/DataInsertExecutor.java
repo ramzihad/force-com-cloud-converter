@@ -130,16 +130,18 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 			for (Iterator<MetadataProxy> iterator2 = migrationContext
 					.getMetadataProxies().iterator(); iterator2.hasNext();) {
 				MetadataProxy metadataProxy = iterator2.next();
-				if (type.get(i)==null){
+
+				if (type.size() < i + 1 || type.get(i) == null) {
 					current.setNull(migrationContext.getFieldMap().get(
 							metadataProxy.getName()));
-				}else{
+				} else {
 					current.setValue(migrationContext.getFieldMap().get(
-							metadataProxy.getName()), type.get(i++));
+							metadataProxy.getName()), type.get(i));
 				}
-			
+
+				i++;
 			}
-			
+
 			toInsert.add(current);
 
 		}

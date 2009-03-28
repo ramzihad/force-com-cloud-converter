@@ -22,12 +22,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		scope="prototype" />
 
 	<bean id="salesforceService"
-		class="com.modelmetrics.cloudconverter.mmimport.services.impl.SalesforceServiceImpl" >
+		class="com.modelmetrics.cloudconverter.mmimport.services.SalesforceServiceImpl" >
 		<property name="salesforceCredentials" ref="salesforceCredentials" />
 	</bean>
 	
 	<bean id="fileService"
-		class="com.modelmetrics.cloudconverter.mmimport.services.impl.FileServiceImpl" />
+		class="com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl" />
 	
 	<bean id="salesforceCredentials"
 		class="com.modelmetrics.common.sforce.SalesforceCredentials" >

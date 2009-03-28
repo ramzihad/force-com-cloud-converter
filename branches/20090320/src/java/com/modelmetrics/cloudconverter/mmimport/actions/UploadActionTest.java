@@ -49,10 +49,12 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	
 	/*
 	 * functional test
+	 * 
+	 * unit tests in FileServiceImplTest and MetadataProxyCollectionBuilderTest.
 	 */
 	public void testSampleUpload_TestSheet1() throws Exception {
 		
-		String fileName = "TestSpreadsheet-DoNotChange-v1.xls";
+		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 		
 		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
 		
@@ -71,19 +73,6 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		String s = action.upload();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
-		
-		/*
-		 * OK now this is to make sure we get everything set here.
-		 */
-		FileServiceImpl poService = new FileServiceImpl();
-		
-		WrapperBean wrapperBean = poService.parseXLS(new File(fileName));
-		
-		assertEquals("sheet1", wrapperBean.getSheetName());
-		
-		
-		
-		
 		
 		
 	}

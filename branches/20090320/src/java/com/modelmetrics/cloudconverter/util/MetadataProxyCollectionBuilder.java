@@ -269,6 +269,8 @@ public class MetadataProxyCollectionBuilder {
 				field.setLength(255);
 			} else if (Constants.EMAIL.equals(value)) {
 				field.setType(FieldType.Email);
+			} else if (Constants.URL.equals(value)) {
+					field.setType(FieldType.Url);
 			} else if (Constants.PHONE_NUMBER.equals(value)) {
 				field.setType(FieldType.Phone);
 				field.setLength(15);
@@ -277,13 +279,22 @@ public class MetadataProxyCollectionBuilder {
 				field.setScale(0);
 				field.setPrecision(18);
 			} else if (Constants.DOUBLE.equals(value)) {
-				field.setType(FieldType.Currency);
+				field.setType(FieldType.Number);
 				field.setScale(8);
 				field.setPrecision(10);
 			} else if (Constants.FLOAT.equals(value)) {
+				field.setType(FieldType.Number);
+				field.setScale(8);
+				field.setPrecision(10);
+			} else if (Constants.PERCENTAGE.equals(value)) {
 				field.setType(FieldType.Percent);
 				field.setScale(8);
 				field.setPrecision(10);
+			} else if (Constants.CURRENCY.equals(value)) {
+				field.setType(FieldType.Currency);
+				field.setScale(8);
+				field.setPrecision(10);
+
 			} else if (Constants.DATE.equals(value)) {
 				field.setType(FieldType.Date);
 			} else if (Constants.DATETIME.equals(value)) {

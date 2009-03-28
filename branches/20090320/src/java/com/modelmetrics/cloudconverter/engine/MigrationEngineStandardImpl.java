@@ -111,6 +111,9 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), fields).execute();
 
+		log.debug("waiting for 10 seconds...");
+		Thread.sleep(10000);
+
 		// reseting the session
 		this.getMigrationContext().resetSession();
 
@@ -131,6 +134,9 @@ public class MigrationEngineStandardImpl extends AbstractMigrationEngine {
 
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomTab[] { customTab }).execute();
+
+		log.debug("waiting for 10 seconds...");
+		Thread.sleep(10000);
 
 		/*
 		 * update the layout

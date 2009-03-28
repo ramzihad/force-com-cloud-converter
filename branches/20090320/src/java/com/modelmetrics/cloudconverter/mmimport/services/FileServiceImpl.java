@@ -91,9 +91,11 @@ public class FileServiceImpl implements FileService {
 								bean.getTypes().add(Constants.STRING);
 							}
 						} else if (type.equals(CellType.NUMBER)) {
-
+							log.debug("Number: " + value + " : format : " + c.getCellFormat().getFormat().getFormatString());
 							if (value.contains("%")) {
-								bean.getTypes().add(Constants.FLOAT);
+								bean.getTypes().add(Constants.PERCENTAGE);
+							} else if (value.contains("$")) {
+								bean.getTypes().add(Constants.CURRENCY);
 							} else if (value.contains(",")
 									|| value.contains(".")) {
 								bean.getTypes().add(Constants.DOUBLE);
