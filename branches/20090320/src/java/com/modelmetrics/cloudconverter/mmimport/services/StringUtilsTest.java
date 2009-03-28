@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.mmimport.test.services;
+package com.modelmetrics.cloudconverter.mmimport.services;
 
 import junit.framework.TestCase;
 

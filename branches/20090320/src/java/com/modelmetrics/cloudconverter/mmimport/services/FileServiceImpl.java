@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.mmimport.services.impl;
+package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import org.apache.commons.validator.GenericValidator;
 
 import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
-import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.utils.Constants;
 import com.modelmetrics.cloudconverter.mmimport.utils.StringUtils;
 
