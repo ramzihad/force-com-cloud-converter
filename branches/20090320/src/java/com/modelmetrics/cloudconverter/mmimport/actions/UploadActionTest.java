@@ -2,8 +2,8 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
+import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;

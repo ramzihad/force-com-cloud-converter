@@ -44,7 +44,7 @@ import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.sforce.soap._2006._04.metadata.CustomField;

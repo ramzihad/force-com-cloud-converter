@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.mmimport.utils;
+package com.modelmetrics.cloudconverter.mmimport.services;
 
 public class StringUtils {
 

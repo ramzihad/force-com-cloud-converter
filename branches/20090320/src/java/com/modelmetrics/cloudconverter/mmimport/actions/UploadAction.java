@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
-import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadAction extends ActionSupport implements ServletRequestAware {

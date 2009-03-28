@@ -2,7 +2,6 @@ package com.modelmetrics.cloudconverter.mmimport.services;
 
 import junit.framework.TestCase;
 
-import com.modelmetrics.cloudconverter.mmimport.utils.StringUtils;
 
 public class StringUtilsTest extends TestCase {
 

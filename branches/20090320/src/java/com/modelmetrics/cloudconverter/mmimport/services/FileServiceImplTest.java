@@ -2,8 +2,6 @@ package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.io.File;
 
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
-import com.modelmetrics.cloudconverter.mmimport.utils.Constants;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 
 import junit.framework.TestCase;

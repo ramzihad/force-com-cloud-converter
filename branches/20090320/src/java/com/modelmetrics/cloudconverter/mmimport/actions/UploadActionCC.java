@@ -4,9 +4,9 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
-import com.modelmetrics.cloudconverter.mmimport.exceptions.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
+import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadActionCC extends ActionSupport {

@@ -6,8 +6,8 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
+import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
