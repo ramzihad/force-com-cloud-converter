@@ -281,19 +281,19 @@ public class MetadataProxyCollectionBuilder {
 			} else if (Constants.DOUBLE.equals(value)) {
 				field.setType(FieldType.Number);
 				field.setScale(8);
-				field.setPrecision(10);
+				field.setPrecision(18);
 			} else if (Constants.FLOAT.equals(value)) {
 				field.setType(FieldType.Number);
 				field.setScale(8);
-				field.setPrecision(10);
+				field.setPrecision(18);
 			} else if (Constants.PERCENTAGE.equals(value)) {
 				field.setType(FieldType.Percent);
 				field.setScale(8);
-				field.setPrecision(10);
+				field.setPrecision(18);
 			} else if (Constants.CURRENCY.equals(value)) {
 				field.setType(FieldType.Currency);
 				field.setScale(8);
-				field.setPrecision(10);
+				field.setPrecision(18);
 
 			} else if (Constants.DATE.equals(value)) {
 				field.setType(FieldType.Date);
