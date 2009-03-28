@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
 import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
-import com.modelmetrics.cloudconverter.mmimport.test.utils.SpringUtils;
+import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -27,7 +27,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	
 	public void testSampleUpload_Sheet1() throws Exception {
 	
-		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
+		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
 		
 		assertNotNull(action.getFileService());
 		
@@ -54,7 +54,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		String fileName = "TestSpreadsheet-DoNotChange-v1.xls";
 		
-		UploadAction action = (UploadAction) SpringUtils.getBean("uploadAction");
+		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
 		
 		assertNotNull(action.getFileService());
 		

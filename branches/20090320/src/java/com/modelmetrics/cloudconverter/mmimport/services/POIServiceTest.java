@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.mmimport.beans.WrapperBean;
-import com.modelmetrics.cloudconverter.mmimport.test.utils.SpringUtils;
+import com.modelmetrics.common.spring.util.SpringBeanBroker;
 
 public class POIServiceTest extends TestCase {
 
@@ -18,7 +18,7 @@ public class POIServiceTest extends TestCase {
 
 	public void setUp() {
 
-		service = (FileService) SpringUtils.getBean("fileService");
+		service = (FileService) SpringBeanBroker.getBeanFactory().getBean("fileService");
 
 	}
 
