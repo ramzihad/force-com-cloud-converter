@@ -144,12 +144,13 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 
 			toInsert.add(current);
 
+			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
+				dao.insert(toInsert);
+				toInsert = new ArrayList<Sproxy>();
+			}
 		}
 
-		if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
-			dao.insert(toInsert);
-			toInsert = new ArrayList<Sproxy>();
-		}
+
 
 		log.debug("starting the insert...");
 

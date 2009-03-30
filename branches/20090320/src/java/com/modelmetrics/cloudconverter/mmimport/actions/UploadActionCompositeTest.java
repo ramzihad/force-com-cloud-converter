@@ -59,5 +59,46 @@ public class UploadActionCompositeTest extends TestCaseWithDevOrg {
 		assertEquals(ActionSupport.SUCCESS, s);
 
 	}
+	
+	public void testSampleUpload_TestSheet2_The500() throws Exception {
+
+		this.handleCustomObjectKill("The500__c");
+		
+		String fileName = "./src/sampledbs/excel/TestSpreadsheet-500-DoNotChange-v1.xls";
+
+		
+		UploadActionComposite action = (UploadActionComposite) SpringBeanBroker
+				.getBeanFactory().getBean("uploadActionComposite");
+
+		assertNotNull(action.getFileService());
+
+		assertNotNull(action.getSalesforceService());
+		
+		action.setUploadContext(new UploadContext());
+
+		SalesforceSessionNewImpl salesforceSessionNewImpl = new SalesforceSessionNewImpl();
+
+		salesforceSessionNewImpl
+				.setSalesforceCredentials(this.salesforceCredentials);
+		
+		log.debug("heading to the main test of action with an existing session id...");
+
+		action.setExistingSessionId(salesforceSessionNewImpl.getSessionId());
+
+		action.setExistingLocationUrl(salesforceSessionNewImpl.getUrl());
+
+		action.init();
+		
+		action.setOverride(Boolean.TRUE);
+		
+		
+
+		action.setUpload(new File(fileName));
+		
+		String s = action.upload();
+		
+		assertEquals(ActionSupport.SUCCESS, s);
+
+	}
 
 }
