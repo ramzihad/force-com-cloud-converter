@@ -27,6 +27,9 @@ THE SOFTWARE.
 
 package com.modelmetrics.common.sforce;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
 import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
 import com.sforce.soap.partner.LoginResult;
@@ -43,6 +46,8 @@ import com.sforce.soap.partner.SoapBindingStub;
 
 public class SalesforceSessionNewImpl implements SalesforceSession {
 
+	private static final Log log = LogFactory.getLog(SalesforceSessionNewImpl.class);
+	
 	private SalesforceCredentials salesforceCredentials;
 
 	private SoapBindingStub sforce;
@@ -53,6 +58,8 @@ public class SalesforceSessionNewImpl implements SalesforceSession {
 
 	private String metadataUrl;
 
+	private String sessionId;
+	
 	public String getMetadataUrl() {
 		return metadataUrl;
 	}
@@ -61,7 +68,7 @@ public class SalesforceSessionNewImpl implements SalesforceSession {
 		this.metadataUrl = metadataUrl;
 	}
 
-	private void initializeConnection() throws Exception {
+	public void initialize() throws Exception {
 
 		SforceServiceLocator locator = new SforceServiceLocator();
 
@@ -71,15 +78,25 @@ public class SalesforceSessionNewImpl implements SalesforceSession {
 		LoginResult lr = sforce.login(this.salesforceCredentials.getUsername(),
 				this.salesforceCredentials.getPassword());
 
+		
 		this.setUrl(lr.getServerUrl());
+		
+		log.debug("api URL: " + this.getUrl());
 
 		this.setMetadataUrl(lr.getMetadataServerUrl());
 
+		log.debug("metadata URL: " + this.getMetadataUrl());
+		
+		this.setSessionId(lr.getSessionId());
+		
+		log.debug("session id: " + this.getSessionId());
+		
 		sforce._setProperty(SoapBindingStub.ENDPOINT_ADDRESS_PROPERTY, lr
 				.getServerUrl());
 
 		SessionHeader hdr = new SessionHeader();
 
+		
 		hdr.setSessionId(lr.getSessionId());
 
 		sforce.setHeader(locator.getServiceName().getNamespaceURI(),
@@ -116,7 +133,7 @@ public class SalesforceSessionNewImpl implements SalesforceSession {
 		}
 
 		try {
-			initializeConnection();
+			initialize();
 		} catch (Exception e) {
 			throw new RuntimeException(
 					"Couldn't initialize Salesforce Session", e);
@@ -138,5 +155,13 @@ public class SalesforceSessionNewImpl implements SalesforceSession {
 
 	public void setMetadata(MetadataBindingStub metadata) {
 		this.metadata = metadata;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 }

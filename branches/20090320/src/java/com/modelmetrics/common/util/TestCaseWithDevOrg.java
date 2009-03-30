@@ -46,6 +46,7 @@ public class TestCaseWithDevOrg extends TestCaseWithLog {
 					.executeSimpleDelete(co);
 		}
 
+		log.debug("custom object killed.");
 	}
 	
 	public boolean containsTestObject(SalesforceSession salesforceSession,

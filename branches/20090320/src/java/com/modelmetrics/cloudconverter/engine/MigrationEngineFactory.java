@@ -27,25 +27,22 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
-
 /**
- * builds migration engines. as of 2009-01-21 this may not be necessary since
- * there's only one migration engine type.  open ot input either way.
+ * builds migration engines. 
  * 
  * @author reidcarlberg
  * 
  */
 public class MigrationEngineFactory {
 
-	public MigrationEngineIF build() {
-		return new MigrationEngineStandardImpl();
+	public MigrationEngineIF build(MigrationContext migrationContext) {
+		if (migrationContext.getDirtConnection() != null) {
+			return new MigrationEngineResultSetImpl();
+		} else if (migrationContext.getWrapperBean() != null) {
+			return new MigrationEngineWrapperBeanImpl();
+		} else {
+			throw new RuntimeException("no way to build anything.");
+		}
 	}
 
-//	public MigrationEngineIF build(DatabaseCredentials dbCreds) {
-//		MigrationEngineStandardImpl ret2 = new MigrationEngineStandardImpl();
-//
-//		ret2.setDirtConnection(new DirtConnectionFactory().build(dbCreds));
-//
-//		return ret2;
-//	}
 }

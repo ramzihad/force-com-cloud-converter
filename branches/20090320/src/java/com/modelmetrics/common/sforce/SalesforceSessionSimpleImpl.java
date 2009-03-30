@@ -32,42 +32,32 @@ import com.sforce.soap.partner.SoapBindingStub;
 
 public class SalesforceSessionSimpleImpl implements SalesforceSession {
 
+	public void initialize() throws Exception {
+		throw new RuntimeException("Reid is lazy and didn't implement");
+	}
 
 	public MetadataBindingStub getMetadataService() throws Exception {
 		throw new RuntimeException("Reid is lazy & didn't implement");
 	}
 
-
-
-
 	public String getMetadataUrl() {
 		throw new RuntimeException("Reid is lazy & didn't implement");
 	}
 
-
-
 	private SoapBindingStub sforce;
-	
-
 
 	public SoapBindingStub getSalesforceService() {
 		return sforce;
 	}
 
-
-
 	public void setSforce(SoapBindingStub sforce) {
 		this.sforce = sforce;
 	}
 
-
-
 	public String getUrl() {
-		
+
 		return null;
 	}
-
-
 
 	public SalesforceCredentials getSalesforceCredentials() {
 		// TODO Auto-generated method stub

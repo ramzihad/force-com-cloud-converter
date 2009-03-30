@@ -51,8 +51,15 @@ public class SalesforceCredentials {
 	public SalesforceCredentials() {
 		super();
 		this.wsdlUrl = this.productionUrl;
-		
 	}
+	
+	public SalesforceCredentials(String username, String password) {
+		super();
+		this.wsdlUrl = this.productionUrl;
+		this.username = username;
+		this.password = password;
+	}
+	
 	public void setUseSandbox() {
 		wsdlUrl = sandboxUrl;
 	}

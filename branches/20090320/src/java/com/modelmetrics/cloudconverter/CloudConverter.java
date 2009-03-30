@@ -148,7 +148,7 @@ public class CloudConverter {
 			throw new RuntimeException("you entered an invalid runtype");
 		}
 
-		MigrationEngineIF engine = new MigrationEngineFactory().build();
+		MigrationEngineIF engine = new MigrationEngineFactory().build(migrationContext);
 
 		engine.setMigrationContext(migrationContext);
 

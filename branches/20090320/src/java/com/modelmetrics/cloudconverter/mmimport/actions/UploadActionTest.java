@@ -2,8 +2,6 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
-import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
@@ -25,6 +23,30 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 
 	}
 	
+	public void testBadCredentials() throws Exception {
+		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		
+		assertNotNull(action.getFileService());
+		
+		assertNotNull(action.getSalesforceService());
+		
+		action.setUploadContext(new UploadContext());
+		
+		action.setUsername("bad@username.com");
+		
+		action.setPassword("badPassword");
+		
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
+		
+		String s = action.upload();
+		
+		assertEquals(ActionSupport.INPUT, s);
+
+		assertTrue(action.hasActionMessages());
+		
+	}
 	public void testSampleUpload_Sheet1() throws Exception {
 	
 		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
@@ -61,6 +83,8 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		assertNotNull(action.getFileService());
 		
 		assertNotNull(action.getSalesforceService());
+		
+		action.setUploadContext(new UploadContext());
 		
 		action.setUsername(this.sampleSfdcUsername);
 		

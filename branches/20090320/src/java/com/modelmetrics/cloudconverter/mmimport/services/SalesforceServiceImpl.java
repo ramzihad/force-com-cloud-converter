@@ -11,38 +11,34 @@ import com.sforce.soap.partner.DescribeGlobalResult;
 
 public class SalesforceServiceImpl implements SalesforceService {
 
-	protected SalesforceCredentials salesforceCredentials;
+	private SalesforceSession salesforceSession;
+	
 
-	public void execute(WrapperBean bean, String username, String password)
+
+	public void execute(WrapperBean bean)
 			throws Exception {
 
 		
-		salesforceCredentials.setUsername(username);
-		salesforceCredentials.setPassword(password);
+//		salesforceCredentials.setUsername(username);
+//		salesforceCredentials.setPassword(password);
 		
 
 		MigrationContext migrationContext = new MigrationContextFactory()
-				.buildMigrationContext(salesforceCredentials);
+				.buildMigrationContext(this.getSalesforceSession());
 
 		migrationContext.setWrapperBean(bean);
 
 		MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
-				.build();
+				.build(migrationContext);
 
 		migrationEngineIF.setMigrationContext(migrationContext);
 		
 		// execute it.
-		migrationEngineIF.execute(bean);
+		migrationEngineIF.execute();
 	}
 	
-	public boolean checkObject(WrapperBean bean, String username,
-			String password) throws Exception{
-		
-		salesforceCredentials.setUsername(username);
-		salesforceCredentials.setPassword(password);
-		
-		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
-		.build(salesforceCredentials);
+	public boolean checkObject(WrapperBean bean) throws Exception{
+
 		return containsObject(salesforceSession, bean.getSheetName());
 
 	}
@@ -64,8 +60,13 @@ public class SalesforceServiceImpl implements SalesforceService {
 		return foundType;
 	}
 
-	public void setSalesforceCredentials(
-			SalesforceCredentials salesforceCredentials) {
-		this.salesforceCredentials = salesforceCredentials;
+
+	public SalesforceSession getSalesforceSession() {
+		return salesforceSession;
 	}
+
+	public void setSalesforceSession(SalesforceSession salesforceSession) {
+		this.salesforceSession = salesforceSession;
+	}
+
 }

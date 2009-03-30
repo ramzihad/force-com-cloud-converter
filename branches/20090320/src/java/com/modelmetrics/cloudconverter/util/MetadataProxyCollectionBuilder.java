@@ -292,7 +292,7 @@ public class MetadataProxyCollectionBuilder {
 				field.setPrecision(18);
 			} else if (Constants.CURRENCY.equals(value)) {
 				field.setType(FieldType.Currency);
-				field.setScale(8);
+				field.setScale(2);
 				field.setPrecision(18);
 
 			} else if (Constants.DATE.equals(value)) {

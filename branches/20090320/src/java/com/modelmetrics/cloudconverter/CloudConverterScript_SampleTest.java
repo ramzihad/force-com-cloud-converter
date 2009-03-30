@@ -1,11 +1,8 @@
 package com.modelmetrics.cloudconverter;
 
-import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
-import com.sforce.soap._2006._04.metadata.CustomObject;
-import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 import com.sforce.soap.partner.Field;
 
@@ -43,7 +40,7 @@ public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 
 		log.debug("starting clean up");
 
-		//this.handleCustomObjectKill(this.sampleObject);
+		this.handleCustomObjectKill(this.sampleObject);
 
 		log.debug("clean up complete");
 	}

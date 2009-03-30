@@ -9,11 +9,13 @@ import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
-public class UploadAction extends AbstractUploadContextAware {
+public class UploadActionComposite extends AbstractUploadContextAware {
 
-	private static final Logger log = Logger.getLogger(UploadAction.class);
+	private static final Logger log = Logger.getLogger(UploadActionComposite.class);
 
 	private static final long serialVersionUID = 1760991341958287065L;
+
+	
 
 	private FileService fileService;
 
@@ -23,9 +25,10 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	private String uploadContentType;
 
-	private String password;
+	
+	private String existingSessionId;
 
-	private String username;
+	private String existingLocationUrl;
 
 	private Boolean override;
 
@@ -51,11 +54,38 @@ public class UploadAction extends AbstractUploadContextAware {
 	 */
 	public String init() throws Exception {
 
+		boolean error = false;
+		
+		if ("".equals(existingLocationUrl)) {
+			addActionMessage("locationUrl is required");
+			error = true;
+		}
+		if ("".equals(existingSessionId)) {
+			addActionMessage("Session Id is required");
+			error = true;
+		}
+		
+		if (error) {
+			return ERROR;
+		}
+		
+		/*
+		 * let's check the session id and location url
+		 */
+		try {
+			this.getUploadContext().setSalesforceExistingSession(
+					this.getExistingSessionId(), this.getExistingLocationUrl());
+		} catch (Exception e) {
+			this.getUploadContext().setLastException(e);
+			error = true;
+			addActionMessage("Could not initialize your Salesforce session.  (Existing URL or Session ID invalid");
+		}		
+		
 		return INPUT;
 	}
 
 	/**
-	 * Uploads the XLS and transformes it to a WrapperBean object to be sent to
+	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
 	 * view
 	 * 
 	 * @return
@@ -64,12 +94,9 @@ public class UploadAction extends AbstractUploadContextAware {
 
 		try {
 			boolean error = false;
-			if ("".equals(username)) {
-				addActionMessage("Username is required");
-				error = true;
-			}
-			if ("".equals(password)) {
-				addActionMessage("Password is required");
+
+			if (this.getUploadContext().getSalesforceSession() == null) {
+				addActionMessage("No Salesforce Session present.");
 				error = true;
 			}
 			if (upload == null) {
@@ -77,17 +104,7 @@ public class UploadAction extends AbstractUploadContextAware {
 				error = true;
 			}
 
-			/*
-			 * let's check the username and password now
-			 */
-			try {
-				this.getUploadContext().setSalesforceCredentials(
-						this.getUsername(), this.getPassword());
-			} catch (Exception e) {
-				this.getUploadContext().setLastException(e);
-				error = true;
-				addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
-			}
+
 			
 			/*
 			 * failed?
@@ -95,7 +112,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			if (error) {
 				return INPUT;
 			}
-			
+
 			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
 			
 			bean = fileService.parseXLS(upload);
@@ -105,6 +122,7 @@ public class UploadAction extends AbstractUploadContextAware {
 
 			boolean containsObject = salesforceService.checkObject(bean);
 			if (containsObject) {
+
 				return "override";
 			} else {
 				log.info("Generating Salesforce object now...");
@@ -136,6 +154,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
 			salesforceService.execute(bean);
 
+			
 			log.info("Object sent successfully");
 			return SUCCESS;
 		} catch (Exception e) {
@@ -194,20 +213,20 @@ public class UploadAction extends AbstractUploadContextAware {
 		return this.salesforceService;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getExistingLocationUrl() {
+		return existingLocationUrl;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setExistingLocationUrl(String username) {
+		this.existingLocationUrl = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getExistingSessionId() {
+		return existingSessionId;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setExistingSessionId(String password) {
+		this.existingSessionId = password;
 	}
 
 	public Boolean getOverride() {
@@ -217,5 +236,23 @@ public class UploadAction extends AbstractUploadContextAware {
 	public void setOverride(Boolean override) {
 		this.override = override;
 	}
+
+	public String getS() {
+		return this.getExistingSessionId();
+	}
+
+	public void setS(String s) {
+		this.setExistingSessionId(s);
+	}
+
+	public String getU() {
+		return this.getExistingLocationUrl();
+	}
+
+	public void setU(String u) {
+		this.setExistingLocationUrl(u);
+	}
+
+
 
 }

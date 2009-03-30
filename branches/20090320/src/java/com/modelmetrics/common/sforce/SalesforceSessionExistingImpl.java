@@ -27,9 +27,13 @@ THE SOFTWARE.
 
 package com.modelmetrics.common.sforce;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
+import com.sforce.soap._2006._04.metadata.MetadataService;
+import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
 import com.sforce.soap.partner.SessionHeader;
 import com.sforce.soap.partner.SforceService;
 import com.sforce.soap.partner.SforceServiceLocator;
@@ -43,25 +47,84 @@ import com.sforce.soap.partner.SoapBindingStub;
 
 public class SalesforceSessionExistingImpl implements SalesforceSession {
 
-
-	public MetadataBindingStub getMetadataService() throws Exception {
-		throw new RuntimeException("Reid is lazy & didn't implement");
-	}
-
-
-	public String getMetadataUrl() {
-		throw new RuntimeException("Reid is lazy & didn't implement");
-	}
-
+	private static final Log log = LogFactory.getLog(SalesforceSessionExistingImpl.class);
+	
 	private final String existingSessionId;
 	
 	private final String existingSessionUrl;
 	
+	private String metadataUrl;
+	
 	private SoapBindingStub sforce;
 	
+	private MetadataBindingStub metadataBindingStub;
+	
+	public void initialize() throws Exception {
+
+		log.debug("in salesforce session existing -- initialize");
+		
+		if (this.existingSessionId == null || this.existingSessionUrl == null) {
+			throw new RuntimeException("You can't initialize without a valid session ID (" + this.existingSessionId + ") and URL ("+ this.existingSessionUrl + ")");
+		}
+		
+		sforce = null;
+		metadataBindingStub = null;
+		
+		this.metadataUrl = this.getUrl().replaceAll("services/Soap/u", "services/Soap/m");
+		
+		SforceService service = new SforceServiceLocator();
+		
+		sforce = (SoapBindingStub) service.getSoap(new java.net.URL(this.existingSessionUrl));
+
+		SessionHeader hdr = new SessionHeader();
+		hdr.setSessionId(this.existingSessionId);
+		
+		sforce.setHeader(service.getServiceName().getNamespaceURI(),
+				"SessionHeader", hdr);
+
+		metadataBindingStub = (MetadataBindingStub) new MetadataServiceLocator().getMetadata();
+		
+		metadataBindingStub._setProperty(MetadataBindingStub.ENDPOINT_ADDRESS_PROPERTY,
+				this.getMetadataUrl());
+
+		metadataBindingStub.setHeader(new MetadataServiceLocator().getServiceName()
+				.getNamespaceURI(), "SessionHeader", hdr);
+		
+		
+		
+	}
+	public MetadataBindingStub getMetadataService() throws Exception {
+		if (metadataBindingStub == null) {
+			
+			SforceService service = new SforceServiceLocator();
+			
+			metadataBindingStub = (MetadataBindingStub) service.getSoap(new java.net.URL(this.existingSessionUrl));
+
+			SessionHeader hdr = new SessionHeader();
+			hdr.setSessionId(this.existingSessionId);
+			
+			metadataBindingStub.setHeader(service.getServiceName().getNamespaceURI(),
+					"SessionHeader", hdr);
+
+		}
+		return metadataBindingStub;
+		
+	}
+
+
+
+
+
+	
+	public String getMetadataUrl() {
+		return metadataUrl;
+	}
+	public void setMetadataUrl(String metadataUrl) {
+		this.metadataUrl = metadataUrl;
+	}
 	public SalesforceSessionExistingImpl(String existingSessionId, String existingSessionUrl) {
 		this.existingSessionId = existingSessionId;
-		this.existingSessionUrl = existingSessionId;
+		this.existingSessionUrl = existingSessionUrl;
 		
 		if ( !StringUtils.hasText(this.existingSessionId) || !StringUtils.hasText(this.existingSessionUrl)) {
 			throw new RuntimeException("you must provide an existing session id and URL");
@@ -72,16 +135,7 @@ public class SalesforceSessionExistingImpl implements SalesforceSession {
 
 		if (sforce == null) {
 			
-			SforceService service = new SforceServiceLocator();
-			
-			sforce = (SoapBindingStub) service.getSoap(new java.net.URL(this.existingSessionUrl));
-
-			SessionHeader hdr = new SessionHeader();
-			hdr.setSessionId(this.existingSessionId);
-			
-			sforce.setHeader(service.getServiceName().getNamespaceURI(),
-					"SessionHeader", hdr);
-
+			initialize();
 		}
 		
 		return sforce;
@@ -93,8 +147,7 @@ public class SalesforceSessionExistingImpl implements SalesforceSession {
 	}
 
 	public SalesforceCredentials getSalesforceCredentials() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("Reid was lazy and this method is not implemented.");
 	}
 
 }

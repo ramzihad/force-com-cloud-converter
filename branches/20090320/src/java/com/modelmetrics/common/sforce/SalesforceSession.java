@@ -46,6 +46,7 @@ public interface SalesforceSession {
 	
 	public String getMetadataUrl();
 	
+	public void initialize() throws Exception;
 	
 	
 }

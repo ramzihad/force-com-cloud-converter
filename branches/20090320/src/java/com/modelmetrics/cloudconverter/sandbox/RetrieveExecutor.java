@@ -4,25 +4,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.AbstractMigrationContextAware;
+import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.Metadata;
 import com.sforce.soap._2006._04.metadata.RetrieveRequest;
 import com.sforce.soap._2006._04.metadata.RetrieveResult;
 
-public class RetrieveExecutor extends AbstractMigrationContextAware {
+public class RetrieveExecutor  {
 
 	private static final Log log = LogFactory.getLog(RetrieveExecutor.class);
 	
 	private static final long ONE_SECOND = 1000;
 
-	public RetrieveResult execute(RetrieveRequest request) {
+	public RetrieveResult execute(SalesforceSession salesforceSession, RetrieveRequest request) {
 
 		log.debug("entering retrieve request " + request.getApiVersion());
 		
 		RetrieveResult result = null;
 		
 		try {
-			AsyncResult ars = this.getMigrationContext().getSalesforceSession().getMetadataService().retrieve(request);
+			AsyncResult ars = salesforceSession.getMetadataService().retrieve(request);
 			if (ars == null) {
 				log.debug("The object was not created successfully");
 				throw new RuntimeException("AsyncResult failed without any information");
@@ -40,7 +41,7 @@ public class RetrieveExecutor extends AbstractMigrationContextAware {
 			 * operation is completed.
 			 */
 			while (!done) {
-				ars = this.getMigrationContext().getSalesforceSession().getMetadataService().checkStatus(new String[] {ars.getId()})[0];
+				ars = salesforceSession.getMetadataService().checkStatus(new String[] {ars.getId()})[0];
 				if (ars == null) {
 					System.out.println("The object status cannot be retrieved");
 					throw new RuntimeException("Could not retrieve AsyncResult status");
@@ -60,7 +61,7 @@ public class RetrieveExecutor extends AbstractMigrationContextAware {
 						+ ars.getState());
 			}
 			
-			result = this.getMigrationContext().getSalesforceSession().getMetadataService().checkRetrieveStatus(ars.getId());
+			result = salesforceSession.getMetadataService().checkRetrieveStatus(ars.getId());
 
 		} catch (Exception e) {
 			throw new RuntimeException("failed! ", e);
@@ -68,4 +69,6 @@ public class RetrieveExecutor extends AbstractMigrationContextAware {
 
 		return result;
 	}
+	
+	
 }

@@ -33,7 +33,6 @@ public interface MigrationEngineIF extends MigrationContextAwareIF {
 
 	public void execute() throws Exception;
 
-	public void execute(WrapperBean bean) throws Exception;
 
 	// public DirtConnectionIF getDirtConnection();
 	//	

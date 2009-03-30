@@ -47,4 +47,13 @@ public class MigrationContextFactory {
 		return migrationContext;
 	}
 
+	public MigrationContext buildMigrationContext(
+			SalesforceSession salesforceSession) throws ServiceException {
+
+		MigrationContext migrationContext = new MigrationContext();
+		migrationContext.setSalesforceSession(salesforceSession);
+
+
+		return migrationContext;
+	}
 }

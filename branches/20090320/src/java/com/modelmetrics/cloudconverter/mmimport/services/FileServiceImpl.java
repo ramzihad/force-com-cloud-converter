@@ -134,7 +134,12 @@ public class FileServiceImpl implements FileService {
 							// value = value.replace(",", ".");
 							// list.add(value);
 							// } else {
-							list.add(((NumberCell) c).getValue());
+							if (value.contains("%")) {
+								//otherwise "percentages" show up in SFDC as 0.78 when it should be 78%.
+								list.add(((NumberCell) c).getValue() * 100);
+							} else {
+								list.add(((NumberCell) c).getValue());
+							}
 							// }
 						}
 					}

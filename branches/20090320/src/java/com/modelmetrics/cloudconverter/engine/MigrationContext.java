@@ -143,17 +143,7 @@ public class MigrationContext {
 		this.salesforceCredentials = salesforceCredentials;
 	}
 	
-	public void resetSession() throws Exception {
-		
-		log.info("in reset session...");
-		
-		SalesforceSession newSession = SalesforceSessionFactory.factory.build(this.getSalesforceCredentials());
-		
-		this.setSalesforceSession(newSession);
-		
-		log.info("reset session complete...");
-		
-	}
+
 
 	public CustomField[] getCustomFields() {
 		return customFields;

@@ -157,7 +157,7 @@ public class CloudConverterScript_Sample {
 		migrationContext.setExternalIdForUpsert("MYID__c");
 
 		MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
-				.build();
+				.build(migrationContext);
 
 		migrationEngineIF.setMigrationContext(migrationContext);
 
