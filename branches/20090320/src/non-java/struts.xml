@@ -36,8 +36,11 @@
 		</action>
 
 		<action name="import" class="uploadActionComposite" method="init">
-			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		<action name="import1" class="uploadActionComposite" method="init2">
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
 		<action name="import2" class="uploadActionComposite" method="upload" >
 			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>

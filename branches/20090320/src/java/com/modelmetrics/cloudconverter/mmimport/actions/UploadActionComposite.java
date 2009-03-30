@@ -84,6 +84,9 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		return INPUT;
 	}
 
+	public String init2() throws Exception {
+		return INPUT;
+	}
 	/**
 	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
 	 * view
@@ -117,6 +120,8 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 			
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
+			
+			this.getUploadContext().setWrapperBean(bean);
 
 			log.info("File uploaded successfully");
 

@@ -70,6 +70,17 @@ public class UploadContext {
 		this.salesforceSession = salesforceSession;
 	}
 	
+	public String getErrorMessage() {
+		return this.getLastException().getMessage() + ", " + this.getLastException().getLocalizedMessage();
+	}
 	
+	public String getProfileListUrl() {
+		
+//		https://na4-api
+		
+		String ret = this.getSalesforceSession().getUrl().substring(0, 11) + ".salesforce.com/setup/ui/profilelist.jsp?setupid=Profiles&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers";
+		
+		return ret;
+	}
 	
 }
