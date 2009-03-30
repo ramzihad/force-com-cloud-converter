@@ -23,7 +23,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="salesforceService"
 		class="com.modelmetrics.cloudconverter.mmimport.services.SalesforceServiceImpl" >
-		<property name="salesforceCredentials" ref="salesforceCredentials" />
+
 	</bean>
 	
 	<bean id="fileService"
@@ -33,8 +33,28 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		class="com.modelmetrics.common.sforce.SalesforceCredentials" >
 	</bean>
 
+	<bean id="uploadContext"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadContext"
+		scope="session">
+		<aop:scoped-proxy />
+	</bean>
+	
+	<bean id="abstractUploadContextAware" abstract="true" >
+		<property name="uploadContext">
+			<ref bean="uploadContext" />
+		</property>
+	</bean>
+
 	<bean id="uploadAction" scope="prototype"
+	parent="abstractUploadContextAware"
 		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadAction">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<bean id="uploadActionComposite" scope="prototype"
+	parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionComposite">
 		<property name="fileService" ref="fileService" />
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>

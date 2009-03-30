@@ -21,19 +21,35 @@
 		</interceptors-->
 		
 		<action name="init" class="uploadAction" method="init">
-			<result name="input">/WEB-INF/jsp/upload.jsp</result>
+			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 		</action>
 		<action name="upload" class="uploadAction" method="upload" >
-			<!-- interceptor-ref name="myStack"/-->
-			<result name="success">/WEB-INF/jsp/view.jsp</result>
-			<result name="error">/WEB-INF/jsp/error.jsp</result>
-			<result name="input">/WEB-INF/jsp/upload.jsp</result>
-			<result name="override">/WEB-INF/jsp/override.jsp</result>
-			<result name="wait">/WEB-INF/jsp/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
+			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
+			<result name="wait">/WEB-INF/jsp/upload/wait.jsp</result>
 		</action>
 		<action name="override" class="uploadAction" method="override" >
-			<result name="success">/WEB-INF/jsp/view.jsp</result>
-			<result name="error">/WEB-INF/jsp/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 		</action>
+
+		<action name="import" class="uploadActionComposite" method="init">
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		<action name="import2" class="uploadActionComposite" method="upload" >
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+		</action>
+		<action name="import3" class="uploadActionComposite" method="override" >
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+
 	</package>
 </struts>
