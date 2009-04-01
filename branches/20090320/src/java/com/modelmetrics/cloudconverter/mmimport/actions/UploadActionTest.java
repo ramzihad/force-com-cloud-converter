@@ -2,6 +2,7 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
+import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
@@ -32,6 +33,8 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUploadContext(new UploadContext());
 		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
+		
 		action.setUsername("bad@username.com");
 		
 		action.setPassword("badPassword");
@@ -51,6 +54,10 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	
 		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
 		
+		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
+		
 		assertNotNull(action.getFileService());
 		
 		assertNotNull(action.getSalesforceService());
@@ -62,6 +69,32 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		action.setOverride(Boolean.TRUE);
 		
 		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
+		
+		String s = action.upload();
+		
+		assertEquals(ActionSupport.SUCCESS, s);
+		
+	}
+	
+	public void testSampleUpload_WasFailing_Evan1() throws Exception {
+		
+		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		
+		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
+		
+		assertNotNull(action.getFileService());
+		
+		assertNotNull(action.getSalesforceService());
+		
+		action.setUsername(this.sampleSfdcUsername);
+		
+		action.setPassword(this.sampleSfdcPassword);
+		
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File("./src/sampledbs/excel/snapshot test.xls"));
 		
 		String s = action.upload();
 		
@@ -85,6 +118,8 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		assertNotNull(action.getSalesforceService());
 		
 		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
 		
 		action.setUsername(this.sampleSfdcUsername);
 		

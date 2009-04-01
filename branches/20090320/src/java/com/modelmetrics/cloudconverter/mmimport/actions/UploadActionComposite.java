@@ -8,8 +8,10 @@ import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.common.sforce.struts2.AbstractCompositeAction;
+import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
-public class UploadActionComposite extends AbstractUploadContextAware {
+public class UploadActionComposite extends AbstractCompositeAction {
 
 	private static final Logger log = Logger.getLogger(UploadActionComposite.class);
 
@@ -26,10 +28,6 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 	private String uploadContentType;
 
 	
-	private String existingSessionId;
-
-	private String existingLocationUrl;
-
 	private Boolean override;
 
 	private String uploadFileName;
@@ -38,6 +36,18 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	private String message;
 
+private SalesforceSessionContext salesforceSessionContext;
+
+	private UploadContext uploadContext;
+
+	public UploadContext getUploadContext() {
+		return uploadContext;
+	}
+
+	public void setUploadContext(UploadContext uploadContext) {
+		this.uploadContext = uploadContext;
+	}
+	
 	public String getMessage() {
 		return message;
 	}
@@ -52,37 +62,40 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 	 * @return
 	 * @throws Exception
 	 */
-	public String init() throws Exception {
-
-		boolean error = false;
-		
-		if ("".equals(existingLocationUrl)) {
-			addActionMessage("locationUrl is required");
-			error = true;
-		}
-		if ("".equals(existingSessionId)) {
-			addActionMessage("Session Id is required");
-			error = true;
-		}
-		
-		if (error) {
-			return ERROR;
-		}
-		
-		/*
-		 * let's check the session id and location url
-		 */
-		try {
-			this.getUploadContext().setSalesforceExistingSession(
-					this.getExistingSessionId(), this.getExistingLocationUrl());
-		} catch (Exception e) {
-			this.getUploadContext().setLastException(e);
-			error = true;
-			addActionMessage("Could not initialize your Salesforce session.  (Existing URL or Session ID invalid");
-		}		
-		
-		return INPUT;
-	}
+//	public String init() throws Exception {
+//
+//		boolean error = false;
+//		
+//		if ("".equals(this.getExistingLocationUrl())) {
+//			addActionMessage("locationUrl is required");
+//			error = true;
+//		}
+//		if ("".equals(this.getExistingSessionId())) {
+//			addActionMessage("Session Id is required");
+//			error = true;
+//		}
+//		
+//		if (error) {
+//			return ERROR;
+//		}
+//		
+//		/*
+//		 * let's check the session id and location url
+//		 */
+//		try {
+//			this.getUploadContext().setSalesforceExistingSession(
+//					this.getExistingSessionId(), this.getExistingLocationUrl());
+//			addActionError("session set.");
+//			log.debug("Session set");
+//			
+//		} catch (Exception e) {
+//			this.getUploadContext().setLastException(e);
+//			error = true;
+//			addActionMessage("Could not initialize your Salesforce session.  (Existing URL or Session ID invalid");
+//		}		
+//		
+//		return INPUT;
+//	}
 
 	public String init2() throws Exception {
 		return INPUT;
@@ -98,7 +111,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		try {
 			boolean error = false;
 
-			if (this.getUploadContext().getSalesforceSession() == null) {
+			if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
 				addActionMessage("No Salesforce Session present.");
 				error = true;
 			}
@@ -116,7 +129,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 				return INPUT;
 			}
 
-			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
 			
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
@@ -156,7 +169,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 			log.info("Generating Salesforce object now...");
 			bean = this.getUploadContext().getWrapperBean();
 			bean.setOverride(Boolean.TRUE);
-			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
 			salesforceService.execute(bean);
 
 			
@@ -218,22 +231,6 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		return this.salesforceService;
 	}
 
-	public String getExistingLocationUrl() {
-		return existingLocationUrl;
-	}
-
-	public void setExistingLocationUrl(String username) {
-		this.existingLocationUrl = username;
-	}
-
-	public String getExistingSessionId() {
-		return existingSessionId;
-	}
-
-	public void setExistingSessionId(String password) {
-		this.existingSessionId = password;
-	}
-
 	public Boolean getOverride() {
 		return override;
 	}
@@ -242,20 +239,13 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		this.override = override;
 	}
 
-	public String getS() {
-		return this.getExistingSessionId();
+	public SalesforceSessionContext getSalesforceSessionContext() {
+		return salesforceSessionContext;
 	}
 
-	public void setS(String s) {
-		this.setExistingSessionId(s);
-	}
-
-	public String getU() {
-		return this.getExistingLocationUrl();
-	}
-
-	public void setU(String u) {
-		this.setExistingLocationUrl(u);
+	public void setSalesforceSessionContext(
+			SalesforceSessionContext salesforceSessionContext) {
+		this.salesforceSessionContext = salesforceSessionContext;
 	}
 
 

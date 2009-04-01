@@ -81,7 +81,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			 * let's check the username and password now
 			 */
 			try {
-				this.getUploadContext().setSalesforceCredentials(
+				this.getSalesforceSessionContext().setSalesforceCredentials(
 						this.getUsername(), this.getPassword());
 			} catch (Exception e) {
 				this.getUploadContext().setLastException(e);
@@ -96,7 +96,7 @@ public class UploadAction extends AbstractUploadContextAware {
 				return INPUT;
 			}
 			
-			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
 			
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
@@ -133,7 +133,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			log.info("Generating Salesforce object now...");
 			bean = this.getUploadContext().getWrapperBean();
 			bean.setOverride(Boolean.TRUE);
-			salesforceService.setSalesforceSession(this.getUploadContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
 			salesforceService.execute(bean);
 
 			log.info("Object sent successfully");

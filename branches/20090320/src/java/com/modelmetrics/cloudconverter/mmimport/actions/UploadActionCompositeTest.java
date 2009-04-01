@@ -3,7 +3,9 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 import java.io.File;
 
 import com.modelmetrics.common.sforce.SalesforceCredentials;
+import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.SalesforceSessionNewImpl;
+import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
@@ -83,11 +85,10 @@ public class UploadActionCompositeTest extends TestCaseWithDevOrg {
 		
 		log.debug("heading to the main test of action with an existing session id...");
 
-		action.setExistingSessionId(salesforceSessionNewImpl.getSessionId());
+		SalesforceSessionContext salesforceSessionContext = new SalesforceSessionContext();
+		salesforceSessionContext.setSalesforceSession(new SalesforceSessionFactory().build(salesforceSessionNewImpl.getSessionId(), salesforceSessionNewImpl.getUrl()));
 
-		action.setExistingLocationUrl(salesforceSessionNewImpl.getUrl());
-
-		action.init();
+		action.setSalesforceSessionContext(salesforceSessionContext);
 		
 		action.setOverride(Boolean.TRUE);
 		

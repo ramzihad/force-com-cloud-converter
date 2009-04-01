@@ -2,34 +2,21 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
-import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
+import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
-public class UploadContext {
+public class UploadContext  {
 
 	private Exception lastException;
-	
+
 	private String salesforceUsername;
-	
+
 	private String salesforcePassword;
-	
+
 	private WrapperBean wrapperBean;
 
-	private SalesforceSession salesforceSession;
-	
-	public void setSalesforceCredentials(String salesforceUsername, String salesforcePassword) throws Exception {
-		
-		salesforceSession = new SalesforceSessionFactory().build(new SalesforceCredentials(salesforceUsername, salesforcePassword));
-		salesforceSession.initialize();
-		
-	}
-	
-	public void setSalesforceExistingSession(String sessionId, String url) throws Exception {
-		
-		salesforceSession = new SalesforceSessionFactory().build(sessionId, url);
-		salesforceSession.initialize();
-		
-	}
+
+
 	public Exception getLastException() {
 		return lastException;
 	}
@@ -62,25 +49,11 @@ public class UploadContext {
 		this.wrapperBean = wrapperBean;
 	}
 
-	public SalesforceSession getSalesforceSession() {
-		return salesforceSession;
+	public String getErrorMessage() {
+		return this.getLastException().getMessage() + ", "
+				+ this.getLastException().getLocalizedMessage();
 	}
 
-	public void setSalesforceSession(SalesforceSession salesforceSession) {
-		this.salesforceSession = salesforceSession;
-	}
-	
-	public String getErrorMessage() {
-		return this.getLastException().getMessage() + ", " + this.getLastException().getLocalizedMessage();
-	}
-	
-	public String getProfileListUrl() {
-		
-//		https://na4-api
-		
-		String ret = this.getSalesforceSession().getUrl().substring(0, 11) + ".salesforce.com/setup/ui/profilelist.jsp?setupid=Profiles&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers";
-		
-		return ret;
-	}
-	
+
+
 }
