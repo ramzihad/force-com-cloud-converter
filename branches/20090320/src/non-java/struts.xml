@@ -29,6 +29,7 @@
 		<action name="init" class="uploadAction" method="init">
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 		</action>
+		
 		<action name="upload" class="uploadAction" method="upload" >
 			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
@@ -43,7 +44,12 @@
 
 		<action name="import" class="compositeLogin" >
 			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
+		</action>
+
+		<action name="home" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/common/main.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
 		</action>
 		
 		<action name="import1" class="uploadActionComposite" method="init2">
@@ -86,11 +92,7 @@
 			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
 		</action>
 		
-		<action name="home" class="basicAction">
-			<result name="success">
-				/WEB-INF/jsp/describe/home.jsp
-			</result>
-		</action>
+
 
 		<action name="select" class="selectTarget">
 			<result name="input">
