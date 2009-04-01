@@ -15,12 +15,13 @@
 
 <h1>Layouts</h1>
 
-<p><s:iterator value="describeContext.types"><a href="<s:url action="layouts"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator></p>
 
 <s:if test="results != null">
 <h2><s:property value="target" /></h2>
 
-<p><a href="<s:url action="layoutsv2"><s:param name="target" value="target" /></s:url>">Layouts V2</a>
+<p><a href="<s:url action="select" />">Select New Object</a> |
+
+<a href="<s:url action="layoutsv2"><s:param name="target" value="target" /></s:url>">Layouts V2</a> |
 
 <a href="<s:url value="layoutsWorkbook.xls"><s:param name="target" value="target" /></s:url>">Excel</a> | 
 

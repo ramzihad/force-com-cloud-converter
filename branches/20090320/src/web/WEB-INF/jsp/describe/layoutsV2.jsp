@@ -15,12 +15,11 @@
 
 <h1>Layouts V2</h1>
 
-<p><s:iterator value="describeContext.types"><a href="<s:url action="layoutsv2"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator></p>
 
 <s:if test="summary != null">
 <h2><s:property value="target" /></h2>
 
-<p>Need excel?  Switch to the <a href="<s:url action="layouts"><s:param name="target" value="target" /></s:url>">original version of layouts</a>. | 
+<p><a href="<s:url action="select" />">Select New Object</a> | Need excel?  Switch to the <a href="<s:url action="layouts"><s:param name="target" value="target" /></s:url>">original version of layouts</a>. | 
 
 <a href="<s:url action="describe"><s:param name="target" value="target" /></s:url>">Switch to Describe</a> |
 <a href="<s:url action="layoutsv2form"><s:param name="target" value="target" /></s:url>">W2A Form</a> | </p>

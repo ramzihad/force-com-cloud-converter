@@ -11,11 +11,6 @@
 
 <h1>Describe</h1>
 
-<a href="<s:url action="describeOutputAsTemplate"></s:url>">Get Multiple Objects</a>
-
-<p>
-	<s:iterator value="describeContext.types"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator>
-</p>
 
 <s:if test="results != null">
 <h2><s:property value="target" /></h2>
@@ -24,7 +19,8 @@
 
 
 
-<p><a href="<s:url value="describeWorkbook.xls"><s:param name="target" value="target" /></s:url>">Excel</a> |
+<p><a href="<s:url action="select" />">Select New Object</a> |
+<a href="<s:url value="describeWorkbook.xls"><s:param name="target" value="target" /></s:url>">Excel</a> |
 <a href="<s:url action="describeForm"><s:param name="target" value="target" /></s:url>">W2A Form (without required)</a> | 
 <a href="<s:url action="layoutsv2"><s:param name="target" value="target" /></s:url>">Switch to Layouts</a> | 
 <a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes.)</a> | 

@@ -15,7 +15,6 @@
 
 <h1>Layouts V2</h1>
 
-<p><s:iterator value="describeContext.types"><a href="<s:url action="layoutsv2"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator></p>
 
 <s:if test="summary != null">
 <h2><s:property value="target" /></h2>
