@@ -19,7 +19,13 @@
 			</interceptor-stack>
 			
 		</interceptors-->
-		
+
+		<result-types>
+			<result-type name="excel"
+				class="com.modelmetrics.common.poi.ExcelResult" default="false" />
+		</result-types>
+
+
 		<action name="init" class="uploadAction" method="init">
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 		</action>
@@ -35,10 +41,11 @@
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 		</action>
 
-		<action name="import" class="uploadActionComposite" method="init">
-			<result name="input">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
+		<action name="import" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
+		
 		<action name="import1" class="uploadActionComposite" method="init2">
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
@@ -53,6 +60,114 @@
 			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
+		
+		<!-- Force.com Platform Utilities -->
+		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
+ 			<result name="input">
+ 				/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp
+ 			</result>
+ 			<result name="success" type="excel" />
+ 		</action>
+
+<!-- 	<action name="login" class="loginAction">
+			<result name="input">
+				/WEB-INF/jsp/common/login.jsp
+			</result>
+			<result name="error">
+				/WEB-INF/jsp/common/login.jsp
+			</result>
+			<result name="success" type="redirect-action">
+				describe
+			</result>
+		</action> -->
+
+		<action name="start" class="compositeLogin" method="init">
+			<result name="success" type="redirectAction">select</result>
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
+		</action>
+		
+		<action name="home" class="basicAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/home.jsp
+			</result>
+		</action>
+
+		<action name="select" class="selectTarget">
+			<result name="input">
+				/WEB-INF/jsp/describe/selectObject.jsp
+			</result>
+			<result name="success" type="redirectAction">describe</result>
+		</action>
+
+		<action name="describe" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describe.jsp
+			</result>
+		</action>
+
+<!-- 		<action name="describe" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describe.jsp
+			</result>
+		</action>
+ -->
+		<action name="describeAsTemplate" class="describeAsTemplateAction">
+			<result name="input">
+				/WEB-INF/jsp/describe/dataTemplateCheckboxlist.jsp
+			</result>
+			<result name="success" type="excel" />
+		</action>
+		
+
+		<action name="describeForm" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describeForm.jsp
+			</result>
+		</action>
+		
+		
+
+		<action name="describeWorkbook" class="describeExcelAction">
+			<result name="success" type="excel" />
+		</action>
+		
+		<action name="dataTemplateWorkbook" class="dataTemplateExcelAction">
+			<result name="success" type="excel" />
+		</action>
+		
+		
+		<action name="describeWorkbookAll" class="describeAllInExcelAction">
+			<result name="success" type="excel" />
+		</action>		
+
+		<action name="layouts" class="layoutsAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/layouts.jsp
+			</result>
+		</action>
+
+		<action name="layoutsv2" class="layoutsActionV2">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2.jsp
+			</result>
+		</action>
+		
+		<action name="layoutsv2form" class="layoutsActionV2Form">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2form.jsp
+			</result>
+		</action>		
+				
+		<action name="layoutsWorkbook" class="layoutsExcelAction">
+			<result name="success" type="excel" />
+		</action>
+		
+		<action name="mmmain" class="basicAction">
+			<result name="success">
+				/WEB-INF/jsp/mm/main.jsp
+			</result>
+		</action>	
+
 
 	</package>
 </struts>
