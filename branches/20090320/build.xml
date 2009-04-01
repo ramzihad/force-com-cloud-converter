@@ -130,9 +130,10 @@
 			<lib dir="lib" />
 		</war>
 		
+		<!--
 		<delete file="src/non-java/log4j.properties" />
 		<copyfile dest="src/non-java/log4j.properties" src="src/non-java/log4j.properties.std"/>
-
+		-->
 		
 		<delete dir="${build}" />
 		<delete dir="${test}" />
