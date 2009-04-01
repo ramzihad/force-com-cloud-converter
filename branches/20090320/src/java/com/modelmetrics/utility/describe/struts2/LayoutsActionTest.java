@@ -1,21 +1,19 @@
 package com.modelmetrics.utility.describe.struts2;
 
-import junit.framework.TestCase;
-
-import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
+import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.modelmetrics.utility.common.struts2.UtilityContext;
 
-public class LayoutsActionTest extends TestCase {
+public class LayoutsActionTest extends TestCaseWithDevOrg {
 
 	public void testBasic() throws Exception {
-		SalesforceCredentials salesforceCredentials = new SalesforceCredentials();
-		salesforceCredentials.setPassword("blah1234");
-		salesforceCredentials.setUsername("reid_carlberg@modelmetrics.com");
-		salesforceCredentials
-				.setWsdlUrl("https://www.salesforce.com/services/Soap/u/14.0");
+//		SalesforceCredentials salesforceCredentials = new SalesforceCredentials();
+//		salesforceCredentials.setPassword("blah1234");
+//		salesforceCredentials.setUsername("reid_carlberg@modelmetrics.com");
+//		salesforceCredentials
+//				.setWsdlUrl("https://www.salesforce.com/services/Soap/u/14.0");
 
 		SalesforceSession salesforceSession = SalesforceSessionFactory.factory
 				.build(salesforceCredentials);

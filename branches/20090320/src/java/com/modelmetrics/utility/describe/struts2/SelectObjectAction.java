@@ -21,19 +21,18 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 		log.info(this.getSalesforceSessionContext().getSalesforceSession()== null);
 		log.info("utility context id " + this.getUtilityContext());
 		
-		if (this.getDescribeContext().getTypes() == null) {
-			
-			
-			this.getDescribeContext().setTypes(
-					this.getSalesforceSessionContext().getSalesforceSession()
-							.getSalesforceService().describeGlobal().getTypes());
-			
-		}
+
 
 
 		
 
 		if (this.getTarget() == null) {
+			
+				this.getDescribeContext().setTypes(
+						this.getSalesforceSessionContext().getSalesforceSession()
+								.getSalesforceService().describeGlobal().getTypes());
+				
+			
 			return INPUT;
 		}
 

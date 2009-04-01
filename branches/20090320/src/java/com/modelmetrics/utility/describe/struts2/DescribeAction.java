@@ -17,13 +17,7 @@ public class DescribeAction extends AbstractDescribeContextAware {
 
 	public String execute() throws Exception {
 
-		if (this.getDescribeContext().getTypes() == null) {
-			
-			this.getDescribeContext().setTypes(
-					this.getSalesforceSessionContext().getSalesforceSession()
-							.getSalesforceService().describeGlobal().getTypes());
-			
-		}
+		
 
 		DescribeSObjectResult r = null;
 		

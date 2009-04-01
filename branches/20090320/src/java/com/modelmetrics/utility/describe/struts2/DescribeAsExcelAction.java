@@ -21,7 +21,7 @@ public class DescribeAsExcelAction extends DescribeAction {
 		
 		DescribeExcelBuilderDelegate delegate = new DescribeExcelBuilderDelegate();
 		
-		delegate.handleBuild(this.getResults(), excelSupport, workbook, this.getTarget());
+		delegate.handleBuild(this.getResults(), excelSupport, workbook, this.getDescribeContext().getTarget());
 		
 		this.setWorkbook(workbook);
 

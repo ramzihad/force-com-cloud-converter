@@ -44,12 +44,9 @@ public class LayoutsAction extends AbstractDescribeContextAware {
 
 		}
 
-		if (this.getTarget() != null) {
+		
+		if (this.getDescribeContext().getTarget() != null) {
 
-			
-			if (this.getTarget() != null) {
-				this.getDescribeContext().setTarget(this.getTarget());
-			}
 			LayoutsBuilder builder = new LayoutsBuilder();
 			builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
 

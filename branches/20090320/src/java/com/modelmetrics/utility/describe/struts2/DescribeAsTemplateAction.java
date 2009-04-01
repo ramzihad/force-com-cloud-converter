@@ -34,7 +34,7 @@ public class DescribeAsTemplateAction extends DescribeAction
 			super.execute();
 			
 			LayoutsBuilderV2 builder = new LayoutsBuilderV2();
-			LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getTarget());
+			LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
 
 			DataTemplateExcelBuilderDelegate delegate = new DataTemplateExcelBuilderDelegate();
 			

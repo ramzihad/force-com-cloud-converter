@@ -25,7 +25,7 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 
 		DataTemplateExcelBuilderDelegate delegate = new DataTemplateExcelBuilderDelegate();
 		
-		delegate.handleBuild(this.getResults(), summary, excelSupport, workbook, this.getTarget());
+		delegate.handleBuild(this.getResults(), summary, excelSupport, workbook, this.getDescribeContext().getTarget());
 		
 		this.setWorkbook(workbook);
 

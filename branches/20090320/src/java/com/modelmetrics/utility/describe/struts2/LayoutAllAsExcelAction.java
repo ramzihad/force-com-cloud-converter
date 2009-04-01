@@ -20,7 +20,7 @@ public class LayoutAllAsExcelAction extends LayoutsAction {
 		
 		LayoutExcelBuilderDelegate delegate = new LayoutExcelBuilderDelegate();
 		
-		delegate.handleBuild(this.getRows(), this.getRecordTypes(), this.getLayoutIds(), excelSupport, workbook, this.getTarget());
+		delegate.handleBuild(this.getRows(), this.getRecordTypes(), this.getLayoutIds(), excelSupport, workbook, this.getDescribeContext().getTarget());
 		
 		this.setWorkbook(workbook);
 		
