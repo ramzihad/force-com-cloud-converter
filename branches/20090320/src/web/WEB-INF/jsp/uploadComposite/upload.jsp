@@ -12,14 +12,10 @@
 		<s:fielderror />
 		<s:form action="import2" method="POST" enctype="multipart/form-data">
 
-		<table>
-		
-		<tr>
-		<td>
 
 			<h1>Import Your App</h1>
 
-			<h2>Step 1: Select Your Excel File</h2>
+			<h1>Step 1: Select Your Excel File</h1>
 			
 			<p>This routine will import your Microsoft Excel based application and data into Salesforce.</p>
 			
@@ -43,12 +39,6 @@
 				
 			</table>
 
-		</td>
-		<td valign="top">
-		<img src="./img/mmlogo.jpg" />
-		</td>
-		</tr>
-		</table>
 		</s:form>
 		
 		<h2>Excel File Formatting Tips</h2>

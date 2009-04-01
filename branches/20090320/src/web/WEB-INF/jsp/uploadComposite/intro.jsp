@@ -2,17 +2,11 @@
 
 <html>
 	<head>
-		<title>Welcome to Import Your App</title>
-		<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
+		<title>Import Your App</title>
 	</head>
 
 	<body >
 
-<table>
-
-<tr>
-
-<td>
 
 <h1>Import Your App to Salesforce</h1>
 
@@ -26,13 +20,6 @@
 
 <p>That's it.  <a href="import1.action">Click here to get started.</a></p>
 
-</td>
-
-<td valign="top">
-<img src="./img/mmlogo.jpg" />
-</td>
-</tr>
-</table>
 
 	</body>
 </html>
