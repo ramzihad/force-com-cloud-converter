@@ -11,7 +11,7 @@
         <body>
 		
 		
-		<div id="puHeader" style="float:right; text-align: center;"><a href="http://modelmetrics.com" target="_blank"><img src="./img/mmlogo.jpg" /></a><br/><a href="http://modelmetrics.com/blog/rcarlberg" target="_blank">Platform Utilities</a> from <a href="http://modelmetrics.com" target="_blank">Model Metrics</a></div>
+		<div id="puHeader" style="float:right; text-align: center;"><a href="http://modelmetrics.com" target="_blank"><img src="./img/mmlogo.jpg" /></a><br/><a href="http://modelmetrics.com" target="_blank">Platform Utilities from Model Metrics</a></div>
 
 		<div id="puMain" style="clear: both">
         

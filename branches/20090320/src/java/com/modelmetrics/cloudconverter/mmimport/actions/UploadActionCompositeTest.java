@@ -40,6 +40,8 @@ public class UploadActionCompositeTest extends TestCaseWithDevOrg {
 		assertNotNull(action.getSalesforceService());
 		
 		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
 
 		SalesforceSessionNewImpl salesforceSessionNewImpl = new SalesforceSessionNewImpl();
 
@@ -48,9 +50,7 @@ public class UploadActionCompositeTest extends TestCaseWithDevOrg {
 		
 		log.debug("heading to the main test of action with an existing session id...");
 
-		action.setExistingSessionId(salesforceSessionNewImpl.getSessionId());
-
-		action.setExistingLocationUrl(salesforceSessionNewImpl.getUrl());
+action.getSalesforceSessionContext().setSalesforceSession(salesforceSessionNewImpl);
 
 		action.setOverride(Boolean.TRUE);
 

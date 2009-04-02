@@ -18,7 +18,7 @@
 
 <p>3. Configure your access permissions to control which profiles can work with your data in setup.</p>
 
-<p>That's it.  <a href="import1.action">Click here to get started.</a></p>
+<p>That's it.  <a href="<s:url action="import1"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Click here to get started.</a></p>
 
 
 	</body>

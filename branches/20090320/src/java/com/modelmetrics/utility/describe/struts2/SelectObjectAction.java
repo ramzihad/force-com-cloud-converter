@@ -11,6 +11,40 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 	
 	private String target;
 
+	private String existingLocationUrl;
+	private String existingSessionId;
+
+	public String getExistingLocationUrl() {
+		return existingLocationUrl;
+	}
+
+	public String getExistingSessionId() {
+		return existingSessionId;
+	}
+
+	public String getS() {
+		return this.getExistingSessionId();
+	}
+
+	public String getU() {
+		return this.getExistingLocationUrl();
+	}
+
+	public void setExistingLocationUrl(String username) {
+		this.existingLocationUrl = username;
+	}
+
+	public void setExistingSessionId(String password) {
+		this.existingSessionId = password;
+	}
+
+	public void setS(String s) {
+		this.setExistingSessionId(s);
+	}
+
+	public void setU(String u) {
+		this.setExistingLocationUrl(u);
+	}
 
 	public String execute() throws Exception {
 
@@ -23,7 +57,14 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 		
 
 
+		if (this.getSalesforceSessionContext().getSalesforceSession() == null
+				&& this.getExistingSessionId() != null
+				&& this.getExistingLocationUrl() != null) {
+			this.getSalesforceSessionContext().setSalesforceExistingSession(
+					this.getExistingSessionId(), this.getExistingLocationUrl());
 
+			log.info("salesforce existing session was null??");
+		}
 		
 
 		if (this.getTarget() == null) {

@@ -11,13 +11,12 @@ import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.common.sforce.struts2.AbstractCompositeAction;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
-public class UploadActionComposite extends AbstractCompositeAction {
+public class UploadActionComposite extends AbstractUploadContextAware {
 
-	private static final Logger log = Logger.getLogger(UploadActionComposite.class);
+	private static final Logger log = Logger
+			.getLogger(UploadActionComposite.class);
 
 	private static final long serialVersionUID = 1760991341958287065L;
-
-	
 
 	private FileService fileService;
 
@@ -27,7 +26,6 @@ public class UploadActionComposite extends AbstractCompositeAction {
 
 	private String uploadContentType;
 
-	
 	private Boolean override;
 
 	private String uploadFileName;
@@ -36,18 +34,41 @@ public class UploadActionComposite extends AbstractCompositeAction {
 
 	private String message;
 
-private SalesforceSessionContext salesforceSessionContext;
+	private String existingLocationUrl;
+	private String existingSessionId;
 
-	private UploadContext uploadContext;
-
-	public UploadContext getUploadContext() {
-		return uploadContext;
+	public String getExistingLocationUrl() {
+		return existingLocationUrl;
 	}
 
-	public void setUploadContext(UploadContext uploadContext) {
-		this.uploadContext = uploadContext;
+	public String getExistingSessionId() {
+		return existingSessionId;
 	}
-	
+
+	public String getS() {
+		return this.getExistingSessionId();
+	}
+
+	public String getU() {
+		return this.getExistingLocationUrl();
+	}
+
+	public void setExistingLocationUrl(String username) {
+		this.existingLocationUrl = username;
+	}
+
+	public void setExistingSessionId(String password) {
+		this.existingSessionId = password;
+	}
+
+	public void setS(String s) {
+		this.setExistingSessionId(s);
+	}
+
+	public void setU(String u) {
+		this.setExistingLocationUrl(u);
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -56,50 +77,19 @@ private SalesforceSessionContext salesforceSessionContext;
 		this.message = message;
 	}
 
-	/**
-	 * initializes form input page
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-//	public String init() throws Exception {
-//
-//		boolean error = false;
-//		
-//		if ("".equals(this.getExistingLocationUrl())) {
-//			addActionMessage("locationUrl is required");
-//			error = true;
-//		}
-//		if ("".equals(this.getExistingSessionId())) {
-//			addActionMessage("Session Id is required");
-//			error = true;
-//		}
-//		
-//		if (error) {
-//			return ERROR;
-//		}
-//		
-//		/*
-//		 * let's check the session id and location url
-//		 */
-//		try {
-//			this.getUploadContext().setSalesforceExistingSession(
-//					this.getExistingSessionId(), this.getExistingLocationUrl());
-//			addActionError("session set.");
-//			log.debug("Session set");
-//			
-//		} catch (Exception e) {
-//			this.getUploadContext().setLastException(e);
-//			error = true;
-//			addActionMessage("Could not initialize your Salesforce session.  (Existing URL or Session ID invalid");
-//		}		
-//		
-//		return INPUT;
-//	}
-
 	public String init2() throws Exception {
+
+		if (this.getSalesforceSessionContext().getSalesforceSession() == null
+				&& this.getExistingSessionId() != null
+				&& this.getExistingLocationUrl() != null) {
+			this.getSalesforceSessionContext().setSalesforceExistingSession(
+					this.getExistingSessionId(), this.getExistingLocationUrl());
+
+			log.info("salesforce existing session was null??");
+		}
 		return INPUT;
 	}
+
 	/**
 	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
 	 * view
@@ -120,8 +110,6 @@ private SalesforceSessionContext salesforceSessionContext;
 				error = true;
 			}
 
-
-			
 			/*
 			 * failed?
 			 */
@@ -129,11 +117,12 @@ private SalesforceSessionContext salesforceSessionContext;
 				return INPUT;
 			}
 
-			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
-			
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
+
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
-			
+
 			this.getUploadContext().setWrapperBean(bean);
 
 			log.info("File uploaded successfully");
@@ -169,10 +158,10 @@ private SalesforceSessionContext salesforceSessionContext;
 			log.info("Generating Salesforce object now...");
 			bean = this.getUploadContext().getWrapperBean();
 			bean.setOverride(Boolean.TRUE);
-			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
 			salesforceService.execute(bean);
 
-			
 			log.info("Object sent successfully");
 			return SUCCESS;
 		} catch (Exception e) {
@@ -238,16 +227,5 @@ private SalesforceSessionContext salesforceSessionContext;
 	public void setOverride(Boolean override) {
 		this.override = override;
 	}
-
-	public SalesforceSessionContext getSalesforceSessionContext() {
-		return salesforceSessionContext;
-	}
-
-	public void setSalesforceSessionContext(
-			SalesforceSessionContext salesforceSessionContext) {
-		this.salesforceSessionContext = salesforceSessionContext;
-	}
-
-
 
 }

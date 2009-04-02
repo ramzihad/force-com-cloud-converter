@@ -55,9 +55,13 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 	 * @return
 	 * @throws Exception
 	 */
-	public String init() throws Exception {
+	public String execute() throws Exception {
 
 		boolean error = false;
+		
+		if (this.getSalesforceSessionContext().getSalesforceSession() != null) {
+			return SUCCESS;
+		}
 
 		if ("".equals(this.getExistingLocationUrl())) {
 			addActionMessage("locationUrl is required");

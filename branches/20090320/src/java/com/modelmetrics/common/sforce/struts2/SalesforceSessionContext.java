@@ -1,11 +1,21 @@
 package com.modelmetrics.common.sforce.struts2;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.modelmetrics.common.sforce.AbstractSalesforceSessionAware;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 
 public class SalesforceSessionContext extends AbstractSalesforceSessionAware {
 
+	private static final Log log = LogFactory.getLog(SalesforceSessionContext.class);
+	
+	public SalesforceSessionContext() {
+		super();
+		log.debug("In create.");
+	}
+	
 	public void setSalesforceCredentials(String salesforceUsername,
 			String salesforcePassword) throws Exception {
 

@@ -43,7 +43,7 @@
 		</action>
 
 		<action name="import" class="compositeLogin" >
-			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
+			<result name="success" type="dispatcher">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
 			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
 		</action>
 
@@ -75,7 +75,7 @@
  			<result name="success" type="excel" />
  		</action>
 
-		<action name="start" class="compositeLogin" method="init">
+		<action name="start" class="compositeLogin" >
 			<result name="success" type="redirectAction">select</result>
 			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
 		</action>	

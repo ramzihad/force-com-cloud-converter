@@ -21,7 +21,7 @@
 		
 		<p>The tab visibility you want to change is "<s:property value="uploadContext.wrapperBean.sheetName" />".</p>
 		
-		<p><a href="<s:property value="uploadContext.profileListUrl" />" target="_parent">Click here to go to your profile list.</a></p>
+		<p><a href="<s:property value="salesforceSessionContext.profileListUrl" />" target="_parent">Click here to go to your profile list.</a></p>
 		
 		<p>Or you can do this step later and <a href="import.action">import another.</a></p>
 
