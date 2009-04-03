@@ -32,8 +32,7 @@ public class UploadActionCompositeTest extends TestCaseWithDevOrg {
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 
 		
-		UploadActionComposite action = (UploadActionComposite) SpringBeanBroker
-				.getBeanFactory().getBean("uploadActionComposite");
+		UploadActionComposite action = (UploadActionComposite) this.getTestBeanFactory().getBean("uploadActionComposite");
 
 		assertNotNull(action.getFileService());
 
@@ -69,8 +68,7 @@ action.getSalesforceSessionContext().setSalesforceSession(salesforceSessionNewIm
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-500-DoNotChange-v1.xls";
 
 		
-		UploadActionComposite action = (UploadActionComposite) SpringBeanBroker
-				.getBeanFactory().getBean("uploadActionComposite");
+		UploadActionComposite action = (UploadActionComposite) this.getTestBeanFactory().getBean("uploadActionComposite");
 
 		assertNotNull(action.getFileService());
 

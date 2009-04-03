@@ -25,7 +25,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	}
 	
 	public void testBadCredentials() throws Exception {
-		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
 		
 		assertNotNull(action.getFileService());
 		
@@ -52,7 +52,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	}
 	public void testSampleUpload_Sheet1() throws Exception {
 	
-		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
 		
 		action.setUploadContext(new UploadContext());
 		
@@ -78,7 +78,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 	
 	public void testSampleUpload_WasFailing_Evan1() throws Exception {
 		
-		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
 		
 		action.setUploadContext(new UploadContext());
 		
@@ -111,7 +111,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 		
-		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
 		
 		assertNotNull(action.getFileService());
 		
@@ -141,7 +141,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v2.xls";
 		
-		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
 		
 		assertNotNull(action.getFileService());
 		

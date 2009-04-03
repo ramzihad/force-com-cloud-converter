@@ -29,11 +29,32 @@ package com.modelmetrics.common.util;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.SessionScope;
+
+import com.modelmetrics.common.spring.util.SpringBeanBroker;
 
 import junit.framework.TestCase;
 
 public class TestCaseWithLog extends TestCase {
 
 	public static final Log log = LogFactory.getLog(TestCaseWithLog.class);
-	
+
+    public BeanFactory getTestBeanFactory() {
+    	
+    	ConfigurableApplicationContext context = (ConfigurableApplicationContext) SpringBeanBroker.getBeanFactory();
+    	
+    	context.getBeanFactory().registerScope("session", new SessionScope());
+    	
+    	MockHttpServletRequest request = new MockHttpServletRequest();
+    	ServletRequestAttributes attributes = new ServletRequestAttributes(request);
+    	RequestContextHolder.setRequestAttributes(attributes);
+    	
+    	return context.getBeanFactory();
+
+    }
 }

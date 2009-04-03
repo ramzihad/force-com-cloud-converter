@@ -33,7 +33,12 @@ THE SOFTWARE.
 package com.modelmetrics.common.spring.util;
 
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.request.SessionScope;
 
 /**
  * 
@@ -46,7 +51,8 @@ public class SpringBeanBroker {
 
     private static BeanFactory factory;
 
-
+    
+    
     public static void changeSpringBeanFile(String fileName) {
         SPRING_BEAN_FILE = fileName;
         /*
@@ -62,11 +68,12 @@ public class SpringBeanBroker {
             
             factory = new ClassPathXmlApplicationContext(SPRING_BEAN_FILE);
             
-//            factory.registerScope("session", new SessionScope());
         }
 
         return factory;
     }
+    
+
 
 
 

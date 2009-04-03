@@ -6,6 +6,7 @@
         <head>
             <title><decorator:title default="Welcome!" /> - Model Metrics Force.com Platform Utilities</title>
 			<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
+			<LINK href="<s:url value="/css/describe.css" includeParams="none"  />" rel="stylesheet" type="text/css">  
             <decorator:head />
         </head>
         <body>
@@ -21,7 +22,7 @@
             
         <div id="puFooter" style="font-size: 75%; color: #000066;">
        <p class="footer">
-       	April 1, 2009 - Profile (mb):
+       	April 3, 2009 - Profile (mb):
        	
        	<%
        	
