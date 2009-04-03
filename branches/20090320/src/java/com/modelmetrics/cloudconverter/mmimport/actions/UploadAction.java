@@ -76,7 +76,7 @@ public class UploadAction extends AbstractUploadContextAware {
 				addActionMessage("Please select a file");
 				error = true;
 			}
-
+			
 			/*
 			 * let's check the username and password now
 			 */
@@ -84,7 +84,7 @@ public class UploadAction extends AbstractUploadContextAware {
 				this.getSalesforceSessionContext().setSalesforceCredentials(
 						this.getUsername(), this.getPassword());
 			} catch (Exception e) {
-				this.getUploadContext().setLastException(e);
+				//this.getUploadContext().setLastException(e);
 				error = true;
 				addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
 			}
@@ -117,13 +117,15 @@ public class UploadAction extends AbstractUploadContextAware {
 		} catch (ParseException e) {
 			message = "There has been a problem uploading the file";
 			log.error(message, e);
-			this.getUploadContext().setLastException(e);
+			addActionMessage(e.getMessage());
+			//this.getUploadContext().setLastException(e);
 			return ERROR;
 
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
 			log.error(message, e);
-			this.getUploadContext().setLastException(e);
+			//this.getUploadContext().setLastException(e);
+			addActionMessage(message);
 			return ERROR;
 		}
 	}
@@ -141,7 +143,8 @@ public class UploadAction extends AbstractUploadContextAware {
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
 			log.error(message, e);
-			this.getUploadContext().setLastException(e);
+			addActionMessage(message);
+			//this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
 	}
