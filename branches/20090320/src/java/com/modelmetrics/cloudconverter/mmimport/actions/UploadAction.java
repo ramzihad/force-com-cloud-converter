@@ -33,7 +33,6 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	private WrapperBean bean;
 
-
 	/**
 	 * initializes form input page
 	 * 
@@ -54,41 +53,32 @@ public class UploadAction extends AbstractUploadContextAware {
 	public String upload() {
 
 		try {
-			boolean error = false;
-			if ("".equals(username)) {
-				addActionMessage("Username is required");
-				error = true;
-			}
-			if ("".equals(password)) {
-				addActionMessage("Password is required");
-				error = true;
-			}
-			if (upload == null) {
-				addActionMessage("Please select a file");
-				error = true;
-			}
-			
+			validateData();
+
 			/*
 			 * let's check the username and password now
 			 */
-			try {
-				this.getSalesforceSessionContext().setSalesforceCredentials(
-						this.getUsername(), this.getPassword());
-			} catch (Exception e) {
-				//this.getUploadContext().setLastException(e);
-				error = true;
-				addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
+			if (getActionMessages().isEmpty()) {
+				try {
+					this.getSalesforceSessionContext()
+							.setSalesforceCredentials(this.getUsername(),
+									this.getPassword());
+				} catch (Exception e) {
+					// this.getUploadContext().setLastException(e);
+					addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
+				}
 			}
-			
+
 			/*
 			 * failed?
 			 */
-			if (error) {
+			if (!getActionMessages().isEmpty()) {
 				return INPUT;
 			}
-			
-			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
-			
+
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
+
 			bean = fileService.parseXLS(upload);
 			bean.setOverride(override);
 
@@ -109,16 +99,29 @@ public class UploadAction extends AbstractUploadContextAware {
 			message = "There has been a problem uploading the file";
 			log.error(message, e);
 			addActionMessage(e.getMessage());
-			//this.getUploadContext().setLastException(e);
+			// this.getUploadContext().setLastException(e);
 			return ERROR;
 
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
 			log.error(message, e);
-			//this.getUploadContext().setLastException(e);
+			// this.getUploadContext().setLastException(e);
 			addActionMessage(message);
 			return ERROR;
 		}
+	}
+
+	private void validateData() {
+		if ("".equals(username)) {
+			addActionMessage("Username is required");
+		}
+		if ("".equals(password)) {
+			addActionMessage("Password is required");
+		}
+		if (upload == null) {
+			addActionMessage("Please select a file");
+		}
+
 	}
 
 	public String override() {
@@ -126,7 +129,8 @@ public class UploadAction extends AbstractUploadContextAware {
 			log.info("Generating Salesforce object now...");
 			bean = this.getUploadContext().getWrapperBean();
 			bean.setOverride(Boolean.TRUE);
-			salesforceService.setSalesforceSession(this.getSalesforceSessionContext().getSalesforceSession());
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
 			salesforceService.execute(bean);
 
 			log.info("Object sent successfully");
@@ -135,7 +139,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			message = "There has been a problem generating salesforce objects";
 			log.error(message, e);
 			addActionMessage(message);
-			//this.getUploadContext().setLastException(e);
+			// this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
 	}
