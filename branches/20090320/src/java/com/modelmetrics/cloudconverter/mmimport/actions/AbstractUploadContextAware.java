@@ -9,6 +9,7 @@ public abstract class AbstractUploadContextAware extends ActionSupport {
 	
 	private SalesforceSessionContext salesforceSessionContext;
 
+	protected String message;
 
 	public UploadContext getUploadContext() {
 		return uploadContext;

@@ -3,26 +3,8 @@
 <html>
 	<head>
 		<title>Upload</title>
-		<script type="text/javascript">
-		
-		function showLoader(){
-			var div = document.getElementById('loading');
-			var formDiv = document.getElementById('form');
-			if (div.style.display == "none"){
-				div.style.display = "";
-				formDiv.style.display = "none";
-			} else {
-				div.style.display = "none";
-				formDiv.style.display = "";
-			} 
-		}
-		function hideLoader(){
-			var div = document.getElementById('loading');
-			var formDiv = document.getElementById('form');
-			div.style.display = "none";		
-			formDiv.style.display = "";
-		}
-		</script>
+		<script type="text/javascript" charset="UTF-8"
+			src="js/loader.js"></script>
 	</head>
 
 	<body onload="hideLoader()">
@@ -72,28 +54,13 @@
 					</tr>
 
 				</table>
-
+				<br/><br/>
+				<a href="dbinit.action">Upload DB information</a>
 			</s:form>
 		</div>
-		<div id="loading" style="display:none">
-			
-			<h3>
-				Please wait while we process your request
-			</h3>
-			<br /><br />
-			Creating the object...
-			<br />
-			Adding fields...
-			<br />
-			Building a custom tab...
-			<br />
-			Modifying the page layout...
-			<br />
-			Moving data...
-			<br />
-			<br />
-			<img src="img/loader.gif">
-		</div>
+		
+		<%@ include
+			file="/WEB-INF/jsp/includes/loader.jsp"%>
 
 	</body>
 </html>

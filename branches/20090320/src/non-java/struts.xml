@@ -30,6 +30,16 @@
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 		</action>
 		
+		<action name="dbinit" class="dbUploadAction" method="init">
+			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
+		</action>
+		
+		<action name="generate" class="dbUploadAction" method="generate" >
+			<result name="success">/WEB-INF/jsp/uploadDb/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadDb/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
+		</action>
+		
 		<action name="upload" class="uploadAction" method="upload" >
 			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>

@@ -32,25 +32,12 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
-import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
-import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
-import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
-import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
-import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
-import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
-import com.sforce.soap._2006._04.metadata.CustomTab;
-import com.sforce.soap._2006._04.metadata.Layout;
 
 public class MigrationEngineResultSetImpl extends AbstractMigrationEngine {
 
