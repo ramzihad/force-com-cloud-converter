@@ -7,7 +7,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 
-public class DbUploadAction extends AbstractUploadContextAware implements ServletRequestAware {
+public class DbUploadAction extends AbstractUploadContextAware implements
+		ServletRequestAware {
 
 	private static final long serialVersionUID = 6218725685999955325L;
 
@@ -36,7 +37,7 @@ public class DbUploadAction extends AbstractUploadContextAware implements Servle
 	private String picklistFields;
 
 	private Boolean override;
-	
+
 	private HttpServletRequest request;
 
 	/**
@@ -85,8 +86,9 @@ public class DbUploadAction extends AbstractUploadContextAware implements Servle
 
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
-			
-			String realPath = request.getSession().getServletContext().getRealPath("/");
+
+			String realPath = request.getSession().getServletContext()
+					.getRealPath("/");
 			salesforceService.generateObjectFromDB(this, realPath);
 			log.info("Object sent successfully");
 
@@ -125,7 +127,7 @@ public class DbUploadAction extends AbstractUploadContextAware implements Servle
 		if ("".equals(picklistFields)) {
 			addActionMessage("You must enter at least one picklist field");
 		}
-		if (externalIds.split(",|;").length > 3) {
+		if (!"".equals(externalIds) && externalIds.split(",|;").length > 3) {
 			addActionMessage("You cannot enter more than 3 Id´s");
 		}
 
@@ -229,7 +231,7 @@ public class DbUploadAction extends AbstractUploadContextAware implements Servle
 
 	public void setServletRequest(HttpServletRequest arg0) {
 		request = arg0;
-		
+
 	}
 
 }
