@@ -136,6 +136,38 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 	}
 	
+	public void testSampleUpload_TestSheet2() throws Exception {
+		
+		
+		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v2.xls";
+		
+		UploadAction action = (UploadAction) SpringBeanBroker.getBeanFactory().getBean("uploadAction");
+		
+		assertNotNull(action.getFileService());
+		
+		assertNotNull(action.getSalesforceService());
+		
+		
+		
+		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
+		
+		action.setUsername(this.sampleSfdcUsername);
+		
+		action.setPassword(this.sampleSfdcPassword);
+		
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File(fileName));
+		
+		String s = action.upload();
+		
+		assertEquals(ActionSupport.SUCCESS, s);
+		
+		
+	}
+	
 
 	
 }

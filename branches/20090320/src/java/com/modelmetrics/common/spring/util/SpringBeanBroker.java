@@ -61,6 +61,8 @@ public class SpringBeanBroker {
 
             
             factory = new ClassPathXmlApplicationContext(SPRING_BEAN_FILE);
+            
+//            factory.registerScope("session", new SessionScope());
         }
 
         return factory;

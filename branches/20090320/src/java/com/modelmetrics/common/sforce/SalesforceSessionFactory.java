@@ -54,17 +54,9 @@ public class SalesforceSessionFactory extends AbstractSpringObjectFactory {
 	}
 	
 	
+
+	
 	public SalesforceSession build(SalesforceCredentials salesforceCredentials) {
-		
-		SalesforceSessionNewImpl ret = (SalesforceSessionNewImpl) this.getBean("salesforceSession");
-	
-		ret.setSalesforceCredentials(salesforceCredentials);
-		
-		return ret;
-		
-	}
-	
-	public SalesforceSession buildWithoutSpring(SalesforceCredentials salesforceCredentials) {
 		
 		SalesforceSessionNewImpl ret = new SalesforceSessionNewImpl();
 	

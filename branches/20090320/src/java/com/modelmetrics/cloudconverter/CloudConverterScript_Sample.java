@@ -121,10 +121,10 @@ public class CloudConverterScript_Sample {
 		Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
 		// key should be the field name, value should be how to resolve that on
 		// sfdc (object__r:externalObjectName:externalidfieldname)
-		/*
+	
 		lookupFields.put("MYLOOKUP", new LookupSettings("MYLOOKUP", "AAA__c",
 				"MYLOOKUP__r:AAA__c:TestExternalId__c"));
-		*/
+	
 
 		/*
 		 * the following are required components

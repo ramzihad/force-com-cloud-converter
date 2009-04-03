@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import jxl.Cell;
 import jxl.CellType;
@@ -15,6 +16,12 @@ import jxl.Workbook;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeField;
+import org.joda.time.DateTimeFieldType;
+import org.joda.time.DateTimeZone;
+import org.joda.time.JodaTimePermission;
+import org.joda.time.LocalDateTime;
 
 
 public class FileServiceImpl implements FileService {
@@ -30,6 +37,9 @@ public class FileServiceImpl implements FileService {
 	@SuppressWarnings("unchecked")
 	public WrapperBean parseXLS(File file) throws ParseException {
 
+		//keeps date fields real.
+		TimeZone.setDefault(TimeZone.getTimeZone("-0"));
+		
 		// DateFormat finalTimeFormat = new SimpleDateFormat(
 		// "yyyy-MM-dd'T'HH:mm:ssZ");
 		// DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,10 +49,12 @@ public class FileServiceImpl implements FileService {
 		bean.setTypes(new ArrayList<String>());
 		bean.setObjects(new ArrayList<List<Object>>());
 
+		
 		try {
 
 			Workbook workbook = Workbook.getWorkbook(file);
 
+			
 			Sheet sheet = workbook.getSheet(0);
 
 			bean.setSheetName(StringUtils.applyConstraints(sheet.getName()));
@@ -113,7 +125,9 @@ public class FileServiceImpl implements FileService {
 							// } else {
 							Date aux = ((DateCell) c).getDate();
 							// String date = finalCommonFormat.format(aux);
+							
 							list.add(aux);
+
 							// }
 						} else if (type.equals(CellType.LABEL)) {
 							// parse string value

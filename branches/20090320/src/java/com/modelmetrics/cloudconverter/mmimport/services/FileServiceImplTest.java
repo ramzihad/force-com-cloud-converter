@@ -1,17 +1,19 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.io.File;
+import java.util.Date;
 
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
+import com.modelmetrics.common.util.TestCaseWithLog;
 
 import junit.framework.TestCase;
 
-public class FileServiceImplTest extends TestCase {
+public class FileServiceImplTest extends TestCaseWithLog {
 
 	public void testSampleSheet() throws Exception {
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 		
-		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker.getBeanFactory().getBean("fileService");
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		
 		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
 		
@@ -37,5 +39,41 @@ public class FileServiceImplTest extends TestCase {
 		
 		assertEquals("S heet1", wrapperBean.getSheetName());
 
+	}
+	
+	public void testSampleSheetWithDates() throws Exception {
+		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v2.xls";
+		
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		
+		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
+		
+		assertNotNull(wrapperBean);
+		
+		assertEquals(Constants.DATE, wrapperBean.getTypes().get(0));
+		
+		Date dateOne = (Date) wrapperBean.getObjects().get(0).get(0);
+		
+		log.info(dateOne.toString());
+
+		
+	}
+	
+	public void testSampleSheetWithDateTimes() throws Exception {
+		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v3.xls";
+		
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		
+		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
+		
+		assertNotNull(wrapperBean);
+		
+		assertEquals(Constants.DATETIME, wrapperBean.getTypes().get(0));
+		
+		Date dateOne = (Date) wrapperBean.getObjects().get(0).get(0);
+		
+		log.info(dateOne.toString());
+
+		
 	}
 }
