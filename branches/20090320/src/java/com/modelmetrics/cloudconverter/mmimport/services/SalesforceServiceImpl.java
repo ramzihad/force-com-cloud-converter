@@ -4,9 +4,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
-import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
-import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.sforce.soap.partner.DescribeGlobalResult;
 
 public class SalesforceServiceImpl implements SalesforceService {

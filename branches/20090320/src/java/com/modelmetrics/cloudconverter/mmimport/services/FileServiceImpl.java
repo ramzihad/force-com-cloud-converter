@@ -1,6 +1,7 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,17 +13,11 @@ import jxl.DateCell;
 import jxl.NumberCell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.read.biff.BiffException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeField;
-import org.joda.time.DateTimeFieldType;
-import org.joda.time.DateTimeZone;
-import org.joda.time.JodaTimePermission;
-import org.joda.time.LocalDateTime;
-
 
 public class FileServiceImpl implements FileService {
 
@@ -33,28 +28,25 @@ public class FileServiceImpl implements FileService {
 	 * 
 	 * @param file
 	 * @return WrapperBean
+	 * @throws ParseException
 	 */
 	@SuppressWarnings("unchecked")
 	public WrapperBean parseXLS(File file) throws ParseException {
 
-		//keeps date fields real.
+		// keeps date fields real.
 		TimeZone.setDefault(TimeZone.getTimeZone("-0"));
-		
-		// DateFormat finalTimeFormat = new SimpleDateFormat(
-		// "yyyy-MM-dd'T'HH:mm:ssZ");
-		// DateFormat finalCommonFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		WrapperBean bean = new WrapperBean();
 		bean.setNames(new ArrayList<String>());
 		bean.setTypes(new ArrayList<String>());
 		bean.setObjects(new ArrayList<List<Object>>());
 
-		
 		try {
 
-			Workbook workbook = Workbook.getWorkbook(file);
+			Workbook workbook;
 
-			
+			workbook = Workbook.getWorkbook(file);
+
 			Sheet sheet = workbook.getSheet(0);
 
 			bean.setSheetName(StringUtils.applyConstraints(sheet.getName()));
@@ -99,7 +91,11 @@ public class FileServiceImpl implements FileService {
 								bean.getTypes().add(Constants.STRING);
 							}
 						} else if (type.equals(CellType.NUMBER)) {
-							log.debug("Number: " + value + " : format : " + c.getCellFormat().getFormat().getFormatString());
+							log.debug("Number: "
+									+ value
+									+ " : format : "
+									+ c.getCellFormat().getFormat()
+											.getFormatString());
 							if (value.contains("%")) {
 								bean.getTypes().add(Constants.PERCENTAGE);
 							} else if (value.contains("$")) {
@@ -111,50 +107,31 @@ public class FileServiceImpl implements FileService {
 								bean.getTypes().add(Constants.INT);
 							}
 						}
-
 					}
 					if (i >= 1) {
 						// parse data values
 						CellType type = c.getType();
 						if (type.equals(CellType.DATE)) {
-							// parse date value
-							// if (value.contains(":")) {
-							// Date aux = ((DateCell) c).getDate();
-							//
-							// list.add(aux);
-							// } else {
+
 							Date aux = ((DateCell) c).getDate();
-							// String date = finalCommonFormat.format(aux);
-							
 							list.add(aux);
 
 							// }
 						} else if (type.equals(CellType.LABEL)) {
-							// parse string value
+
 							list.add(value);
 						} else if (type.equals(CellType.EMPTY)) {
-							// parse string value
+
 							list.add(null);
-						}  
-						else if (type.equals(CellType.NUMBER)) {
-							// parse numeric value
-							//							
-							// if (value.contains("%")) {
-							// // value = value.replace("%", "");
-							// // value = "0." + value;
-							// list.add(((NumberCell) c).getValue());
-							// list.add(value);
-							// } else if (value.contains(",")) {
-							// value = value.replace(",", ".");
-							// list.add(value);
-							// } else {
+						} else if (type.equals(CellType.NUMBER)) {
+
 							if (value.contains("%")) {
-								//otherwise "percentages" show up in SFDC as 0.78 when it should be 78%.
+								// otherwise "percentages" show up in SFDC as
+								// 0.78 when it should be 78%.
 								list.add(((NumberCell) c).getValue() * 100);
 							} else {
 								list.add(((NumberCell) c).getValue());
 							}
-							// }
 						}
 					}
 				}
@@ -163,8 +140,14 @@ public class FileServiceImpl implements FileService {
 				}
 			}
 
-		} catch (Exception e) {
-			throw new ParseException(e);
+		} catch (BiffException e) {
+			throw new ParseException("Could not read file");
+		} catch (IOException e) {
+			throw new ParseException("Input/Output error");
+		} catch (IndexOutOfBoundsException e) {
+			throw new ParseException("Columns and data do not match");
+		} catch (NullPointerException e) {
+			throw new ParseException("A reference in the file has a null value");
 		}
 
 		return bean;

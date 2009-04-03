@@ -5,12 +5,22 @@
 
 	<body>
 
-		Please wait while we process your request...
-		<br />
-		<br />
+		<div>
+			Creating the object...
+			<br />
+			Adding fields...
+			<br />
+			Building a custom tab...
+			<br />
+			Modifying the page layout...
+			<br />
+			Moving data...
+			<br />
+			<br />
+			<br />
 
-		<img src="img/loader.gif">
-
+			<img src="img/loader.gif">
+		</div>
 	</body>
 </html>
 

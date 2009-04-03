@@ -1,9 +1,6 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
-import com.modelmetrics.common.sforce.SalesforceCredentials;
-import com.modelmetrics.common.sforce.SalesforceSessionFactory;
-import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
 public class UploadContext  {
 

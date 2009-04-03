@@ -3,7 +3,6 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 import java.io.File;
 
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
-import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
 

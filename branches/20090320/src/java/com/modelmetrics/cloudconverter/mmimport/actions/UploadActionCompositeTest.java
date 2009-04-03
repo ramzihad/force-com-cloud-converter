@@ -2,11 +2,9 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 
-import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.SalesforceSessionNewImpl;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
-import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
 

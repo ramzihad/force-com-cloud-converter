@@ -8,8 +8,6 @@ import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
-import com.modelmetrics.common.sforce.struts2.AbstractCompositeAction;
-import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 
