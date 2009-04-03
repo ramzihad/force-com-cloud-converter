@@ -119,9 +119,6 @@ public class DbUploadAction extends AbstractUploadContextAware implements Servle
 		if ("".equals(dbTable)) {
 			addActionMessage("Database table is required");
 		}
-		if ("".equals(externalIds)) {
-			addActionMessage("You must enter at least one external id");
-		}
 		if ("".equals(lookupFields)) {
 			addActionMessage("You must enter at least one lookup field");
 		}
