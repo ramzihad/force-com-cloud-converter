@@ -23,6 +23,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	</bean>
 	
+	<bean id="dbSalesforceService"
+		class="com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceServiceImpl" >
+
+	</bean>
+	
 	<bean id="fileService"
 		class="com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl" />
 	
@@ -76,7 +81,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="dbUploadAction" scope="prototype"
 		parent="abstractUploadContextAware"
 		class="com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction">
-		<property name="salesforceService" ref="salesforceService" />
+		<property name="dbSalesforceService" ref="dbSalesforceService" />
 	</bean>
 
 

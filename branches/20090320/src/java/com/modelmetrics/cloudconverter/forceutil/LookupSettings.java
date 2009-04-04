@@ -32,6 +32,13 @@ public class LookupSettings {
 		this.relationshipObject = relationshipObject;
 	}
 	
+	public LookupSettings(String localName) {
+		this.localName = localName;
+	}
+	
+	public LookupSettings() {
+	}
+	
 	public LookupSettings(String localName, String localRelationshipName,
 			String parentObjectName, String targetFieldName) {
 		this.localName = localName;

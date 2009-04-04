@@ -1,11 +1,15 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
+import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
+import com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceService;
 
 public class DbUploadAction extends AbstractUploadContextAware implements
 		ServletRequestAware {
@@ -14,29 +18,38 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 
 	private static final Logger log = Logger.getLogger(DbUploadAction.class);
 
-	private SalesforceService salesforceService;
+	private DbSalesforceService dbSalesforceService;
 
-	private String password;
+	//sfdc connection information -- same as before
+	private String sfdcUsername;
+	
+	private String sfdcPassword;
+	
+	private String sfdcSecurityToken;
+	
+	//database credentials information
+	private String dbTypeName; //"derby" -- name internal to CloudConverter
+	
+	private String dbDriver; //"org.apache.derby.jdbc.EmbeddedDriver" -- Fully qualified JDBC driver name
+	
+	private String dbConnection; //"jdbc:derby:./src/sampledbs/derby/sample2" -- Fully qualified JDBC connection string
+	
+	private String dbUser; //"sa" 
+	
+	private String dbPassword; //""
+	
+	private String dbSelect; //"Select * from mytable" -- since this could be a very complex select string, I want people to be able to enter whatever they want.
 
-	private String username;
+	//special fields
+	/*
+	 * note in struts2, I **think** these can be either arrays or Lists.  You probably want to check the documentation on that.
+	 */
+	private List<String> externalIds = new ArrayList<String>(); //not required, no more than three allowed.
+	
+	private List<PicklistInfo> picklistInfos = new ArrayList<PicklistInfo>(); //not required -- this new object is to illustrate the info I want
+	
+	private List<LookupSettings> lookupSettings = new ArrayList<LookupSettings>(); //not required -- this new object is to illustrate what I want
 
-	private String dbUser;
-
-	private String dbPassword;
-
-	private String dbUrl;
-
-	private String dbName;
-
-	private String dbTable;
-
-	private String externalIds;
-
-	private String lookupFields;
-
-	private String picklistFields;
-
-	private Boolean override;
 
 	private HttpServletRequest request;
 
@@ -48,6 +61,18 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 	 */
 	public String init() throws Exception {
 
+		
+		externalIds.add("");
+		externalIds.add("");
+		externalIds.add("");
+		
+		picklistInfos.add(new PicklistInfo());
+		picklistInfos.add(new PicklistInfo());
+		picklistInfos.add(new PicklistInfo());
+		
+		lookupSettings.add(new LookupSettings());
+		lookupSettings.add(new LookupSettings());
+		lookupSettings.add(new LookupSettings());
 		return INPUT;
 	}
 
@@ -69,8 +94,8 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 			if (getActionMessages().isEmpty()) {
 				try {
 					this.getSalesforceSessionContext()
-							.setSalesforceCredentials(this.getUsername(),
-									this.getPassword());
+							.setSalesforceCredentials(sfdcUsername,
+									sfdcPassword+sfdcSecurityToken);
 				} catch (Exception e) {
 
 					addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
@@ -84,12 +109,18 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 				return INPUT;
 			}
 
-			salesforceService.setSalesforceSession(this
+			dbSalesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
+			//This has to be done this way otherwise the server does not see the folder inside web-inf
 			String realPath = request.getSession().getServletContext()
 					.getRealPath("/");
-			salesforceService.generateObjectFromDB(this, realPath);
+			String dbUrl = "jdbc:derby:";
+			dbUrl += realPath + "sampledbs/";
+			dbUrl += this.getDbConnection();
+			
+			
+			dbSalesforceService.generateObjectFromDB(this, dbUrl);
 			log.info("Object sent successfully");
 
 			return SUCCESS;
@@ -103,75 +134,117 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 
 	private void validateData() {
 
-		if ("".equals(username)) {
+		if ("".equals(sfdcUsername)) {
 			addActionMessage("Username is required");
 		}
-		if ("".equals(password)) {
+		if ("".equals(sfdcPassword)) {
 			addActionMessage("Password is required");
 		}
-		if ("".equals(dbName)) {
-			addActionMessage("Database name is required");
+		if ("".equals(dbTypeName)) {
+			addActionMessage("Database type name is required");
 		}
 		if ("".equals(dbUser)) {
 			addActionMessage("Database user is required");
 		}
-		if ("".equals(dbUrl)) {
-			addActionMessage("Database url is required");
+		if ("".equals(dbDriver)) {
+			addActionMessage("Database driver is required");
 		}
-		if ("".equals(dbTable)) {
-			addActionMessage("Database table is required");
+		if ("".equals(dbConnection)) {
+			addActionMessage("Database connection is required");
 		}
-		if ("".equals(lookupFields)) {
-			addActionMessage("You must enter at least one lookup field");
-		}
-		if ("".equals(picklistFields)) {
-			addActionMessage("You must enter at least one picklist field");
-		}
-		if (!"".equals(externalIds) && externalIds.split(",|;").length > 3) {
-			addActionMessage("You cannot enter more than 3 Id's");
-		}
+		
 
 	}
 
-	public Boolean getOverride() {
-		return override;
+
+	public String getDbConnection() {
+		return dbConnection;
 	}
 
-	public void setOverride(Boolean override) {
-		this.override = override;
+	public void setDbConnection(String dbConnection) {
+		this.dbConnection = dbConnection;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getDbDriver() {
+		return dbDriver;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setDbDriver(String dbDriver) {
+		this.dbDriver = dbDriver;
 	}
 
-	public SalesforceService getSalesforceService() {
-		return salesforceService;
+	public String getDbSelect() {
+		return dbSelect;
 	}
 
-	public void setSalesforceService(SalesforceService salesforceService) {
-		this.salesforceService = salesforceService;
+	public void setDbSelect(String dbSelect) {
+		this.dbSelect = dbSelect;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getDbTypeName() {
+		return dbTypeName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setDbTypeName(String dbTypeName) {
+		this.dbTypeName = dbTypeName;
 	}
 
-	public String getDbName() {
-		return dbName;
+	public List<String> getExternalIds() {
+		return externalIds;
 	}
 
-	public void setDbName(String dbName) {
-		this.dbName = dbName;
+	public void setExternalIds(List<String> externalIds) {
+		this.externalIds = externalIds;
 	}
+
+	public List<LookupSettings> getLookupSettings() {
+		return lookupSettings;
+	}
+
+	public void setLookupSettings(List<LookupSettings> lookupSettings) {
+		this.lookupSettings = lookupSettings;
+	}
+
+	public List<PicklistInfo> getPicklistInfos() {
+		return picklistInfos;
+	}
+
+	public void setPicklistInfos(List<PicklistInfo> picklistInfos) {
+		this.picklistInfos = picklistInfos;
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public String getSfdcPassword() {
+		return sfdcPassword;
+	}
+
+	public void setSfdcPassword(String sfdcPassword) {
+		this.sfdcPassword = sfdcPassword;
+	}
+
+	public String getSfdcSecurityToken() {
+		return sfdcSecurityToken;
+	}
+
+	public void setSfdcSecurityToken(String sfdcSecurityToken) {
+		this.sfdcSecurityToken = sfdcSecurityToken;
+	}
+
+	public String getSfdcUsername() {
+		return sfdcUsername;
+	}
+
+	public void setSfdcUsername(String sfdcUsername) {
+		this.sfdcUsername = sfdcUsername;
+	}
+
 
 	public String getDbPassword() {
 		return dbPassword;
@@ -181,21 +254,7 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 		this.dbPassword = dbPassword;
 	}
 
-	public String getDbTable() {
-		return dbTable;
-	}
 
-	public void setDbTable(String dbTable) {
-		this.dbTable = dbTable;
-	}
-
-	public String getDbUrl() {
-		return dbUrl;
-	}
-
-	public void setDbUrl(String dbUrl) {
-		this.dbUrl = dbUrl;
-	}
 
 	public String getDbUser() {
 		return dbUser;
@@ -205,33 +264,19 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 		this.dbUser = dbUser;
 	}
 
-	public String getExternalIds() {
-		return externalIds;
-	}
 
-	public void setExternalIds(String externalIds) {
-		this.externalIds = externalIds;
-	}
-
-	public String getLookupFields() {
-		return lookupFields;
-	}
-
-	public void setLookupFields(String lookupFields) {
-		this.lookupFields = lookupFields;
-	}
-
-	public String getPicklistFields() {
-		return picklistFields;
-	}
-
-	public void setPicklistFields(String picklistFields) {
-		this.picklistFields = picklistFields;
-	}
 
 	public void setServletRequest(HttpServletRequest arg0) {
 		request = arg0;
 
+	}
+
+	public DbSalesforceService getDbSalesforceService() {
+		return dbSalesforceService;
+	}
+
+	public void setDbSalesforceService(DbSalesforceService dbSalesforceService) {
+		this.dbSalesforceService = dbSalesforceService;
 	}
 
 }
