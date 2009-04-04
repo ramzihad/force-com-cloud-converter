@@ -62,6 +62,12 @@ public class SalesforceServiceImpl implements SalesforceService {
 		return foundType;
 	}
 
+	/*
+	 * this should be a separate object and not just a new method.
+	 * 
+	 * (non-Javadoc)
+	 * @see com.modelmetrics.cloudconverter.mmimport.services.SalesforceService#generateObjectFromDB(com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction, java.lang.String)
+	 */
 	public void generateObjectFromDB(DbUploadAction action, String path) throws Exception {
 
 		String[] picklists = action.getPicklistFields().split(",|;");

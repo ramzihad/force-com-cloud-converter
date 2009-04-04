@@ -14,7 +14,7 @@
 	<property name="reports.test" location="test/reports-test" />
 	<property name="reports" location="test/reports-test-html" />
 	<property name="reports.html" location="test/reports-test-html" />	
-	<property name="tomcat.home" location="/Applications/apache-tomcat-6.0.18" />
+	
 	<property name="tomcat.webapp" location="${tomcat.home}/webapps" />
 	<property name="tomcat.webapp.war" location="${tomcat.webapp}/${warname}.war" />
 	<property name="dist.war" location="${dist}\${warname}.war" />

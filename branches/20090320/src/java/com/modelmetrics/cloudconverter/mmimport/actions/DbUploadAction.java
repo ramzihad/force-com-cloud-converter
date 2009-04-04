@@ -128,7 +128,7 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 			addActionMessage("You must enter at least one picklist field");
 		}
 		if (!"".equals(externalIds) && externalIds.split(",|;").length > 3) {
-			addActionMessage("You cannot enter more than 3 Id´s");
+			addActionMessage("You cannot enter more than 3 Id's");
 		}
 
 	}

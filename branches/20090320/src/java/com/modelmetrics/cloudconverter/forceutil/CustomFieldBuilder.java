@@ -179,7 +179,7 @@ public class CustomFieldBuilder {
 
 				customLookupFieldsCollection.add(field);
 				fieldMap.put(current.getName(), lookupSettings
-						.getRelationshipFields());
+						.getApiResolutionString());
 			} else {
 
 				field.setType(current.getType());
