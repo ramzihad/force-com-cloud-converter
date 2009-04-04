@@ -53,7 +53,7 @@
 		</action>
 
 		<action name="import" class="compositeLogin" >
-			<result name="success" type="dispatcher">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
 			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
 		</action>
 
@@ -62,19 +62,23 @@
 			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
 		</action>
 		
-		<action name="import1" class="uploadActionComposite" method="init2">
+		<action name="import1" class="uploadActionCompositeInitialize">
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
-		<action name="import2" class="uploadActionComposite" method="upload" >
-			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+		<action name="import2" class="uploadActionComposite" >
+			<result name="success" type="redirectAction">importExecute</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
-			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
 		</action>
-		<action name="import3" class="uploadActionComposite" method="override" >
-			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+		<action name="import3" class="uploadActionCompositeOverride" >
+			<result name="success" type="redirectAction">importExecute</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		<action name="importExecute" class="uploadActionCompositeExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
 		</action>
 		
 		<!-- Force.com Platform Utilities -->

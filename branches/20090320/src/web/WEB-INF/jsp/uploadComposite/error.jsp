@@ -10,10 +10,12 @@
 	</head>
 
 	<body>
-		<h1>Error</h3>
+		<h1>Error</h1>
+		
+		<p><s:actionmessage /></p>
 		
 		<p>Message: <s:property value="errorMessage" /></p>
 		
-	<p><a href="import.action">Start fresh again</a></p>
+		<p><a href="import1.action">Please try again./a></p>
 	</body>
 </html>

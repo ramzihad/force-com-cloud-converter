@@ -53,7 +53,7 @@ action.getSalesforceSessionContext().setSalesforceSession(salesforceSessionNewIm
 
 		action.setUpload(new File(fileName));
 		
-		String s = action.upload();
+		String s = action.execute();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 
@@ -92,7 +92,7 @@ action.getSalesforceSessionContext().setSalesforceSession(salesforceSessionNewIm
 
 		action.setUpload(new File(fileName));
 		
-		String s = action.upload();
+		String s = action.execute();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 

@@ -88,8 +88,27 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
+	<bean id="uploadActionCompositeInitialize" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeInitialize">
+		
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
+	<bean id="uploadActionCompositeOverride" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeOverride">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
+	<bean id="uploadActionCompositeExecute" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeExecute">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
 	<!-- STRUTS2 -->
 	<bean id="abstractUtilityContextAware" abstract="true">

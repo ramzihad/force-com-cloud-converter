@@ -10,10 +10,10 @@ import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UploadActionComposite extends AbstractUploadContextAware {
+public class UploadActionCompositeInitialize extends AbstractUploadContextAware {
 
 	private static final Logger log = Logger
-			.getLogger(UploadActionComposite.class);
+			.getLogger(UploadActionCompositeInitialize.class);
 
 	private static final long serialVersionUID = 1760991341958287065L;
 
@@ -76,72 +76,21 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		this.message = message;
 	}
 
+	public String execute() throws Exception {
 
+		if (this.getSalesforceSessionContext().getSalesforceSession() == null
+				&& this.getExistingSessionId() != null
+				&& this.getExistingLocationUrl() != null) {
+			this.getSalesforceSessionContext().setSalesforceExistingSession(
+					this.getExistingSessionId(), this.getExistingLocationUrl());
 
-	/**
-	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
-	 * view
-	 * 
-	 * @return
-	 */
-	public String execute() {
-
-		try {
-			boolean error = false;
-
-			if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
-				addActionMessage("No Salesforce Session present.");
-				error = true;
-			}
-			if (upload == null) {
-				addActionMessage("Please select a file");
-				error = true;
-			}
-
-			/*
-			 * failed?
-			 */
-			if (error) {
-				return INPUT;
-			}
-
-			salesforceService.setSalesforceSession(this
-					.getSalesforceSessionContext().getSalesforceSession());
-
-			bean = fileService.parseXLS(upload);
-			bean.setOverride(Boolean.FALSE);
-
-			this.getUploadContext().setWrapperBean(bean);
-
-			log.info("File uploaded successfully");
-
-			boolean containsObject = salesforceService.checkObject(bean);
-			if (containsObject) {
-
-				return "override";
-			} 
-			
-//			else {
-//				log.info("Generating Salesforce object now...");
-//				bean.setOverride(Boolean.FALSE);
-//				salesforceService.execute(bean);
-//			}
-//			log.info("Object sent successfully");
-
-			return SUCCESS;
-		} catch (ParseException e) {
-			message = "There has been a problem uploading the file";
-			log.error(message, e);
-			this.getUploadContext().setLastException(e);
-			return ERROR;
-
-		} catch (Exception e) {
-			message = "There has been a problem generating salesforce objects";
-			log.error(message, e);
-			this.getUploadContext().setLastException(e);
-			return ERROR;
+			log.info("salesforce existing session was null??");
 		}
+		return INPUT;
 	}
+
+
+
 
 
 	public File getUpload() {
