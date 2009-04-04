@@ -18,6 +18,14 @@
 				</h3>
 
 				<table>
+					<tr style="background-color:#9EBDA6">
+						<td>
+							<b>Salesforce Credentials</b>
+						</td>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
 					<tr>
 						<td>
 							Username:
