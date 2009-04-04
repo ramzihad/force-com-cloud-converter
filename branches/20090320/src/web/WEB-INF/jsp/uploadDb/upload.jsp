@@ -110,7 +110,7 @@
 					</tr>
 					<s:iterator value="externalIds" status="status">
 						<tr>
-							<td>External ID ${status.index}</td>
+							<td>External ID #${status.index}</td>
 							<td>
 								<s:textfield id="externalIds[%{#status.index}]"
 								name="externalIds[%{#status.index}]"
@@ -128,7 +128,7 @@
 					</tr>
 					<s:iterator value="picklistInfos" status="status">
 						<tr>
-							<td>Picklist ${status.index}</td>
+							<td>Picklist #${status.index}</td>
 							<td>
 								Field name <s:textfield id="picklistInfos[%{#status.index}].fieldName"
 								name="picklistInfos[%{#status.index}].fieldName" 
@@ -150,7 +150,7 @@
 					</tr>
 					<s:iterator value="lookupSettings" status="status">
 						<tr>
-							<td>Lookup Field ${status.index}</td>
+							<td>Lookup Field #${status.index}</td>
 							<td>
 								Local name <s:textfield id="lookupSettings[%{#status.index}].localName"
 								name="lookupSettings[%{#status.index}].localName"
