@@ -42,7 +42,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
 		
-		String s = action.upload();
+		String s = action.advanceOptionsOne();
 		
 		assertEquals(ActionSupport.INPUT, s);
 
@@ -69,7 +69,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUpload(new File("./src/sampledbs/excel/SampleInputSpreadsheet2009-03-17.v1.xls"));
 		
-		String s = action.upload();
+		String s = action.override();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 		
@@ -95,7 +95,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUpload(new File("./src/sampledbs/excel/snapshot test.xls"));
 		
-		String s = action.upload();
+		String s = action.override();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 		
@@ -128,7 +128,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUpload(new File(fileName));
 		
-		String s = action.upload();
+		String s = action.override();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 		
@@ -160,7 +160,7 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 		action.setUpload(new File(fileName));
 		
-		String s = action.upload();
+		String s = action.override();
 		
 		assertEquals(ActionSupport.SUCCESS, s);
 		

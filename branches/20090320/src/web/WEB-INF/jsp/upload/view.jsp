@@ -18,6 +18,7 @@
 					</td>
 				</s:iterator>
 			</tr>
+			
 			<tr style="background-color: #EDF3EE">
 				<s:iterator value="bean.types" var="type">
 					<td>

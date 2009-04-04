@@ -14,12 +14,12 @@
 			<h3>
 				Object exists
 			</h3>
-			
+			<br/><br/>
 			The object exists in Salesforce.<br /> 
 			Do you want to continue and delete it?
 			<br />
 			<br />
-			<a href="init.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="advanceOptionsOne.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="override.action">Continue</a>
 
 		</s:form>

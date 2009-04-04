@@ -23,4 +23,10 @@ public class Constants {
 	public static final String URL = "URL";
 	
 	public static final String PHONE_NUMBER = "Phone Number";
+	
+	public static final String EXTERNAL_ID = "External Id";
+	
+	public static final String LOOKUP = "Lookup";
+	
+	public static final String PICKUPLIST = "Pickuplist";
 }

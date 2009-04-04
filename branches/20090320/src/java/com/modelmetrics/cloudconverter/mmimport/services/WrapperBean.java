@@ -7,6 +7,8 @@ public class WrapperBean {
 	private String sheetName;
 	
 	private List<String> names;
+	
+	private List<String> labels;
 
 	private List<String> types;
 
@@ -67,5 +69,13 @@ public class WrapperBean {
 
 	public void setSheetName(String sheetName) {
 		this.sheetName = sheetName;
+	}
+
+	public List<String> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<String> labels) {
+		this.labels = labels;
 	}
 }

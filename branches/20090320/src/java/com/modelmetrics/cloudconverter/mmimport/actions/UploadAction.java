@@ -1,12 +1,15 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
+import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
 public class UploadAction extends AbstractUploadContextAware {
@@ -31,7 +34,7 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	private String uploadFileName;
 
-	private WrapperBean bean;
+	private List<ValueId> fieldTypes;
 
 	/**
 	 * initializes form input page
@@ -50,7 +53,7 @@ public class UploadAction extends AbstractUploadContextAware {
 	 * 
 	 * @return
 	 */
-	public String upload() {
+	public String advanceOptionsOne() {
 
 		try {
 			validateData();
@@ -79,21 +82,12 @@ public class UploadAction extends AbstractUploadContextAware {
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
-			bean = fileService.parseXLS(upload);
-			bean.setOverride(override);
+		
+			this.getUploadContext().setWrapperBean(fileService.parseXLS(upload));
 
 			log.info("File uploaded successfully");
 
-			boolean containsObject = salesforceService.checkObject(bean);
-			if (containsObject) {
-				return "override";
-			} else {
-				log.info("Generating Salesforce object now...");
-				bean.setOverride(Boolean.FALSE);
-				salesforceService.execute(bean);
-			}
-			log.info("Object sent successfully");
-
+			fieldTypes = StringUtils.getAllFieldTypes();
 			return SUCCESS;
 		} catch (ParseException e) {
 			message = "There has been a problem uploading the file";
@@ -102,11 +96,52 @@ public class UploadAction extends AbstractUploadContextAware {
 			// this.getUploadContext().setLastException(e);
 			return ERROR;
 
+		}
+	}
+
+	public String checkOverride() {
+		try {
+			WrapperBean bean = this.getUploadContext().getWrapperBean();
+			boolean containsObject = salesforceService.checkObject(bean);
+			if (containsObject) {
+				return "override";
+			} else {
+				log.info("Generating Salesforce object now...");
+				bean.setOverride(Boolean.FALSE);
+				salesforceService.execute(bean);
+			}
+			this.getUploadContext().setWrapperBean(bean);
+			return SUCCESS;
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
 			log.error(message, e);
-			// this.getUploadContext().setLastException(e);
 			addActionMessage(message);
+			// this.getUploadContext().setLastException(e);
+			return ERROR;
+		}
+	}
+
+	
+
+	public String override() {
+		try {
+			WrapperBean bean = this.getUploadContext().getWrapperBean();
+
+			log.info("Generating Salesforce object now...");
+			bean = this.getUploadContext().getWrapperBean();
+			bean.setOverride(Boolean.TRUE);
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
+			salesforceService.execute(bean);
+
+			log.info("Object sent successfully");
+			this.getUploadContext().setWrapperBean(bean);
+			return SUCCESS;
+		} catch (Exception e) {
+			message = "There has been a problem generating salesforce objects";
+			log.error(message, e);
+			addActionMessage(message);
+			// this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
 	}
@@ -123,27 +158,7 @@ public class UploadAction extends AbstractUploadContextAware {
 		}
 
 	}
-
-	public String override() {
-		try {
-			log.info("Generating Salesforce object now...");
-			bean = this.getUploadContext().getWrapperBean();
-			bean.setOverride(Boolean.TRUE);
-			salesforceService.setSalesforceSession(this
-					.getSalesforceSessionContext().getSalesforceSession());
-			salesforceService.execute(bean);
-
-			log.info("Object sent successfully");
-			return SUCCESS;
-		} catch (Exception e) {
-			message = "There has been a problem generating salesforce objects";
-			log.error(message, e);
-			addActionMessage(message);
-			// this.getUploadContext().setLastException(e);
-			return ERROR;
-		}
-	}
-
+	
 	public File getUpload() {
 		return upload;
 	}
@@ -176,14 +191,6 @@ public class UploadAction extends AbstractUploadContextAware {
 		return fileService;
 	}
 
-	public WrapperBean getBean() {
-		return bean;
-	}
-
-	public void setBean(WrapperBean bean) {
-		this.bean = bean;
-	}
-
 	public void setSalesforceService(SalesforceService salesforceService) {
 		this.salesforceService = salesforceService;
 	}
@@ -214,6 +221,14 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	public void setOverride(Boolean override) {
 		this.override = override;
+	}
+
+	public List<ValueId> getFieldTypes() {
+		return fieldTypes;
+	}
+
+	public void setFieldTypes(List<ValueId> fieldTypes) {
+		this.fieldTypes = fieldTypes;
 	}
 
 }

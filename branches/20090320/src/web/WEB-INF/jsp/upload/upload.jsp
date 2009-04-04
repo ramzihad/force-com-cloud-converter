@@ -12,7 +12,7 @@
 		<s:actionerror />
 		<s:fielderror />
 		<div id="form">
-			<s:form action="upload" method="POST" enctype="multipart/form-data">
+			<s:form action="advanceOptionsOne" method="POST" enctype="multipart/form-data">
 
 				<h3>
 					Upload your Excel File

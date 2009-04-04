@@ -40,13 +40,21 @@
 			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
 		</action>
 		
-		<action name="upload" class="uploadAction" method="upload" >
-			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+	
+		<action name="advanceOptionsOne" class="uploadAction" method="advanceOptionsOne" >
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
-			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
-			<result name="wait">/WEB-INF/jsp/upload/wait.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
+
 		</action>
+		<action name="checkExistance" class="uploadAction" method="checkOverride" >
+
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
+			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
+
+		</action>
+		
 		<action name="override" class="uploadAction" method="override" >
 			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>

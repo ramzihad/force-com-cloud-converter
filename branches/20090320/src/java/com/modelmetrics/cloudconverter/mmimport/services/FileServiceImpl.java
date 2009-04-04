@@ -38,6 +38,7 @@ public class FileServiceImpl implements FileService {
 
 		WrapperBean bean = new WrapperBean();
 		bean.setNames(new ArrayList<String>());
+		bean.setLabels(new ArrayList<String>());
 		bean.setTypes(new ArrayList<String>());
 		bean.setObjects(new ArrayList<List<Object>>());
 
@@ -68,6 +69,7 @@ public class FileServiceImpl implements FileService {
 						// parse column names
 						bean.getNames()
 								.add(StringUtils.applyConstraints(value));
+						bean.getLabels().add(value);
 					}
 					if (i == 1) {
 						// parse data types
