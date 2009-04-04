@@ -3,14 +3,14 @@
 <html>
 	<head>
 		<title>Upload</title>
-		<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
+		
 	</head>
 
 	<body onload="hideLoader()">
 
 		<s:actionerror />
 		<s:fielderror />
-		<s:form action="import2" method="POST" enctype="multipart/form-data">
+		<s:form action="import2" method="POST" enctype="multipart/form-data" theme="simple">
 
 			<h1>Step 1: Select Your Excel File</h1>
 			

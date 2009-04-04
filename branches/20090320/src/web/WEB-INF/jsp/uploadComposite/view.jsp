@@ -5,13 +5,12 @@
 	<head>
 		<title>View</title>
 		
-				<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
 		
 	</head>
 
 	<body>
 		
-		<h1>Complete!</h1>
+		<h1>Successfully Imported "<s:property value="uploadContext.wrapperBean.sheetName" />"</h1>
 
 		<p>Congratulations! You have Imported Your App.</p>
 		
@@ -19,7 +18,7 @@
 		
 		<p>Simply edit the profile(s) you want to have access to the object and change tab visibility from "Tab Hidden" to "Default On".</p>
 		
-		<p>The tab visibility you want to change is "<s:property value="uploadContext.wrapperBean.sheetName" />".</p>
+		<p>The object you want to change tab visibility for is "<s:property value="uploadContext.wrapperBean.sheetName" />".</p>
 		
 		<p><a href="<s:property value="salesforceSessionContext.profileListUrl" />" target="_parent">Click here to go to your profile list.</a></p>
 		

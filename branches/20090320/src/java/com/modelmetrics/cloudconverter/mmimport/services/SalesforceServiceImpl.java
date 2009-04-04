@@ -4,6 +4,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.mmimport.actions.UploadContext;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.DescribeGlobalResult;
 
@@ -11,7 +12,7 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 	private SalesforceSession salesforceSession;
 
-	public void execute(WrapperBean bean) throws Exception {
+	public void execute(UploadContext uploadContext) throws Exception {
 
 		// salesforceCredentials.setUsername(username);
 		// salesforceCredentials.setPassword(password);
@@ -19,20 +20,22 @@ public class SalesforceServiceImpl implements SalesforceService {
 		MigrationContext migrationContext = new MigrationContextFactory()
 				.buildMigrationContext(this.getSalesforceSession());
 
-		migrationContext.setWrapperBean(bean);
+		migrationContext.setWrapperBean(uploadContext.getWrapperBean());
 
 		MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
 				.build(migrationContext);
 
 		migrationEngineIF.setMigrationContext(migrationContext);
 
+		migrationEngineIF.subscribeToStatus(uploadContext.getStatusSubscriber());
+		
 		// execute it.
 		migrationEngineIF.execute();
 	}
 
-	public boolean checkObject(WrapperBean bean) throws Exception {
+	public boolean checkObject(UploadContext uploadContext) throws Exception {
 
-		return containsObject(salesforceSession, bean.getSheetName());
+		return containsObject(salesforceSession, uploadContext.getWrapperBean().getSheetName());
 
 	}
 

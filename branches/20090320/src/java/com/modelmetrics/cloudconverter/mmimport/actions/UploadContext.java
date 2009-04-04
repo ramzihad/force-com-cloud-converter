@@ -1,6 +1,7 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class UploadContext  {
 
@@ -11,6 +12,8 @@ public class UploadContext  {
 	private String salesforcePassword;
 
 	private WrapperBean wrapperBean;
+	
+	private MigrationStatusSubscriber statusSubscriber;
 
 
 
@@ -49,6 +52,14 @@ public class UploadContext  {
 	public String getErrorMessage() {
 		return this.getLastException().getMessage() + ", "
 				+ this.getLastException().getLocalizedMessage();
+	}
+
+	public MigrationStatusSubscriber getStatusSubscriber() {
+		return statusSubscriber;
+	}
+
+	public void setStatusSubscriber(MigrationStatusSubscriber statusSubscriber) {
+		this.statusSubscriber = statusSubscriber;
 	}
 
 

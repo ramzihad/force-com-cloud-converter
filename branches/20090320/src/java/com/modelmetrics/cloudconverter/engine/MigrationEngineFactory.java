@@ -36,13 +36,20 @@ package com.modelmetrics.cloudconverter.engine;
 public class MigrationEngineFactory {
 
 	public MigrationEngineIF build(MigrationContext migrationContext) {
+		
+		MigrationEngineIF ret = null;
+		
 		if (migrationContext.getDirtConnection() != null) {
-			return new MigrationEngineResultSetImpl();
+			ret = new MigrationEngineResultSetImpl();
 		} else if (migrationContext.getWrapperBean() != null) {
-			return new MigrationEngineWrapperBeanImpl();
+			ret = new MigrationEngineWrapperBeanImpl();
 		} else {
 			throw new RuntimeException("no way to build anything.");
 		}
+		
+		migrationContext.setMigrationStatusPublisher(ret);
+		
+		return ret;
 	}
 
 }

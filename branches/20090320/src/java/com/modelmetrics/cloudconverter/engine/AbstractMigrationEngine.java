@@ -27,6 +27,10 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,6 +40,7 @@ import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.ProfileTabVisibilityBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
+import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
@@ -43,15 +48,30 @@ import com.sforce.soap._2006._04.metadata.Layout;
 import com.sforce.soap._2006._04.metadata.Profile;
 
 public abstract class AbstractMigrationEngine extends
-		AbstractMigrationContextAware implements MigrationEngineIF {
+		AbstractMigrationContextAware implements MigrationEngineIF, MigrationStatusPublisher {
 
 	protected static final Log log = LogFactory
 			.getLog(AbstractMigrationEngine.class);
 
+	public List<MigrationStatusSubscriber> subscribers = new ArrayList<MigrationStatusSubscriber>();
+	
+	public void subscribeToStatus(MigrationStatusSubscriber migrationStatusSubscriber) {
+		subscribers.add(migrationStatusSubscriber);
+	}
+	
+	public void publishStatus(String status) {
+		for (Iterator<MigrationStatusSubscriber> iterator = subscribers.iterator(); iterator.hasNext();) {
+			MigrationStatusSubscriber type =  iterator.next();
+			type.publish(status);
+			
+		}
+	}
 	public void executeCommon(CustomObject co) throws Exception {
 
 		this.getMigrationContext().setCustomObject(co);
 
+		this.publishStatus("creating new object");
+		
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomObject[] { co }).execute();
 
@@ -62,6 +82,8 @@ public abstract class AbstractMigrationEngine extends
 		CustomField[] fields = new CustomFieldBuilder().build(this
 				.getMigrationContext());
 
+		this.publishStatus("creating new fields");
+		
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), fields).execute();
 
@@ -71,6 +93,9 @@ public abstract class AbstractMigrationEngine extends
 		// moving to the lookups
 		if (this.getMigrationContext().getCustomLookupFields() != null
 				&& this.getMigrationContext().getCustomLookupFields().length > 0) {
+			
+			this.publishStatus("creating new lookup fields");
+			
 			new CreateExecutor(this.getMigrationContext()
 					.getSalesforceSession().getMetadataService(), this
 					.getMigrationContext().getCustomLookupFields()).execute();
@@ -79,6 +104,9 @@ public abstract class AbstractMigrationEngine extends
 		/*
 		 * Custom Tab
 		 */
+		
+		this.publishStatus("creating custom tab");
+		
 		CustomTab customTab = new CustomTabBuilder().build(co);
 		log.debug("CustomTab - local definition complete - "
 				+ customTab.getFullName());
@@ -89,6 +117,9 @@ public abstract class AbstractMigrationEngine extends
 		/*
 		 * update the layout
 		 */
+		
+		this.publishStatus("updating default layout");
+		
 		LayoutBuilder layoutBuilder = new LayoutBuilder();
 		layoutBuilder.setMigrationContext(this.getMigrationContext());
 		Layout layout = layoutBuilder.build();
@@ -126,6 +157,7 @@ public abstract class AbstractMigrationEngine extends
 //		
 //		log.info("reset session complete...");
 		
+		this.publishStatus("resting");
 		log.debug("waiting for 10 seconds (instead of resetting session)...");
 		Thread.sleep(10000);
 		

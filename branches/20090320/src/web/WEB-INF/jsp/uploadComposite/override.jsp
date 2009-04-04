@@ -4,7 +4,7 @@
 	<head>
 		<title>Upload</title>
 		
-						<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
+						
 		
 	</head>
 

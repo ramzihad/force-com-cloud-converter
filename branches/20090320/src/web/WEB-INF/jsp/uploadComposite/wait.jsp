@@ -7,11 +7,23 @@
 
 	<body>
 
-		Please wait while we process your request...
-		<br />
-		<br />
-
-		<img src="img/loader.gif">
+	<h1>Importing Your App > Please Wait</h1>
+	
+	<p>Have a suggestion on how to improve this application? Contact Reid Carlberg at <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a>.</p>
+	
+	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
+	
+	<h2>Current Status, Newest First</h2>
+	
+	<p>This page refreshes automatically every five seconds.  Please be patient.</p>
+	
+	<ul>
+	
+	<s:iterator value="uploadContext.statusSubscriber.status">
+		<li><s:property /></li>
+	</s:iterator>
+	
+	</ul>
 
 	</body>
 </html>

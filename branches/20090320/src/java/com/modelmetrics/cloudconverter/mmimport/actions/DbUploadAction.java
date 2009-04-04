@@ -95,9 +95,9 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 				try {
 					this.getSalesforceSessionContext()
 							.setSalesforceCredentials(sfdcUsername,
-									sfdcPassword+sfdcSecurityToken);
+									sfdcPassword);
 				} catch (Exception e) {
-
+					this.getUploadContext().setLastException(e);
 					addActionMessage("Could not initialize your Salesforce session.  You might need your security token.");
 				}
 			}
@@ -112,15 +112,19 @@ public class DbUploadAction extends AbstractUploadContextAware implements
 			dbSalesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
+			//2009-04-04 RSC Commented out.
+			/*
+			 * we cannot hard code this to look at a particular connection string.
+			 */
 			//This has to be done this way otherwise the server does not see the folder inside web-inf
-			String realPath = request.getSession().getServletContext()
-					.getRealPath("/");
-			String dbUrl = "jdbc:derby:";
-			dbUrl += realPath + "sampledbs/";
-			dbUrl += this.getDbConnection();
+//			String realPath = request.getSession().getServletContext()
+//					.getRealPath("/");
+//			String dbUrl = "jdbc:derby:";
+//			dbUrl += realPath + "sampledbs/";
+//			dbUrl += this.getDbConnection();
 			
 			
-			dbSalesforceService.generateObjectFromDB(this, dbUrl);
+			dbSalesforceService.generateObjectFromDB(this);
 			log.info("Object sent successfully");
 
 			return SUCCESS;

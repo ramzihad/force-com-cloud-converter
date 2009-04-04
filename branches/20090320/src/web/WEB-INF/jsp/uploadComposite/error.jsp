@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
+
 
 <html>
 

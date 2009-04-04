@@ -115,9 +115,8 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 			log.info("File uploaded successfully");
 
-			boolean containsObject = salesforceService.checkObject(bean);
+			boolean containsObject = salesforceService.checkObject(this.getUploadContext());
 			if (containsObject) {
-
 				return "override";
 			} 
 			

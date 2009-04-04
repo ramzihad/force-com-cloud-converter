@@ -8,6 +8,7 @@ import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadActionCompositeExecute extends AbstractUploadContextAware {
@@ -76,8 +77,6 @@ public class UploadActionCompositeExecute extends AbstractUploadContextAware {
 		this.message = message;
 	}
 
-
-
 	/**
 	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
 	 * view
@@ -86,41 +85,16 @@ public class UploadActionCompositeExecute extends AbstractUploadContextAware {
 	 */
 	public String execute() throws Exception {
 
-//		try {
+		this.getUploadContext().setStatusSubscriber(new MigrationStatusSubscriberLifoImpl());
+		
+		salesforceService.setSalesforceSession(this
+				.getSalesforceSessionContext().getSalesforceSession());
 
-			salesforceService.setSalesforceSession(this
-					.getSalesforceSessionContext().getSalesforceSession());
+		log.info("Generating Salesforce object now...");
+		salesforceService.execute(this.getUploadContext());
 
-////			bean = fileService.parseXLS(upload);
-////			bean.setOverride(override);
-//
-//			this.getUploadContext().setWrapperBean(bean);
-
-			log.info("File uploaded successfully");
-
-//			boolean containsObject = salesforceService.checkObject(bean);
-//			if (containsObject) {
-//
-//				return "override";
-//			} else {
-				log.info("Generating Salesforce object now...");
-//				bean.setOverride(B);
-				salesforceService.execute(this.getUploadContext().getWrapperBean());
-//			}
-//			log.info("Object sent successfully");
-
-			return SUCCESS;
-//			return "wait";
-
-//		} catch (Exception e) {
-//			message = "There has been a problem generating salesforce objects";
-//			log.error(message, e);
-//			this.getUploadContext().setLastException(e);
-//			return ERROR;
-//		}
+		return SUCCESS;
 	}
-
-
 
 	public File getUpload() {
 		return upload;

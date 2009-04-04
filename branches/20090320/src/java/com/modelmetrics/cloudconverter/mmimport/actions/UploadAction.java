@@ -102,13 +102,13 @@ public class UploadAction extends AbstractUploadContextAware {
 	public String checkOverride() {
 		try {
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			boolean containsObject = salesforceService.checkObject(bean);
+			boolean containsObject = salesforceService.checkObject(this.getUploadContext());
 			if (containsObject) {
 				return "override";
 			} else {
 				log.info("Generating Salesforce object now...");
 				bean.setOverride(Boolean.FALSE);
-				salesforceService.execute(bean);
+				salesforceService.execute(this.getUploadContext());
 			}
 			this.getUploadContext().setWrapperBean(bean);
 			return SUCCESS;
@@ -132,7 +132,7 @@ public class UploadAction extends AbstractUploadContextAware {
 			bean.setOverride(Boolean.TRUE);
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
-			salesforceService.execute(bean);
+			salesforceService.execute(this.getUploadContext());
 
 			log.info("Object sent successfully");
 			this.getUploadContext().setWrapperBean(bean);

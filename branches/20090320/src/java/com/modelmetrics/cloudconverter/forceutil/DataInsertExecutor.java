@@ -93,17 +93,21 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 			// }
 
 			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
+				migrationContext.getMigrationStatusPublisher().publishStatus("execting data insert...");
 				dao.insert(toInsert);
 				toInsert = new ArrayList<Sproxy>();
+				
 			}
 
 		}
 
 		log.debug("starting the insert...");
 
+		migrationContext.getMigrationStatusPublisher().publishStatus("execting data insert...");
 		dao.insert(toInsert);
 
 		log.debug("insert complete...");
+		migrationContext.getMigrationStatusPublisher().publishStatus("insert complete");
 
 	}
 
@@ -145,6 +149,7 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 			toInsert.add(current);
 
 			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
+				migrationContext.getMigrationStatusPublisher().publishStatus("execting data insert");
 				dao.insert(toInsert);
 				toInsert = new ArrayList<Sproxy>();
 			}

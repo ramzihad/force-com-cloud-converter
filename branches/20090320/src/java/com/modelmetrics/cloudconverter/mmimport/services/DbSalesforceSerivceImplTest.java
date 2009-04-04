@@ -44,8 +44,7 @@ public class DbSalesforceSerivceImplTest extends TestCaseWithDevOrg {
 			salesforceServiceImpl.setSalesforceSession(context
 					.getSalesforceSession());
 
-			salesforceServiceImpl.generateObjectFromDB(action,
-					"jdbc:derby:./src/sampledbs/derby/sample2");
+			salesforceServiceImpl.generateObjectFromDB(action);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

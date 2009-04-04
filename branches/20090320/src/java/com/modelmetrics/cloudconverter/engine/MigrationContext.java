@@ -86,6 +86,8 @@ public class MigrationContext {
 
 	private WrapperBean wrapperBean;
 	
+	private MigrationStatusPublisher migrationStatusPublisher;
+	
 	public String getExternalIdForUpsert() {
 		return externalIdForUpsert;
 	}
@@ -215,5 +217,14 @@ public class MigrationContext {
 
 	public void setWrapperBean(WrapperBean wrapperBean) {
 		this.wrapperBean = wrapperBean;
+	}
+
+	public MigrationStatusPublisher getMigrationStatusPublisher() {
+		return migrationStatusPublisher;
+	}
+
+	public void setMigrationStatusPublisher(
+			MigrationStatusPublisher migrationStatusPublisher) {
+		this.migrationStatusPublisher = migrationStatusPublisher;
 	}
 }

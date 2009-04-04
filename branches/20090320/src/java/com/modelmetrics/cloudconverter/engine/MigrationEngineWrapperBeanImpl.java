@@ -22,6 +22,8 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 
 	private void createCustomObject() throws Exception {
 
+		this.publishStatus("Beginning migration");
+		
 		WrapperBean bean = this.getMigrationContext().getWrapperBean();
 		
 		/*
@@ -34,6 +36,8 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 
 		// check if it needs overriding
 		if (bean.getOverride().booleanValue()) {
+			
+			this.publishStatus("Deleting existing object");
 			// delete object here
 			CustomObject co = new CustomObject();
 			co.setFullName(bean.getSheetName()+"__c");
@@ -41,6 +45,7 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 					.getSalesforceSession().getMetadataService())
 					.executeSimpleDelete(co);
 			log.info("Deleting object "+bean.getSheetName()+" from salesforce...");
+			this.publishStatus("Delete complete");
 		}
 
 		/*
@@ -54,56 +59,6 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 		CustomObject co = new CustomObjectBuilder().build(bean);
 
 		this.executeCommon(co);
-		
-//		this.getMigrationContext().setCustomObject(co);
-//
-//		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-//				.getMetadataService(), new CustomObject[] { co }).execute();
-//
-//		/*
-//		 * create custom fields 2009-03-21 RSC This has the migration context so
-//		 * it is now aware of the metadata proxy collection
-//		 */
-//		CustomField[] fields = new CustomFieldBuilder().build(this
-//				.getMigrationContext());
-//
-//		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-//				.getMetadataService(), fields).execute();
-//
-//		// reseting the session
-//		this.getMigrationContext().pauseSession();
-//
-//		// moving to the lookups
-//		if (this.getMigrationContext().getCustomLookupFields() != null
-//				&& this.getMigrationContext().getCustomLookupFields().length > 0) {
-//			new CreateExecutor(this.getMigrationContext()
-//					.getSalesforceSession().getMetadataService(), this
-//					.getMigrationContext().getCustomLookupFields()).execute();
-//		}
-//
-//		/*
-//		 * Custom Tab
-//		 */
-//		CustomTab customTab = new CustomTabBuilder().build(co);
-//		log.debug("CustomTab - local definition complete - "
-//				+ customTab.getFullName());
-//
-//		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-//				.getMetadataService(), new CustomTab[] { customTab }).execute();
-//
-//		this.getMigrationContext().pauseSession();
-//
-//		/*
-//		 * update the layout
-//		 */
-//		LayoutBuilder layoutBuilder = new LayoutBuilder();
-//		layoutBuilder.setMigrationContext(this.getMigrationContext());
-//		Layout layout = layoutBuilder.build();
-//
-//		new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
-//				.getMetadataService()).executeSimpleUpdate(layout);
-//
-//		this.getMigrationContext().pauseSession();
 
 		/*
 		 * Move the data
@@ -116,6 +71,7 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			this.publishStatus("Found a problem: " + e.getLocalizedMessage());
 			throw new RuntimeException(e);
 		}
 

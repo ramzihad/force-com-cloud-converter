@@ -14,9 +14,9 @@ public class DbUploadActionTest  extends TestCaseWithDevOrg {
 
 		// sfdc
 		action.setSfdcUsername(this.sampleSfdcUsername);
-
-		action.setSfdcPassword("police78");
-		action.setSfdcSecurityToken("VAwrqZKkqcEGyTYO7LhNu1CV");
+		action.setSfdcPassword(this.sampleSfdcPassword);
+//		action.setSfdcPassword("police78");
+//		action.setSfdcSecurityToken("VAwrqZKkqcEGyTYO7LhNu1CV");
 
 		// db
 		action.setDbTypeName("derby");

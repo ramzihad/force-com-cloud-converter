@@ -18,7 +18,7 @@ public class DbSalesforceServiceImpl implements DbSalesforceService {
 
 	private SalesforceSession salesforceSession;
 
-	public void generateObjectFromDB(DbUploadAction action, String dbConnection)
+	public void generateObjectFromDB(DbUploadAction action)
 			throws Exception {
 
 		Map<String, String> picklistFields = new HashMap<String, String>();
@@ -34,7 +34,7 @@ public class DbSalesforceServiceImpl implements DbSalesforceService {
 
 		
 		DatabaseCredentials databaseCredentials = new DatabaseCredentials(
-				action.getDbTypeName(), action.getDbDriver(), dbConnection, action
+				action.getDbTypeName(), action.getDbDriver(), action.getDbConnection(), action
 						.getDbUser(), action.getDbPassword(), action
 						.getDbSelect());
 
