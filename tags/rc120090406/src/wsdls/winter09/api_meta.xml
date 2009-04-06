@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?NLS  TYPE="org.eclipse.help.toc"?>
+<toc label="Force.com Metadata API Developer's Guide" topic="meta_intro.htm">
+   <topic label="Understanding the Metadata API" href="meta_intro.htm"/>
+   <topic label="Quick Start" href="meta_quickstart.htm"/>
+   <topic label="Asynchronous Metadata Calls" href="meta_calls_intro.htm">
+      <topic label="checkStatus()" href="meta_checkstatus.htm"/>
+      <topic label="create()" href="meta_create.htm">
+         <topic label="AsyncResult" href="meta_asyncresult.htm"/>
+      </topic>
+      <topic label="delete()" href="meta_delete.htm">
+         <topic label="AsyncResult" href="meta_asyncresult.htm"/>
+      </topic>
+      <topic label="update()" href="meta_update.htm">
+         <topic label="AsyncResult" href="meta_asyncresult.htm"/>
+      </topic>
+   </topic>
+   <topic label="Declarative (File-Based) Metadata API Calls" href="file_based.htm">
+      <topic label="deploy()" href="meta_deploy.htm">
+         <topic label="checkDeployStatus()" href="meta_checkdeploystatus.htm"/>
+         <topic label="DeployResult" href="meta_deployresult.htm"/>
+      </topic>
+      <topic label="retrieve()" href="meta_retrieve.htm">
+         <topic label="checkRetrieveStatus()" href="meta_checkretrievestatus.htm"/>
+         <topic label="RetrieveRequest" href="meta_retrieve_request.htm"/>
+         <topic label="RetrieveResult" href="meta_retrieveresult.htm"/>
+      </topic>
+      <topic label="describeMetadata()" href="meta_describe.htm">
+         <topic label="DescribeMetadataResult" href="meta_describemeta_result.htm"/>
+      </topic>
+      <topic label="listMetadata()" href="meta_listmetadata.htm">
+         <topic label="ListMetadataQuery" href="meta_listmetadataquery.htm"/>
+      </topic>
+   </topic>
+   <topic label="Metadata Components" href="objects/meta_objects_intro.htm">
+      <topic label="ApexClass" href="objects/meta_classes.htm"/>
+      <topic label="ApexComponent" href="objects/meta_component.htm"/>
+      <topic label="ApexPage" href="objects/meta_pages.htm"/>
+      <topic label="ApexTrigger" href="objects/meta_triggers.htm"/>
+      <topic label="CustomApplication" href="objects/meta_customapplication.htm"/>
+      <topic label="CustomDataType" href="objects/meta_cdt.htm"/>
+      <topic label="CustomLabels" href="objects/meta_customlabels.htm"/>
+      <topic label="CustomObject" href="objects/customobject.htm">
+         <topic label="CustomField" href="objects/customfield.htm"/>
+         <topic label="ListView" href="objects/meta_listview.htm"/>
+         <topic label="Picklist" href="objects/meta_picklist.htm"/>
+         <topic label="RecordType" href="objects/meta_recordtype.htm"/>
+         <topic label="SearchLayouts" href="objects/meta_searchlayouts.htm"/>
+         <topic label="SharingReason" href="objects/meta_apexsharingreason.htm"/>
+         <topic label="SharingRecalculation" href="objects/meta_apexsharingrecalculation.htm"/>
+         <topic label="ValidationRule" href="objects/meta_validationformulas.htm"/>
+         <topic label="Weblink" href="objects/meta_weblink.htm"/>
+         <topic label="Metadata Field Types" href="objects/meta_field_types.htm"/>
+      </topic>
+      <topic label="CustomObjectTranslation" href="objects/meta_customobjecttranslation.htm"/>
+      <topic label="CustomPageWebLink" href="objects/custompageweblink.htm"/>
+      <topic label="CustomTab" href="objects/meta_tab.htm"/>
+      <topic label="Dashboard" href="objects/meta_dashboard.htm"/>
+      <topic label="Document" href="objects/meta_document.htm"/>
+      <topic label="EmailTemplate" href="objects/meta_emailtemplate.htm"/>
+      <topic label="Folder" href="objects/meta_folder.htm"/>
+      <topic label="HomePageComponent" href="objects/meta_homepagecomponent.htm"/>
+      <topic label="HomePageLayout" href="objects/meta_homepagelayouts.htm"/>
+      <topic label="Layout" href="objects/meta_layouts.htm"/>
+      <topic label="Letterhead" href="objects/meta_letterhead.htm"/>
+      <topic label="Metadata" href="objects/metadata.htm"/>
+      <topic label="MetadataWithContent" href="objects/meta_metadatawithcontent.htm"/>
+      <topic label="Profile" href="objects/meta_profile.htm"/>
+      <topic label="Report" href="objects/meta_report.htm"/>
+      <topic label="ReportType" href="objects/meta_reporttype.htm"/>
+      <topic label="Scontrol" href="objects/meta_scontrol.htm"/>
+      <topic label="StaticResource" href="objects/meta_staticresource.htm"/>
+      <topic label="Translations" href="objects/meta_translations.htm"/>
+      <topic label="Workflow" href="objects/meta_workflow.htm"/>
+   </topic>
+</toc>
