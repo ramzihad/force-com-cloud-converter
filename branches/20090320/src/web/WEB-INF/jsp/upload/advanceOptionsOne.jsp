@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
@@ -17,11 +18,62 @@
 		<br />
 		<s:form action="checkExistance" method="POST">
 			<a href="init.action">Back</a>
-			<s:submit value="Continue" />
+			<s:submit value="Next" />
 			<br />
 			<br />
 			<table border="1">
-				<tr style="background-color: #CCCCCC">
+
+				<tr><td>
+					<b>Field Name</b>
+				</td><td>
+					<b>Field Label</b>
+				</td><td>
+					<b>Data Type</b>
+				</td>
+				<s:iterator value="advanceOptionsBeans" status="status">
+					 <s:if test="${status.index==1}">	
+					 	<s:iterator value="advanceOptionsBeans[#status.index].data">
+								<td>Example</td>
+						</s:iterator>
+					</s:if>
+				</s:iterator>
+				
+				</tr>
+
+				<s:iterator value="advanceOptionsBeans" var="bean" status="status">
+					<tr>
+						<td>
+							${bean.name}
+						</td>
+						<td>
+							
+							
+							<s:textfield
+								id="advanceOptionsBeans[%{#status.index}].label"
+								name="advanceOptionsBeans[%{#status.index}].label"
+								value="%{advanceOptionsBeans[#status.index].label}"
+								theme="simple" />
+						
+						</td>
+						<td>
+							<s:select list="fieldTypes" listKey="id" listValue="value"
+								theme="simple" name="advanceOptionsBeans[%{#status.index}].type"
+								value="%{advanceOptionsBeans[#status.index].type}" />
+						</td>
+						
+						<s:iterator value="advanceOptionsBeans[#status.index].data" var="d">
+							<td>${d}</td>
+						</s:iterator>
+						
+						
+					</tr>
+				</s:iterator>
+			</table>
+			<s:submit value="Next" />
+		</s:form>
+
+
+				<%--<tr style="background-color: #CCCCCC">
 					<td>
 						<b>Field Name</b>
 					</td>
@@ -74,11 +126,12 @@
 						</s:iterator>
 					</tr>
 				</s:iterator>
-			</table>
+				
+			</table>--%>
 			<br />
 			<br />
-			<a href="init.action">Back</a><s:submit value="Continue" />
-		</s:form>
+			<a href="init.action">Back</a>
+		
 	</body>
 </html>
 
