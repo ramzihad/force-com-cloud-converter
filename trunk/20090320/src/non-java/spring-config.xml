@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+
+
+		<!--  spring.properties includes all the parameters listed below.  -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:spring.properties</value>
+		</property>
+	</bean>
+
+
+
+	<bean id="salesforceService"
+		class="com.modelmetrics.cloudconverter.mmimport.services.SalesforceServiceImpl" >
+
+	</bean>
+	
+	<bean id="dbSalesforceService"
+		class="com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceServiceImpl" >
+
+	</bean>
+	
+	<bean id="fileService"
+		class="com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl" />
+	
+	<bean id="salesforceCredentials"
+		class="com.modelmetrics.common.sforce.SalesforceCredentials" >
+	</bean>
+
+
+
+	<bean id="uploadContext"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadContext"
+		scope="session">
+		<!-- <aop:scoped-proxy />  -->
+	</bean>
+
+	<bean id="salesforceSessionContext"
+		class="com.modelmetrics.common.sforce.struts2.SalesforceSessionContext"
+		scope="session">
+		<!-- <aop:scoped-proxy /> -->
+	</bean>
+	
+	<bean id="utilityContext"
+		class="com.modelmetrics.utility.common.struts2.UtilityContext"
+		scope="session">
+		<!-- <aop:scoped-proxy /> -->
+	</bean>
+	
+	<bean id="describeContext"
+		class="com.modelmetrics.utility.describe.struts2.DescribeContext"
+		scope="session">
+		<!-- <aop:scoped-proxy /> -->
+	</bean>
+		
+	<bean id="abstractUploadContextAware" abstract="true" >
+		<property name="uploadContext">
+			<ref bean="uploadContext" />
+		</property>
+		<property name="salesforceSessionContext" >
+			<ref bean="salesforceSessionContext" />
+		</property>
+	</bean>
+
+	<bean id="uploadAction" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadAction">
+		
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<bean id="dbUploadAction" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction">
+		<property name="dbSalesforceService" ref="dbSalesforceService" />
+	</bean>
+
+
+	<bean id="uploadActionComposite" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionComposite">
+		
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<bean id="uploadActionCompositeInitialize" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeInitialize">
+		
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<bean id="uploadActionCompositeOverride" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeOverride">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<bean id="uploadActionCompositeExecute" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeExecute">
+		<property name="fileService" ref="fileService" />
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+
+	<!-- STRUTS2 -->
+	<bean id="abstractUtilityContextAware" abstract="true">
+		<property name="utilityContext">
+			<ref bean="utilityContext" />
+		</property>
+	</bean>
+		
+	<bean id="abstractDescribeContextAware" abstract="true" parent="abstractUtilityContextAware">
+		<property name="describeContext">
+			<ref bean="describeContext" />
+		</property>
+		<property name="salesforceSessionContext" >
+			<ref bean="salesforceSessionContext" />
+		</property>
+	</bean>
+
+	
+	<bean id="basicAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DescribeContextAwareAction"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="compositeLogin" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.common.struts2.CompositeLoginAction"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="describeOutputAsTemplateAction" parent="abstractDescribeContextAware"
+ 		class="com.modelmetrics.utility.describe.struts2.DescribeOutputAsTemplateAction"
+ 		scope="prototype">
+ 		
+ 	</bean>
+
+
+	<bean id="selectTarget" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.SelectObjectAction"
+		scope="prototype">
+		
+	</bean>
+
+	<bean id="describeAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DescribeAction"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="describeAsTemplateAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DescribeAsTemplateAction"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="describeExcelAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DescribeAsExcelAction"
+		scope="prototype">
+		
+	</bean>	
+	
+	<bean id="dataTemplateExcelAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DataTemplateAsExcelAction"
+		scope="prototype">
+		
+	</bean>	
+	
+	
+	<bean id="describeAllInExcelAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.DescribeAllInExcelAction"
+		scope="prototype">
+		
+	</bean>		
+
+	<bean id="layoutsAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.LayoutsAction"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="layoutsActionV2" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.LayoutsActionV2"
+		scope="prototype">
+		
+	</bean>
+	
+	<bean id="layoutsActionV2Form" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.LayoutsV2Form"
+		scope="prototype">
+		
+	</bean>
+		
+	
+	
+	
+	<bean id="layoutsExcelAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.utility.describe.struts2.LayoutAsExcelAction"
+		scope="prototype">
+		
+	</bean>	
+
+
+
+</beans>
+

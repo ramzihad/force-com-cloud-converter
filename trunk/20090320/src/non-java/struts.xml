@@ -1,0 +1,181 @@
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+
+<struts>
+
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.devMode" value="false" />
+
+	<!-- Configuration for the default package. -->
+	<package name="default" extends="struts-default">
+
+		<!-- interceptors>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="logger" />
+				<interceptor-ref name="completeStack" />			
+				<interceptor-ref name="execAndWait" />
+				
+			</interceptor-stack>
+			
+		</interceptors-->
+
+		<result-types>
+			<result-type name="excel"
+				class="com.modelmetrics.common.poi.ExcelResult" default="false" />
+		</result-types>
+
+
+		<action name="init" class="uploadAction" method="init">
+			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
+		</action>
+		
+		<action name="dbinit" class="dbUploadAction" method="init">
+			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
+		</action>
+		
+		<action name="generate" class="dbUploadAction" method="generate" >
+			<result name="success">/WEB-INF/jsp/uploadDb/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadDb/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
+		</action>
+		
+	
+		<action name="advanceOptionsOne" class="uploadAction" method="advanceOptionsOne" >
+			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
+
+		</action>
+		<action name="checkExistance" class="uploadAction" method="checkOverride" >
+
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
+			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
+
+		</action>
+		
+		<action name="override" class="uploadAction" method="override" >
+			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+		</action>
+
+		<action name="import" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
+		</action>
+
+		<action name="home" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/common/main.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
+		</action>
+		
+		<action name="import1" class="uploadActionCompositeInitialize">
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+		</action>
+		<action name="import2" class="uploadActionComposite" >
+			<result name="success" type="redirectAction">importExecute</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
+		</action>
+		<action name="import3" class="uploadActionCompositeOverride" >
+			<result name="success" type="redirectAction">importExecute</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		<action name="importExecute" class="uploadActionCompositeExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
+		</action>
+		
+		<!-- Force.com Platform Utilities -->
+		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
+ 			<result name="input">
+ 				/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp
+ 			</result>
+ 			<result name="success" type="excel" />
+ 		</action>
+
+		<action name="start" class="compositeLogin" >
+			<result name="success" type="redirectAction">select</result>
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
+		</action>	
+
+		<action name="select" class="selectTarget">
+			<result name="input">
+				/WEB-INF/jsp/describe/selectObject.jsp
+			</result>
+			<result name="success" type="redirectAction">describe</result>
+		</action>
+
+		<action name="describe" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describe.jsp
+			</result>
+		</action>
+
+		<action name="describeAsTemplate" class="describeAsTemplateAction">
+			<result name="input">
+				/WEB-INF/jsp/describe/dataTemplateCheckboxlist.jsp
+			</result>
+			<result name="success" type="excel" />
+		</action>
+		
+
+		<action name="describeForm" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describeForm.jsp
+			</result>
+		</action>
+		
+		
+
+		<action name="describeWorkbook" class="describeExcelAction">
+			<result name="success" type="excel" />
+		</action>
+		
+		<action name="dataTemplateWorkbook" class="dataTemplateExcelAction">
+			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		
+		<action name="describeWorkbookAll" class="describeAllInExcelAction">
+			<result name="success" type="excel" />
+		</action>		
+
+		<action name="layouts" class="layoutsAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/layouts.jsp
+			</result>
+			<result name="error" type="redirectAction">select</result>
+		</action>
+
+		<action name="layoutsv2" class="layoutsActionV2">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2.jsp
+			</result>
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		<action name="layoutsv2form" class="layoutsActionV2Form">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2form.jsp
+			</result>
+		</action>		
+				
+		<action name="layoutsWorkbook" class="layoutsExcelAction">
+			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		<action name="mmmain" class="basicAction">
+			<result name="success">
+				/WEB-INF/jsp/mm/main.jsp
+			</result>
+		</action>	
+
+
+	</package>
+</struts>
