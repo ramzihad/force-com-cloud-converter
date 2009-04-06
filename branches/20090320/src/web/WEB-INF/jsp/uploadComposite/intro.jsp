@@ -8,7 +8,7 @@
 	<body >
 
 
-<h1>Import Your App to Salesforce</h1>
+<h1>Import Your App to Salesforce - Beta</h1>
 
 <p>Import Your App in three simple steps:</p>
 

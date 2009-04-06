@@ -26,7 +26,6 @@ import javax.naming.spi.NamingManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.util.ClassUtils;
 
 /**

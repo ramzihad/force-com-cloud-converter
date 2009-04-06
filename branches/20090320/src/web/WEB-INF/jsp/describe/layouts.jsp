@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Layouts</title>
+			<link rel="stylesheet" type="text/css" media="all" href="./css/describe.css" />
 
 <style>
 .found {
@@ -13,7 +14,7 @@
 
 <body>
 
-<h1>Layouts</h1>
+<h1>Layouts V1 -- <s:property value="describeContext.target" /></h1>
 
 
 <s:if test="results != null">

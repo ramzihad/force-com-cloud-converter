@@ -1,8 +1,6 @@
 package com.modelmetrics.utility.common.struts2;
 
 import com.modelmetrics.common.sforce.SalesforceCredentials;
-import com.modelmetrics.common.sforce.SalesforceSession;
-import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 
 public class UtilityContext  {
 

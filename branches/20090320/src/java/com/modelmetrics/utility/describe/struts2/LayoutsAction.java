@@ -12,11 +12,11 @@ public class LayoutsAction extends AbstractDescribeContextAware {
 	private String target;
 
 	private DescribeSObjectResult results;
-	
+
 	private Collection<LayoutsFieldVO> rows;
-	
+
 	private Collection<String> recordTypes;
-	
+
 	private Collection<String> layoutIds;
 
 	public Collection<String> getRecordTypes() {
@@ -37,25 +37,24 @@ public class LayoutsAction extends AbstractDescribeContextAware {
 
 	public String execute() throws Exception {
 
-		if (this.getDescribeContext().getTypes() == null) {
-			this.getDescribeContext().setTypes(
-					this.getSalesforceSessionContext().getSalesforceSession()
-							.getSalesforceService().describeGlobal().getTypes());
+		try {
+			if (this.getDescribeContext().getTarget() != null) {
 
-		}
+				LayoutsBuilder builder = new LayoutsBuilder();
+				builder.execute(this.getSalesforceSessionContext()
+						.getSalesforceSession(), this.getDescribeContext()
+						.getTarget());
 
-		
-		if (this.getDescribeContext().getTarget() != null) {
+				this.setLayoutIds(builder.getLayoutIds());
+				this.setRecordTypes(builder.getRecordTypes());
+				this.setResults(builder.getResults());
+				this.setRows(builder.getRows());
 
-			LayoutsBuilder builder = new LayoutsBuilder();
-			builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
-
-			this.setLayoutIds(builder.getLayoutIds());
-			this.setRecordTypes(builder.getRecordTypes());
-			this.setResults(builder.getResults());
-			this.setRows(builder.getRows());
-			
-			this.getDescribeContext().setTarget(this.getTarget());
+				this.getDescribeContext().setTarget(this.getTarget());
+			}
+		} catch (Exception e) {
+			this.getDescribeContext().setLastMessage("Layouts not supported for object '" + this.getDescribeContext().getTarget() + "'.");
+			return Action.ERROR;
 		}
 
 		return Action.SUCCESS;

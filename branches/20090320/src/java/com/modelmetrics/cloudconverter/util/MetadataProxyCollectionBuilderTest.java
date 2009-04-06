@@ -3,12 +3,12 @@ package com.modelmetrics.cloudconverter.util;
 import java.io.File;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.sforce.soap._2006._04.metadata.FieldType;
-
-import junit.framework.TestCase;
 
 public class MetadataProxyCollectionBuilderTest extends TestCase {
 

@@ -42,7 +42,6 @@ import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
-import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 

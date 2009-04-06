@@ -7,12 +7,6 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 
-import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
-import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
-import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
-import com.sforce.soap._2006._04.metadata.CustomField;
-import com.sforce.soap._2006._04.metadata.CustomObject;
-
 public class TestNotesSqlOdbc {
 
     public static void main(String[] args) {

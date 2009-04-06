@@ -32,7 +32,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
-import com.sforce.soap._2006._04.metadata.MetadataService;
 import com.sforce.soap._2006._04.metadata.MetadataServiceLocator;
 import com.sforce.soap.partner.SessionHeader;
 import com.sforce.soap.partner.SforceService;

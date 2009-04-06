@@ -12,15 +12,21 @@ public class LayoutsActionV2 extends AbstractDescribeContextAware {
 
 	public String execute() throws Exception {
 
-		if (this.getDescribeContext().getTarget() != null) {
+		try {
+			if (this.getDescribeContext().getTarget() != null) {
 
-			LayoutsBuilderV2 builder = new LayoutsBuilderV2();
-			LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext()
-					.getTarget());
+				LayoutsBuilderV2 builder = new LayoutsBuilderV2();
+				LayoutsSummary summary = builder.execute(this
+						.getSalesforceSessionContext().getSalesforceSession(),
+						this.getDescribeContext().getTarget());
 
-			this.setSummary(summary);
+				this.setSummary(summary);
 
-			this.getDescribeContext().setTarget(this.getTarget());
+//				this.getDescribeContext().setTarget(this.getTarget());
+			}
+		} catch (Exception e) {
+			this.getDescribeContext().setLastMessage("Layouts not supported for object '" + this.getDescribeContext().getTarget() + "'.");
+			return Action.ERROR;
 		}
 
 		return Action.SUCCESS;
@@ -34,7 +40,6 @@ public class LayoutsActionV2 extends AbstractDescribeContextAware {
 	public void setTarget(String targetSObject) {
 		this.target = targetSObject;
 	}
-
 
 	public LayoutsSummary getSummary() {
 		return summary;

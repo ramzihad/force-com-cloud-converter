@@ -41,8 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.omg.CORBA.DATA_CONVERSION;
-
 public abstract class AbstractSproxy implements Sproxy {
 
 	private static final SimpleDateFormat FORCE_DATE = new SimpleDateFormat(

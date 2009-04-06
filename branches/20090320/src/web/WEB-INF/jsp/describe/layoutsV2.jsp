@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Layouts</title>
+			<link rel="stylesheet" type="text/css" media="all" href="./css/describe.css" />
 
 <style>
 .found {
@@ -13,16 +14,14 @@
 
 <body>
 
-<h1>Layouts V2</h1>
+<h1>Layouts: "<s:property value="describeContext.target" />"</h1>
 
 
 <s:if test="summary != null">
-<h2><s:property value="target" /></h2>
 
-<p><a href="<s:url action="select" />">Select New Object</a> | Need excel?  Switch to the <a href="<s:url action="layouts"><s:param name="target" value="target" /></s:url>">original version of layouts</a>. | 
+<p><a href="<s:url action="select" />">Select New Object</a> |  
 
-<a href="<s:url action="describe"><s:param name="target" value="target" /></s:url>">Switch to Describe</a> |
-<a href="<s:url action="layoutsv2form"><s:param name="target" value="target" /></s:url>">W2A Form</a> | </p>
+<a href="<s:url action="describe"><s:param name="target" value="target" /></s:url>">Switch to Describe</a> </p>
 
 <table>
 	<tr>

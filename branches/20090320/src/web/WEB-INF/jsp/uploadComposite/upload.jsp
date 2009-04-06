@@ -6,13 +6,15 @@
 		
 	</head>
 
-	<body onload="hideLoader()">
+	<body >
+
+<h1>Step 1: Select Your Excel File</h1>
 
 		<s:actionerror />
 		<s:fielderror />
 		<s:form action="import2" method="POST" enctype="multipart/form-data" theme="simple">
 
-			<h1>Step 1: Select Your Excel File</h1>
+			
 			
 			<p>This routine will import your Microsoft Excel based application and data into Salesforce.</p>
 			

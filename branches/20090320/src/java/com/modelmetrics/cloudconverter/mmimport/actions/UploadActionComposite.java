@@ -8,7 +8,6 @@ import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
-import com.opensymphony.xwork2.ActionSupport;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 

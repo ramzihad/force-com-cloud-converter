@@ -33,7 +33,6 @@ import org.apache.commons.logging.LogFactory;
 import com.sforce.soap._2006._04.metadata.AsyncResult;
 import com.sforce.soap._2006._04.metadata.Metadata;
 import com.sforce.soap._2006._04.metadata.MetadataBindingStub;
-import com.sforce.soap._2006._04.metadata.UpdateMetadata;
 
 public class DeleteExecutor {
 

@@ -8,11 +8,8 @@
 		
 	</head>
 
-	<body onload="hideLoader()">
+	<body >
 
-		<s:actionmessage />
-		<s:fielderror />
-		<s:form action="upload" method="POST">
 
 		
 			<h1>Object Exists - Overwrite?</h1>
@@ -26,7 +23,5 @@
 			<p><a href="import3.action">Yes - Continue - this will delete the current object and all data associated with it.</a></p>
 
 
-		
-		</s:form>
 	</body>
 </html>

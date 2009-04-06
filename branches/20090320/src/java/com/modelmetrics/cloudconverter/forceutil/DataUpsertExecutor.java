@@ -9,9 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
-import com.modelmetrics.common.sforce.dao.SproxyBuilder;
 
 public class DataUpsertExecutor extends AbstractDataExecutor {
 

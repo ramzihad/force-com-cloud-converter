@@ -1,11 +1,11 @@
 package com.modelmetrics.utility.describe.struts2;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Arrays;
+
 import com.sforce.soap.partner.DescribeSObjectResult;
-import com.sforce.soap.partner.Field;
 
 public class DescribeContext {
 
@@ -19,6 +19,8 @@ public class DescribeContext {
 	
 	private DescribeSObjectResult lastResult;
 
+	private String lastMessage;
+	
 	public void initialize() {
 
 		this.types = null;
@@ -67,6 +69,20 @@ public class DescribeContext {
 	public void setObjectTypes(Collection<String> objectTypes)
 	{
 		this.objectTypes = objectTypes;
+	}
+
+	public String getLastMessage() {
+		return lastMessage;
+	}
+	
+	public String getLastMessageWithReset() {
+		String ret = lastMessage;
+		lastMessage = null;
+		return ret;
+	}
+
+	public void setLastMessage(String lastMessage) {
+		this.lastMessage = lastMessage;
 	}
 
 

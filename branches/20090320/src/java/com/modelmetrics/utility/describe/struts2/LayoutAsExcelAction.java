@@ -13,7 +13,13 @@ public class LayoutAsExcelAction extends LayoutsAction {
 
 
 	public String execute() throws Exception {
-		super.execute();
+		
+		String s = super.execute();
+		
+		if (s.equals(Action.ERROR)) {
+			return s;
+		}
+		
 		ExcelSupport excelSupport = new ExcelSupport();
 		
 		HSSFWorkbook workbook = excelSupport.getWorkbook();

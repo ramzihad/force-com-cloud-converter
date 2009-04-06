@@ -3,6 +3,7 @@
 	<head>
 		<title>Loading objects...</title>
 		<meta http-equiv="refresh" content="5;url=<s:url includeParams="all" />"/>
+		<SCRIPT TYPE="text/javascript" SRC="http://ajax.googleapis.com/ajax/libs/dojo/1.3/dojo/dojo.xd.js"></SCRIPT>
 	</head>
 
 	<body>
@@ -17,13 +18,13 @@
 	
 	<p>This page refreshes automatically every five seconds.  Please be patient.</p>
 	
-	<ul>
+	<p>
 	
 	<s:iterator value="uploadContext.statusSubscriber.status">
-		<li><s:property /></li>
+		- <s:property /><br/>
 	</s:iterator>
 	
-	</ul>
+	</p>
 
 	</body>
 </html>

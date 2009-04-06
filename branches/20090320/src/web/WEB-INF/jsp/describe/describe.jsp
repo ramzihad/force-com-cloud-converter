@@ -2,28 +2,27 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Sign On</title>
+    <title>Describe</title>
+			<link rel="stylesheet" type="text/css" media="all" href="./css/describe.css" />
 
 
 </head>
 
 <body>
 
-<h1>Describe</h1>
+<h1>Describe: "<s:property value="describeContext.target" />"</h1>
 
 
 <s:if test="results != null">
-<h2><s:property value="target" /></h2>
+
 
 
 
 
 
 <p><a href="<s:url action="select" />">Select New Object</a> |
-<a href="<s:url value="describeWorkbook.xls"><s:param name="target" value="target" /></s:url>">Excel</a> |
-<a href="<s:url action="describeForm"><s:param name="target" value="target" /></s:url>">W2A Form (without required)</a> | 
-<a href="<s:url action="layoutsv2"><s:param name="target" value="target" /></s:url>">Switch to Layouts</a> | 
-<a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes.)</a> | 
+<a href="<s:url value="describeWorkbook.xls"></s:url>">Excel</a> |
+<a href="<s:url action="layoutsv2"></s:url>">Switch to Layouts</a> | 
 <a href="<s:url value="dataTemplateWorkbook.xls" />">Data Template As Excel</a>
 </p>
 

@@ -14,6 +14,7 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 
 	public String execute() throws Exception {
 
+		try {
 		super.execute();
 
 		ExcelSupport excelSupport = new ExcelSupport();
@@ -28,6 +29,10 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 		delegate.handleBuild(this.getResults(), summary, excelSupport, workbook, this.getDescribeContext().getTarget());
 		
 		this.setWorkbook(workbook);
+		} catch (Exception e) {
+			this.getDescribeContext().setLastMessage("Layouts not supported for object '" + this.getDescribeContext().getTarget() + "'.");
+			return Action.ERROR;
+		}
 
 		return Action.SUCCESS;
 	}

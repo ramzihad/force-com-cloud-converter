@@ -6,10 +6,8 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.common.poi.ExcelSupport;
-import com.modelmetrics.utility.describe.LayoutsBuilderV2;
-import com.modelmetrics.utility.describe.LayoutsSummary;
-import com.opensymphony.xwork2.Action;
 import com.modelmetrics.utility.describe.DescribeExcelBuilderDelegate;
+import com.opensymphony.xwork2.Action;
 
 public class DescribeOutputAsTemplateAction extends DescribeAction
 {

@@ -27,6 +27,8 @@ THE SOFTWARE.
 
 package com.modelmetrics.common.util;
 
+import junit.framework.TestCase;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -37,8 +39,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.SessionScope;
 
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
-
-import junit.framework.TestCase;
 
 public class TestCaseWithLog extends TestCase {
 

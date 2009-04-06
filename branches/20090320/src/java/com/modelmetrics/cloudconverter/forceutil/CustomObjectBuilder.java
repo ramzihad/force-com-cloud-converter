@@ -30,13 +30,11 @@ package com.modelmetrics.cloudconverter.forceutil;
 import java.sql.ResultSetMetaData;
 
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
-import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.DeploymentStatus;
 import com.sforce.soap._2006._04.metadata.FieldType;
 import com.sforce.soap._2006._04.metadata.SharingModel;
-import com.sforce.soap.partner.DescribeGlobalResult;
 
 public class CustomObjectBuilder {
 

@@ -5,10 +5,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.validator.GenericValidator;
-
 import com.modelmetrics.cloudconverter.mmimport.services.Constants;
-import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.sforce.soap._2006._04.metadata.FieldType;
 

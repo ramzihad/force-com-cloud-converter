@@ -1,8 +1,6 @@
 package com.modelmetrics.utility.describe;
 
-import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -12,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
-import com.sforce.soap.partner.Field;
 
 public class LayoutsBuilderV2Test extends TestCase {
 

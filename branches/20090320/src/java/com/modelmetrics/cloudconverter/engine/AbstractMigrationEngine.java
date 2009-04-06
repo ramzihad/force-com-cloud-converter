@@ -38,40 +38,43 @@ import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
 import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
-import com.modelmetrics.cloudconverter.forceutil.ProfileTabVisibilityBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
 import com.sforce.soap._2006._04.metadata.Layout;
-import com.sforce.soap._2006._04.metadata.Profile;
 
 public abstract class AbstractMigrationEngine extends
-		AbstractMigrationContextAware implements MigrationEngineIF, MigrationStatusPublisher {
+		AbstractMigrationContextAware implements MigrationEngineIF,
+		MigrationStatusPublisher {
 
 	protected static final Log log = LogFactory
 			.getLog(AbstractMigrationEngine.class);
 
 	public List<MigrationStatusSubscriber> subscribers = new ArrayList<MigrationStatusSubscriber>();
-	
-	public void subscribeToStatus(MigrationStatusSubscriber migrationStatusSubscriber) {
+
+	public void subscribeToStatus(
+			MigrationStatusSubscriber migrationStatusSubscriber) {
 		subscribers.add(migrationStatusSubscriber);
 	}
-	
+
 	public void publishStatus(String status) {
-		for (Iterator<MigrationStatusSubscriber> iterator = subscribers.iterator(); iterator.hasNext();) {
-			MigrationStatusSubscriber type =  iterator.next();
-			type.publish(status);
-			
+		for (Iterator<MigrationStatusSubscriber> iterator = subscribers
+				.iterator(); iterator.hasNext();) {
+			MigrationStatusSubscriber type = iterator.next();
+			if (type != null)
+				type.publish(status);
+
 		}
 	}
+
 	public void executeCommon(CustomObject co) throws Exception {
 
 		this.getMigrationContext().setCustomObject(co);
 
 		this.publishStatus("creating new object");
-		
+
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomObject[] { co }).execute();
 
@@ -83,7 +86,7 @@ public abstract class AbstractMigrationEngine extends
 				.getMigrationContext());
 
 		this.publishStatus("creating new fields");
-		
+
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), fields).execute();
 
@@ -93,9 +96,9 @@ public abstract class AbstractMigrationEngine extends
 		// moving to the lookups
 		if (this.getMigrationContext().getCustomLookupFields() != null
 				&& this.getMigrationContext().getCustomLookupFields().length > 0) {
-			
+
 			this.publishStatus("creating new lookup fields");
-			
+
 			new CreateExecutor(this.getMigrationContext()
 					.getSalesforceSession().getMetadataService(), this
 					.getMigrationContext().getCustomLookupFields()).execute();
@@ -104,9 +107,10 @@ public abstract class AbstractMigrationEngine extends
 		/*
 		 * Custom Tab
 		 */
-		
+
+		this.pauseSession();
 		this.publishStatus("creating custom tab");
-		
+
 		CustomTab customTab = new CustomTabBuilder().build(co);
 		log.debug("CustomTab - local definition complete - "
 				+ customTab.getFullName());
@@ -117,9 +121,10 @@ public abstract class AbstractMigrationEngine extends
 		/*
 		 * update the layout
 		 */
-		
+
+		this.pauseSession();
 		this.publishStatus("updating default layout");
-		
+
 		LayoutBuilder layoutBuilder = new LayoutBuilder();
 		layoutBuilder.setMigrationContext(this.getMigrationContext());
 		Layout layout = layoutBuilder.build();
@@ -132,35 +137,35 @@ public abstract class AbstractMigrationEngine extends
 		/*
 		 * update profile permissions
 		 */
-//		Profile profile = new ProfileTabVisibilityBuilder().build("Admin",
-//				customTab.getFullName());
-//		new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
-//				.getMetadataService()).executeSimpleUpdate(profile);
-//		
-//		this.pauseSession();
-
+		// Profile profile = new ProfileTabVisibilityBuilder().build("Admin",
+		// customTab.getFullName());
+		// new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
+		// .getMetadataService()).executeSimpleUpdate(profile);
+		//		
+		// this.pauseSession();
 	}
-	
+
 	/**
-	 * sleeps for 10 seconds -- useful when executing a lot of tasks dependent upon other preceding tasks.
-	 * (2009-03-28 RSC)
+	 * sleeps for 10 seconds -- useful when executing a lot of tasks dependent
+	 * upon other preceding tasks. (2009-03-28 RSC)
 	 * 
 	 * @throws Exception
 	 */
 	public void pauseSession() throws Exception {
-		
-//		log.info("in reset session...");
-//		
-//		SalesforceSession newSession = SalesforceSessionFactory.factory.build(this.getSalesforceCredentials());
-//		
-//		this.setSalesforceSession(newSession);
-//		
-//		log.info("reset session complete...");
-		
+
+		// log.info("in reset session...");
+		//		
+		// SalesforceSession newSession =
+		// SalesforceSessionFactory.factory.build(this.getSalesforceCredentials());
+		//		
+		// this.setSalesforceSession(newSession);
+		//		
+		// log.info("reset session complete...");
+
 		this.publishStatus("resting");
 		log.debug("waiting for 10 seconds (instead of resetting session)...");
 		Thread.sleep(10000);
-		
+
 	}
 
 }

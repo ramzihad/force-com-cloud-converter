@@ -48,12 +48,7 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 
 	public String execute() throws Exception {
 
-		log.info("in execute.");
-		log.info("utility context is null?");
-		log.info(this.getUtilityContext() == null);
-		log.info("salesforce session?");
-		log.info(this.getSalesforceSessionContext().getSalesforceSession()== null);
-		log.info("utility context id " + this.getUtilityContext());
+
 		
 
 

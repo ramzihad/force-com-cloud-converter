@@ -6,8 +6,6 @@ import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.modelmetrics.utility.common.struts2.UtilityContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import junit.framework.TestCase;
-
 public class SelectObjectActionTest extends TestCaseWithDevOrg {
 
 	public void testBasic() throws Exception {

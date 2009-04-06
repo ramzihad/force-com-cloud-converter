@@ -137,6 +137,7 @@
 		
 		<action name="dataTemplateWorkbook" class="dataTemplateExcelAction">
 			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
 		</action>
 		
 		
@@ -148,12 +149,14 @@
 			<result name="success">
 				/WEB-INF/jsp/describe/layouts.jsp
 			</result>
+			<result name="error" type="redirectAction">select</result>
 		</action>
 
 		<action name="layoutsv2" class="layoutsActionV2">
 			<result name="success">
 				/WEB-INF/jsp/describe/layoutsV2.jsp
 			</result>
+			<result name="error" type="redirectAction">select</result>
 		</action>
 		
 		<action name="layoutsv2form" class="layoutsActionV2Form">
@@ -164,6 +167,7 @@
 				
 		<action name="layoutsWorkbook" class="layoutsExcelAction">
 			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
 		</action>
 		
 		<action name="mmmain" class="basicAction">

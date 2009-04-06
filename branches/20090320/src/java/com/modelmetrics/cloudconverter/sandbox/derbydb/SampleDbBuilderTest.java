@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Random;
 
 import com.modelmetrics.common.util.ContentGenerator;
 import com.modelmetrics.common.util.TestCaseWithLog;

@@ -1,7 +1,5 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction;
 import com.modelmetrics.cloudconverter.mmimport.actions.PicklistInfo;
