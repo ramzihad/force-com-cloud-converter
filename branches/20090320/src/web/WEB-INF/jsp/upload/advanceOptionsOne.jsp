@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
@@ -31,13 +30,12 @@
 					<b>Data Type</b>
 				</td>
 				<s:iterator value="advanceOptionsBeans" status="status">
-					 <s:if test="${status.index==1}">	
+					 <s:if test="#status.index==1">	
 					 	<s:iterator value="advanceOptionsBeans[#status.index].data">
 								<td>Example</td>
 						</s:iterator>
 					</s:if>
 				</s:iterator>
-				
 				</tr>
 
 				<s:iterator value="advanceOptionsBeans" var="bean" status="status">
