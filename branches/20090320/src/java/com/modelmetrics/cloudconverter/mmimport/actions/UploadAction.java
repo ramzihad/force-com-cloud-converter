@@ -153,20 +153,6 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	}
 
-	private boolean[] checkForSpecialData(WrapperBean bean) {
-		boolean[] result = { false, false };
-
-		for (String type : bean.getTypes()) {
-			if (Constants.EXTERNAL_ID.equals(type)) {
-				result[0] = true;
-			}
-			if (Constants.LOOKUP.equals(type)) {
-				result[1] = true;
-			}
-		}
-		return result;
-	}
-
 	public String checkOverride() {
 		try {
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
@@ -212,6 +198,20 @@ public class UploadAction extends AbstractUploadContextAware {
 			// this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
+	}
+	
+	private boolean[] checkForSpecialData(WrapperBean bean) {
+		boolean[] result = { false, false };
+
+		for (String type : bean.getTypes()) {
+			if (Constants.EXTERNAL_ID.equals(type)) {
+				result[0] = true;
+			}
+			if (Constants.LOOKUP.equals(type)) {
+				result[1] = true;
+			}
+		}
+		return result;
 	}
 
 	private void validateData() {
