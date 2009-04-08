@@ -14,6 +14,8 @@ import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
+import com.modelmetrics.cloudconverter.util.LookupBean;
 
 public class UploadAction extends AbstractUploadContextAware {
 
@@ -38,6 +40,16 @@ public class UploadAction extends AbstractUploadContextAware {
 	private String uploadFileName;
 
 	private List<ValueId> fieldTypes;
+
+	private List<ValueId> uniques;
+
+	private List<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
+
+	private List<LookupBean> lookups = new ArrayList<LookupBean>();
+
+	private List<ValueId> salesforceObjects = new ArrayList<ValueId>();
+
+	private List<ValueId> objectFields = new ArrayList<ValueId>();
 
 	boolean foundExternalId;
 	boolean foundLookup;
@@ -110,6 +122,22 @@ public class UploadAction extends AbstractUploadContextAware {
 	}
 
 	/**
+	 * get fields for object
+	 * 
+	 * @return
+	 */
+	public String loadObjectFields() {
+		try {
+			String object = "";
+			objectFields = salesforceService.getFieldsForObject(object);
+		} catch (Exception e) {
+			return ERROR;
+
+		}
+		return null;
+	}
+
+	/**
 	 * Loads page two of advance options
 	 * 
 	 * @return
@@ -119,10 +147,14 @@ public class UploadAction extends AbstractUploadContextAware {
 		try {
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
 			transformToWrapperBean(advanceOptionsBeans, bean);
-			boolean[] array = checkForSpecialData(bean);
+			checkForSpecialData(advanceOptionsBeans, lookups, externalIds);
 
-			foundExternalId = array[0];
-			foundLookup = array[1];
+			foundExternalId = !externalIds.isEmpty();
+			foundLookup = !lookups.isEmpty();
+
+			salesforceObjects = salesforceService.getAllSalesforcObjects();
+
+			uniques = StringUtils.getUniques();
 
 			boolean found = foundLookup | foundExternalId;
 
@@ -199,19 +231,27 @@ public class UploadAction extends AbstractUploadContextAware {
 			return ERROR;
 		}
 	}
-	
-	private boolean[] checkForSpecialData(WrapperBean bean) {
-		boolean[] result = { false, false };
 
-		for (String type : bean.getTypes()) {
-			if (Constants.EXTERNAL_ID.equals(type)) {
-				result[0] = true;
+	private void checkForSpecialData(
+			List<AdvanceOptionsBean> advanceOptionsBeans,
+			List<LookupBean> lookups, List<ExternalIdBean> externalIds) {
+
+		for (AdvanceOptionsBean advanceOptionsBean : advanceOptionsBeans) {
+			if (Constants.EXTERNAL_ID.equals(advanceOptionsBean.getType())) {
+				ExternalIdBean extId = new ExternalIdBean();
+				extId.setLabel(advanceOptionsBean.getLabel());
+				extId.setUnique(false);
+				externalIds.add(extId);
 			}
-			if (Constants.LOOKUP.equals(type)) {
-				result[1] = true;
+			if (Constants.LOOKUP.equals(advanceOptionsBean.getType())) {
+				LookupBean look = new LookupBean();
+				look.setLabel(advanceOptionsBean.getLabel());
+				look.setSourceField("");
+				look.setSourceObject("");
+				lookups.add(look);
 			}
 		}
-		return result;
+
 	}
 
 	private void validateData() {
@@ -363,6 +403,46 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	public void setExternalIdUnique(boolean externalIdUnique) {
 		this.externalIdUnique = externalIdUnique;
+	}
+
+	public List<ExternalIdBean> getExternalIds() {
+		return externalIds;
+	}
+
+	public void setExternalIds(List<ExternalIdBean> externalIds) {
+		this.externalIds = externalIds;
+	}
+
+	public List<LookupBean> getLookups() {
+		return lookups;
+	}
+
+	public void setLookups(List<LookupBean> lookups) {
+		this.lookups = lookups;
+	}
+
+	public List<ValueId> getSalesforceObjects() {
+		return salesforceObjects;
+	}
+
+	public void setSalesforceObjects(List<ValueId> salesforceObjects) {
+		this.salesforceObjects = salesforceObjects;
+	}
+
+	public List<ValueId> getUniques() {
+		return uniques;
+	}
+
+	public void setUniques(List<ValueId> uniques) {
+		this.uniques = uniques;
+	}
+
+	public List<ValueId> getObjectFields() {
+		return objectFields;
+	}
+
+	public void setObjectFields(List<ValueId> objectFields) {
+		this.objectFields = objectFields;
 	}
 
 }

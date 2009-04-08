@@ -4,54 +4,55 @@
 <html>
 	<head>
 		<title>Advance Options</title>
+		<script type="text/javascript" charset="UTF-8"
+			src="js/jquery-1.3.1.min.js"></script>
 	</head>
 
 	<body>
 		<h3>
 			Advance Options page 2
 		</h3>
-		<s:form action="checkExistance" method="POST">
+		<s:form action="checkExistance" method="POST" theme="simple">
 			<a href="init.action">Back</a>
-			<s:submit value="Next" />
+				<s:submit value="Next" theme="simple"/>
 			<br />
 			<br />
 			<s:if test="%{foundExternalId}">
-			External ID Settings
-			<br />
-				<table border="1">
-					<tr>
-						<td>
-							Field
-						</td>
-						<td>
-							Unique
-						</td>
-					</tr>
-					<tr>
-						<td>
-							Field Label
-						</td>
-						<td>
-							<select name="externalIdUnique" >
-								<option value="true">
-									true
-								</option>
-								<option value="false">
-									false
-								</option>
-							</select>
-						</td>
-					</tr>
-				</table>
+				External ID Settings
 				<br />
-				<br />
+					<table border="1">
+						<tr>
+							<td>
+								Field
+							</td>
+							<td>
+								Unique
+							</td>
+						</tr>
+						<s:iterator value="externalIds" var="advBean" status="status">
+						
+						<tr>
+							<td>
+								${advBean.label}
+							</td>
+							<td>
+								<s:select list="uniques" listKey="id" listValue="value"
+									theme="simple" name="externalIds[%{#status.index}].unique"
+									value="%{externalIds[#status.index].unique}" />
+	
+							</td>
+						</tr>
+						</s:iterator>
+					</table>
+					<br />
+					<br />
 			</s:if>
 		
 		<br />
 		
 			<s:if test="%{foundLookup}">
 				Lookup Field Settings
-				<table>
+				<table border="1">
 					<tr>
 						<td>
 							Field
@@ -63,17 +64,24 @@
 							Source Field
 						</td>
 					</tr>
+					<s:iterator value="lookups" var="advBean" status="status">
+					
 					<tr>
 						<td>
-							Field Label
+							${advBean.label}
 						</td>
 						<td>
-							Source Object
+							<s:select list="salesforceObjects" listKey="id" listValue="value"
+								theme="simple" name="lookups[%{#status.index}].objectSource"
+								value="%{lookups[#status.index].objectSource}" />
 						</td>
 						<td>
-							Source Field
+							
+							
 						</td>
 					</tr>
+					</s:iterator>
+					
 				</table>
 			</s:if>
 			<br />

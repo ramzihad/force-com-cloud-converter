@@ -62,6 +62,13 @@ public class StringUtils {
 
 		return buffer.toString();
 	}
+	
+	public static List<ValueId> getUniques() {
+		List<ValueId> types = new ArrayList<ValueId>();
+		types.add(new ValueId("false","false"));
+		types.add(new ValueId("true","true"));
+		return types;
+	}
 
 	/**
 	 * returns a list with all field types
