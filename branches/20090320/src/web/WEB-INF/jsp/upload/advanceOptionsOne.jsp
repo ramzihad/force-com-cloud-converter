@@ -15,7 +15,7 @@
 		You may modify the excel information or you may continue as it is.
 		<br />
 		<br />
-		<s:form action="checkExistance" method="POST">
+		<s:form action="advanceOptionsTwo" method="POST">
 			<a href="init.action">Back</a>
 			<s:submit value="Next" />
 			<br />

@@ -47,12 +47,18 @@
 			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
 
 		</action>
+		
+		<action name="advanceOptionsTwo" class="uploadAction" method="advanceOptionsTwo" >
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+			<result name="success">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
+			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
+			<result name="view">/WEB-INF/jsp/upload/view.jsp</result>
+		</action>
+		
 		<action name="checkExistance" class="uploadAction" method="checkOverride" >
-
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
 			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
-
 		</action>
 		
 		<action name="override" class="uploadAction" method="override" >

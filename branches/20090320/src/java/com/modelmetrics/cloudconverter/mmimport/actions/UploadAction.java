@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
+import com.modelmetrics.cloudconverter.mmimport.services.Constants;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
@@ -37,6 +38,10 @@ public class UploadAction extends AbstractUploadContextAware {
 	private String uploadFileName;
 
 	private List<ValueId> fieldTypes;
+
+	boolean foundExternalId;
+	boolean foundLookup;
+	boolean externalIdUnique;
 
 	private List<AdvanceOptionsBean> advanceOptionsBeans;
 
@@ -104,36 +109,62 @@ public class UploadAction extends AbstractUploadContextAware {
 		}
 	}
 
-	private List<AdvanceOptionsBean> transformFromWrapperBean(WrapperBean bean) {
-		List<AdvanceOptionsBean> list = new ArrayList<AdvanceOptionsBean>();
-		
-		for (int i = 0; i < bean.getNames().size(); i++) {
-			AdvanceOptionsBean advanceBean = new AdvanceOptionsBean();
-			advanceBean.setName(bean.getNames().get(i));
-			advanceBean.setLabel(bean.getLabels().get(i));
-			advanceBean.setType(bean.getTypes().get(i));
-			List<Object> data = new ArrayList<Object>();
-			for (List<Object> aux : bean.getObjects()) {
-				data.add(aux.get(i));
+	/**
+	 * Loads page two of advance options
+	 * 
+	 * @return
+	 */
+	public String advanceOptionsTwo() {
+
+		try {
+			WrapperBean bean = this.getUploadContext().getWrapperBean();
+			transformToWrapperBean(advanceOptionsBeans, bean);
+			boolean[] array = checkForSpecialData(bean);
+
+			foundExternalId = array[0];
+			foundLookup = array[1];
+
+			boolean found = foundLookup | foundExternalId;
+
+			if (found) {
+
+				return SUCCESS;
+			} else {
+				transformToWrapperBean(advanceOptionsBeans, bean);
+				boolean containsObject = salesforceService.checkObject(this
+						.getUploadContext());
+				if (containsObject) {
+					return "override";
+				} else {
+					log.info("Generating Salesforce object now...");
+					bean.setOverride(Boolean.FALSE);
+					salesforceService.execute(this.getUploadContext());
+					return "view";
+				}
 			}
-			advanceBean.setData(data);
-			list.add(advanceBean);
+
+		} catch (Exception e) {
+			message = "There has been a problem loading advance options 2 page";
+			log.error(message, e);
+			addActionMessage(e.getMessage());
+			return ERROR;
+
 		}
-		return list;
+
 	}
-	
-	private void transformToWrapperBean(List<AdvanceOptionsBean> advanceBeans,WrapperBean wrapperBean) {
-		
-		List<String> types = new ArrayList<String>();
-		List<String> labels = new ArrayList<String>();
-		
-		for (AdvanceOptionsBean advanceOptionsBean : advanceBeans) {
-			types.add(advanceOptionsBean.getType());
-			labels.add(advanceOptionsBean.getLabel());
+
+	private boolean[] checkForSpecialData(WrapperBean bean) {
+		boolean[] result = { false, false };
+
+		for (String type : bean.getTypes()) {
+			if (Constants.EXTERNAL_ID.equals(type)) {
+				result[0] = true;
+			}
+			if (Constants.LOOKUP.equals(type)) {
+				result[1] = true;
+			}
 		}
-		
-		wrapperBean.setLabels(labels);
-		wrapperBean.setTypes(types);
+		return result;
 	}
 
 	public String checkOverride() {
@@ -194,6 +225,39 @@ public class UploadAction extends AbstractUploadContextAware {
 			addActionMessage("Please select a file");
 		}
 
+	}
+
+	private List<AdvanceOptionsBean> transformFromWrapperBean(WrapperBean bean) {
+		List<AdvanceOptionsBean> list = new ArrayList<AdvanceOptionsBean>();
+
+		for (int i = 0; i < bean.getNames().size(); i++) {
+			AdvanceOptionsBean advanceBean = new AdvanceOptionsBean();
+			advanceBean.setName(bean.getNames().get(i));
+			advanceBean.setLabel(bean.getLabels().get(i));
+			advanceBean.setType(bean.getTypes().get(i));
+			List<Object> data = new ArrayList<Object>();
+			for (List<Object> aux : bean.getObjects()) {
+				data.add(aux.get(i));
+			}
+			advanceBean.setData(data);
+			list.add(advanceBean);
+		}
+		return list;
+	}
+
+	private void transformToWrapperBean(List<AdvanceOptionsBean> advanceBeans,
+			WrapperBean wrapperBean) {
+
+		List<String> types = new ArrayList<String>();
+		List<String> labels = new ArrayList<String>();
+
+		for (AdvanceOptionsBean advanceOptionsBean : advanceBeans) {
+			types.add(advanceOptionsBean.getType());
+			labels.add(advanceOptionsBean.getLabel());
+		}
+
+		wrapperBean.setLabels(labels);
+		wrapperBean.setTypes(types);
 	}
 
 	public File getUpload() {
@@ -275,6 +339,30 @@ public class UploadAction extends AbstractUploadContextAware {
 	public void setAdvanceOptionsBeans(
 			List<AdvanceOptionsBean> advanceOptionsBeans) {
 		this.advanceOptionsBeans = advanceOptionsBeans;
+	}
+
+	public boolean isFoundExternalId() {
+		return foundExternalId;
+	}
+
+	public void setFoundExternalId(boolean foundExternalId) {
+		this.foundExternalId = foundExternalId;
+	}
+
+	public boolean isFoundLookup() {
+		return foundLookup;
+	}
+
+	public void setFoundLookup(boolean foundLookup) {
+		this.foundLookup = foundLookup;
+	}
+
+	public boolean isExternalIdUnique() {
+		return externalIdUnique;
+	}
+
+	public void setExternalIdUnique(boolean externalIdUnique) {
+		this.externalIdUnique = externalIdUnique;
 	}
 
 }
