@@ -6,6 +6,22 @@
 		<title>Advance Options</title>
 		<script type="text/javascript" charset="UTF-8"
 			src="js/jquery-1.3.1.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("select.salesforceObjects").change(function() {
+					var parent = $(this).parent().parent();
+					parent.find("img.loader").css('display','');
+					$.getJSON("loadObjectFields.action",{id: $(this).val()}, function(j){
+				    	var options = '';
+				    	for (var i = 0; i < j.length; i++) {
+				        	options += '<option value="' + j[i].value + '">' + j[i].value + '</option>';
+				      	}
+				      	parent.find("select.objectFields").html(options);
+				      	parent.find("img.loader").css('display','none');
+				    })
+				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -64,20 +80,20 @@
 							Source Field
 						</td>
 					</tr>
-					<s:iterator value="lookups" var="advBean" status="status">
 					
+					<s:iterator value="lookups" var="advBean" status="status">
 					<tr>
 						<td>
 							${advBean.label}
 						</td>
 						<td>
-							<s:select list="salesforceObjects" listKey="id" listValue="value"
+							<s:select cssClass="salesforceObjects" list="salesforceObjects" listKey="id" listValue="value"
 								theme="simple" name="lookups[%{#status.index}].objectSource"
 								value="%{lookups[#status.index].objectSource}" />
+							<img class="loader" style="display: none;" src="./img/loading.gif"/>
 						</td>
 						<td>
-							
-							
+							<select name="objectFields" class="objectFields"></select>
 						</td>
 					</tr>
 					</s:iterator>

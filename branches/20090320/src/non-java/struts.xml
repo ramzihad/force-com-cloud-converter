@@ -45,7 +45,6 @@
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
-
 		</action>
 		
 		<action name="advanceOptionsTwo" class="uploadAction" method="advanceOptionsTwo" >
@@ -53,6 +52,13 @@
 			<result name="success">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
 			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
 			<result name="view">/WEB-INF/jsp/upload/view.jsp</result>
+		</action>
+		
+		<action name="loadObjectFields" class="uploadAction" method="loadObjectFields" >
+			<result name="success" type="stream">
+				<param name="contentType">text/plain</param>
+				<param name="inputName">inputStream</param>
+			</result>
 		</action>
 		
 		<action name="checkExistance" class="uploadAction" method="checkOverride" >

@@ -1,10 +1,17 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.Constants;
@@ -17,7 +24,8 @@ import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.LookupBean;
 
-public class UploadAction extends AbstractUploadContextAware {
+public class UploadAction extends AbstractUploadContextAware implements
+		ServletRequestAware {
 
 	private static final Logger log = Logger.getLogger(UploadAction.class);
 
@@ -52,10 +60,16 @@ public class UploadAction extends AbstractUploadContextAware {
 	private List<ValueId> objectFields = new ArrayList<ValueId>();
 
 	boolean foundExternalId;
+
 	boolean foundLookup;
+
 	boolean externalIdUnique;
 
 	private List<AdvanceOptionsBean> advanceOptionsBeans;
+
+	private InputStream inputStream;
+	
+	private HttpServletRequest request;
 
 	/**
 	 * initializes form input page
@@ -121,6 +135,10 @@ public class UploadAction extends AbstractUploadContextAware {
 		}
 	}
 
+	public InputStream getInputStream() throws Exception {
+		return inputStream;
+	}
+
 	/**
 	 * get fields for object
 	 * 
@@ -128,13 +146,22 @@ public class UploadAction extends AbstractUploadContextAware {
 	 */
 	public String loadObjectFields() {
 		try {
-			String object = "";
-			objectFields = salesforceService.getFieldsForObject(object);
-		} catch (Exception e) {
-			return ERROR;
+			String objectId = request.getParameter("id");
+			List<ValueId> values = salesforceService.getFieldsForObject(objectId);
 
+			JSONArray jsonArray = new JSONArray();
+			for (ValueId value : values) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("id", value.getId());
+				jsonObj.put("value", value.getValue());
+				jsonArray.put(jsonObj);
+			}
+
+			inputStream = new ByteArrayInputStream(jsonArray.toString().getBytes());
+		} catch (Exception e) {
+			inputStream = new ByteArrayInputStream("".getBytes());
 		}
-		return null;
+		return SUCCESS;
 	}
 
 	/**
@@ -443,6 +470,10 @@ public class UploadAction extends AbstractUploadContextAware {
 
 	public void setObjectFields(List<ValueId> objectFields) {
 		this.objectFields = objectFields;
+	}
+
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 
 }
