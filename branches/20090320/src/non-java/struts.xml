@@ -65,6 +65,7 @@
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
 			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
+			<result name="advanceOptionsTwo">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
 		</action>
 		
 		<action name="override" class="uploadAction" method="override" >

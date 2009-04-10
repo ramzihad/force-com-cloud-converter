@@ -120,7 +120,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 			WrapperBean bean = fileService.parseXLS(upload);
 			this.getUploadContext().setWrapperBean(bean);
 			advanceOptionsBeans = transformFromWrapperBean(bean);
-
+			
 			log.info("File uploaded successfully");
 
 			fieldTypes = StringUtils.getAllFieldTypes();
@@ -172,6 +172,9 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public String advanceOptionsTwo() {
 
 		try {
+			
+			this.getUploadContext().setAdvanceOptionsBeans(advanceOptionsBeans);
+
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
 			transformToWrapperBean(advanceOptionsBeans, bean);
 			checkForSpecialData(advanceOptionsBeans, lookups, externalIds);
@@ -214,8 +217,9 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	public String checkOverride() {
 		try {
+			
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			transformToWrapperBean(advanceOptionsBeans, bean);
+			transformToWrapperBean(this.getUploadContext().getAdvanceOptionsBeans(), bean);
 			boolean containsObject = salesforceService.checkObject(this
 					.getUploadContext());
 			if (containsObject) {

@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
@@ -9,6 +10,11 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$("select.salesforceObjects").change(function() {
+					
+					var form = $("#advForm");
+					var form_elements = form.find('select');
+					form_elements.attr('disabled', 'disabled');
+					form.attr("disabled","disabled");
 					var parent = $(this).parent().parent();
 					parent.find("img.loader").css('display','');
 					$.getJSON("loadObjectFields.action",{id: $(this).val()}, function(j){
@@ -18,7 +24,13 @@
 				      	}
 				      	parent.find("select.objectFields").html(options);
 				      	parent.find("img.loader").css('display','none');
+				      	form_elements.attr('disabled', '');
 				    })
+				});
+				$("#btnsubmit").click(function() {
+					//validate here
+					$("#mge").show();
+					$("#advForm").submit();
 				});
 			});
 		</script>
@@ -28,9 +40,9 @@
 		<h3>
 			Advance Options page 2
 		</h3>
-		<s:form action="checkExistance" method="POST" theme="simple">
+		<s:form action="checkExistance" method="POST" id="advForm" disabled="disabled" theme="simple">
 			<a href="init.action">Back</a>
-				<s:submit value="Next" theme="simple"/>
+				<input type="button" id="btnsubmit" value="Next" theme="simple"/>
 			<br />
 			<br />
 			<s:if test="%{foundExternalId}">
@@ -88,8 +100,8 @@
 						</td>
 						<td>
 							<s:select cssClass="salesforceObjects" list="salesforceObjects" listKey="id" listValue="value"
-								theme="simple" name="lookups[%{#status.index}].objectSource"
-								value="%{lookups[#status.index].objectSource}" />
+								theme="simple" name="lookups[%{#status.index}].sourceObject"
+								value="%{lookups[#status.index].sourceObject}" />
 							<img class="loader" style="display: none;" src="./img/loading.gif"/>
 						</td>
 						<td>
@@ -107,7 +119,13 @@
 		</s:form>
 
 
-
+		<div id="mge" style="display:none">
+			<br />
+			<br />
+			You must select an object for each lookup
+		</div>
+		
+		
 		<br />
 		<br />
 		<a href="init.action">Back</a>

@@ -17,6 +17,8 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 	private SalesforceSession salesforceSession;
 
+	private static final String[] FILTERS = { "__Tag", "__Share", "__History" };
+
 	public void execute(UploadContext uploadContext) throws Exception {
 
 		// salesforceCredentials.setUsername(username);
@@ -67,11 +69,24 @@ public class SalesforceServiceImpl implements SalesforceService {
 		DescribeGlobalResult result = salesforceSession.getSalesforceService()
 				.describeGlobal();
 		List<ValueId> list = new ArrayList<ValueId>();
+		list.add(new ValueId("Select", ""));
 		for (String object : result.getTypes()) {
-			list.add(new ValueId(object, object));
+			if (!applyFilter(object)) {
+				list.add(new ValueId(object, object));
+			}
 		}
 		return list;
 
+	}
+
+	private boolean applyFilter(String object) {
+		for (int i = 0; i < FILTERS.length; i++) {
+			String filter = FILTERS[i];
+			if (object.endsWith(filter)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public List<ValueId> getFieldsForObject(String object) throws Exception {
@@ -79,7 +94,9 @@ public class SalesforceServiceImpl implements SalesforceService {
 				.describeSObject(object);
 		List<ValueId> list = new ArrayList<ValueId>();
 		for (Field field : result.getFields()) {
-			list.add(new ValueId(field.getName(), field.getName()));
+			//if (field.getExternalId()!=null && field.getExternalId()){
+				list.add(new ValueId(field.getName(), field.getName()));
+			//}
 		}
 		return list;
 
