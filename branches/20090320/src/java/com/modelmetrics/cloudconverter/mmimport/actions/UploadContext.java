@@ -1,9 +1,12 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
+import com.modelmetrics.cloudconverter.util.LookupBean;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class UploadContext  {
@@ -15,6 +18,10 @@ public class UploadContext  {
 	private String salesforcePassword;
 
 	private WrapperBean wrapperBean;
+	
+	private List<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
+
+	private List<LookupBean> lookups = new ArrayList<LookupBean>();
 	
 	private List<AdvanceOptionsBean> advanceOptionsBeans;
 
@@ -74,6 +81,22 @@ public class UploadContext  {
 
 	public void setAdvanceOptionsBeans(List<AdvanceOptionsBean> advanceOptionsBeans) {
 		this.advanceOptionsBeans = advanceOptionsBeans;
+	}
+
+	public List<ExternalIdBean> getExternalIds() {
+		return externalIds;
+	}
+
+	public void setExternalIds(List<ExternalIdBean> externalIds) {
+		this.externalIds = externalIds;
+	}
+
+	public List<LookupBean> getLookups() {
+		return lookups;
+	}
+
+	public void setLookups(List<LookupBean> lookups) {
+		this.lookups = lookups;
 	}
 
 

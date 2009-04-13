@@ -21,8 +21,12 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 	public void execute(UploadContext uploadContext) throws Exception {
 
-		// salesforceCredentials.setUsername(username);
-		// salesforceCredentials.setPassword(password);
+		/*Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
+		for (LookupBean lookupBean : uploadContext.getLookups()) {
+			lookupFields.put(lookupBean.getLabel(), new LookupSettings(
+					lookupBean.getLabel(), lookupBean.getSourceObject(),
+					lookupBean.getSourceField()));
+		}*/
 
 		MigrationContext migrationContext = new MigrationContextFactory()
 				.buildMigrationContext(this.getSalesforceSession());
@@ -82,7 +86,7 @@ public class SalesforceServiceImpl implements SalesforceService {
 	private boolean applyFilter(String object) {
 		for (int i = 0; i < FILTERS.length; i++) {
 			String filter = FILTERS[i];
-			if (object.endsWith(filter)){
+			if (object.endsWith(filter)) {
 				return true;
 			}
 		}
@@ -94,9 +98,9 @@ public class SalesforceServiceImpl implements SalesforceService {
 				.describeSObject(object);
 		List<ValueId> list = new ArrayList<ValueId>();
 		for (Field field : result.getFields()) {
-			//if (field.getExternalId()!=null && field.getExternalId()){
-				list.add(new ValueId(field.getName(), field.getName()));
-			//}
+			// if (field.getExternalId()!=null && field.getExternalId()){
+			list.add(new ValueId(field.getName(), field.getName()));
+			// }
 		}
 		return list;
 

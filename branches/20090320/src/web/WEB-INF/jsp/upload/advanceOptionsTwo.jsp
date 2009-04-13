@@ -70,6 +70,11 @@
 						<tr>
 							<td>
 								${advBean.label}
+								<s:textfield
+								id="externalIds[%{#status.index}].label"
+								name="externalIds[%{#status.index}].label"
+								value="%{externalIds[#status.index].label}"
+								theme="simple" />
 							</td>
 							<td>
 								<s:select list="uniques" listKey="id" listValue="value"
@@ -101,10 +106,14 @@
 						</td>
 					</tr>
 					
-					<s:iterator value="lookups" var="advBean" status="status">
+					<s:iterator value="lookups"  status="status">
 					<tr>
 						<td>
-							${advBean.label}
+							<s:textfield
+								id="lookups[%{#status.index}].label"
+								name="lookups[%{#status.index}].label"
+								value="%{lookups[#status.index].label}"
+								theme="simple" />
 						</td>
 						<td>
 							<s:select cssClass="salesforceObjects" list="salesforceObjects" listKey="id" listValue="value"

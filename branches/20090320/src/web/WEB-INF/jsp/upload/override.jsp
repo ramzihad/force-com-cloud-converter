@@ -3,29 +3,29 @@
 <html>
 	<head>
 		<title>Upload</title>
-		<script type="text/javascript" charset="UTF-8"
-			src="js/loader.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="js/loader.js"></script>
 	</head>
 
 	<body onload="hideLoader()">
+		<div id="form">
+			<s:actionerror />
+			<s:fielderror />
+			<s:form action="upload" method="POST">
 
-		<s:actionerror />
-		<s:fielderror />
-		<s:form action="upload" method="POST">
-
-			<h3>
-				Object exists
-			</h3>
-			<br/><br/>
+				<h3>
+					Object exists
+				</h3>
+				<br />
+				<br />
 			The object exists in Salesforce.<br /> 
 			Do you want to continue and delete it?
 			<br />
-			<br />
-			<a href="${backPage}.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="override.action" onclick="showLoader()" >Continue</a>
+				<br />
+				<a href="${backPage}.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="override.action" onclick="showLoader()">Continue</a>
 
-		</s:form>
-			<%@ include
-			file="/WEB-INF/jsp/includes/loader.jsp"%>
+			</s:form>
+		</div>
+		<%@ include file="/WEB-INF/jsp/includes/loader.jsp"%>
 	</body>
 </html>

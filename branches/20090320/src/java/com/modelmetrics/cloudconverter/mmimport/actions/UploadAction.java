@@ -227,7 +227,9 @@ public class UploadAction extends AbstractUploadContextAware implements
 				lookupBean.setSourceField(fields[i]);
 				i++;
 			}
-
+			this.getUploadContext().setLookups(lookups);
+			this.getUploadContext().setExternalIds(externalIds);
+			
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
 			transformToWrapperBean(this.getUploadContext()
 					.getAdvanceOptionsBeans(), bean);
