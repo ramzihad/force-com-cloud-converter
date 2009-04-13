@@ -68,7 +68,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 	private List<AdvanceOptionsBean> advanceOptionsBeans;
 
 	private InputStream inputStream;
-	
+
 	private HttpServletRequest request;
 
 	/**
@@ -120,7 +120,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 			WrapperBean bean = fileService.parseXLS(upload);
 			this.getUploadContext().setWrapperBean(bean);
 			advanceOptionsBeans = transformFromWrapperBean(bean);
-			
+
 			log.info("File uploaded successfully");
 
 			fieldTypes = StringUtils.getAllFieldTypes();
@@ -135,33 +135,36 @@ public class UploadAction extends AbstractUploadContextAware implements
 		}
 	}
 
-	public InputStream getInputStream() throws Exception {
-		return inputStream;
-	}
-
 	/**
-	 * get fields for object
 	 * 
 	 * @return
 	 */
-	public String loadObjectFields() {
-		try {
-			String objectId = request.getParameter("id");
-			List<ValueId> values = salesforceService.getFieldsForObject(objectId);
-
-			JSONArray jsonArray = new JSONArray();
-			for (ValueId value : values) {
-				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("id", value.getId());
-				jsonObj.put("value", value.getValue());
-				jsonArray.put(jsonObj);
-			}
-
-			inputStream = new ByteArrayInputStream(jsonArray.toString().getBytes());
-		} catch (Exception e) {
-			inputStream = new ByteArrayInputStream("".getBytes());
-		}
+	public String backToPageOne() {
+		advanceOptionsBeans = transformFromWrapperBean(this.getUploadContext()
+				.getWrapperBean());
+		fieldTypes = StringUtils.getAllFieldTypes();
 		return SUCCESS;
+	}
+
+	public String backToPageTwo() {
+		try {
+		
+			WrapperBean bean = this.getUploadContext().getWrapperBean();
+			advanceOptionsBeans = transformFromWrapperBean(bean);
+
+			transformToWrapperBean(advanceOptionsBeans, bean);
+			checkForSpecialData(advanceOptionsBeans, lookups, externalIds);
+			foundExternalId = !externalIds.isEmpty();
+			foundLookup = !lookups.isEmpty();
+			salesforceObjects = salesforceService.getAllSalesforcObjects();
+			uniques = StringUtils.getUniques();
+			return SUCCESS;
+		} catch (Exception e) {
+			message = "There has been a problem loading advance options 2 page";
+			log.error(message, e);
+			addActionMessage(e.getMessage());
+			return ERROR;
+		}
 	}
 
 	/**
@@ -172,7 +175,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public String advanceOptionsTwo() {
 
 		try {
-			
+
 			this.getUploadContext().setAdvanceOptionsBeans(advanceOptionsBeans);
 
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
@@ -189,13 +192,13 @@ public class UploadAction extends AbstractUploadContextAware implements
 			boolean found = foundLookup | foundExternalId;
 
 			if (found) {
-
 				return SUCCESS;
 			} else {
 				transformToWrapperBean(advanceOptionsBeans, bean);
 				boolean containsObject = salesforceService.checkObject(this
 						.getUploadContext());
 				if (containsObject) {
+					request.setAttribute("backPage", "backToPageOne");
 					return "override";
 				} else {
 					log.info("Generating Salesforce object now...");
@@ -217,12 +220,21 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	public String checkOverride() {
 		try {
-			
+
+			String[] fields = request.getParameterValues("fields");
+			int i = 0;
+			for (LookupBean lookupBean : lookups) {
+				lookupBean.setSourceField(fields[i]);
+				i++;
+			}
+
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			transformToWrapperBean(this.getUploadContext().getAdvanceOptionsBeans(), bean);
+			transformToWrapperBean(this.getUploadContext()
+					.getAdvanceOptionsBeans(), bean);
 			boolean containsObject = salesforceService.checkObject(this
 					.getUploadContext());
 			if (containsObject) {
+				request.setAttribute("backPage", "backToPageTwo");
 				return "override";
 			} else {
 				log.info("Generating Salesforce object now...");
@@ -261,6 +273,37 @@ public class UploadAction extends AbstractUploadContextAware implements
 			// this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
+	}
+
+	public InputStream getInputStream() throws Exception {
+		return inputStream;
+	}
+
+	/**
+	 * get fields for object
+	 * 
+	 * @return
+	 */
+	public String loadObjectFields() {
+		try {
+			String objectId = request.getParameter("id");
+			List<ValueId> values = salesforceService
+					.getFieldsForObject(objectId);
+
+			JSONArray jsonArray = new JSONArray();
+			for (ValueId value : values) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("id", value.getId());
+				jsonObj.put("value", value.getValue());
+				jsonArray.put(jsonObj);
+			}
+
+			inputStream = new ByteArrayInputStream(jsonArray.toString()
+					.getBytes());
+		} catch (Exception e) {
+			inputStream = new ByteArrayInputStream("".getBytes());
+		}
+		return SUCCESS;
 	}
 
 	private void checkForSpecialData(

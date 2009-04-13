@@ -3,39 +3,15 @@
 
 <html>
 	<head>
-		<title>View</title>
+		<title>Success</title>
 	</head>
 
 	<body>
 		<h3>
-			View Excel Info
+			Object uploaded successfully
 		</h3>
-		<table border="1">
-			<tr style="background-color: #CCCCCC">
-				<s:iterator value="bean.names" var="name">
-					<td>
-						${name}
-					</td>
-				</s:iterator>
-			</tr>
-			
-			<tr style="background-color: #EDF3EE">
-				<s:iterator value="bean.types" var="type">
-					<td>
-						${type}
-					</td>
-				</s:iterator>
-			</tr>
-
-			<s:iterator value="bean.objects" var="object">
-				<tr>
-					<s:iterator value="object" var="value">
-						<td>${value}</td>
-					</s:iterator>
-				</tr>
-			</s:iterator>
-		</table>
+		
 		<br />
-		<a href="init.action">Back</a>
+		<a href="init.action">Upload another one</a>
 	</body>
 </html>

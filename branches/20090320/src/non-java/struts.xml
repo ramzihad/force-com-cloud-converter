@@ -33,6 +33,7 @@
 		<action name="dbinit" class="dbUploadAction" method="init">
 			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
 		</action>
+	
 		
 		<action name="generate" class="dbUploadAction" method="generate" >
 			<result name="success">/WEB-INF/jsp/uploadDb/view.jsp</result>
@@ -40,7 +41,14 @@
 			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
 		</action>
 		
-	
+		<action name="backToPageOne" class="uploadAction" method="backToPageOne">
+			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
+		</action>
+		<action name="backToPageTwo" class="uploadAction" method="backToPageTwo">
+			<result name="success">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
+			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
+		</action>
+		
 		<action name="advanceOptionsOne" class="uploadAction" method="advanceOptionsOne" >
 			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>

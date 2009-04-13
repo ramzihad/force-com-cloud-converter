@@ -49,7 +49,7 @@
 			Advance Options page 2
 		</h3>
 		<s:form action="checkExistance" method="POST" id="advForm" disabled="disabled" theme="simple">
-			<a href="init.action">Back</a>
+			<a href="backToPageOne.action">Back</a>
 				<input type="button" id="btnsubmit" value="Next"/>
 			<br />
 			<br />
@@ -113,7 +113,7 @@
 							<img class="loader" style="display: none;" src="./img/loading.gif"/>
 						</td>
 						<td>
-							<select name="objectFields" class="objectFields"></select>
+							<select name="fields" class="objectFields" ></select>
 						</td>
 					</tr>
 					</s:iterator>
@@ -136,7 +136,7 @@
 		
 		<br />
 		<br />
-		<a href="init.action">Back</a>
+		<a href="backToPageOne.action">Back</a>
 
 	</body>
 </html>
