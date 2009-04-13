@@ -3,6 +3,8 @@
 <html>
 	<head>
 		<title>Upload</title>
+		<script type="text/javascript" charset="UTF-8"
+			src="js/loader.js"></script>
 	</head>
 
 	<body onload="hideLoader()">
@@ -20,8 +22,10 @@
 			<br />
 			<br />
 			<a href="${backPage}.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="override.action">Continue</a>
+			<a href="override.action" onclick="showLoader()" >Continue</a>
 
 		</s:form>
+			<%@ include
+			file="/WEB-INF/jsp/includes/loader.jsp"%>
 	</body>
 </html>

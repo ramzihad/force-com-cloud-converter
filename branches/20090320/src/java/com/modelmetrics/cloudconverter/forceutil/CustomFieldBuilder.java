@@ -90,7 +90,7 @@ public class CustomFieldBuilder {
 			customFieldShortNames.add(sfdcColumnName);
 			field.setFullName(newCustomObject.getFullName() + "."
 					+ sfdcColumnName);
-			field.setLabel(current.getName());
+			field.setLabel(current.getLabel());
 
 			// rsc need this for later use with DAO / Sproxy
 			// fieldMap.put(rsmd.getColumnName(i+1), sfdcColumnName);

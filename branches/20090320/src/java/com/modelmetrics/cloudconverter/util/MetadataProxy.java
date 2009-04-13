@@ -6,6 +6,8 @@ public class MetadataProxy {
 
 	private String name;
 	
+	private String label;
+	
 	private FieldType type;
 	
 	private int length;
@@ -62,6 +64,14 @@ public class MetadataProxy {
 
 	public void setLength(int length) {
 		this.length = length;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	

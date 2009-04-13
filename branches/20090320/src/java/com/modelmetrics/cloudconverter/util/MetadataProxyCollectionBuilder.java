@@ -260,6 +260,7 @@ public class MetadataProxyCollectionBuilder {
 			MetadataProxy field = new MetadataProxy();
 
 			field.setName(bean.getNames().get(i));
+			field.setLabel(bean.getLabels().get(i));
 			String value = bean.getTypes().get(i);
 			if (Constants.STRING.equals(value)) {
 				field.setType(FieldType.Text);
