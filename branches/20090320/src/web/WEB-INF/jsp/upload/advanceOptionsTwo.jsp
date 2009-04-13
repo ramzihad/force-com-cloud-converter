@@ -29,8 +29,16 @@
 				});
 				$("#btnsubmit").click(function() {
 					//validate here
-					$("#mge").show();
-					$("#advForm").submit();
+					var error=false;
+					$("select.salesforceObjects").each(function(){
+						if ($(this).val()==''){
+							$("#mge").show();
+							error=true;
+						}
+					});
+					if (!error){
+						$("#advForm").submit();
+					}
 				});
 			});
 		</script>
@@ -42,7 +50,7 @@
 		</h3>
 		<s:form action="checkExistance" method="POST" id="advForm" disabled="disabled" theme="simple">
 			<a href="init.action">Back</a>
-				<input type="button" id="btnsubmit" value="Next" theme="simple"/>
+				<input type="button" id="btnsubmit" value="Next"/>
 			<br />
 			<br />
 			<s:if test="%{foundExternalId}">
