@@ -38,6 +38,7 @@ import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
 import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
+import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.sforce.soap._2006._04.metadata.CustomField;
@@ -117,6 +118,24 @@ public abstract class AbstractMigrationEngine extends
 
 		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService(), new CustomTab[] { customTab }).execute();
+
+		/*
+		 * check to see if we're ready to proceed.
+		 */
+		 
+		MetadataReadinessChecker checker = new MetadataReadinessChecker();
+
+		boolean ready = false;
+
+		for (int i = 0; i < 5; i++) {
+			ready = checker.isMetadataReady(this.getMigrationContext());
+			log.debug("is metadata ready? " + ready);
+			if (ready) 
+				break;
+			this.pauseSession();
+		}
+
+		
 
 		/*
 		 * update the layout

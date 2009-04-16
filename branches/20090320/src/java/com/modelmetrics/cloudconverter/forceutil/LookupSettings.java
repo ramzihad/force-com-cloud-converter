@@ -65,7 +65,7 @@ public class LookupSettings {
 
 	
 	public String getApiResolutionString() {
-		if (StringUtils.hasText(this.getApiResolutionString())) 
+		if (StringUtils.hasText(this.apiResolutionString)) 
 		return apiResolutionString;
 		
 		if (StringUtils.hasText(this.getLocalRelationshipName()) && StringUtils.hasText(this.getParentObjectName()) && StringUtils.hasText(this.getParentExternalIdName()) ) {

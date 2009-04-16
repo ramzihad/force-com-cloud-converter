@@ -26,6 +26,7 @@ public class MetadataProxyCollectionBuilder {
 			MetadataProxy field = new MetadataProxy();
 
 			field.setName(rsmd.getColumnName(i + 1));
+			field.setLabel(rsmd.getColumnName(i + 1));
 
 			switch (rsmd.getColumnType(i + 1)) {
 			case Types.BIGINT:
