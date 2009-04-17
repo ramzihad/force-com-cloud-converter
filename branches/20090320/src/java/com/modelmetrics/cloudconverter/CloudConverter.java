@@ -72,6 +72,12 @@ public class CloudConverter {
 				.println("Create objects, customize the default layout and move data in one quick step.");
 		System.out
 				.println("This utility offered AS IS without warranty or support of any kind.\n\n");
+
+		System.out
+				.println("Important -- if you have already run this and have a \"MYTABLE\" object in your salesforce.com\n");
+		System.out
+				.println("org, this will fail.  You must delete that before continuing.\n\n");
+
 		System.out
 				.println("*****\nThis is an example script. Review the class CloudConverterScript and then edit CloudConverterScriptTemplate to create your own.\nBe sure to read ReadMe.txt.\n*****\n");
 
@@ -148,12 +154,11 @@ public class CloudConverter {
 			throw new RuntimeException("you entered an invalid runtype");
 		}
 
-		MigrationEngineIF engine = new MigrationEngineFactory().build(migrationContext);
+		MigrationEngineIF engine = new MigrationEngineFactory()
+				.build(migrationContext);
 
 		engine.setMigrationContext(migrationContext);
 
-		
-		
 		try {
 
 			engine.execute();
