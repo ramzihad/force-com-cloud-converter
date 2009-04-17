@@ -87,10 +87,8 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 						metadataProxy.getName()), rs.getObject(metadataProxy
 						.getName()));
 			}
-			// for (int i = 0; i < rsmd.getColumnCount(); i++) {
-			// current.setValue(migrationContext.getFieldMap().get(rsmd.getColumnName(i+1)),
-			// rs.getObject(i+1));
-			// }
+
+			toInsert.add(current);
 
 			if (toInsert.size() == MAX_SPROXY_BATCH_SIZE) {
 				migrationContext.getMigrationStatusPublisher().publishStatus("executing data insert...");

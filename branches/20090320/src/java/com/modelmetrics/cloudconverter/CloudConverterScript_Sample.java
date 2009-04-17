@@ -61,8 +61,13 @@ import com.modelmetrics.common.sforce.SalesforceCredentials;
  * 
  * IMPORTANT - IMPORTANT - IMPORTANT
  * 
+ * If the object MyTable__c already exists in your org, this sample will throw an exception.
+ * 
+ * IMPORTANT - IMPORTANT - IMPORTANT
+ * 
  * There is a Lookup Field setting below that relies on your dev org's configuration.  
- * You should change this to match your dev org OR create an object matching this sample.
+ * You should change this to match your dev org OR create an object matching this sample
+ * if you want to test this functionality.
  * 
  * Object Name: "AAA__c"
  * External Id Field: "TestExternalId__c"
@@ -79,7 +84,8 @@ public class CloudConverterScript_Sample {
 
 		try {
 			script.execute("reid_carlberg@modelmetrics.com",
-					"yourpasswordYOURSECURITYTOKEN");
+					"Test123456c91zr6ovorQmq3d8TQpKFGUF" );
+			//"yourpasswordYOURSECURITYTOKEN"
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

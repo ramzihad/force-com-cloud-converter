@@ -84,6 +84,7 @@ public class MigrationEngineResultSetImpl extends AbstractMigrationEngine {
 
 		this.getMigrationContext().setResultSet(rs);
 
+
 		/*
 		 * build the basic custom object
 		 */
