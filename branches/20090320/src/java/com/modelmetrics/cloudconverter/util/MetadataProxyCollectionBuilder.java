@@ -298,7 +298,8 @@ public class MetadataProxyCollectionBuilder {
 				field.setType(FieldType.Date);
 			} else if (Constants.DATETIME.equals(value)) {
 				field.setType(FieldType.DateTime);
-			}
+			} 
+			
 			ret.add(field);
 		}
 		return ret;

@@ -167,6 +167,34 @@ public class UploadActionTest extends TestCaseWithDevOrg {
 		
 	}
 	
-
+	public void testSampleUpload_TestSheet_Ebrary_Failed() throws Exception {
+		
+		
+		String fileName = "./src/sampledbs/excel/Sample-Error_Index-OutOfBounds-2009-05-03.xls";
+		
+		UploadAction action = (UploadAction) this.getTestBeanFactory().getBean("uploadAction");
+		
+		assertNotNull(action.getFileService());
+		
+		assertNotNull(action.getSalesforceService());
+		
+		action.setUploadContext(new UploadContext());
+		
+		action.setSalesforceSessionContext(new SalesforceSessionContext());
+		
+		action.setUsername(this.sampleSfdcUsername);
+		
+		action.setPassword(this.sampleSfdcPassword);
+		
+		action.setOverride(Boolean.TRUE);
+		
+		action.setUpload(new File(fileName));
+		
+		String s = action.override();
+		
+		assertEquals(ActionSupport.SUCCESS, s);
+		
+		
+	}
 	
 }

@@ -19,6 +19,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
 
+import com.sforce.soap._2006._04.metadata.FieldType;
+
 public class FileServiceImpl implements FileService {
 
 	private static final Log log = LogFactory.getLog(FileServiceImpl.class);
@@ -108,6 +110,9 @@ public class FileServiceImpl implements FileService {
 							} else {
 								bean.getTypes().add(Constants.INT);
 							}
+						} else {
+							//default.
+							bean.getTypes().add(Constants.STRING);
 						}
 					}
 					if (i >= 1) {

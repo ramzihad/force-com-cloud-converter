@@ -45,4 +45,20 @@ public class MetadataProxyCollectionBuilderTest extends TestCase {
 		assertEquals(proxies.get(8).getType(), FieldType.Url);
 
 	}
+	
+	public void testSampleSheet_ShowedIndexOutOfBoundsErrors() throws Exception {
+		//2009-05-03 resulted in a default field data type.
+		
+		String fileName = "./src/sampledbs/excel/Sample-Error-Index-OutOfBounds-2009-05-03.xls";
+		
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		
+		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
+		
+		assertNotNull(wrapperBean);
+		
+		List<MetadataProxy> proxies = new MetadataProxyCollectionBuilder().build(wrapperBean);
+
+		
+	}
 }
