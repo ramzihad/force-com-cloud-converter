@@ -14,7 +14,7 @@
 
 <p>1. Select your Microsoft Excel Spreadsheet based application (XLS format).</p>
 
-<p>2. Click "upload" and wait a few moments while Import Your App creates a matching object and upload your data.</p>
+<p>2. Click "upload" and wait a few moments while Import Your App creates a matching object and uploads your data.</p>
 
 <p>3. Configure your access permissions to control which profiles can work with your data in setup.</p>
 

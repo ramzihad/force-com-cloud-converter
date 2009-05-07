@@ -18,7 +18,7 @@
 			
 			<p>This routine will import your Microsoft Excel based application and data into Salesforce.</p>
 			
-			<p>Select your file and click on "upload".  Importing your app will take a short amount of time.  you will see a Success! screen when it is complete.</p>
+			<p>Select your file and click on "upload".  Importing your app will take a short amount of time.  You will see a Success! screen when it is complete.</p>
 			
 			<p>File: <s:file name="upload" label="File" /> <s:submit value="Step 2: Upload" id="butSubmit" onclick="showLoader()" />
 
