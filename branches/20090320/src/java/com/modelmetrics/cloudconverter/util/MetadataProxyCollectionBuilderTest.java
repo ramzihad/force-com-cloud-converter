@@ -18,9 +18,9 @@ public class MetadataProxyCollectionBuilderTest extends TestCase {
 		
 		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker.getBeanFactory().getBean("fileService");
 		
-		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
-		
-		assertNotNull(wrapperBean);
+		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		WrapperBean wrapperBean = wrapperBeans.get(0);
+		assertNotNull(wrapperBean);		
 
 		List<MetadataProxy> proxies = new MetadataProxyCollectionBuilder().build(wrapperBean);
 		
@@ -52,9 +52,9 @@ public class MetadataProxyCollectionBuilderTest extends TestCase {
 		String fileName = "./src/sampledbs/excel/Sample-Error-Index-OutOfBounds-2009-05-03.xls";
 		
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
-		
-		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
-		
+		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		WrapperBean wrapperBean = wrapperBeans.get(0);
+		assertNotNull(wrapperBean);		
 		assertNotNull(wrapperBean);
 		
 		List<MetadataProxy> proxies = new MetadataProxyCollectionBuilder().build(wrapperBean);

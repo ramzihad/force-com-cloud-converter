@@ -3,10 +3,13 @@ package com.modelmetrics.cloudconverter.mmimport.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.mmimport.actions.UploadAction;
 import com.modelmetrics.cloudconverter.mmimport.actions.UploadContext;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.DescribeGlobalResult;
@@ -15,18 +18,22 @@ import com.sforce.soap.partner.Field;
 
 public class SalesforceServiceImpl implements SalesforceService {
 
+	private static final Logger log = Logger.getLogger(SalesforceServiceImpl.class);
+
+	
 	private SalesforceSession salesforceSession;
 
 	private static final String[] FILTERS = { "__Tag", "__Share", "__History" };
 
 	public void execute(UploadContext uploadContext) throws Exception {
 
-		/*Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
-		for (LookupBean lookupBean : uploadContext.getLookups()) {
-			lookupFields.put(lookupBean.getLabel(), new LookupSettings(
-					lookupBean.getLabel(), lookupBean.getSourceObject(),
-					lookupBean.getSourceField()));
-		}*/
+		/*
+		 * Map<String, LookupSettings> lookupFields = new HashMap<String,
+		 * LookupSettings>(); for (LookupBean lookupBean :
+		 * uploadContext.getLookups()) { lookupFields.put(lookupBean.getLabel(),
+		 * new LookupSettings( lookupBean.getLabel(),
+		 * lookupBean.getSourceObject(), lookupBean.getSourceField())); }
+		 */
 
 		MigrationContext migrationContext = new MigrationContextFactory()
 				.buildMigrationContext(this.getSalesforceSession());
@@ -44,11 +51,51 @@ public class SalesforceServiceImpl implements SalesforceService {
 		// execute it.
 		migrationEngineIF.execute();
 	}
+	
+	public void executeMultiple(UploadContext uploadContext) throws Exception {
 
-	public boolean checkObject(UploadContext uploadContext) throws Exception {
+		List<WrapperBean> beans = uploadContext.getWrapperBeans();
+		for (WrapperBean wrapperBean : beans) {
+			/*
+			 * Map<String, LookupSettings> lookupFields = new HashMap<String,
+			 * LookupSettings>(); for (LookupBean lookupBean :
+			 * uploadContext.getLookups()) { lookupFields.put(lookupBean.getLabel(),
+			 * new LookupSettings( lookupBean.getLabel(),
+			 * lookupBean.getSourceObject(), lookupBean.getSourceField())); }
+			 */
 
-		return containsObject(salesforceSession, uploadContext.getWrapperBean()
-				.getSheetName());
+			MigrationContext migrationContext = new MigrationContextFactory()
+					.buildMigrationContext(this.getSalesforceSession());
+
+			migrationContext.setWrapperBean(wrapperBean);
+
+			MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
+					.build(migrationContext);
+
+			migrationEngineIF.setMigrationContext(migrationContext);
+
+			migrationEngineIF
+					.subscribeToStatus(uploadContext.getStatusSubscriber());
+
+			// execute it.
+			migrationEngineIF.execute();
+			log.info("Object '"+wrapperBean.getSheetName()+"' saved in salesforce successfully");
+		}
+	}
+	
+	
+	public List<String> checkObject(UploadContext uploadContext)
+			throws Exception {
+
+		List<WrapperBean> wrapperBeans = uploadContext.getWrapperBeans();
+		List<String> result = new ArrayList<String>();
+		for (WrapperBean wrapperBean : wrapperBeans) {
+			if (containsObject(salesforceSession, wrapperBean.getSheetName())) {
+				result.add(wrapperBean.getSheetName());
+			}
+		}
+
+		return result;
 
 	}
 

@@ -1,6 +1,9 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 
@@ -28,12 +31,13 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	private String uploadFileName;
 
-	private WrapperBean bean;
+	private List<WrapperBean> beans;
 
 	private String message;
 
 	private String existingLocationUrl;
 	private String existingSessionId;
+	private List<String> sheets;
 
 	public String getExistingLocationUrl() {
 		return existingLocationUrl;
@@ -103,19 +107,19 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 			if (error) {
 				return INPUT;
 			}
-
+		
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
-			bean = fileService.parseXLS(upload);
-			bean.setOverride(Boolean.FALSE);
+			beans = fileService.parseXLS(upload);
 
-			this.getUploadContext().setWrapperBean(bean);
+			//this.getUploadContext().setWrapperBean(bean);
 
 			log.info("File uploaded successfully");
 
-			boolean containsObject = salesforceService.checkObject(this.getUploadContext());
-			if (containsObject) {
+			sheets = salesforceService.checkObject(this
+					.getUploadContext());
+			if (!sheets.isEmpty()) {
 				return "override";
 			} 
 			
@@ -174,14 +178,6 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		return fileService;
 	}
 
-	public WrapperBean getBean() {
-		return bean;
-	}
-
-	public void setBean(WrapperBean bean) {
-		this.bean = bean;
-	}
-
 	public void setSalesforceService(SalesforceService salesforceService) {
 		this.salesforceService = salesforceService;
 	}
@@ -196,6 +192,14 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	public void setOverride(Boolean override) {
 		this.override = override;
+	}
+
+	public List<WrapperBean> getBeans() {
+		return beans;
+	}
+
+	public void setBeans(List<WrapperBean> beans) {
+		this.beans = beans;
 	}
 
 }

@@ -23,8 +23,9 @@ public class CustomFieldBuilderTest extends TestCase {
 		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker
 				.getBeanFactory().getBean("fileService");
 
-		WrapperBean wrapperBean = fileServiceImpl.parseXLS(new File(fileName));
-
+		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		WrapperBean wrapperBean = wrapperBeans.get(0);
+		assertNotNull(wrapperBean);
 		assertNotNull(wrapperBean);
 
 		List<MetadataProxy> proxies = new MetadataProxyCollectionBuilder()

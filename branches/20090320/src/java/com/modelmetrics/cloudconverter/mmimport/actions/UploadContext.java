@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
+import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.LookupBean;
@@ -19,11 +20,15 @@ public class UploadContext  {
 
 	private WrapperBean wrapperBean;
 	
+	private List<WrapperBean> wrapperBeans;
+	
 	private List<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
 
 	private List<LookupBean> lookups = new ArrayList<LookupBean>();
 	
 	private List<AdvanceOptionsBean> advanceOptionsBeans;
+
+	private List<OptionsOneBean> advanceOptionsWrapperBeans;
 
 	
 	private MigrationStatusSubscriber statusSubscriber;
@@ -97,6 +102,23 @@ public class UploadContext  {
 
 	public void setLookups(List<LookupBean> lookups) {
 		this.lookups = lookups;
+	}
+
+	public List<WrapperBean> getWrapperBeans() {
+		return wrapperBeans;
+	}
+
+	public void setWrapperBeans(List<WrapperBean> wrapperBeans) {
+		this.wrapperBeans = wrapperBeans;
+	}
+
+	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+		return advanceOptionsWrapperBeans;
+	}
+
+	public void setAdvanceOptionsWrapperBeans(
+			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
 	}
 
 

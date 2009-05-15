@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.Constants;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
+import com.modelmetrics.cloudconverter.mmimport.services.LookupAndIdWrapper;
+import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
@@ -65,7 +67,11 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	boolean externalIdUnique;
 
-	private List<AdvanceOptionsBean> advanceOptionsBeans;
+	private List<LookupAndIdWrapper> lookupIdWrapperList;
+
+	private List<OptionsOneBean> advanceOptionsWrapperBeans;
+
+	private List<String> sheets;
 
 	private InputStream inputStream;
 
@@ -117,9 +123,22 @@ public class UploadAction extends AbstractUploadContextAware implements
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
-			WrapperBean bean = fileService.parseXLS(upload);
-			this.getUploadContext().setWrapperBean(bean);
-			advanceOptionsBeans = transformFromWrapperBean(bean);
+			// parse all sheets here
+			List<WrapperBean> wrapperBeans = fileService.parseXLS(upload);
+			this.getUploadContext().setWrapperBeans(wrapperBeans);
+
+			// prepare information on a different structure for view
+			advanceOptionsWrapperBeans = new ArrayList<OptionsOneBean>();
+			for (WrapperBean wrapperBean : wrapperBeans) {
+				List<AdvanceOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
+				OptionsOneBean aux = new OptionsOneBean();
+				aux.setAdvanceOptionsBeans(advanceOptionsBeans);
+				advanceOptionsWrapperBeans.add(aux);
+			}
+
+			// set new structure in session
+			this.getUploadContext().setAdvanceOptionsWrapperBeans(
+					advanceOptionsWrapperBeans);
 
 			log.info("File uploaded successfully");
 
@@ -140,20 +159,21 @@ public class UploadAction extends AbstractUploadContextAware implements
 	 * @return
 	 */
 	public String backToPageOne() {
-		advanceOptionsBeans = transformFromWrapperBean(this.getUploadContext()
-				.getWrapperBean());
+
+		advanceOptionsWrapperBeans = this.getUploadContext()
+				.getAdvanceOptionsWrapperBeans();
+
 		fieldTypes = StringUtils.getAllFieldTypes();
 		return SUCCESS;
 	}
 
 	public String backToPageTwo() {
 		try {
-		
-			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			advanceOptionsBeans = transformFromWrapperBean(bean);
 
-			transformToWrapperBean(advanceOptionsBeans, bean);
-			checkForSpecialData(advanceOptionsBeans, lookups, externalIds);
+			// advanceOptionsBeans = transformFromWrapperBean(bean);
+
+			// transformToWrapperBean(advanceOptionsBeans, bean);
+			// checkForSpecialData(loo, lookups, externalIds);
 			foundExternalId = !externalIds.isEmpty();
 			foundLookup = !lookups.isEmpty();
 			salesforceObjects = salesforceService.getAllSalesforcObjects();
@@ -175,15 +195,37 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public String advanceOptionsTwo() {
 
 		try {
+			// get session structure information
+			List<OptionsOneBean> sessionAdvanceOptionsWrapperBeans = this
+					.getUploadContext().getAdvanceOptionsWrapperBeans();
 
-			this.getUploadContext().setAdvanceOptionsBeans(advanceOptionsBeans);
+			// merge edited information with session info
+			int i = 0;
+			for (OptionsOneBean optionOne : sessionAdvanceOptionsWrapperBeans) {
+				mergeInformation(optionOne.getAdvanceOptionsBeans(),
+						advanceOptionsWrapperBeans.get(i)
+								.getAdvanceOptionsBeans());
+				i++;
+			}
 
-			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			transformToWrapperBean(advanceOptionsBeans, bean);
-			checkForSpecialData(advanceOptionsBeans, lookups, externalIds);
+			// set edited information in session
+			this.getUploadContext().setAdvanceOptionsWrapperBeans(
+					sessionAdvanceOptionsWrapperBeans);
 
-			foundExternalId = !externalIds.isEmpty();
-			foundLookup = !lookups.isEmpty();
+			List<WrapperBean> wrapperBeans = this.getUploadContext()
+					.getWrapperBeans();
+			int j = 0;
+			for (OptionsOneBean optionOne : sessionAdvanceOptionsWrapperBeans) {
+				WrapperBean bean = wrapperBeans.get(j);
+				transformToWrapperBean(optionOne.getAdvanceOptionsBeans(), bean);
+				j++;
+			}
+			this.getUploadContext().setWrapperBeans(wrapperBeans);
+
+			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
+
+			foundExternalId = checkExternalIds(lookupIdWrapperList);
+			foundLookup = checkLookups(lookupIdWrapperList);
 
 			salesforceObjects = salesforceService.getAllSalesforcObjects();
 
@@ -194,16 +236,16 @@ public class UploadAction extends AbstractUploadContextAware implements
 			if (found) {
 				return SUCCESS;
 			} else {
-				transformToWrapperBean(advanceOptionsBeans, bean);
-				boolean containsObject = salesforceService.checkObject(this
-						.getUploadContext());
-				if (containsObject) {
+				// transformToWrapperBean(advanceOptionsBeans, bean);
+				sheets = salesforceService.checkObject(this.getUploadContext());
+				if (!sheets.isEmpty()) {
 					request.setAttribute("backPage", "backToPageOne");
+					request.setAttribute("sheets", sheets);
 					return "override";
 				} else {
 					log.info("Generating Salesforce object now...");
-					bean.setOverride(Boolean.FALSE);
-					salesforceService.execute(this.getUploadContext());
+					// bean.setOverride(Boolean.FALSE);
+					salesforceService.executeMultiple(this.getUploadContext());
 					return "view";
 				}
 			}
@@ -218,6 +260,25 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	}
 
+	private boolean checkLookups(List<LookupAndIdWrapper> lookupIdWrapperList2) {
+		for (LookupAndIdWrapper lookupAndIdWrapper : lookupIdWrapperList2) {
+			if (!lookupAndIdWrapper.getLookups().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean checkExternalIds(
+			List<LookupAndIdWrapper> lookupIdWrapperList2) {
+		for (LookupAndIdWrapper lookupAndIdWrapper : lookupIdWrapperList2) {
+			if (!lookupAndIdWrapper.getExternalIds().isEmpty()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public String checkOverride() {
 		try {
 
@@ -229,13 +290,12 @@ public class UploadAction extends AbstractUploadContextAware implements
 			}
 			this.getUploadContext().setLookups(lookups);
 			this.getUploadContext().setExternalIds(externalIds);
-			
+
 			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			transformToWrapperBean(this.getUploadContext()
-					.getAdvanceOptionsBeans(), bean);
-			boolean containsObject = salesforceService.checkObject(this
-					.getUploadContext());
-			if (containsObject) {
+			// transformToWrapperBean(this.getUploadContext()
+			// .getAdvanceOptionsBeans(), bean);
+			sheets = salesforceService.checkObject(this.getUploadContext());
+			if (!sheets.isEmpty()) {
 				request.setAttribute("backPage", "backToPageTwo");
 				return "override";
 			} else {
@@ -308,26 +368,35 @@ public class UploadAction extends AbstractUploadContextAware implements
 		return SUCCESS;
 	}
 
-	private void checkForSpecialData(
-			List<AdvanceOptionsBean> advanceOptionsBeans,
-			List<LookupBean> lookups, List<ExternalIdBean> externalIds) {
+	private List<LookupAndIdWrapper> checkForSpecialData(List<OptionsOneBean> list) {
 
-		for (AdvanceOptionsBean advanceOptionsBean : advanceOptionsBeans) {
-			if (Constants.EXTERNAL_ID.equals(advanceOptionsBean.getType())) {
-				ExternalIdBean extId = new ExternalIdBean();
-				extId.setLabel(advanceOptionsBean.getLabel());
-				extId.setUnique(false);
-				externalIds.add(extId);
+		List<LookupAndIdWrapper> lookIpWrapper = new ArrayList<LookupAndIdWrapper>();
+
+		for (OptionsOneBean optionOneBean : list) {
+			LookupAndIdWrapper wrap = new LookupAndIdWrapper();
+			List<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
+			List<LookupBean> lookups = new ArrayList<LookupBean>();
+			for (AdvanceOptionsBean advanceOptionsBean : optionOneBean
+					.getAdvanceOptionsBeans()) {
+				if (Constants.EXTERNAL_ID.equals(advanceOptionsBean.getType())) {
+					ExternalIdBean extId = new ExternalIdBean();
+					extId.setLabel(advanceOptionsBean.getLabel());
+					extId.setUnique(false);
+					externalIds.add(extId);
+				}
+				if (Constants.LOOKUP.equals(advanceOptionsBean.getType())) {
+					LookupBean look = new LookupBean();
+					look.setLabel(advanceOptionsBean.getLabel());
+					look.setSourceField("");
+					look.setSourceObject("");
+					lookups.add(look);
+				}
 			}
-			if (Constants.LOOKUP.equals(advanceOptionsBean.getType())) {
-				LookupBean look = new LookupBean();
-				look.setLabel(advanceOptionsBean.getLabel());
-				look.setSourceField("");
-				look.setSourceObject("");
-				lookups.add(look);
-			}
+			wrap.setExternalIds(externalIds);
+			wrap.setLookups(lookups);
+			lookIpWrapper.add(wrap);
 		}
-
+		return lookIpWrapper;
 	}
 
 	private void validateData() {
@@ -374,6 +443,16 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 		wrapperBean.setLabels(labels);
 		wrapperBean.setTypes(types);
+	}
+
+	private void mergeInformation(List<AdvanceOptionsBean> advanceBeans,
+			List<AdvanceOptionsBean> updatedAdvanceBeans) {
+		int i = 0;
+		for (AdvanceOptionsBean advanceOptionsBean : updatedAdvanceBeans) {
+			advanceBeans.get(i).setType(advanceOptionsBean.getType());
+			advanceBeans.get(i).setLabel(advanceOptionsBean.getLabel());
+			i++;
+		}
 	}
 
 	public File getUpload() {
@@ -448,15 +527,6 @@ public class UploadAction extends AbstractUploadContextAware implements
 		this.fieldTypes = fieldTypes;
 	}
 
-	public List<AdvanceOptionsBean> getAdvanceOptionsBeans() {
-		return advanceOptionsBeans;
-	}
-
-	public void setAdvanceOptionsBeans(
-			List<AdvanceOptionsBean> advanceOptionsBeans) {
-		this.advanceOptionsBeans = advanceOptionsBeans;
-	}
-
 	public boolean isFoundExternalId() {
 		return foundExternalId;
 	}
@@ -523,6 +593,24 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
+	}
+
+	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+		return advanceOptionsWrapperBeans;
+	}
+
+	public void setAdvanceOptionsWrapperBeans(
+			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
+	}
+
+	public List<LookupAndIdWrapper> getLookupIdWrapperList() {
+		return lookupIdWrapperList;
+	}
+
+	public void setLookupIdWrapperList(
+			List<LookupAndIdWrapper> lookupIdWrapperList) {
+		this.lookupIdWrapperList = lookupIdWrapperList;
 	}
 
 }
