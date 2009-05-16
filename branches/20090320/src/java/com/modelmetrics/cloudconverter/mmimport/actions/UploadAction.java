@@ -283,10 +283,13 @@ public class UploadAction extends AbstractUploadContextAware implements
 			int i = 0;
 			
 			for (LookupAndIdWrapper bean : lookupIdWrapperList) {
-				for (LookupBean lookupBean : bean.getLookups()) {
-					lookupBean.setSourceField(fields[i]);
-					i++;
+				if (bean!=null){
+					for (LookupBean lookupBean : bean.getLookups()) {
+						lookupBean.setSourceField(fields[i]);
+						i++;
+					}
 				}
+			
 			}
 			
 			this.getUploadContext().setLookupIdWrapperList(lookupIdWrapperList);
