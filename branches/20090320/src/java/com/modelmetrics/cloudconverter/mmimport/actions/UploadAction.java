@@ -44,7 +44,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 	private String password;
 
 	private String username;
-
+	
 	private Boolean override;
 
 	private String uploadFileName;
@@ -52,10 +52,6 @@ public class UploadAction extends AbstractUploadContextAware implements
 	private List<ValueId> fieldTypes;
 
 	private List<ValueId> uniques;
-
-	private List<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
-
-	private List<LookupBean> lookups = new ArrayList<LookupBean>();
 
 	private List<ValueId> salesforceObjects = new ArrayList<ValueId>();
 
@@ -170,12 +166,13 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public String backToPageTwo() {
 		try {
 
-			// advanceOptionsBeans = transformFromWrapperBean(bean);
+			List<OptionsOneBean> sessionAdvanceOptionsWrapperBeans = this
+			.getUploadContext().getAdvanceOptionsWrapperBeans();
 
-			// transformToWrapperBean(advanceOptionsBeans, bean);
-			// checkForSpecialData(loo, lookups, externalIds);
-			foundExternalId = !externalIds.isEmpty();
-			foundLookup = !lookups.isEmpty();
+			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
+
+			foundExternalId = checkExternalIds(lookupIdWrapperList);
+			foundLookup = checkLookups(lookupIdWrapperList);
 			salesforceObjects = salesforceService.getAllSalesforcObjects();
 			uniques = StringUtils.getUniques();
 			return SUCCESS;
@@ -284,26 +281,39 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 			String[] fields = request.getParameterValues("fields");
 			int i = 0;
-			for (LookupBean lookupBean : lookups) {
-				lookupBean.setSourceField(fields[i]);
-				i++;
+			
+			for (LookupAndIdWrapper bean : lookupIdWrapperList) {
+				for (LookupBean lookupBean : bean.getLookups()) {
+					lookupBean.setSourceField(fields[i]);
+					i++;
+				}
 			}
-			this.getUploadContext().setLookups(lookups);
-			this.getUploadContext().setExternalIds(externalIds);
+			
+			this.getUploadContext().setLookupIdWrapperList(lookupIdWrapperList);
+			
+			
+			// get session structure information
+			List<OptionsOneBean> sessionAdvanceOptionsWrapperBeans = this
+					.getUploadContext().getAdvanceOptionsWrapperBeans();
 
-			WrapperBean bean = this.getUploadContext().getWrapperBean();
-			// transformToWrapperBean(this.getUploadContext()
-			// .getAdvanceOptionsBeans(), bean);
+			List<WrapperBean> wrapperBeans = this.getUploadContext()
+			.getWrapperBeans();
+			int j = 0;
+			for (OptionsOneBean optionOne : sessionAdvanceOptionsWrapperBeans) {
+				WrapperBean bean = wrapperBeans.get(j);
+				transformToWrapperBean(optionOne.getAdvanceOptionsBeans(), bean);
+				j++;
+			}
 			sheets = salesforceService.checkObject(this.getUploadContext());
 			if (!sheets.isEmpty()) {
 				request.setAttribute("backPage", "backToPageTwo");
+				request.setAttribute("sheets", sheets);
 				return "override";
 			} else {
 				log.info("Generating Salesforce object now...");
-				bean.setOverride(Boolean.FALSE);
-				salesforceService.execute(this.getUploadContext());
+				salesforceService.executeMultiple(this.getUploadContext());
 			}
-			this.getUploadContext().setWrapperBean(bean);
+			
 			return SUCCESS;
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
@@ -316,17 +326,19 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	public String override() {
 		try {
-			WrapperBean bean = this.getUploadContext().getWrapperBean();
+			List<WrapperBean> beans = this.getUploadContext().getWrapperBeans();
 
+			for (WrapperBean wrapperBean : beans) {
+				wrapperBean.setOverride(Boolean.TRUE);
+			}
 			log.info("Generating Salesforce object now...");
-			bean = this.getUploadContext().getWrapperBean();
-			bean.setOverride(Boolean.TRUE);
+			this.getUploadContext().setWrapperBeans(beans);
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
-			salesforceService.execute(this.getUploadContext());
+			salesforceService.executeMultiple(this.getUploadContext());
 
 			log.info("Object sent successfully");
-			this.getUploadContext().setWrapperBean(bean);
+			this.getUploadContext().setWrapperBeans(beans);
 			return SUCCESS;
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
@@ -511,14 +523,6 @@ public class UploadAction extends AbstractUploadContextAware implements
 		this.password = password;
 	}
 
-	public Boolean getOverride() {
-		return override;
-	}
-
-	public void setOverride(Boolean override) {
-		this.override = override;
-	}
-
 	public List<ValueId> getFieldTypes() {
 		return fieldTypes;
 	}
@@ -551,21 +555,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 		this.externalIdUnique = externalIdUnique;
 	}
 
-	public List<ExternalIdBean> getExternalIds() {
-		return externalIds;
-	}
-
-	public void setExternalIds(List<ExternalIdBean> externalIds) {
-		this.externalIds = externalIds;
-	}
-
-	public List<LookupBean> getLookups() {
-		return lookups;
-	}
-
-	public void setLookups(List<LookupBean> lookups) {
-		this.lookups = lookups;
-	}
+	
 
 	public List<ValueId> getSalesforceObjects() {
 		return salesforceObjects;
@@ -611,6 +601,14 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public void setLookupIdWrapperList(
 			List<LookupAndIdWrapper> lookupIdWrapperList) {
 		this.lookupIdWrapperList = lookupIdWrapperList;
+	}
+
+	public Boolean getOverride() {
+		return override;
+	}
+
+	public void setOverride(Boolean override) {
+		this.override = override;
 	}
 
 }

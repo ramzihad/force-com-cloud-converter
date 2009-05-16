@@ -14,9 +14,6 @@ public class WrapperBean {
 
 	private List<List<Object>> objects;
 
-
-	private String type;
-
 	private Boolean override;
 
 	public Boolean getOverride() {
@@ -25,14 +22,6 @@ public class WrapperBean {
 
 	public void setOverride(Boolean override) {
 		this.override = override;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public String toString() {

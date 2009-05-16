@@ -48,55 +48,66 @@
 		<h3>
 			Advance Options page 2
 		</h3>
-		<s:form action="checkExistance" method="POST" id="advForm" disabled="disabled" theme="simple">
+		<s:form action="checkExistance" method="POST" id="advForm"
+			disabled="disabled" theme="simple">
 			<a href="backToPageOne.action">Back</a>
-				<input type="button" id="btnsubmit" value="Next"/>
+			<input type="button" id="btnsubmit" value="Next" />
+			
+			
 			<br />
 			<br />
-			<s:if test="%{foundExternalId}">
+			<s:iterator value="lookupIdWrapperList" var="lookupIdWrapper"
+				status="parentStatus">
+				
+				<b>Object ${parentStatus.index+1}</b>
+				<br /><br />
 				External ID Settings
 				<br />
-					<table border="1">
+				<table border="1">
+					<tr>
+						<td>
+							Field
+						</td>
+							<td>
+							Label
+						</td>
+						<td colspan="2">
+							Unique
+						</td>
+					</tr>
+					<s:iterator value="#lookupIdWrapper.externalIds" var="externalIdBean" status="status">
+
 						<tr>
 							<td>
-								Field
-							</td>
-							<td>
-								Unique
-							</td>
-						</tr>
-						<s:iterator value="externalIds" var="advBean" status="status">
-						
-						<tr>
-							<td>
-								${advBean.label}
-								<s:textfield
-								id="externalIds[%{#status.index}].label"
-								name="externalIds[%{#status.index}].label"
-								value="%{externalIds[#status.index].label}"
-								theme="simple" />
+								${externalIdBean.label}
+							</td><td>
+								<s:textfield id="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].label"
+									name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].label"
+									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#status.index].label}" theme="simple" />
 							</td>
 							<td>
 								<s:select list="uniques" listKey="id" listValue="value"
-									theme="simple" name="externalIds[%{#status.index}].unique"
-									value="%{externalIds[#status.index].unique}" />
-	
+									theme="simple" name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].unique"
+									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#status.index].unique}" />
+
 							</td>
 						</tr>
-						</s:iterator>
-					</table>
-					<br />
-					<br />
-			</s:if>
+					</s:iterator>
+				</table>
+				<br />
+				<br />
+
+				<br />
 		
-		<br />
-		
-			<s:if test="%{foundLookup}">
+	
 				Lookup Field Settings
 				<table border="1">
 					<tr>
 						<td>
 							Field
+						</td>
+						<td>
+							Label
 						</td>
 						<td>
 							Source Object
@@ -105,44 +116,48 @@
 							Source Field
 						</td>
 					</tr>
-					
-					<s:iterator value="lookups"  status="status">
-					<tr>
-						<td>
-							<s:textfield
-								id="lookups[%{#status.index}].label"
-								name="lookups[%{#status.index}].label"
-								value="%{lookups[#status.index].label}"
-								theme="simple" />
-						</td>
-						<td>
-							<s:select cssClass="salesforceObjects" list="salesforceObjects" listKey="id" listValue="value"
-								theme="simple" name="lookups[%{#status.index}].sourceObject"
-								value="%{lookups[#status.index].sourceObject}" />
-							<img class="loader" style="display: none;" src="./img/loading.gif"/>
-						</td>
-						<td>
-							<select name="fields" class="objectFields" ></select>
-						</td>
-					</tr>
+
+					<s:iterator value="#lookupIdWrapper.lookups" var="lookupdBean" status="status">
+						<tr>
+							<td>
+								${lookupdBean.label}
+							</td>
+							<td>
+								<s:textfield id="lookupIdWrapperList[%{#parentStatus.index}].lookups[%{#status.index}].label"
+									name="lookupIdWrapperList[%{#parentStatus.index}].lookups[%{#status.index}].label"
+									value="%{lookupIdWrapperList.[#parentStatus.index].lookups[#status.index].label}" theme="simple" />
+							</td>
+							<td>
+								<s:select cssClass="salesforceObjects" list="salesforceObjects"
+									listKey="id" listValue="value" theme="simple"
+									name="lookupIdWrapperList[%{#parentStatus.index}].lookups[%{#status.index}].sourceObject"
+									value="%{lookupIdWrapperList.[#parentStatus.index].lookups[#status.index].sourceObject}" />
+								<img class="loader" style="display: none;"
+									src="./img/loading.gif" />
+							</td>
+							<td>
+								<select name="fields" class="objectFields"></select>
+							</td>
+						</tr>
 					</s:iterator>
-					
+
 				</table>
-			</s:if>
-			<br />
-			<br />
 
+				<br />
+				<br />
+				
 
+			</s:iterator>
 		</s:form>
 
 
-		<div id="mge" style="display:none">
+		<div id="mge" style="display: none">
 			<br />
 			<br />
 			You must select an object for each lookup
 		</div>
-		
-		
+
+
 		<br />
 		<br />
 		<a href="backToPageOne.action">Back</a>
