@@ -39,6 +39,7 @@ import org.apache.commons.logging.LogFactory;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
@@ -77,7 +78,7 @@ public class MigrationContext {
 	
 	private Map<String, LookupSettings> lookupFields;
 	
-	private Collection<String> externalIds;
+	private Collection<ExternalIdBean> externalIds;
 	
 	private String externalIdForUpsert;
 	
@@ -178,11 +179,11 @@ public class MigrationContext {
 		this.lookupFields = lookupFields;
 	}
 
-	public Collection<String> getExternalIds() {
+	public Collection<ExternalIdBean> getExternalIds() {
 		return externalIds;
 	}
 
-	public void setExternalIds(Collection<String> externalIds) {
+	public void setExternalIds(Collection<ExternalIdBean> externalIds) {
 		this.externalIds = externalIds;
 	}
 

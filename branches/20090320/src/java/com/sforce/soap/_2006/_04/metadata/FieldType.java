@@ -27,6 +27,7 @@ public class FieldType implements java.io.Serializable {
     public static final java.lang.String _Email = "Email";
     public static final java.lang.String _Number = "Number";
     public static final java.lang.String _Percent = "Percent";
+    public static final java.lang.String _ExternalId = "ExternalId";
     public static final java.lang.String _Phone = "Phone";
     public static final java.lang.String _Picklist = "Picklist";
     public static final java.lang.String _MultiselectPicklist = "MultiselectPicklist";
@@ -40,6 +41,7 @@ public class FieldType implements java.io.Serializable {
     public static final java.lang.String _CustomDataType = "CustomDataType";
     public static final FieldType AutoNumber = new FieldType(_AutoNumber);
     public static final FieldType Lookup = new FieldType(_Lookup);
+    public static final FieldType ExternalId = new FieldType(_ExternalId);
     public static final FieldType MasterDetail = new FieldType(_MasterDetail);
     public static final FieldType Checkbox = new FieldType(_Checkbox);
     public static final FieldType Currency = new FieldType(_Currency);

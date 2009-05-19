@@ -44,7 +44,7 @@ public class DbSalesforceServiceImpl implements DbSalesforceService {
 
 		// add field traits to the context
 		// migrationContext.setLookupFields(lookupFields);
-		migrationContext.setExternalIds(action.getExternalIds());
+		//migrationContext.setExternalIds(action.getExternalIds());
 		migrationContext.setPicklistFields(picklistFields);
 		migrationContext.setDirtConnection(new DirtConnectionFactory()
 				.build(databaseCredentials));

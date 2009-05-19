@@ -75,20 +75,20 @@
 							Unique
 						</td>
 					</tr>
-					<s:iterator value="#lookupIdWrapper.externalIds" var="externalIdBean" status="status">
+					<s:iterator value="#lookupIdWrapper.externalIds" var="externalIdBean" status="statusId">
 
 						<tr>
 							<td>
-								${externalIdBean.label}
+								${externalIdBean.name}
 							</td><td>
-								<s:textfield id="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].label"
-									name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].label"
-									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#status.index].label}" theme="simple" />
+								<s:textfield id="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#statusId.index}].label"
+									name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#statusId.index}].label"
+									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#statusId.index].label}" theme="simple" />
 							</td>
 							<td>
 								<s:select list="uniques" listKey="id" listValue="value"
-									theme="simple" name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#status.index}].unique"
-									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#status.index].unique}" />
+									theme="simple" name="lookupIdWrapperList[%{#parentStatus.index}].externalIds[%{#statusId.index}].unique"
+									value="%{lookupIdWrapperList.[#parentStatus.index].externalIds[#statusId.index].unique}" />
 
 							</td>
 						</tr>

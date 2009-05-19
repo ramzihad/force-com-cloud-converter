@@ -40,6 +40,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
@@ -156,16 +157,19 @@ public class CustomFieldBuilder {
 				customFieldsCollection.add(field);
 				fieldMap.put(current.getName(), sfdcColumnName);
 			} else if (migrationContext.getExternalIds() != null
-					&& migrationContext.getExternalIds().contains(
-							current.getName())) {
-
-				field.setType(FieldType.Text);
-				field.setExternalId(Boolean.TRUE);
-				field.setUnique(Boolean.TRUE);
-				field.setLength(current.getPrecision());
-				field.setCaseSensitive(Boolean.FALSE);
-				customFieldsCollection.add(field);
-				fieldMap.put(current.getName(), sfdcColumnName);
+					) {
+				ExternalIdBean bean = foundInList(migrationContext.getExternalIds(),current.getName());
+				if (bean!=null){
+					field.setType(FieldType.Text);
+					field.setExternalId(Boolean.TRUE);
+					field.setUnique(bean.isUnique());
+					field.setLength(current.getPrecision());
+					field.setCaseSensitive(Boolean.FALSE);
+					field.setLabel(bean.getLabel());
+					customFieldsCollection.add(field);
+					fieldMap.put(current.getName(), sfdcColumnName);
+				}
+				
 			} else if (migrationContext.getLookupFields() != null
 					&& migrationContext.getLookupFields().containsKey(
 							current.getName())) {
@@ -230,5 +234,15 @@ public class CustomFieldBuilder {
 				.toArray(new String[] {}));
 
 		return migrationContext.getCustomFields();
+	}
+
+	private ExternalIdBean foundInList(Collection<ExternalIdBean> externalIds,
+			String name) {
+		for (ExternalIdBean externalIdBean : externalIds) {
+			if (externalIdBean.getName().equals(name)){
+				return externalIdBean;
+			}
+		}
+		return null;
 	}
 }

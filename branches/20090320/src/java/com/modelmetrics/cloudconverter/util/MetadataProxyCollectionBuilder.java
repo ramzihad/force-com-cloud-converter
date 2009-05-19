@@ -299,6 +299,12 @@ public class MetadataProxyCollectionBuilder {
 			} else if (Constants.DATETIME.equals(value)) {
 				field.setType(FieldType.DateTime);
 			} 
+			else if (Constants.LOOKUP.equals(value)) {
+				field.setType(FieldType.Lookup);
+			} 
+			else if (Constants.EXTERNAL_ID.equals(value)) {
+				field.setType(FieldType.ExternalId);
+			} 
 			
 			ret.add(field);
 		}

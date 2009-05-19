@@ -47,6 +47,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 
@@ -91,7 +92,7 @@ public class CloudConverterScript_Template {
 		//		"select distinct mypicklist from mytable");
 
 		// if there are not external ids, you can leave this blank
-		Collection<String> externalIds = new ArrayList<String>();
+		Collection<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
 		// these should be unique strings
 		//externalIds.add("MYID");
 

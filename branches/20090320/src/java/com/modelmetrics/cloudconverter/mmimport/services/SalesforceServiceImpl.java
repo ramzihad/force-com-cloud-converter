@@ -66,9 +66,8 @@ public class SalesforceServiceImpl implements SalesforceService {
 		for (WrapperBean wrapperBean : beans) {
 
 			Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
-			Collection<String> externalIds = new ArrayList<String>();
-			LookupAndIdWrapper wrapper = uploadContext.getLookupIdWrapperList().get(1);
-			/*if (wrapper!=null){
+			LookupAndIdWrapper wrapper = uploadContext.getLookupIdWrapperList().get(i);
+			if (wrapper!=null){
 				if (wrapper.getLookups()!=null){
 					for (LookupBean lookupBean : wrapper.getLookups()) {
 						lookupFields.put(lookupBean.getLabel(), new LookupSettings(
@@ -76,18 +75,13 @@ public class SalesforceServiceImpl implements SalesforceService {
 								lookupBean.getSourceField()));
 					}
 				}
-				if (wrapper.getExternalIds()!=null){
-					for (ExternalIdBean externalIdBean : wrapper.getExternalIds()) {
-						externalIds.add(externalIdBean.getLabel());
-					}
-				}
-			}*/
+			}
 			
 			
 			migrationContext.setLookupFields(lookupFields);
 			migrationContext.setWrapperBean(wrapperBean);
 			
-			migrationContext.setExternalIds(externalIds);
+			migrationContext.setExternalIds(wrapper.getExternalIds());
 
 			MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
 					.build(migrationContext);

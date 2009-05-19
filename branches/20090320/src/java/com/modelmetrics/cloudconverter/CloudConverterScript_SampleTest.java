@@ -60,6 +60,7 @@ public class CloudConverterScript_SampleTest extends TestCaseWithDevOrg {
 		// bouncing the session
 		salesforceSession = SalesforceSessionFactory.factory
 				.build(salesforceCredentials);
+		
 
 		assertTrue(this
 				.containsTestObject(salesforceSession, this.sampleObject));

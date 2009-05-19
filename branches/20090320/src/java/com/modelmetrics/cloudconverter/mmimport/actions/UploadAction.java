@@ -44,7 +44,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 	private String password;
 
 	private String username;
-	
+
 	private Boolean override;
 
 	private String uploadFileName;
@@ -167,7 +167,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 		try {
 
 			List<OptionsOneBean> sessionAdvanceOptionsWrapperBeans = this
-			.getUploadContext().getAdvanceOptionsWrapperBeans();
+					.getUploadContext().getAdvanceOptionsWrapperBeans();
 
 			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
 
@@ -220,7 +220,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 			this.getUploadContext().setWrapperBeans(wrapperBeans);
 
 			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
-
+			this.getUploadContext().setAuxList(lookupIdWrapperList);
 			foundExternalId = checkExternalIds(lookupIdWrapperList);
 			foundLookup = checkLookups(lookupIdWrapperList);
 
@@ -281,26 +281,39 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 			String[] fields = request.getParameterValues("fields");
 			int i = 0;
-			
+			int h = 0;
+			List<LookupAndIdWrapper> auxList = this.getUploadContext()
+					.getAuxList();
+
 			for (LookupAndIdWrapper bean : lookupIdWrapperList) {
-				if (bean!=null){
+				if (bean != null && bean.getLookups() != null) {
 					for (LookupBean lookupBean : bean.getLookups()) {
 						lookupBean.setSourceField(fields[i]);
 						i++;
 					}
 				}
-			
+
+				if (bean != null && bean.getExternalIds() != null) {
+					int j = 0;
+					
+					for (ExternalIdBean extBean : bean.getExternalIds()) {
+						extBean.setName(auxList.get(h).getExternalIds().get(j)
+								.getName());
+						j++;
+					}
+					
+				}
+				h++;
 			}
-			
+
 			this.getUploadContext().setLookupIdWrapperList(lookupIdWrapperList);
-			
-			
+
 			// get session structure information
 			List<OptionsOneBean> sessionAdvanceOptionsWrapperBeans = this
 					.getUploadContext().getAdvanceOptionsWrapperBeans();
 
 			List<WrapperBean> wrapperBeans = this.getUploadContext()
-			.getWrapperBeans();
+					.getWrapperBeans();
 			int j = 0;
 			for (OptionsOneBean optionOne : sessionAdvanceOptionsWrapperBeans) {
 				WrapperBean bean = wrapperBeans.get(j);
@@ -316,7 +329,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 				log.info("Generating Salesforce object now...");
 				salesforceService.executeMultiple(this.getUploadContext());
 			}
-			
+
 			return SUCCESS;
 		} catch (Exception e) {
 			message = "There has been a problem generating salesforce objects";
@@ -383,7 +396,8 @@ public class UploadAction extends AbstractUploadContextAware implements
 		return SUCCESS;
 	}
 
-	private List<LookupAndIdWrapper> checkForSpecialData(List<OptionsOneBean> list) {
+	private List<LookupAndIdWrapper> checkForSpecialData(
+			List<OptionsOneBean> list) {
 
 		List<LookupAndIdWrapper> lookIpWrapper = new ArrayList<LookupAndIdWrapper>();
 
@@ -394,9 +408,9 @@ public class UploadAction extends AbstractUploadContextAware implements
 			for (AdvanceOptionsBean advanceOptionsBean : optionOneBean
 					.getAdvanceOptionsBeans()) {
 				if (Constants.EXTERNAL_ID.equals(advanceOptionsBean.getType())) {
-					ExternalIdBean extId = new ExternalIdBean();
-					extId.setLabel(advanceOptionsBean.getLabel());
-					extId.setUnique(false);
+					ExternalIdBean extId = new ExternalIdBean(
+							advanceOptionsBean.getLabel(), false);
+					extId.setName(advanceOptionsBean.getName());
 					externalIds.add(extId);
 				}
 				if (Constants.LOOKUP.equals(advanceOptionsBean.getType())) {
@@ -557,8 +571,6 @@ public class UploadAction extends AbstractUploadContextAware implements
 	public void setExternalIdUnique(boolean externalIdUnique) {
 		this.externalIdUnique = externalIdUnique;
 	}
-
-	
 
 	public List<ValueId> getSalesforceObjects() {
 		return salesforceObjects;

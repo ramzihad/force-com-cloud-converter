@@ -35,7 +35,7 @@ public class UploadContext  {
 	
 	private MigrationStatusSubscriber statusSubscriber;
 
-
+	private List<LookupAndIdWrapper> auxList;
 
 	public Exception getLastException() {
 		return lastException;
@@ -129,6 +129,14 @@ public class UploadContext  {
 
 	public void setLookupIdWrapperList(List<LookupAndIdWrapper> lookupIdWrapperList) {
 		this.lookupIdWrapperList = lookupIdWrapperList;
+	}
+
+	public List<LookupAndIdWrapper> getAuxList() {
+		return auxList;
+	}
+
+	public void setAuxList(List<LookupAndIdWrapper> auxList) {
+		this.auxList = auxList;
 	}
 
 

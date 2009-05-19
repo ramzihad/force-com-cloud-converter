@@ -45,11 +45,9 @@
 					<s:iterator value="#optionOneBean.advanceOptionsBeans" var="bean"  status="status">
 						<tr>
 							<td>
-								${bean.name}
+								<s:property value="name" />
 							</td>
 							<td>
-								
-								
 								<s:textfield
 									id="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].label"
 									name="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].label"
