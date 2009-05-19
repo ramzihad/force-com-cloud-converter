@@ -47,6 +47,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
+import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 
@@ -61,13 +62,8 @@ import com.modelmetrics.common.sforce.SalesforceCredentials;
  * 
  * IMPORTANT - IMPORTANT - IMPORTANT
  * 
- * If the object MyTable__c already exists in your org, this sample will throw an exception.
- * 
- * IMPORTANT - IMPORTANT - IMPORTANT
- * 
  * There is a Lookup Field setting below that relies on your dev org's configuration.  
- * You should change this to match your dev org OR create an object matching this sample
- * if you want to test this functionality.
+ * You should change this to match your dev org OR create an object matching this sample.
  * 
  * Object Name: "AAA__c"
  * External Id Field: "TestExternalId__c"
@@ -110,9 +106,9 @@ public class CloudConverterScript_Sample {
 				"select distinct mypicklist from mytable");
 
 		// if there are not external ids, you can leave this blank
-		Collection<String> externalIds = new ArrayList<String>();
+		Collection<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
 		// these should be unique strings
-		externalIds.add("MYID");
+		externalIds.add(new ExternalIdBean("MYID",true));
 
 		/*
 		 * ********************************
