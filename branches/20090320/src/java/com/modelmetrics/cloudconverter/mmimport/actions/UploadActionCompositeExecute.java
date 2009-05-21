@@ -1,6 +1,7 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -82,16 +83,30 @@ public class UploadActionCompositeExecute extends AbstractUploadContextAware {
 	 * @return
 	 */
 	public String execute() throws Exception {
+		try {
+			List<WrapperBean> beans = this.getUploadContext().getWrapperBeans();
 
-		this.getUploadContext().setStatusSubscriber(new MigrationStatusSubscriberLifoImpl());
-		
-		salesforceService.setSalesforceSession(this
-				.getSalesforceSessionContext().getSalesforceSession());
+			this.getUploadContext().setStatusSubscriber(
+					new MigrationStatusSubscriberLifoImpl());
 
-		log.info("Generating Salesforce object now...");
-		salesforceService.execute(this.getUploadContext());
+			salesforceService.setSalesforceSession(this
+					.getSalesforceSessionContext().getSalesforceSession());
+			
+			log.info("Generating Salesforce object now...");
+			this.getUploadContext().setWrapperBeans(beans);
 
-		return SUCCESS;
+			salesforceService.executeMultiple(this.getUploadContext());
+
+			log.info("Object sent successfully");
+			this.getUploadContext().setWrapperBeans(beans);
+			return SUCCESS;
+		} catch (Exception e) {
+			message = "There has been a problem generating salesforce objects";
+			log.error(message, e);
+			addActionMessage(message);
+			// this.getUploadContext().setLastException(e);
+			return ERROR;
+		}
 	}
 
 	public File getUpload() {

@@ -1,7 +1,9 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StringUtils {
 
@@ -68,6 +70,13 @@ public class StringUtils {
 		types.add(new ValueId("false","false"));
 		types.add(new ValueId("true","true"));
 		return types;
+	}
+	
+	public static Map<Long, String> getOptions() {
+		 Map<Long, String> optionsList = new HashMap<Long, String>();
+		optionsList.put(Long.valueOf(0), "No");
+		optionsList.put(Long.valueOf(1), "Yes");
+		return optionsList;
 	}
 
 	/**

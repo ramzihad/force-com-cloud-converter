@@ -1,6 +1,6 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
-import java.io.File;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -19,15 +19,12 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 
 	private SalesforceService salesforceService;
 
-	private File upload;
+
 
 	private String uploadContentType;
 
 	private Boolean override;
 
-	private String uploadFileName;
-
-	private WrapperBean bean;
 
 	private String message;
 
@@ -78,36 +75,16 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 
 
 	public String execute() throws Exception {
-//		try {
-			log.info("Generating Salesforce object now...");
-			bean = this.getUploadContext().getWrapperBean();
-			if (bean == null) {
-				this.addActionMessage("Internal Error - Please try again - Wrapper bean is missing!");
-				this.getUploadContext().setLastException(new RuntimeException("Wrapper bean was not in upload context."));
-				return ERROR;
-			}
-			bean.setOverride(Boolean.TRUE);
-//			salesforceService.setSalesforceSession(this
-//					.getSalesforceSessionContext().getSalesforceSession());
-//			salesforceService.execute(bean);
+		List<WrapperBean> beans = this.getUploadContext().getWrapperBeans();
 
-			log.info("Object sent successfully");
+		for (WrapperBean wrapperBean : beans) {
+			wrapperBean.setOverride(Boolean.TRUE);
+		}
 			return SUCCESS;
-//		} catch (Exception e) {
-//			message = "There has been a problem generating salesforce objects";
-//			log.error(message, e);
-//			this.getUploadContext().setLastException(e);
-//			return ERROR;
-//		}
+
 	}
 
-	public File getUpload() {
-		return upload;
-	}
 
-	public void setUpload(File upload) {
-		this.upload = upload;
-	}
 
 	public String getUploadContentType() {
 		return uploadContentType;
@@ -117,13 +94,7 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 		this.uploadContentType = uploadContentType;
 	}
 
-	public String getUploadFileName() {
-		return uploadFileName;
-	}
 
-	public void setUploadFileName(String uploadFileName) {
-		this.uploadFileName = uploadFileName;
-	}
 
 	public void setFileService(FileService fileService) {
 		this.fileService = fileService;
@@ -133,13 +104,6 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 		return fileService;
 	}
 
-	public WrapperBean getBean() {
-		return bean;
-	}
-
-	public void setBean(WrapperBean bean) {
-		this.bean = bean;
-	}
 
 	public void setSalesforceService(SalesforceService salesforceService) {
 		this.salesforceService = salesforceService;

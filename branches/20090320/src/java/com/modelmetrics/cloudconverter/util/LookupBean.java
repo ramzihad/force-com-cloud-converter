@@ -4,6 +4,8 @@ public class LookupBean {
 
 	private String label;
 	
+	private String name;
+	
 	private String sourceObject;
 	
 	private String sourceField;
@@ -30,5 +32,13 @@ public class LookupBean {
 
 	public void setSourceField(String sourceField) {
 		this.sourceField = sourceField;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

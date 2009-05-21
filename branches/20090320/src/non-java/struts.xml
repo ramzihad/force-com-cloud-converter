@@ -1,3 +1,4 @@
+
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 
@@ -81,6 +82,10 @@
 			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
 		</action>
 
+		<!--************************** COMPOSITE **************************************
+			************************** COMPOSITE **************************************
+			************************** COMPOSITE **************************************
+		-->
 		<action name="import" class="compositeLogin" >
 			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
 			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
@@ -95,11 +100,31 @@
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
 		<action name="import2" class="uploadActionComposite" >
-			<result name="success" type="redirectAction">importExecute</result>
+			<!--result name="success" >importExecute</result-->
+			<result name="success">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
-		<action name="import3" class="uploadActionCompositeOverride" >
+		
+		
+		<action name="backToBranch" class="uploadActionCompositeBranch" method="back" >
+						<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
+		</action>
+		
+		<action name="importBranch" class="uploadActionCompositeBranch" >
+			<result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="advanceOptionsOne">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>
+		</action>
+		
+		<action name="importOptionsOne" class="uploadActionCompositeBranch" >
+			<result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+		</action>
+		
+		
+		<action name="importOverride" class="uploadActionCompositeOverride" >
 			<result name="success" type="redirectAction">importExecute</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>

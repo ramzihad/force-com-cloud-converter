@@ -1,7 +1,6 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.actions.UploadContext;
-import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.LookupBean;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.DescribeGlobalResult;
@@ -61,27 +59,31 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 		List<WrapperBean> beans = uploadContext.getWrapperBeans();
 		MigrationContext migrationContext = new MigrationContextFactory()
-		.buildMigrationContext(this.getSalesforceSession());
-		int i =0;
+				.buildMigrationContext(this.getSalesforceSession());
+		int i = 0;
 		for (WrapperBean wrapperBean : beans) {
 
 			Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
-			LookupAndIdWrapper wrapper = uploadContext.getLookupIdWrapperList().get(i);
-			if (wrapper!=null){
-				if (wrapper.getLookups()!=null){
-					for (LookupBean lookupBean : wrapper.getLookups()) {
-						lookupFields.put(lookupBean.getLabel(), new LookupSettings(
-								lookupBean.getLabel(), lookupBean.getSourceObject(),
-								lookupBean.getSourceField()));
+			if (uploadContext.getLookupIdWrapperList() != null) {
+				LookupAndIdWrapper wrapper = uploadContext
+						.getLookupIdWrapperList().get(i);
+				if (wrapper != null) {
+					if (wrapper.getLookups() != null) {
+						for (LookupBean lookupBean : wrapper.getLookups()) {
+							lookupFields.put(lookupBean.getName(),
+									new LookupSettings(lookupBean.getName(),
+											lookupBean.getSourceObject(),
+											lookupBean.getSourceField()));
+						}
 					}
 				}
+				if (wrapper != null && wrapper.getExternalIds() != null) {
+					migrationContext.setExternalIds(wrapper.getExternalIds());
+				}
 			}
-			
-			
+
 			migrationContext.setLookupFields(lookupFields);
 			migrationContext.setWrapperBean(wrapperBean);
-			
-			migrationContext.setExternalIds(wrapper.getExternalIds());
 
 			MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
 					.build(migrationContext);

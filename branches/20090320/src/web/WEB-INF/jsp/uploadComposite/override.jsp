@@ -1,27 +1,41 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
 
 <html>
 	<head>
 		<title>Upload</title>
-		
-						
-		
+		<script type="text/javascript" charset="UTF-8" src="js/loader.js"></script>
 	</head>
 
-	<body >
+	<body onload="hideLoader()">
+		<div id="form">
+			<s:actionerror />
+			<s:fielderror />
+			<s:form action="upload" method="POST">
 
-
+				<h3>
+					Object/s exist/s
+				</h3>
+				<br />
+				<br />
+			These objects already exist.
+			<ul>
+				<c:forEach items="${sheets}" var="sheet">
+					<li>
+						${sheet}
+					</li>
+				</c:forEach>
+			
+			</ul>
 		
-			<h1>Object Exists - Overwrite?</h1>
-			
-			<p>The object "<s:property value="uploadContext.wrapperBean.sheetName" />" exists in Salesforce.</p>
-			 
-			<p>Do you want to continue?</p>
+			Do you want to continue and delete it/them?
+			<br />
+				<br />
+				<a href="${backPage}.action">Go back</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="importOverride.action" >Continue</a>
 
-			<p><a href="import.action">No - Go back</a></p>
-			
-			<p><a href="import3.action">Yes - Continue - this will delete the current object and all data associated with it.</a></p>
-
-
+			</s:form>
+		</div>
+	
 	</body>
 </html>

@@ -2,7 +2,9 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
@@ -10,7 +12,10 @@ import org.apache.log4j.Logger;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
+import com.modelmetrics.common.sforce.SalesforceCredentials;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 
@@ -34,6 +39,10 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 	private List<WrapperBean> beans;
 
 	private String message;
+	
+	private Long selectedOption;
+	
+	private Map<Long,String> optionsList;
 
 	private String existingLocationUrl;
 	private String existingSessionId;
@@ -90,46 +99,35 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 	public String execute() {
 
 		try {
-			boolean error = false;
 
-			if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
+			/*if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
 				addActionMessage("No Salesforce Session present.");
-				error = true;
-			}
+			}*/
+			
+			//TODO make work the session context
+			/*this.getSalesforceSessionContext()
+			.setSalesforceCredentials("marianocolombo.dev@gmail.com",
+					"police78aV9NiOCnvUNs3VC2FzoVX1Dt");
+			*/
 			if (upload == null) {
 				addActionMessage("Please select a file");
-				error = true;
 			}
 
-			/*
-			 * failed?
-			 */
-			if (error) {
+			if (!getActionMessages().isEmpty()) {
 				return INPUT;
 			}
 		
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
+			// parse all sheets here
 			beans = fileService.parseXLS(upload);
-
-			//this.getUploadContext().setWrapperBean(bean);
-
-			log.info("File uploaded successfully");
-
-			sheets = salesforceService.checkObject(this
-					.getUploadContext());
-			if (!sheets.isEmpty()) {
-				return "override";
-			} 
+			this.getUploadContext().setWrapperBeans(beans);
+		
+			//set radio button options for next page
+			optionsList = StringUtils.getOptions();
 			
-//			else {
-//				log.info("Generating Salesforce object now...");
-//				bean.setOverride(Boolean.FALSE);
-//				salesforceService.execute(bean);
-//			}
-//			log.info("Object sent successfully");
-
+			log.info("XLS file uploaded successfully");
 			return SUCCESS;
 		} catch (ParseException e) {
 			message = "There has been a problem uploading the file";
@@ -200,6 +198,22 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	public void setBeans(List<WrapperBean> beans) {
 		this.beans = beans;
+	}
+
+	public Long getSelectedOption() {
+		return selectedOption;
+	}
+
+	public void setSelectedOption(Long selectedOption) {
+		this.selectedOption = selectedOption;
+	}
+
+	public Map<Long, String> getOptionsList() {
+		return optionsList;
+	}
+
+	public void setOptionsList(Map<Long, String> optionsList) {
+		this.optionsList = optionsList;
 	}
 
 }

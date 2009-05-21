@@ -289,6 +289,8 @@ public class UploadAction extends AbstractUploadContextAware implements
 				if (bean != null && bean.getLookups() != null) {
 					for (LookupBean lookupBean : bean.getLookups()) {
 						lookupBean.setSourceField(fields[i]);
+						lookupBean.setName(auxList.get(h).getLookups().get(i)
+								.getName());
 						i++;
 					}
 				}
@@ -416,6 +418,7 @@ public class UploadAction extends AbstractUploadContextAware implements
 				if (Constants.LOOKUP.equals(advanceOptionsBean.getType())) {
 					LookupBean look = new LookupBean();
 					look.setLabel(advanceOptionsBean.getLabel());
+					look.setName(advanceOptionsBean.getName());
 					look.setSourceField("");
 					look.setSourceObject("");
 					lookups.add(look);
