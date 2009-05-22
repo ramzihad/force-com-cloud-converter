@@ -20,7 +20,7 @@ import com.modelmetrics.cloudconverter.util.LookupBean;
 import com.opensymphony.xwork2.Preparable;
 
 public class UploadActionCompositeOptionsThree extends
-		AbstractUploadContextAware implements ServletRequestAware, Preparable  {
+		AbstractUploadContextAware implements ServletRequestAware, Preparable {
 
 	private static final long serialVersionUID = -2803796981361837197L;
 
@@ -39,26 +39,34 @@ public class UploadActionCompositeOptionsThree extends
 
 	public void prepare() throws Exception {
 		lookupIdWrapperList = this.getUploadContext().getLookupIdWrapperList();
-		
+
 	}
-	
+
 	public String execute() throws Exception {
 
 		try {
 			String[] fields = request.getParameterValues("fields");
 			int i = 0;
-		
+
 			List<LookupAndIdWrapper> auxList = this.getUploadContext()
 					.getAuxList();
-
+			int h = 0;
 			for (LookupAndIdWrapper bean : auxList) {
 				if (bean != null && bean.getLookups() != null) {
+					int j = 0;
 					for (LookupBean lookupBean : bean.getLookups()) {
-						lookupBean.setSourceField(fields[i]);
-						
+						lookupBean.setSourceField(fields[j]);
+						lookupBean.setLabel(lookupIdWrapperList.get(h)
+								.getLookups().get(j).getLabel());
+						lookupBean.setName(lookupIdWrapperList.get(h)
+								.getLookups().get(j).getName());
+						lookupBean.setSourceObject(lookupIdWrapperList.get(h)
+								.getLookups().get(j).getSourceObject());
 						i++;
+						j++;
 					}
-				}	
+				}
+				h++;
 			}
 
 			this.getUploadContext().setLookupIdWrapperList(auxList);
