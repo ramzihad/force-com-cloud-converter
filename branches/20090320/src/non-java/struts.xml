@@ -108,7 +108,7 @@
 		
 		
 		<action name="backToBranch" class="uploadActionCompositeBranch" method="back" >
-						<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
+				<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
 		</action>
 		
 		<action name="importBranch" class="uploadActionCompositeBranch" >
@@ -119,10 +119,13 @@
 			<result name="advanceOptionsOne">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>
 		</action>
 		
-		<action name="importOptionsOne" class="uploadActionCompositeBranch" >
+		<action name="importOptionsOne" class="uploadActionCompositeOptionsOne" >
 			<result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="advanceOptionsTwo">/WEB-INF/jsp/uploadComposite/advanceOptionsTwo.jsp</result>
+			<result name="advanceOptionsThree">/WEB-INF/jsp/uploadComposite/advanceOptionsThree.jsp</result>
 		</action>
-		
 		
 		<action name="importOverride" class="uploadActionCompositeOverride" >
 			<result name="success" type="redirectAction">importExecute</result>

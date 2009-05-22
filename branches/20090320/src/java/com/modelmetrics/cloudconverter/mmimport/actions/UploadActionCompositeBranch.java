@@ -17,8 +17,8 @@ import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
-public class UploadActionCompositeBranch extends AbstractUploadContextAware implements
-ServletRequestAware{
+public class UploadActionCompositeBranch extends AbstractUploadContextAware
+		implements ServletRequestAware {
 
 	private static final long serialVersionUID = -3145368694251083353L;
 
@@ -27,7 +27,6 @@ ServletRequestAware{
 
 	private static final Long NO = Long.valueOf(0);
 
-	
 	private SalesforceService salesforceService;
 
 	private Long selectedOption;
@@ -39,7 +38,7 @@ ServletRequestAware{
 	private List<String> sheets;
 
 	private List<ValueId> fieldTypes;
-	
+
 	private HttpServletRequest request;
 
 	public HttpServletRequest getRequest() {
@@ -56,26 +55,23 @@ ServletRequestAware{
 		optionsList.put(Long.valueOf(1), "Yes");
 		return INPUT;
 	}
-	
+
 	public String execute() throws Exception {
 		try {
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
 			// validate radiobutton
-			if (selectedOption==null){
+			if (selectedOption == null) {
 				addActionMessage("Please select an option");
-				//set radio button options for next page
+				// set radio button options for next page
 				optionsList = StringUtils.getOptions();
 				return INPUT;
 			}
-			
+
 			if (NO.equals(selectedOption)) {
 				// check if object exists
-				//sheets = salesforceService.checkObject(this.getUploadContext());
-				sheets = new ArrayList<String>();
-				sheets.add("Test 1");
-				sheets.add("Test 2");
+				sheets = salesforceService.checkObject(this.getUploadContext());
 				if (!sheets.isEmpty()) {
 					request.setAttribute("backPage", "backToBranch");
 					request.setAttribute("sheets", sheets);
@@ -87,17 +83,18 @@ ServletRequestAware{
 					salesforceService.executeMultiple(this.getUploadContext());
 					return "view";
 				}
-				
 
 			} else {
-				// go to advance options
+
+				List<WrapperBean> beans = this.getUploadContext()
+						.getWrapperBeans();
 
 				// prepare information on a different structure for view
 				advanceOptionsWrapperBeans = new ArrayList<OptionsOneBean>();
-				for (WrapperBean wrapperBean : this.getUploadContext()
-						.getWrapperBeans()) {
+				for (WrapperBean wrapperBean : beans) {
 					List<AdvanceOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
 					OptionsOneBean aux = new OptionsOneBean();
+					aux.setSheet(wrapperBean.getSheetName());
 					aux.setAdvanceOptionsBeans(advanceOptionsBeans);
 					advanceOptionsWrapperBeans.add(aux);
 				}

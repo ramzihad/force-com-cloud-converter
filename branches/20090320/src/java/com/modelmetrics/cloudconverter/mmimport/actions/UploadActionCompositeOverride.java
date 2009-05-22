@@ -80,7 +80,7 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 		for (WrapperBean wrapperBean : beans) {
 			wrapperBean.setOverride(Boolean.TRUE);
 		}
-			return SUCCESS;
+		return SUCCESS;
 
 	}
 

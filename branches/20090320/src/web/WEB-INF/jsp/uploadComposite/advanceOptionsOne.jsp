@@ -15,14 +15,15 @@
 		You may modify the excel information or you may continue as it is.
 		<br />
 		<br />
-		<s:form action="advanceOptionsTwo" method="POST">
-			<a href="backToBranch.action">Back</a>
+		<s:form action="importOptionsOne" method="POST">
+			<a href="backToOptionsOne.action">Back</a>
 			<s:submit value="Next" />
 			<br />
 			<br />
 			<s:iterator value="advanceOptionsWrapperBeans" 
 			var="optionOneBean" status="parentStatus">
 				
+				<h3><s:property value="sheet" /> </h3>
 				<table border="1">
 	
 					<tr><td>
@@ -76,7 +77,7 @@
 
 			<br />
 			<br />
-			<a href="backToBranch.action">Back</a>
+			<a href="backToOptionsOne.action">Back</a>
 		
 	</body>
 </html>

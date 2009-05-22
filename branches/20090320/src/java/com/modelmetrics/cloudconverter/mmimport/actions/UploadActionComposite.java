@@ -1,11 +1,8 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 
@@ -14,8 +11,6 @@ import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
-import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
-import com.modelmetrics.common.sforce.SalesforceCredentials;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 
@@ -100,15 +95,11 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 		try {
 
-			/*if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
+			if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
 				addActionMessage("No Salesforce Session present.");
-			}*/
+			}
 			
-			//TODO make work the session context
-			/*this.getSalesforceSessionContext()
-			.setSalesforceCredentials("marianocolombo.dev@gmail.com",
-					"police78aV9NiOCnvUNs3VC2FzoVX1Dt");
-			*/
+		
 			if (upload == null) {
 				addActionMessage("Please select a file");
 			}
@@ -214,6 +205,14 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	public void setOptionsList(Map<Long, String> optionsList) {
 		this.optionsList = optionsList;
+	}
+
+	public List<String> getSheets() {
+		return sheets;
+	}
+
+	public void setSheets(List<String> sheets) {
+		this.sheets = sheets;
 	}
 
 }

@@ -99,6 +99,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
+	
+	<bean id="uploadActionCompositeOptionsOne" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeOptionsOne">
+		
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
 
 	<bean id="uploadActionCompositeInitialize" scope="prototype"
