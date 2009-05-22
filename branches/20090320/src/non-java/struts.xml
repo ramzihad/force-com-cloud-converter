@@ -27,60 +27,6 @@
 		</result-types>
 
 
-		<action name="init" class="uploadAction" method="init">
-			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
-		</action>
-		
-		<action name="dbinit" class="dbUploadAction" method="init">
-			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
-		</action>
-	
-		
-		<action name="generate" class="dbUploadAction" method="generate" >
-			<result name="success">/WEB-INF/jsp/uploadDb/view.jsp</result>
-			<result name="error">/WEB-INF/jsp/uploadDb/error.jsp</result>
-			<result name="input">/WEB-INF/jsp/uploadDb/upload.jsp</result>
-		</action>
-		
-		<action name="backToPageOne" class="uploadAction" method="backToPageOne">
-			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
-		</action>
-		<action name="backToPageTwo" class="uploadAction" method="backToPageTwo">
-			<result name="success">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
-		</action>
-		
-		<action name="advanceOptionsOne" class="uploadAction" method="advanceOptionsOne" >
-			<result name="input">/WEB-INF/jsp/upload/upload.jsp</result>
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
-			<result name="success">/WEB-INF/jsp/upload/advanceOptionsOne.jsp</result>
-		</action>
-		
-		<action name="advanceOptionsTwo" class="uploadAction" method="advanceOptionsTwo" >
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
-			<result name="success">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
-			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
-			<result name="view">/WEB-INF/jsp/upload/view.jsp</result>
-		</action>
-		
-		<action name="loadObjectFields" class="uploadAction" method="loadObjectFields" >
-			<result name="success" type="stream">
-				<param name="contentType">text/plain</param>
-				<param name="inputName">inputStream</param>
-			</result>
-		</action>
-		
-		<action name="checkExistance" class="uploadAction" method="checkOverride" >
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
-			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
-			<result name="override">/WEB-INF/jsp/upload/override.jsp</result>
-			<result name="advanceOptionsTwo">/WEB-INF/jsp/upload/advanceOptionsTwo.jsp</result>
-		</action>
-		
-		<action name="override" class="uploadAction" method="override" >
-			<result name="success">/WEB-INF/jsp/upload/view.jsp</result>
-			<result name="error">/WEB-INF/jsp/upload/error.jsp</result>
-		</action>
 
 		<!--************************** COMPOSITE **************************************
 			************************** COMPOSITE **************************************
@@ -163,6 +109,7 @@
 		<action name="importExecute" class="uploadActionCompositeExecute" >
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
 			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
 		</action>
