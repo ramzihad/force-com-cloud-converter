@@ -148,6 +148,8 @@ public abstract class AbstractMigrationEngine extends
 		layoutBuilder.setMigrationContext(this.getMigrationContext());
 		Layout layout = layoutBuilder.build();
 
+		this.pauseSession();
+		this.pauseSession();
 		new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
 				.getMetadataService()).executeSimpleUpdate(layout);
 
