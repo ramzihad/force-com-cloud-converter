@@ -2,6 +2,7 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,6 +50,16 @@ public class UploadActionCompositeOptionsOne extends AbstractUploadContextAware
 	boolean externalIdUnique;
 
 	private List<String> sheets;
+	
+	private Map<Long, String> optionsList;
+
+	public Map<Long, String> getOptionsList() {
+		return optionsList;
+	}
+
+	public void setOptionsList(Map<Long, String> optionsList) {
+		this.optionsList = optionsList;
+	}
 
 	public String backToOptionsOne() {
 
@@ -89,29 +100,18 @@ public class UploadActionCompositeOptionsOne extends AbstractUploadContextAware
 			if (foundExternalId) {
 				// there are external ids, go to advance page 2
 				uniques = StringUtils.getUniques();
-				return "importOptionsTwo";
+				return "advanceOptionsTwo";
 			} else {
 				if (foundLookup) {
 					// there are no external IDs, but lookups, go to advance
 					// page 3
 					salesforceObjects = salesforceService
 							.getAllSalesforcObjects();
-					return "importOptionsThree";
+					return "advanceOptionsThree";
 				} else {
-					// object exists in salesforce, go to check override page
-					sheets = salesforceService.checkObject(this
-							.getUploadContext());
-					if (!sheets.isEmpty()) {
-						request.setAttribute("backPage", "backToOptionsOne");
-						request.setAttribute("sheets", sheets);
-						return "override";
-					} else {
-						// import directly
-						log.info("Generating Salesforce object now...");
-						salesforceService.executeMultiple(this
-								.getUploadContext());
-						return "view";
-					}
+					//go to confirm page
+					optionsList = StringUtils.getOptions();
+					return "confirm";
 				}
 			}
 		} catch (Exception e) {
@@ -151,14 +151,7 @@ public class UploadActionCompositeOptionsOne extends AbstractUploadContextAware
 		wrapperBean.setTypes(types);
 	}
 
-	private boolean checkLookups(List<LookupAndIdWrapper> lookupIdWrapperList2) {
-		for (LookupAndIdWrapper lookupAndIdWrapper : lookupIdWrapperList2) {
-			if (!lookupAndIdWrapper.getLookups().isEmpty()) {
-				return true;
-			}
-		}
-		return false;
-	}
+	
 
 	private boolean checkExternalIds(
 			List<LookupAndIdWrapper> lookupIdWrapperList2) {

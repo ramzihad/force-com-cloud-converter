@@ -257,14 +257,6 @@ public class UploadAction extends AbstractUploadContextAware implements
 
 	}
 
-	private boolean checkLookups(List<LookupAndIdWrapper> lookupIdWrapperList2) {
-		for (LookupAndIdWrapper lookupAndIdWrapper : lookupIdWrapperList2) {
-			if (!lookupAndIdWrapper.getLookups().isEmpty()) {
-				return true;
-			}
-		}
-		return false;
-	}
 
 	private boolean checkExternalIds(
 			List<LookupAndIdWrapper> lookupIdWrapperList2) {

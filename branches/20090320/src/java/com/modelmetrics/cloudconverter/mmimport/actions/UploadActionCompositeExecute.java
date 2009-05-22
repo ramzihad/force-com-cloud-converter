@@ -91,7 +91,7 @@ public class UploadActionCompositeExecute extends AbstractUploadContextAware {
 
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
-			
+
 			log.info("Generating Salesforce object now...");
 			this.getUploadContext().setWrapperBeans(beans);
 

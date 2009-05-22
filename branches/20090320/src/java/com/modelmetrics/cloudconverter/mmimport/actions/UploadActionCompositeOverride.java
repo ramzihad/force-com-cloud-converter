@@ -2,16 +2,11 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
 public class UploadActionCompositeOverride extends AbstractUploadContextAware {
-
-	private static final Logger log = Logger
-			.getLogger(UploadActionCompositeOverride.class);
 
 	private static final long serialVersionUID = 1760991341958287065L;
 
@@ -19,16 +14,12 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 
 	private SalesforceService salesforceService;
 
-
-
-	private String uploadContentType;
-
 	private Boolean override;
-
 
 	private String message;
 
 	private String existingLocationUrl;
+	
 	private String existingSessionId;
 
 	public String getExistingLocationUrl() {
@@ -83,17 +74,6 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 		return SUCCESS;
 
 	}
-
-
-
-	public String getUploadContentType() {
-		return uploadContentType;
-	}
-
-	public void setUploadContentType(String uploadContentType) {
-		this.uploadContentType = uploadContentType;
-	}
-
 
 
 	public void setFileService(FileService fileService) {

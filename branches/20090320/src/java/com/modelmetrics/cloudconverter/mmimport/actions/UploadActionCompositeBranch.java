@@ -25,8 +25,6 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 	private static final Logger log = Logger
 			.getLogger(UploadActionCompositeBranch.class);
 
-	private static final Long NO = Long.valueOf(0);
-
 	private SalesforceService salesforceService;
 
 	private Long selectedOption;

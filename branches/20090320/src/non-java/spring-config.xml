@@ -106,6 +106,24 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
+	
+	<bean id="uploadActionCompositeOptionsTwo" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeOptionsTwo">
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+	
+	<bean id="uploadActionCompositeOptionsThree" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeOptionsThree">
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
+	
+	<bean id="uploadActionCompositeConfirm" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadActionCompositeConfirm">
+		<property name="salesforceService" ref="salesforceService" />
+	</bean>
 
 
 	<bean id="uploadActionCompositeInitialize" scope="prototype"
