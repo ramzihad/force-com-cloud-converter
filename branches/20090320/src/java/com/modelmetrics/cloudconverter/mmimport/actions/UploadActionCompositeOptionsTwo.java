@@ -18,7 +18,7 @@ import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.opensymphony.xwork2.Preparable;
 
 public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
-		implements ServletRequestAware{
+		implements ServletRequestAware {
 
 	private static final long serialVersionUID = -7006948648233904859L;
 
@@ -38,8 +38,6 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 	private List<ValueId> uniques;
 
 	private Map<Long, String> optionsList;
-	
-
 
 	public String execute() throws Exception {
 
@@ -72,20 +70,20 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 	private void updateList(List<LookupAndIdWrapper> auxList,
 			List<LookupAndIdWrapper> lookupIdWrapperList2) {
 		int h = 0;
-		for (LookupAndIdWrapper bean : lookupIdWrapperList) {
+		for (LookupAndIdWrapper bean : auxList) {
 			if (bean != null && bean.getExternalIds() != null) {
 				int j = 0;
 
 				for (ExternalIdBean extBean : bean.getExternalIds()) {
-					extBean.setName(auxList.get(h).getExternalIds().get(j)
-							.getName());
+					extBean.setUnique(lookupIdWrapperList.get(h)
+							.getExternalIds().get(j).isUnique());
 					j++;
 				}
 			}
-			
+
 			h++;
 		}
-		this.getUploadContext().setLookupIdWrapperList(lookupIdWrapperList);
+		this.getUploadContext().setLookupIdWrapperList(auxList);
 	}
 
 	public HttpServletRequest getRequest() {
@@ -149,6 +147,5 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 	public void setSalesforceObjects(List<ValueId> salesforceObjects) {
 		this.salesforceObjects = salesforceObjects;
 	}
-
 
 }

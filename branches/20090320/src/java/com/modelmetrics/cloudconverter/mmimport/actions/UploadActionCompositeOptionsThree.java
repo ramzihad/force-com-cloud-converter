@@ -47,23 +47,21 @@ public class UploadActionCompositeOptionsThree extends
 		try {
 			String[] fields = request.getParameterValues("fields");
 			int i = 0;
-			int h = 0;
+		
 			List<LookupAndIdWrapper> auxList = this.getUploadContext()
 					.getAuxList();
 
-			for (LookupAndIdWrapper bean : lookupIdWrapperList) {
+			for (LookupAndIdWrapper bean : auxList) {
 				if (bean != null && bean.getLookups() != null) {
 					for (LookupBean lookupBean : bean.getLookups()) {
 						lookupBean.setSourceField(fields[i]);
-						lookupBean.setName(auxList.get(h).getLookups().get(i)
-								.getName());
+						
 						i++;
 					}
-				}
-				h++;
+				}	
 			}
 
-			this.getUploadContext().setLookupIdWrapperList(lookupIdWrapperList);
+			this.getUploadContext().setLookupIdWrapperList(auxList);
 
 			// go to confirm page
 			optionsList = StringUtils.getOptions();
