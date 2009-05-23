@@ -157,18 +157,17 @@ public class CustomFieldBuilder {
 				customFieldsCollection.add(field);
 				fieldMap.put(current.getName(), sfdcColumnName);
 			} else if (migrationContext.getExternalIds() != null
-					) {
-				ExternalIdBean bean = foundInList(migrationContext.getExternalIds(),current.getName());
-				if (bean!=null){
+					&& migrationContext.getExternalIds().contains(current.getName())) {
 					field.setType(FieldType.Text);
 					field.setExternalId(Boolean.TRUE);
-					field.setUnique(bean.isUnique());
+					//RSC 2009-05-23 Modified to not use the bean - should always be unique (even though I thought it might be OK to allow them to select it).
+					field.setUnique(Boolean.TRUE);
 					field.setLength(current.getPrecision());
 					field.setCaseSensitive(Boolean.FALSE);
-					field.setLabel(bean.getLabel());
+					field.setLabel(current.getLabel());
 					customFieldsCollection.add(field);
 					fieldMap.put(current.getName(), sfdcColumnName);
-				}
+				
 				
 			} else if (migrationContext.getLookupFields() != null
 					&& migrationContext.getLookupFields().containsKey(
@@ -177,9 +176,20 @@ public class CustomFieldBuilder {
 						.getLookupFields().get(current.getName());
 				field.setType(FieldType.Lookup);
 				field.setReferenceTo(lookupSettings.getRelationshipObject());
-				//TODO clean this up
-				field.setRelationshipName("AAAs");
-				field.setRelationshipLabel("Lookup1");
+				
+				//RSC 2009-05-23 Modified to pick the name out rather than hard code it.
+				
+				String relName = lookupSettings.getRelationshipObject();
+				
+				if (relName.endsWith("__c")) {
+					relName = relName.substring(0, relName.length()-3);
+				}
+				
+				field.setRelationshipName(relName + "s");
+				field.setRelationshipLabel(relName + "s");
+
+//				field.setRelationshipName("AAAs");
+//				field.setRelationshipLabel("Lookup1");
 
 				customLookupFieldsCollection.add(field);
 				fieldMap.put(current.getName(), lookupSettings
