@@ -58,7 +58,8 @@
 		</action>
 		
 		<action name="importBranch" class="uploadActionCompositeBranch" >
-			<result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="view" >importExecute</result>
+			<!--result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result-->
 			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
