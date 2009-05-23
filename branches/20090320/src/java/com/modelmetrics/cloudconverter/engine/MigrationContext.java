@@ -78,7 +78,7 @@ public class MigrationContext {
 	
 	private Map<String, LookupSettings> lookupFields;
 	
-	private Collection<ExternalIdBean> externalIds;
+	private Collection<String> externalIds;
 	
 	private String externalIdForUpsert;
 	
@@ -179,11 +179,11 @@ public class MigrationContext {
 		this.lookupFields = lookupFields;
 	}
 
-	public Collection<ExternalIdBean> getExternalIds() {
+	public Collection<String> getExternalIds() {
 		return externalIds;
 	}
 
-	public void setExternalIds(Collection<ExternalIdBean> externalIds) {
+	public void setExternalIds(Collection<String> externalIds) {
 		this.externalIds = externalIds;
 	}
 
