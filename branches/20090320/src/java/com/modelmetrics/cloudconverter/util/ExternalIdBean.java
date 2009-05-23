@@ -1,5 +1,8 @@
 package com.modelmetrics.cloudconverter.util;
 
+/*
+ * rsc 2009-05-23 probably overkill.
+ */
 public class ExternalIdBean {
 
 	private String name;
