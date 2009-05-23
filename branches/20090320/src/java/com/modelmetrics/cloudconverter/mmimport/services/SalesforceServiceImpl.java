@@ -26,8 +26,11 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 	private SalesforceSession salesforceSession;
 
-	private static final String[] FILTERS = { "__Tag", "__Share", "__History" };
+	private static final String[] EXCLUDE_FILTERS = { "__Tag", "__Share", "__History", "Apex" };
 
+	private static final String[] INCLUDE_FILTERS = { "__c", "Account", "Asset", "Case", "Contact", "Contract", "Lead", "Opportunity", "User" };
+
+	
 	public void execute(UploadContext uploadContext) throws Exception {
 
 		/*
@@ -136,10 +139,13 @@ public class SalesforceServiceImpl implements SalesforceService {
 	public List<ValueId> getAllSalesforcObjects() throws Exception {
 		DescribeGlobalResult result = salesforceSession.getSalesforceService()
 				.describeGlobal();
+		
+		
+		
 		List<ValueId> list = new ArrayList<ValueId>();
 		list.add(new ValueId("Select", ""));
 		for (String object : result.getTypes()) {
-			if (!applyFilter(object)) {
+			if (applyFilter(object)) {
 				list.add(new ValueId(object, object));
 			}
 		}
@@ -147,10 +153,14 @@ public class SalesforceServiceImpl implements SalesforceService {
 
 	}
 
+	/*
+	 * 2009-05-23 -- changed to use the positive include filters -- much smaller list of items.
+	 */
 	private boolean applyFilter(String object) {
-		for (int i = 0; i < FILTERS.length; i++) {
-			String filter = FILTERS[i];
-			if (object.endsWith(filter)) {
+		for (int i = 0; i < INCLUDE_FILTERS.length; i++) {
+			String filter = INCLUDE_FILTERS[i];
+			//added begins with to Filter out
+			if (object.endsWith(filter) || object.equalsIgnoreCase(filter)) {
 				return true;
 			}
 		}
@@ -162,9 +172,10 @@ public class SalesforceServiceImpl implements SalesforceService {
 				.describeSObject(object);
 		List<ValueId> list = new ArrayList<ValueId>();
 		for (Field field : result.getFields()) {
-			// if (field.getExternalId()!=null && field.getExternalId()){
-			list.add(new ValueId(field.getName(), field.getName()));
-			// }
+			// 2009-05-23 RSC added filter condition back in.
+			if ((field.getExternalId()!=null && field.getExternalId().booleanValue()) || field.getName().equals("Id")){
+				list.add(new ValueId(field.getName(), field.getName()));
+			}
 		}
 		return list;
 
