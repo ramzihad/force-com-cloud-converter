@@ -10,17 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
-public class UploadActionCompositeBranch extends AbstractUploadContextAware
-		implements ServletRequestAware {
+public class UploadActionCompositeBranch extends AbstractUploadContextAware {
 
 	private static final long serialVersionUID = -3145368694251083353L;
+
+	private static final String SUBMIT_STANDARD = "Standard Import";
+
+	private static final String SUBMIT_ADVANCED = "Show Advanced Options";
+	
+	private static final String CONFIG_INPUT = "input";
 
 	private static final Logger log = Logger
 			.getLogger(UploadActionCompositeBranch.class);
@@ -31,68 +36,45 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 
 	private Map<Long, String> optionsList;
 
-	private List<OptionsOneBean> advanceOptionsWrapperBeans;
+	private List<SheetOptionsBean> advanceOptionsWrapperBeans;
 
 	private List<String> sheets;
 
 	private List<ValueId> fieldTypes;
 
-	private HttpServletRequest request;
+	private String submit;
 
-	public HttpServletRequest getRequest() {
-		return request;
-	}
-
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-
-	public String back() throws Exception {
-		optionsList = new HashMap<Long, String>();
-		optionsList.put(Long.valueOf(0), "No");
-		optionsList.put(Long.valueOf(1), "Yes");
-		return INPUT;
-	}
 
 	public String execute() throws Exception {
+		
+		//if someone comes "back" submit will be null and we need to get them to input.
+		if (this.getSubmit() == null) {
+			return CONFIG_INPUT;
+		}
+		
 		try {
 			salesforceService.setSalesforceSession(this
 					.getSalesforceSessionContext().getSalesforceSession());
 
-			// validate radiobutton
-			if (selectedOption == null) {
-				addActionMessage("Please select an option");
-				// set radio button options for next page
-				optionsList = StringUtils.getOptions();
-				return INPUT;
-			}
-
-			if (NO.equals(selectedOption)) {
-				// check if object exists
+			if (this.getSubmit().equalsIgnoreCase(SUBMIT_STANDARD)) {
 				sheets = salesforceService.checkObject(this.getUploadContext());
 				if (!sheets.isEmpty()) {
-					request.setAttribute("backPage", "backToBranch");
-					request.setAttribute("sheets", sheets);
+					// request.setAttribute("backPage", "backToBranch");
+					// request.setAttribute("sheets", sheets);
 					return "override";
 				} else {
-					// import directly
-					log.info("Generating Salesforce object now...");
-					// bean.setOverride(Boolean.FALSE);
-					salesforceService.executeMultiple(this.getUploadContext());
 					return "view";
 				}
-
 			} else {
-
 				List<WrapperBean> beans = this.getUploadContext()
 						.getWrapperBeans();
 
 				// prepare information on a different structure for view
-				advanceOptionsWrapperBeans = new ArrayList<OptionsOneBean>();
+				advanceOptionsWrapperBeans = new ArrayList<SheetOptionsBean>();
 				for (WrapperBean wrapperBean : beans) {
-					List<AdvanceOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
-					OptionsOneBean aux = new OptionsOneBean();
-					aux.setSheet(wrapperBean.getSheetName());
+					List<SingleFieldOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
+					SheetOptionsBean aux = new SheetOptionsBean();
+					aux.setSheetName(wrapperBean.getSheetName());
 					aux.setAdvanceOptionsBeans(advanceOptionsBeans);
 					advanceOptionsWrapperBeans.add(aux);
 				}
@@ -106,6 +88,7 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 				fieldTypes = StringUtils.getAllFieldTypes();
 				return "advanceOptionsOne";
 			}
+
 		} catch (Exception e) {
 			message = "There has been a problem";
 			log.error(message, e);
@@ -115,11 +98,11 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 
 	}
 
-	private List<AdvanceOptionsBean> transformFromWrapperBean(WrapperBean bean) {
-		List<AdvanceOptionsBean> list = new ArrayList<AdvanceOptionsBean>();
+	private List<SingleFieldOptionsBean> transformFromWrapperBean(WrapperBean bean) {
+		List<SingleFieldOptionsBean> list = new ArrayList<SingleFieldOptionsBean>();
 
 		for (int i = 0; i < bean.getNames().size(); i++) {
-			AdvanceOptionsBean advanceBean = new AdvanceOptionsBean();
+			SingleFieldOptionsBean advanceBean = new SingleFieldOptionsBean();
 			advanceBean.setName(bean.getNames().get(i));
 			advanceBean.setLabel(bean.getLabels().get(i));
 			advanceBean.setType(bean.getTypes().get(i));
@@ -157,12 +140,12 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 		this.salesforceService = salesforceService;
 	}
 
-	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+	public List<SheetOptionsBean> getAdvanceOptionsWrapperBeans() {
 		return advanceOptionsWrapperBeans;
 	}
 
 	public void setAdvanceOptionsWrapperBeans(
-			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+			List<SheetOptionsBean> advanceOptionsWrapperBeans) {
 		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
 	}
 
@@ -180,6 +163,14 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware
 
 	public void setFieldTypes(List<ValueId> fieldTypes) {
 		this.fieldTypes = fieldTypes;
+	}
+
+	public String getSubmit() {
+		return submit;
+	}
+
+	public void setSubmit(String submit) {
+		this.submit = submit;
 	}
 
 }

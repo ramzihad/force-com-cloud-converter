@@ -29,7 +29,8 @@
 		<h2>Excel File Formatting Tips</h2>
 		
 		<ul>
-		<li>The object name comes from the work sheet name.  Note that the routine imports only the first work sheet in a file.</a>
+		<li>The object name comes from the work sheet name.  </li>
+		<li>Your XLS file can have multiple work sheets.  Import Your App will import each work sheet as a separte object.</li>  
 		<li>The first row will contain your field names.  Import Your App will remove spaces and other special characters.</li>
 		<li>The second row will determine field data type.  Import Your App will assume that all data in your a column matches the data in the second row.</li>
 		<li>Phone numbers should be formatted as (XXX) XXX-XXXX</li>

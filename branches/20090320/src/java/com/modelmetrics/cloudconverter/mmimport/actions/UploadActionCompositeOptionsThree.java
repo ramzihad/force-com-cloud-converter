@@ -2,6 +2,7 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,35 +18,60 @@ import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
 import com.modelmetrics.cloudconverter.util.LookupBean;
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
 public class UploadActionCompositeOptionsThree extends
-		AbstractUploadContextAware implements ServletRequestAware, Preparable {
+		AbstractUploadContextAware  {
 
 	private static final long serialVersionUID = -2803796981361837197L;
 
+	private static final String SUBMIT_BACK = "Back";
+	
+	private static final String SUBMIT_NEXT = "Next";
+	
 	private static final Logger log = Logger
 			.getLogger(UploadActionCompositeOptionsOne.class);
 
 	private SalesforceService salesforceService;
 
-	private HttpServletRequest request;
+
 
 	private InputStream inputStream;
 
 	private Map<Long, String> optionsList;
 
 	private List<LookupAndIdWrapper> lookupIdWrapperList;
+	
+	private String submit;
+	
+	private String[] fields;
+	
+	private String id;
+	
+	private List<ValueId> salesforceObjects = new ArrayList<ValueId>();
 
-	public void prepare() throws Exception {
-		lookupIdWrapperList = this.getUploadContext().getLookupIdWrapperList();
 
-	}
 
 	public String execute() throws Exception {
 
+		if (this.getSubmit() == null) {
+			lookupIdWrapperList = this.getUploadContext().getAuxList();
+			salesforceObjects = salesforceService
+			.getAllSalesforcObjects();
+			return Action.INPUT;
+		}
+		
+		if ((this.getFields() == null || this.getFields().length == 0) && this.getSubmit().equalsIgnoreCase(SUBMIT_BACK)) {
+			return "back";
+		}
+		
+		if (this.getSubmit().equalsIgnoreCase(SUBMIT_NEXT) && (this.getFields() == null || this.getFields().length == 0) ) {
+			this.addActionMessage("You must select a Lookup Object and Field.");
+			return Action.INPUT;
+		}
 		try {
-			String[] fields = request.getParameterValues("fields");
+			
 			int i = 0;
 
 			List<LookupAndIdWrapper> auxList = this.getUploadContext()
@@ -73,7 +99,12 @@ public class UploadActionCompositeOptionsThree extends
 
 			// go to confirm page
 			optionsList = StringUtils.getOptions();
-			return "confirm";
+			
+			if (this.getSubmit().equals(SUBMIT_BACK)) {
+				return "back";
+			} else {
+				return "confirm";
+			}
 
 		} catch (Exception e) {
 			message = "There has been a problem";
@@ -90,7 +121,7 @@ public class UploadActionCompositeOptionsThree extends
 	 */
 	public String loadObjectFields() {
 		try {
-			String objectId = request.getParameter("id");
+			String objectId = this.getId();
 			List<ValueId> values = salesforceService
 					.getFieldsForObject(objectId);
 
@@ -143,8 +174,36 @@ public class UploadActionCompositeOptionsThree extends
 		this.lookupIdWrapperList = lookupIdWrapperList;
 	}
 
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
+
+	public String getSubmit() {
+		return submit;
 	}
 
+	public void setSubmit(String submit) {
+		this.submit = submit;
+	}
+
+	public String[] getFields() {
+		return fields;
+	}
+
+	public void setFields(String[] fields) {
+		this.fields = fields;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<ValueId> getSalesforceObjects() {
+		return salesforceObjects;
+	}
+
+	public void setSalesforceObjects(List<ValueId> salesforceObjects) {
+		this.salesforceObjects = salesforceObjects;
+	}
 }

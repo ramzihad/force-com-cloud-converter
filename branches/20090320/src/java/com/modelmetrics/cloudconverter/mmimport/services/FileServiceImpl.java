@@ -53,6 +53,7 @@ public class FileServiceImpl implements FileService {
 				bean.setLabels(new ArrayList<String>());
 				bean.setTypes(new ArrayList<String>());
 				bean.setObjects(new ArrayList<List<Object>>());
+				bean.setExamples(new ArrayList<String>());
 				bean
 						.setSheetName(StringUtils.applyConstraints(sheet
 								.getName()));
@@ -145,7 +146,11 @@ public class FileServiceImpl implements FileService {
 									list.add(((NumberCell) c).getValue());
 								}
 							}
+							if (i == 1) {
+								bean.getExamples().add(value);
+							}
 						}
+						
 					}
 					if (i >= 1) {
 						bean.getObjects().add(list);

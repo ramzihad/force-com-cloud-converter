@@ -2,13 +2,15 @@ package com.modelmetrics.cloudconverter.mmimport.services;
 
 import java.util.List;
 
-public class AdvanceOptionsBean {
+public class SingleFieldOptionsBean {
 	
 	private String name;
 	
 	private String label;
 	
 	private String type;
+	
+	private boolean externalId;
 	
 	private List<Object> data;
 
@@ -42,5 +44,13 @@ public class AdvanceOptionsBean {
 
 	public void setData(List<Object> data) {
 		this.data = data;
+	}
+
+	public boolean isExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(boolean externalId) {
+		this.externalId = externalId;
 	}
 }

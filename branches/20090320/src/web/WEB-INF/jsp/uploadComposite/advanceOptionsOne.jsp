@@ -1,84 +1,149 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+
 <%@ taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
 
+
+
 <html>
+
 	<head>
-		<title>Advance Options</title>
+
+		<title>Advanced Options: Labels & Data Types</title>
+
 	</head>
 
+
+
 	<body>
-		<h3>
-			Advance Options page 1
-		</h3>
-		<br />
-		<br />
-		You may modify the excel information or you may continue as it is.
-		<br />
-		<br />
+
+		<h1>Advance Options: Verify Field Names and Data Types</h1>
+
+		
+
+		
+
 		<s:form action="importOptionsOne" method="POST">
-			<a href="backToOptionsOne.action">Back</a>
-			<s:submit value="Next" />
-			<br />
-			<br />
-			<s:iterator value="advanceOptionsWrapperBeans" 
-			var="optionOneBean" status="parentStatus">
+
+			<p><s:submit name="submit" value="Back" />	
+			<s:submit name="submit" value="Next" /></p>
+
+			
+
+			<p><s:iterator value="advanceOptionsWrapperBeans" var="optionOneBean" status="parentStatus"></p>
+
 				
+
 				<h3><s:property value="sheet" /> </h3>
+
 				<table border="1">
+
 	
-					<tr><td>
-						<b>Field Name</b>
-					</td><td>
-						<b>Field Label</b>
-					</td><td>
-						<b>Data Type</b>
-					</td>
-					
-					<s:iterator value="#optionOneBean.advanceOptionsBeans" status="status">
-						 <s:if test="#status.index==1">	
-						 	<s:iterator value="advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].data">
-									<td><b>Example</b></td>
-							</s:iterator>
-						</s:if>
-					</s:iterator>
+
+					<tr>
+
+						<th>Name</th>
+
+						<th>Label</th>
+
+						<th>Type</th>
+
+						<th>External ID?</th>
+
+						<th>Example</th>
+
+
+
 					</tr>
+
 					
+
 					<s:iterator value="#optionOneBean.advanceOptionsBeans" var="bean"  status="status">
+
 						<tr>
+
+							<td><s:property value="name" /></td>
+
 							<td>
-								<s:property value="name" />
-							</td>
-							<td>
+
 								<s:textfield
+
 									id="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].label"
+
 									name="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].label"
+
 									value="%{advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].label}"
+
 									theme="simple" />
+
 							
+
 							</td>
+
 							<td>
+
 								<s:select list="fieldTypes" listKey="id" listValue="value"
+
 									theme="simple" name="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].type"
+
 									value="%{advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].type}" />
+
 							</td>
+
+							<td>
+
+							<s:checkbox
+
+									id="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].externalId"
+
+									name="advanceOptionsWrapperBeans[%{#parentStatus.index}].advanceOptionsBeans[%{#status.index}].externalId"
+
+									fieldValue="true"
+
+									value="%{advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].externalId}"
+
+									theme="simple" />
+
+							</td>
+
 							
-							<s:iterator value="advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].data" var="d">
-								<td>${d}</td>
-							</s:iterator>
+
+							<s:if test="advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].data.size > 0">
+
+								<td><s:property value="advanceOptionsWrapperBeans[#parentStatus.index].advanceOptionsBeans[#status.index].data.get(0)" /></td>
+							</s:if>
+<s:else>
+<td>&nbsp;</td>
+</s:else>
+
 							
+
 							
+
 						</tr>
+
 					</s:iterator>
+
 				</table>
+
 				<br/><br/>
+
 			</s:iterator>
-			<s:submit value="Next" />
+
+			<s:submit name="submit" value="Back" />	
+
+			<s:submit name="submit" value="Next" />
+
 		</s:form>
 
-			<br />
-			<br />
-			<a href="backToOptionsOne.action">Back</a>
+
+
+
+
 		
+
 	</body>
+
 </html>
+
+
 

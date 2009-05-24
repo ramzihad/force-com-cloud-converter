@@ -3,9 +3,9 @@
 	
 	<property name="warname" value="mmimport" />
 	<!--RSC-->	
-	<property name="tomcat.home" location="C:\apache-tomcat-6.0.18" />
+	<!--<property name="tomcat.home" location="C:\apache-tomcat-6.0.18" />-->
 	<!--MC-->
-	<!--<property name="tomcat.home" location="/Applications/apache-tomcat-6.0.18" />-->
+	<property name="tomcat.home" location="/Applications/apache-tomcat-6.0.18" />
 	
 	<property name="src" location="src/java" />
 	<property name="src-non-java" location="src/non-java" />

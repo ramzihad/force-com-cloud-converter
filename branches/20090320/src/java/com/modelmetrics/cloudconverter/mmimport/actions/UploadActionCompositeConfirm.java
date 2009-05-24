@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
@@ -35,16 +35,16 @@ public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 
 	private HttpServletRequest request;
 	
-	private List<OptionsOneBean> advanceOptionsWrapperBeans;
+	private List<SheetOptionsBean> advanceOptionsWrapperBeans;
 
 
 
-	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+	public List<SheetOptionsBean> getAdvanceOptionsWrapperBeans() {
 		return advanceOptionsWrapperBeans;
 	}
 
 	public void setAdvanceOptionsWrapperBeans(
-			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+			List<SheetOptionsBean> advanceOptionsWrapperBeans) {
 		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
 	}
 
@@ -69,11 +69,11 @@ public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 					.getWrapperBeans();
 
 			// prepare information on a different structure for view
-			advanceOptionsWrapperBeans = new ArrayList<OptionsOneBean>();
+			advanceOptionsWrapperBeans = new ArrayList<SheetOptionsBean>();
 			for (WrapperBean wrapperBean : beans) {
-				List<AdvanceOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
-				OptionsOneBean aux = new OptionsOneBean();
-				aux.setSheet(wrapperBean.getSheetName());
+				List<SingleFieldOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
+				SheetOptionsBean aux = new SheetOptionsBean();
+				aux.setSheetName(wrapperBean.getSheetName());
 				aux.setAdvanceOptionsBeans(advanceOptionsBeans);
 				advanceOptionsWrapperBeans.add(aux);
 			}
@@ -102,11 +102,11 @@ public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 		}
 	}
 	
-	private List<AdvanceOptionsBean> transformFromWrapperBean(WrapperBean bean) {
-		List<AdvanceOptionsBean> list = new ArrayList<AdvanceOptionsBean>();
+	private List<SingleFieldOptionsBean> transformFromWrapperBean(WrapperBean bean) {
+		List<SingleFieldOptionsBean> list = new ArrayList<SingleFieldOptionsBean>();
 
 		for (int i = 0; i < bean.getNames().size(); i++) {
-			AdvanceOptionsBean advanceBean = new AdvanceOptionsBean();
+			SingleFieldOptionsBean advanceBean = new SingleFieldOptionsBean();
 			advanceBean.setName(bean.getNames().get(i));
 			advanceBean.setLabel(bean.getLabels().get(i));
 			advanceBean.setType(bean.getTypes().get(i));

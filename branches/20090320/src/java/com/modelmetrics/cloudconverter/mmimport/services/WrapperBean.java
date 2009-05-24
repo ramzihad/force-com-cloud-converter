@@ -11,6 +11,8 @@ public class WrapperBean {
 	private List<String> labels;
 
 	private List<String> types;
+	
+	private List<String> examples;
 
 	private List<List<Object>> objects;
 
@@ -66,5 +68,13 @@ public class WrapperBean {
 
 	public void setLabels(List<String> labels) {
 		this.labels = labels;
+	}
+
+	public List<String> getExamples() {
+		return examples;
+	}
+
+	public void setExamples(List<String> examples) {
+		this.examples = examples;
 	}
 }

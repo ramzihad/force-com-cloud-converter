@@ -3,9 +3,9 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.modelmetrics.cloudconverter.mmimport.services.AdvanceOptionsBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.LookupAndIdWrapper;
-import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.LookupBean;
@@ -27,9 +27,9 @@ public class UploadContext  {
 
 	private List<LookupBean> lookups = new ArrayList<LookupBean>();
 	
-	private List<AdvanceOptionsBean> advanceOptionsBeans;
+	private List<SingleFieldOptionsBean> advanceOptionsBeans;
 
-	private List<OptionsOneBean> advanceOptionsWrapperBeans;
+	private List<SheetOptionsBean> advanceOptionsWrapperBeans;
 
 	private List<LookupAndIdWrapper> lookupIdWrapperList;
 	
@@ -82,11 +82,11 @@ public class UploadContext  {
 		this.statusSubscriber = statusSubscriber;
 	}
 
-	public List<AdvanceOptionsBean> getAdvanceOptionsBeans() {
+	public List<SingleFieldOptionsBean> getAdvanceOptionsBeans() {
 		return advanceOptionsBeans;
 	}
 
-	public void setAdvanceOptionsBeans(List<AdvanceOptionsBean> advanceOptionsBeans) {
+	public void setAdvanceOptionsBeans(List<SingleFieldOptionsBean> advanceOptionsBeans) {
 		this.advanceOptionsBeans = advanceOptionsBeans;
 	}
 
@@ -114,12 +114,12 @@ public class UploadContext  {
 		this.wrapperBeans = wrapperBeans;
 	}
 
-	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+	public List<SheetOptionsBean> getAdvanceOptionsWrapperBeans() {
 		return advanceOptionsWrapperBeans;
 	}
 
 	public void setAdvanceOptionsWrapperBeans(
-			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+			List<SheetOptionsBean> advanceOptionsWrapperBeans) {
 		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
 	}
 

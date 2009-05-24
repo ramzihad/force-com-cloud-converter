@@ -45,38 +45,28 @@
 	</head>
 
 	<body>
-		<h3>
-			Advance Options page 3
-		</h3>
+		<h1>Advance Options: Lookup Field Settings</h1>
 		<s:form action="importOptionsThree" method="POST" id="advForm"
-			disabled="disabled" theme="simple">
-			<a href="backToPageOne.action">Back</a>
-			<input type="button" id="btnsubmit" value="Next" />
-			<br />
-			<br />
+			disabled="disabled" >
+
+			
+			<p><s:submit name="submit" id="btnsubmit_back" value="Back" />	
+
+			<s:submit name="submit" id="btnsubmit" value="Next" /></p>
+			
+			
 			<s:iterator value="lookupIdWrapperList" var="lookupIdWrapper"
 				status="parentStatus">
 
+
+			<s:if test="#lookupIdWrapper.lookups.size > 0">
 				<b>Object ${parentStatus.index+1}</b>
-				<br />
-				<br />
-				<br />
-				<br />
-			Lookup Field Settings
+			
 			<table border="1">
 					<tr>
-						<td>
-							Field
-						</td>
-						<td>
-							Label
-						</td>
-						<td>
-							Source Object
-						</td>
-						<td>
-							Source Field
-						</td>
+						<th>Field</th>
+						<th>Looks Up to Object</th>
+						<th>Using Field</th>
 					</tr>
 
 					<s:iterator value="#lookupIdWrapper.lookups" var="lookupdBean"
@@ -85,13 +75,7 @@
 							<td>
 								${lookupdBean.label}
 							</td>
-							<td>
-								<s:textfield
-									id="lookupIdWrapperList[%{#parentStatus.index}].lookups[%{#status.index}].label"
-									name="lookupIdWrapperList[%{#parentStatus.index}].lookups[%{#status.index}].label"
-									value="%{lookupIdWrapperList.[#parentStatus.index].lookups[#status.index].label}"
-									theme="simple" />
-							</td>
+
 							<td>
 								<s:select cssClass="salesforceObjects" list="salesforceObjects"
 									listKey="id" listValue="value" theme="simple"
@@ -107,23 +91,17 @@
 					</s:iterator>
 
 				</table>
+				</s:if>
 
-				<br />
-				<br />
 			</s:iterator>
 		</s:form>
 
 
 		<div id="mge" style="display: none">
-			<br />
-			<br />
 			You must select an object for each lookup
 		</div>
 
 
-		<br />
-		<br />
-		<a href="backToPageOne.action">Back</a>
 
 	</body>
 </html>

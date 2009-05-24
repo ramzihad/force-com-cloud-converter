@@ -80,9 +80,9 @@ public class SalesforceServiceImpl implements SalesforceService {
 						}
 					}
 				}
-				if (wrapper != null && wrapper.getExternalIds() != null) {
-					migrationContext.setExternalIds(wrapper.getExternalIds());
-				}
+//				if (wrapper != null && wrapper.getExternalIds() != null) {
+//					migrationContext.setExternalIds(wrapper.getExternalIds());
+//				}
 			}
 
 			migrationContext.setLookupFields(lookupFields);

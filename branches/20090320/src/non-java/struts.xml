@@ -52,38 +52,45 @@
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
 		
-		
+		<!-- RSC 2009-05-23
 		<action name="backToBranch" class="uploadActionCompositeBranch" method="back" >
 				<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
-		</action>
+		</action> -->
 		
 		<action name="importBranch" class="uploadActionCompositeBranch" >
-			<result name="view" >importExecute</result>
+			<result name="view" type="redirectAction">importExecute</result>
 			<!--result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result-->
 			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="advanceOptionsOne">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>
+			<result name="advanceOptionsOne" type="redirectAction">importOptionsOne</result>
 		</action>
 		
-		
+		<!-- RSC 2009-05-23
 		<action name="backToPageOne" class="uploadActionCompositeOptionsOne" >
-			<result name="success">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>		</action>
+			<result name="success">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>		
+		</action> -->
 		
 		<action name="importOptionsOne" class="uploadActionCompositeOptionsOne" >
+			<result name="back" type="redirectAction">importBranch</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>
 			<result name="confirm">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			
 			<result name="advanceOptionsTwo">/WEB-INF/jsp/uploadComposite/advanceOptionsTwo.jsp</result>
-			<result name="advanceOptionsThree">/WEB-INF/jsp/uploadComposite/advanceOptionsThree.jsp</result>
+			<result name="advanceOptionsThree" type="redirectAction">importOptionsThree</result>
 		</action>
 		
+		<!-- RSC 2009-05-23 Two Should be useless at this point -->
 		<action name="importOptionsTwo" class="uploadActionCompositeOptionsTwo" >
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="confirm">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
-			<result name="advanceOptionsThree">/WEB-INF/jsp/uploadComposite/advanceOptionsThree.jsp</result>
+			<result name="advanceOptionsThree" type="redirectAction">importOptionsThree</result>
 		</action>
 		
 		<action name="importOptionsThree" class="uploadActionCompositeOptionsThree" >
+			<result name="input">/WEB-INF/jsp/uploadComposite/advanceOptionsThree.jsp</result>
+			<result name="back" type="redirectAction">importOptionsOne</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="confirm">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
 		</action>

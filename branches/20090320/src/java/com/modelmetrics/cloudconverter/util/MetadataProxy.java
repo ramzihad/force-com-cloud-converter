@@ -16,7 +16,19 @@ public class MetadataProxy {
 	
 	private int precision;
 	
+	private boolean uniqueExternalId;
+	
 	private String defaultValue;
+	
+	private String example;
+
+	public String getExample() {
+		return example;
+	}
+
+	public void setExample(String sourceExample) {
+		this.example = sourceExample;
+	}
 
 	public String getName() {
 		return name;
@@ -72,6 +84,14 @@ public class MetadataProxy {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public boolean isUniqueExternalId() {
+		return uniqueExternalId;
+	}
+
+	public void setUniqueExternalId(boolean uniqueExternalId) {
+		this.uniqueExternalId = uniqueExternalId;
 	}
 	
 	

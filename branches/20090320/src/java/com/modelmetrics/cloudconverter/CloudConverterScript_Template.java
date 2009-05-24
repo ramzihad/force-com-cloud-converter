@@ -92,7 +92,7 @@ public class CloudConverterScript_Template {
 		//		"select distinct mypicklist from mytable");
 
 		// if there are not external ids, you can leave this blank
-		Collection<ExternalIdBean> externalIds = new ArrayList<ExternalIdBean>();
+		Collection<String> externalIds = new ArrayList<String>();
 		// these should be unique strings
 		//externalIds.add("MYID");
 

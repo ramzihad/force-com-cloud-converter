@@ -262,6 +262,7 @@ public class MetadataProxyCollectionBuilder {
 
 			field.setName(bean.getNames().get(i));
 			field.setLabel(bean.getLabels().get(i));
+			field.setExample(bean.getExamples().get(i));
 			String value = bean.getTypes().get(i);
 			if (Constants.STRING.equals(value)) {
 				field.setType(FieldType.Text);
@@ -305,6 +306,7 @@ public class MetadataProxyCollectionBuilder {
 			else if (Constants.EXTERNAL_ID.equals(value)) {
 				field.setType(FieldType.ExternalId);
 			} 
+			
 			
 			ret.add(field);
 		}

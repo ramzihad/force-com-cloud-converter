@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.modelmetrics.cloudconverter.mmimport.services.LookupAndIdWrapper;
-import com.modelmetrics.cloudconverter.mmimport.services.OptionsOneBean;
+import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
@@ -29,7 +29,7 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 
 	private SalesforceService salesforceService;
 
-	private List<OptionsOneBean> advanceOptionsWrapperBeans;
+	private List<SheetOptionsBean> advanceOptionsWrapperBeans;
 
 	private List<ValueId> salesforceObjects = new ArrayList<ValueId>();
 
@@ -39,6 +39,9 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 
 	private Map<Long, String> optionsList;
 
+	/*
+	 * RSC 2000-05-23 should be out of date at this point.
+	 */
 	public String execute() throws Exception {
 
 		try {
@@ -69,21 +72,21 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 
 	private void updateList(List<LookupAndIdWrapper> auxList,
 			List<LookupAndIdWrapper> lookupIdWrapperList2) {
-		int h = 0;
-		for (LookupAndIdWrapper bean : auxList) {
-			if (bean != null && bean.getExternalIds() != null) {
-				int j = 0;
-
-				for (ExternalIdBean extBean : bean.getExternalIds()) {
-					extBean.setUnique(lookupIdWrapperList.get(h)
-							.getExternalIds().get(j).isUnique());
-					j++;
-				}
-			}
-
-			h++;
-		}
-		this.getUploadContext().setLookupIdWrapperList(auxList);
+//		int h = 0;
+//		for (LookupAndIdWrapper bean : auxList) {
+//			if (bean != null && bean.getExternalIds() != null) {
+//				int j = 0;
+//
+//				for (ExternalIdBean extBean : bean.getExternalIds()) {
+//					extBean.setUnique(lookupIdWrapperList.get(h)
+//							.getExternalIds().get(j).isUnique());
+//					j++;
+//				}
+//			}
+//
+//			h++;
+//		}
+//		this.getUploadContext().setLookupIdWrapperList(auxList);
 	}
 
 	public HttpServletRequest getRequest() {
@@ -131,12 +134,12 @@ public class UploadActionCompositeOptionsTwo extends AbstractUploadContextAware
 		this.salesforceService = salesforceService;
 	}
 
-	public List<OptionsOneBean> getAdvanceOptionsWrapperBeans() {
+	public List<SheetOptionsBean> getAdvanceOptionsWrapperBeans() {
 		return advanceOptionsWrapperBeans;
 	}
 
 	public void setAdvanceOptionsWrapperBeans(
-			List<OptionsOneBean> advanceOptionsWrapperBeans) {
+			List<SheetOptionsBean> advanceOptionsWrapperBeans) {
 		this.advanceOptionsWrapperBeans = advanceOptionsWrapperBeans;
 	}
 
