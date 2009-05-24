@@ -48,7 +48,8 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 	public void execute(MigrationContext migrationContext) throws Exception {
 		try {
 			if (migrationContext.getResultSet() == null
-					&& migrationContext.getWrapperBean() == null) {
+					&& migrationContext.getWrapperBean() == null
+					) {
 				throw new RuntimeException(
 						"no result set and no wrapper bean ERGO no sproxy building bonanza.");
 			} else if (migrationContext.getResultSet() != null) {

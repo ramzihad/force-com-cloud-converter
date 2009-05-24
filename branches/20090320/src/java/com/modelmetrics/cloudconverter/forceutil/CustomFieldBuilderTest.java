@@ -34,7 +34,7 @@ public class CustomFieldBuilderTest extends TestCase {
 		MigrationContext migrationContext = new MigrationContext();
 
 		migrationContext.setCustomObject(new CustomObjectBuilder()
-				.build("test"));
+				.build("test__c", "test"));
 
 		migrationContext.setMetadataProxies(proxies);
 

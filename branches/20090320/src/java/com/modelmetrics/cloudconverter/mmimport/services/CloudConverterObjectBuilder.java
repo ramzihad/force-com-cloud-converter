@@ -20,16 +20,18 @@ public class CloudConverterObjectBuilder {
 		
 		List<CloudConverterObject> ret = new ArrayList<CloudConverterObject>();
 		
-		for (ExcelWorksheetWrapperBean singleWorksheet: workbookBeans) {
+		for (ExcelWorksheetWrapperBean currentWorksheet: workbookBeans) {
 			
 			CloudConverterObject current = new CloudConverterObject();
 			
-			current.setOriginalData(singleWorksheet);
+			current.setOriginalData(currentWorksheet);
 			
-			current.setObjectName(singleWorksheet.getSheetName());
+			current.setObjectName(currentWorksheet.getSheetName());
+			
+			current.setObjectLabel(currentWorksheet.getSheetName());
 			
 			List<MetadataProxy> metadataProxies = new MetadataProxyCollectionBuilder()
-					.build(singleWorksheet);
+					.build(currentWorksheet);
 
 			current.setMetadataProxies(metadataProxies);
 			

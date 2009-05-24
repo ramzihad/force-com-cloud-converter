@@ -76,7 +76,7 @@ public abstract class AbstractSalesforceService implements SalesforceService {
 				.describeGlobal();
 
 		boolean foundType = false;
-		objectName += "__c";
+		
 		for (int i = 0; i < result.getTypes().length; i++) {
 			String name = result.getTypes(i);
 			if (name.equalsIgnoreCase(objectName)) {

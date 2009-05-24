@@ -11,11 +11,13 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 	private static final long serialVersionUID = -1198350407323092698L;
 
 	public String execute() throws Exception {
-		
-		SalesforceService salesforceService = new SalesforceServiceFactory().buildCloudConverterObject();
-		
+
+		SalesforceService salesforceService = new SalesforceServiceFactory()
+				.build(this.getSalesforceSessionContext()
+						.getSalesforceSession());
+
 		salesforceService.execute(this.getUploadContext());
-		
+
 		return SUCCESS;
 	}
 }

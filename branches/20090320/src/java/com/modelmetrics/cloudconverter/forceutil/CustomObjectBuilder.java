@@ -49,7 +49,7 @@ public class CustomObjectBuilder {
 			objectName = rsmd.getTableName(i + 1);
 		}
 
-		return this.build(objectName);
+		return this.build(new CustomObjectNameBuilder().buildCustomObjectName(objectName),objectName);
 	}
 
 	public CustomObject build(ExcelWorksheetWrapperBean bean) throws Exception {
@@ -57,23 +57,23 @@ public class CustomObjectBuilder {
 		String objectName = bean.getSheetName();
 		//check if object exists in salesforce
 		
-		return this.build(objectName);
+		return this.build(new CustomObjectNameBuilder().buildCustomObjectName(objectName), objectName);
 	}
 
-	public CustomObject build(String objectName) throws Exception {
+	public CustomObject build(String objectName, String objectLabel) throws Exception {
 		
 		if (!objectName.endsWith("__c")) {
-			throw new RuntimeException("Bad object name.");
+			throw new RuntimeException("Bad object name. " + objectName);
 		}
 		
 		CustomObject co = new CustomObject();
-		String name = objectName;
+		
 		co.setFullName(objectName);
 		co.setDeploymentStatus(DeploymentStatus.Deployed);
 		co
 				.setDescription("Created by the CloudConverter from http://ModelMetrics.com");
 		co.setEnableActivities(true);
-		co.setLabel(name);
+		co.setLabel(objectLabel);
 		co.setPluralLabel(co.getLabel() + "s");
 		co.setSharingModel(SharingModel.ReadWrite);
 
@@ -85,7 +85,7 @@ public class CustomObjectBuilder {
 		nf.setDisplayFormat("A-{000000}");
 		nf
 				.setDescription("The custom object identifier on page layouts, related lists, etc.");
-		nf.setLabel(name + " Name");
+		nf.setLabel(objectLabel + " Name");
 		nf.setFullName(objectName + " __c");
 
 		co.setNameField(nf);
