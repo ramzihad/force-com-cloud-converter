@@ -2,6 +2,7 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceServiceImpl;
+import com.modelmetrics.cloudconverter.mmimport.services.PicklistInfo;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;

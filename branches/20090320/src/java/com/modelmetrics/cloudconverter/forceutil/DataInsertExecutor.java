@@ -37,7 +37,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 
@@ -121,9 +121,9 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 		// ResultSet rs = migrationContext.getResultSet();
 		// ResultSetMetaData rsmd = migrationContext.getResultSetMetaData();
 
-		WrapperBean wrapperBean = migrationContext.getWrapperBean();
+		ExcelWorksheetWrapperBean wrapperBean = migrationContext.getWrapperBean();
 
-		for (Iterator<List<Object>> iterator = wrapperBean.getObjects()
+		for (Iterator<List<Object>> iterator = wrapperBean.getData()
 				.iterator(); iterator.hasNext();) {
 			List<Object> type = (List<Object>) iterator.next();
 			Sproxy current = sproxyBuilder.buildEmpty(migrationContext

@@ -38,7 +38,8 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
@@ -84,7 +85,9 @@ public class MigrationContext {
 	
 	private List<MetadataProxy> metadataProxies;
 
-	private WrapperBean wrapperBean;
+	private ExcelWorksheetWrapperBean wrapperBean;
+	
+	private CloudConverterObject cloudConverterObject;
 	
 	private MigrationStatusPublisher migrationStatusPublisher;
 	
@@ -211,11 +214,11 @@ public class MigrationContext {
 		this.metadataProxies = metadataProxies;
 	}
 
-	public WrapperBean getWrapperBean() {
+	public ExcelWorksheetWrapperBean getWrapperBean() {
 		return wrapperBean;
 	}
 
-	public void setWrapperBean(WrapperBean wrapperBean) {
+	public void setWrapperBean(ExcelWorksheetWrapperBean wrapperBean) {
 		this.wrapperBean = wrapperBean;
 	}
 
@@ -226,5 +229,13 @@ public class MigrationContext {
 	public void setMigrationStatusPublisher(
 			MigrationStatusPublisher migrationStatusPublisher) {
 		this.migrationStatusPublisher = migrationStatusPublisher;
+	}
+
+	public CloudConverterObject getCloudConverterObject() {
+		return cloudConverterObject;
+	}
+
+	public void setCloudConverterObject(CloudConverterObject cloudConverterObject) {
+		this.cloudConverterObject = cloudConverterObject;
 	}
 }

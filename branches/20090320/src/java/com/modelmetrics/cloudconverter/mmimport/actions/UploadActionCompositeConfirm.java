@@ -13,7 +13,7 @@ import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 
 public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 		implements ServletRequestAware {
@@ -64,45 +64,45 @@ public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 
 		if (NO.equals(selectedOption)) {
 
-			//go back to  options 1 page. So prepare information again
-			List<WrapperBean> beans = this.getUploadContext()
-					.getWrapperBeans();
-
-			// prepare information on a different structure for view
-			advanceOptionsWrapperBeans = new ArrayList<SheetOptionsBean>();
-			for (WrapperBean wrapperBean : beans) {
-				List<SingleFieldOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
-				SheetOptionsBean aux = new SheetOptionsBean();
-				aux.setSheetName(wrapperBean.getSheetName());
-				aux.setAdvanceOptionsBeans(advanceOptionsBeans);
-				advanceOptionsWrapperBeans.add(aux);
-			}
-
-			// set new structure in session
-			this.getUploadContext().setAdvanceOptionsWrapperBeans(
-					advanceOptionsWrapperBeans);
+//			//go back to  options 1 page. So prepare information again
+//			List<ExcelWorksheetWrapperBean> beans = this.getUploadContext()
+//					.getWrapperBeans();
+//
+//			// prepare information on a different structure for view
+//			advanceOptionsWrapperBeans = new ArrayList<SheetOptionsBean>();
+//			for (ExcelWorksheetWrapperBean wrapperBean : beans) {
+//				List<SingleFieldOptionsBean> advanceOptionsBeans = transformFromWrapperBean(wrapperBean);
+//				SheetOptionsBean aux = new SheetOptionsBean();
+//				aux.setSheetName(wrapperBean.getSheetName());
+//				aux.setAdvanceOptionsBeans(advanceOptionsBeans);
+//				advanceOptionsWrapperBeans.add(aux);
+//			}
+//
+//			// set new structure in session
+//			this.getUploadContext().setAdvanceOptionsWrapperBeans(
+//					advanceOptionsWrapperBeans);
 
 			
 			return "startOver";
 		} else {
 			//go ahead and create objects
 			
-			sheets = salesforceService.checkObject(this.getUploadContext());
-			if (!sheets.isEmpty()) {
-				request.setAttribute("backPage", "backToBranch");
-				request.setAttribute("sheets", sheets);
-				return "override";
-			} else {
-				// import directly
-				log.info("Generating Salesforce object now...");
-				// bean.setOverride(Boolean.FALSE);
-				salesforceService.executeMultiple(this.getUploadContext());
+//			sheets = salesforceService.checkObject(this.getUploadContext());
+//			if (!sheets.isEmpty()) {
+//				request.setAttribute("backPage", "backToBranch");
+//				request.setAttribute("sheets", sheets);
+//				return "override";
+//			} else {
+//				// import directly
+//				log.info("Generating Salesforce object now...");
+//				// bean.setOverride(Boolean.FALSE);
+//				salesforceService.execute(this.getUploadContext());
 				return "view";
-			}
+//			}
 		}
 	}
 	
-	private List<SingleFieldOptionsBean> transformFromWrapperBean(WrapperBean bean) {
+	private List<SingleFieldOptionsBean> transformFromWrapperBean(ExcelWorksheetWrapperBean bean) {
 		List<SingleFieldOptionsBean> list = new ArrayList<SingleFieldOptionsBean>();
 
 		for (int i = 0; i < bean.getNames().size(); i++) {
@@ -111,7 +111,7 @@ public class UploadActionCompositeConfirm extends AbstractUploadContextAware
 			advanceBean.setLabel(bean.getLabels().get(i));
 			advanceBean.setType(bean.getTypes().get(i));
 			List<Object> data = new ArrayList<Object>();
-			for (List<Object> aux : bean.getObjects()) {
+			for (List<Object> aux : bean.getData()) {
 				data.add(aux.get(i));
 			}
 			advanceBean.setData(data);

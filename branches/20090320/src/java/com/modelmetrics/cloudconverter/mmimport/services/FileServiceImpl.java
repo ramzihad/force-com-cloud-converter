@@ -33,12 +33,12 @@ public class FileServiceImpl implements FileService {
 	 * @throws ParseException
 	 */
 	@SuppressWarnings("unchecked")
-	public List<WrapperBean> parseXLS(File file) throws ParseException {
+	public List<ExcelWorksheetWrapperBean> parseXLS(File file) throws ParseException {
 
 		// keeps date fields real.
 		TimeZone.setDefault(TimeZone.getTimeZone("-0"));
 
-		List<WrapperBean> wrapperBeans = new ArrayList<WrapperBean>();
+		List<ExcelWorksheetWrapperBean> wrapperBeans = new ArrayList<ExcelWorksheetWrapperBean>();
 
 		try {
 
@@ -48,12 +48,8 @@ public class FileServiceImpl implements FileService {
 
 			Sheet[] sheets = workbook.getSheets();
 			for (Sheet sheet : sheets) {
-				WrapperBean bean = new WrapperBean();
-				bean.setNames(new ArrayList<String>());
-				bean.setLabels(new ArrayList<String>());
-				bean.setTypes(new ArrayList<String>());
-				bean.setObjects(new ArrayList<List<Object>>());
-				bean.setExamples(new ArrayList<String>());
+				ExcelWorksheetWrapperBean bean = new ExcelWorksheetWrapperBean();
+
 				bean
 						.setSheetName(StringUtils.applyConstraints(sheet
 								.getName()));
@@ -153,7 +149,7 @@ public class FileServiceImpl implements FileService {
 						
 					}
 					if (i >= 1) {
-						bean.getObjects().add(list);
+						bean.getData().add(list);
 						bean.setOverride(Boolean.FALSE);
 					}
 				}

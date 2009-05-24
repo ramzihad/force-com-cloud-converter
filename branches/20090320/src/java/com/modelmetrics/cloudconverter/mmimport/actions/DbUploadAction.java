@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.services.PicklistInfo;
 
 public class DbUploadAction extends AbstractUploadContextAware implements
 		ServletRequestAware {

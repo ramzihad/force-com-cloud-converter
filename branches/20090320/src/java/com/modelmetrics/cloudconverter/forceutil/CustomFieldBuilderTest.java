@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
@@ -23,8 +23,8 @@ public class CustomFieldBuilderTest extends TestCase {
 		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker
 				.getBeanFactory().getBean("fileService");
 
-		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
-		WrapperBean wrapperBean = wrapperBeans.get(0);
+		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);
 		assertNotNull(wrapperBean);
 

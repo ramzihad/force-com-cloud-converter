@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface FileService {
 
-	List<WrapperBean> parseXLS(File file)
+	List<ExcelWorksheetWrapperBean> parseXLS(File file)
 			throws ParseException;
 }

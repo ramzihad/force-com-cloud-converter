@@ -37,6 +37,7 @@ import org.apache.commons.logging.LogFactory;
 import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
 import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
+import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
@@ -189,4 +190,20 @@ public abstract class AbstractMigrationEngine extends
 
 	}
 
+	public void cleanUpOrg(String objectName, String objectLable, boolean delete) throws Exception {
+		
+		// check if it needs overriding
+		if (delete) {
+			
+			this.publishStatus("Deleting existing object");
+			// delete object here
+			CustomObject co = new CustomObject();
+			co.setFullName(objectName);
+			new DeleteExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService())
+					.executeSimpleDelete(co);
+			log.info("Deleting object "+objectLable+" from salesforce...");
+			this.publishStatus("Delete complete");
+		}
+	}
 }

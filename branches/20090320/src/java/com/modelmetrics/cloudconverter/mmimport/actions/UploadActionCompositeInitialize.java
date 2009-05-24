@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 
 public class UploadActionCompositeInitialize extends AbstractUploadContextAware {
 
@@ -27,7 +27,7 @@ public class UploadActionCompositeInitialize extends AbstractUploadContextAware 
 
 	private String uploadFileName;
 
-	private WrapperBean bean;
+	private ExcelWorksheetWrapperBean bean;
 
 	private String message;
 
@@ -123,11 +123,11 @@ public class UploadActionCompositeInitialize extends AbstractUploadContextAware 
 		return fileService;
 	}
 
-	public WrapperBean getBean() {
+	public ExcelWorksheetWrapperBean getBean() {
 		return bean;
 	}
 
-	public void setBean(WrapperBean bean) {
+	public void setBean(ExcelWorksheetWrapperBean bean) {
 		this.bean = bean;
 	}
 

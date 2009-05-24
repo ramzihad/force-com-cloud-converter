@@ -2,15 +2,15 @@ package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObjectBuilder;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.mmimport.services.FileService;
 import com.modelmetrics.cloudconverter.mmimport.services.ParseException;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
-import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 
@@ -31,17 +31,10 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	private String uploadFileName;
 
-	private List<WrapperBean> beans;
-
 	private String message;
-	
-	private Long selectedOption;
-	
-	private Map<Long,String> optionsList;
 
 	private String existingLocationUrl;
 	private String existingSessionId;
-	private List<String> sheets;
 
 	public String getExistingLocationUrl() {
 		return existingLocationUrl;
@@ -83,8 +76,6 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		this.message = message;
 	}
 
-
-
 	/**
 	 * Uploads the XLS and transforms it to a WrapperBean object to be sent to
 	 * view
@@ -93,47 +84,51 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 	 */
 	public String execute() {
 
+		if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
+			addActionMessage("No Salesforce Session present.");
+		}
+
+		if (upload == null) {
+			addActionMessage("Please select a file");
+		}
+
+		if (!getActionMessages().isEmpty()) {
+			return INPUT;
+		}
+
+		salesforceService.setSalesforceSession(this
+				.getSalesforceSessionContext().getSalesforceSession());
+
+		// parse all sheets here
+		List<ExcelWorksheetWrapperBean> beans = null;
+
 		try {
-
-			if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
-				addActionMessage("No Salesforce Session present.");
-			}
-			
-		
-			if (upload == null) {
-				addActionMessage("Please select a file");
-			}
-
-			if (!getActionMessages().isEmpty()) {
-				return INPUT;
-			}
-		
-			salesforceService.setSalesforceSession(this
-					.getSalesforceSessionContext().getSalesforceSession());
-
-			// parse all sheets here
 			beans = fileService.parseXLS(upload);
-			this.getUploadContext().setWrapperBeans(beans);
-		
-			//set radio button options for next page
-			optionsList = StringUtils.getOptions();
-			
-			log.info("XLS file uploaded successfully");
-			return SUCCESS;
 		} catch (ParseException e) {
 			message = "There has been a problem uploading the file";
 			log.error(message, e);
 			this.getUploadContext().setLastException(e);
 			return ERROR;
+		}
 
+		List<CloudConverterObject> targets = null;
+
+		try {
+			targets = new CloudConverterObjectBuilder()
+					.buildFromExcelFile(beans);
 		} catch (Exception e) {
-			message = "There has been a problem generating salesforce objects";
+			message = "There has been a problem converting the file to metadata";
 			log.error(message, e);
 			this.getUploadContext().setLastException(e);
 			return ERROR;
 		}
-	}
+		
+		this.getUploadContext().setCloudConverterObjects(targets);
 
+		log.info("Upload Completed Successfully");
+		return SUCCESS;
+
+	}
 
 	public File getUpload() {
 		return upload;
@@ -175,44 +170,8 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		return this.salesforceService;
 	}
 
-	public Boolean getOverride() {
-		return override;
-	}
 
-	public void setOverride(Boolean override) {
-		this.override = override;
-	}
 
-	public List<WrapperBean> getBeans() {
-		return beans;
-	}
 
-	public void setBeans(List<WrapperBean> beans) {
-		this.beans = beans;
-	}
-
-	public Long getSelectedOption() {
-		return selectedOption;
-	}
-
-	public void setSelectedOption(Long selectedOption) {
-		this.selectedOption = selectedOption;
-	}
-
-	public Map<Long, String> getOptionsList() {
-		return optionsList;
-	}
-
-	public void setOptionsList(Map<Long, String> optionsList) {
-		this.optionsList = optionsList;
-	}
-
-	public List<String> getSheets() {
-		return sheets;
-	}
-
-	public void setSheets(List<String> sheets) {
-		this.sheets = sheets;
-	}
 
 }

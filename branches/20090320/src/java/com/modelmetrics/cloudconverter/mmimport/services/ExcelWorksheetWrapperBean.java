@@ -1,20 +1,22 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class WrapperBean {
+public class ExcelWorksheetWrapperBean {
 
 	private String sheetName;
 	
-	private List<String> names;
+	private List<String> names = new ArrayList<String>();
 	
-	private List<String> labels;
+	private List<String> labels= new ArrayList<String>();
 
-	private List<String> types;
+	private List<String> types= new ArrayList<String>();
 	
-	private List<String> examples;
+	//a single row of example data
+	private List<String> examples= new ArrayList<String>();
 
-	private List<List<Object>> objects;
+	private List<List<Object>> data = new ArrayList<List<Object>>();
 
 	private Boolean override;
 
@@ -46,12 +48,12 @@ public class WrapperBean {
 		this.types = types;
 	}
 
-	public List<List<Object>> getObjects() {
-		return objects;
+	public List<List<Object>> getData() {
+		return data;
 	}
 
-	public void setObjects(List<List<Object>> objects) {
-		this.objects = objects;
+	public void setData(List<List<Object>> objects) {
+		this.data = objects;
 	}
 
 	public String getSheetName() {

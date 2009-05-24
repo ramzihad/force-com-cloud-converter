@@ -29,7 +29,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.DeploymentStatus;
@@ -52,7 +52,7 @@ public class CustomObjectBuilder {
 		return this.build(objectName);
 	}
 
-	public CustomObject build(WrapperBean bean) throws Exception {
+	public CustomObject build(ExcelWorksheetWrapperBean bean) throws Exception {
 
 		String objectName = bean.getSheetName();
 		//check if object exists in salesforce
@@ -61,9 +61,14 @@ public class CustomObjectBuilder {
 	}
 
 	public CustomObject build(String objectName) throws Exception {
+		
+		if (!objectName.endsWith("__c")) {
+			throw new RuntimeException("Bad object name.");
+		}
+		
 		CustomObject co = new CustomObject();
 		String name = objectName;
-		co.setFullName(objectName + "__c");
+		co.setFullName(objectName);
 		co.setDeploymentStatus(DeploymentStatus.Deployed);
 		co
 				.setDescription("Created by the CloudConverter from http://ModelMetrics.com");

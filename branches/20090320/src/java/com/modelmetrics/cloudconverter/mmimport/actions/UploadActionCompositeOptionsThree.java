@@ -55,63 +55,64 @@ public class UploadActionCompositeOptionsThree extends
 
 	public String execute() throws Exception {
 
-		if (this.getSubmit() == null) {
-			lookupIdWrapperList = this.getUploadContext().getAuxList();
-			salesforceObjects = salesforceService
-			.getAllSalesforcObjects();
-			return Action.INPUT;
-		}
-		
-		if ((this.getFields() == null || this.getFields().length == 0) && this.getSubmit().equalsIgnoreCase(SUBMIT_BACK)) {
-			return "back";
-		}
-		
-		if (this.getSubmit().equalsIgnoreCase(SUBMIT_NEXT) && (this.getFields() == null || this.getFields().length == 0) ) {
-			this.addActionMessage("You must select a Lookup Object and Field.");
-			return Action.INPUT;
-		}
-		try {
-			
-			int i = 0;
-
-			List<LookupAndIdWrapper> auxList = this.getUploadContext()
-					.getAuxList();
-			int h = 0;
-			for (LookupAndIdWrapper bean : auxList) {
-				if (bean != null && bean.getLookups() != null) {
-					int j = 0;
-					for (LookupBean lookupBean : bean.getLookups()) {
-						lookupBean.setSourceField(fields[j]);
-						lookupBean.setLabel(lookupIdWrapperList.get(h)
-								.getLookups().get(j).getLabel());
-						lookupBean.setName(lookupIdWrapperList.get(h)
-								.getLookups().get(j).getName());
-						lookupBean.setSourceObject(lookupIdWrapperList.get(h)
-								.getLookups().get(j).getSourceObject());
-						i++;
-						j++;
-					}
-				}
-				h++;
-			}
-
-			this.getUploadContext().setLookupIdWrapperList(auxList);
-
-			// go to confirm page
-			optionsList = StringUtils.getOptions();
-			
-			if (this.getSubmit().equals(SUBMIT_BACK)) {
-				return "back";
-			} else {
-				return "confirm";
-			}
-
-		} catch (Exception e) {
-			message = "There has been a problem";
-			log.error(message, e);
-			addActionMessage(e.getMessage());
-			return ERROR;
-		}
+		return null;
+//		if (this.getSubmit() == null) {
+//			lookupIdWrapperList = this.getUploadContext().getAuxList();
+//			salesforceObjects = salesforceService
+//			.getAllSalesforcObjects();
+//			return Action.INPUT;
+//		}
+//		
+//		if ((this.getFields() == null || this.getFields().length == 0) && this.getSubmit().equalsIgnoreCase(SUBMIT_BACK)) {
+//			return "back";
+//		}
+//		
+//		if (this.getSubmit().equalsIgnoreCase(SUBMIT_NEXT) && (this.getFields() == null || this.getFields().length == 0) ) {
+//			this.addActionMessage("You must select a Lookup Object and Field.");
+//			return Action.INPUT;
+//		}
+//		try {
+//			
+//			int i = 0;
+//
+//			List<LookupAndIdWrapper> auxList = this.getUploadContext()
+//					.getAuxList();
+//			int h = 0;
+//			for (LookupAndIdWrapper bean : auxList) {
+//				if (bean != null && bean.getLookups() != null) {
+//					int j = 0;
+//					for (LookupBean lookupBean : bean.getLookups()) {
+//						lookupBean.setSourceField(fields[j]);
+//						lookupBean.setLabel(lookupIdWrapperList.get(h)
+//								.getLookups().get(j).getLabel());
+//						lookupBean.setName(lookupIdWrapperList.get(h)
+//								.getLookups().get(j).getName());
+//						lookupBean.setSourceObject(lookupIdWrapperList.get(h)
+//								.getLookups().get(j).getSourceObject());
+//						i++;
+//						j++;
+//					}
+//				}
+//				h++;
+//			}
+//
+//			this.getUploadContext().setLookupIdWrapperList(auxList);
+//
+//			// go to confirm page
+//			optionsList = StringUtils.getOptions();
+//			
+//			if (this.getSubmit().equals(SUBMIT_BACK)) {
+//				return "back";
+//			} else {
+//				return "confirm";
+//			}
+//
+//		} catch (Exception e) {
+//			message = "There has been a problem";
+//			log.error(message, e);
+//			addActionMessage(e.getMessage());
+//			return ERROR;
+//		}
 	}
 
 	/**
@@ -120,24 +121,24 @@ public class UploadActionCompositeOptionsThree extends
 	 * @return
 	 */
 	public String loadObjectFields() {
-		try {
-			String objectId = this.getId();
-			List<ValueId> values = salesforceService
-					.getFieldsForObject(objectId);
-
-			JSONArray jsonArray = new JSONArray();
-			for (ValueId value : values) {
-				JSONObject jsonObj = new JSONObject();
-				jsonObj.put("id", value.getId());
-				jsonObj.put("value", value.getValue());
-				jsonArray.put(jsonObj);
-			}
-
-			inputStream = new ByteArrayInputStream(jsonArray.toString()
-					.getBytes());
-		} catch (Exception e) {
-			inputStream = new ByteArrayInputStream("".getBytes());
-		}
+//		try {
+//			String objectId = this.getId();
+//			List<ValueId> values = salesforceService
+//					.getFieldsForObject(objectId);
+//
+//			JSONArray jsonArray = new JSONArray();
+//			for (ValueId value : values) {
+//				JSONObject jsonObj = new JSONObject();
+//				jsonObj.put("id", value.getId());
+//				jsonObj.put("value", value.getValue());
+//				jsonArray.put(jsonObj);
+//			}
+//
+//			inputStream = new ByteArrayInputStream(jsonArray.toString()
+//					.getBytes());
+//		} catch (Exception e) {
+//			inputStream = new ByteArrayInputStream("".getBytes());
+//		}
 		return SUCCESS;
 	}
 

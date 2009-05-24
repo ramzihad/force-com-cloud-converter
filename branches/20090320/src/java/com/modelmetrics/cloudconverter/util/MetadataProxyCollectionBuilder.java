@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.mmimport.services.Constants;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.FieldType;
 
 public class MetadataProxyCollectionBuilder {
@@ -254,7 +254,7 @@ public class MetadataProxyCollectionBuilder {
 		return ret;
 	}
 
-	public List<MetadataProxy> build(WrapperBean bean) throws Exception {
+	public List<MetadataProxy> build(ExcelWorksheetWrapperBean bean) throws Exception {
 
 		List<MetadataProxy> ret = new ArrayList<MetadataProxy>();
 		for (int i = 0; i < bean.getNames().size(); i++) {

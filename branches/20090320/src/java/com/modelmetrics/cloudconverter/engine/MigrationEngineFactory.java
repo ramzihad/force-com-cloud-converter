@@ -43,6 +43,8 @@ public class MigrationEngineFactory {
 			ret = new MigrationEngineResultSetImpl();
 		} else if (migrationContext.getWrapperBean() != null) {
 			ret = new MigrationEngineWrapperBeanImpl();
+		} else if (migrationContext.getCloudConverterObject() != null) {
+			ret = new MigrationEngineCloudConverterObjectImpl();
 		} else {
 			throw new RuntimeException("no way to build anything.");
 		}

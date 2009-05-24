@@ -103,7 +103,7 @@
 		</action>
 		
 		<action name="confirm" class="uploadActionCompositeConfirm" >
-			<result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result>
+			<result name="view" type="redirectAction">importExecute</result>
 			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>

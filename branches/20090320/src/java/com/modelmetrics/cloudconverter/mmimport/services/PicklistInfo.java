@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.mmimport.actions;
+package com.modelmetrics.cloudconverter.mmimport.services;
 
 public class PicklistInfo {
 

@@ -18,7 +18,7 @@ import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
 import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
-import com.modelmetrics.cloudconverter.mmimport.services.WrapperBean;
+import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.LookupBean;
 import com.opensymphony.xwork2.Action;
@@ -73,68 +73,69 @@ public class UploadActionCompositeOptionsOne extends AbstractUploadContextAware
 
 	public String execute() throws Exception {
 
-		//If Submit Is Null, we go to input
-		if (this.getSubmit() == null) {
-			this.advanceOptionsWrapperBeans = this.getUploadContext().getAdvanceOptionsWrapperBeans();
-			fieldTypes = StringUtils.getAllFieldTypes();
-			return Action.INPUT;
-		}
-		//"BACK" means we're not doing advanced options, so we don't care about any changes they made.
-		if (this.getSubmit().equalsIgnoreCase(SUBMIT_BACK)) {
-			return "back";
-		}
-		
-		try {
-			// get session structure information
-			List<SheetOptionsBean> sessionAdvanceOptionsWrapperBeans = this
-					.getUploadContext().getAdvanceOptionsWrapperBeans();
-
-			// merge edited information with session info
-			int i = 0;
-			for (SheetOptionsBean optionOne : sessionAdvanceOptionsWrapperBeans) {
-				mergeInformation(optionOne.getAdvanceOptionsBeans(),
-						advanceOptionsWrapperBeans.get(i)
-								.getAdvanceOptionsBeans());
-				i++;
-			}
-			// set edited information in session
-			this.getUploadContext().setAdvanceOptionsWrapperBeans(
-					sessionAdvanceOptionsWrapperBeans);
-
-			this.getUploadContext().setWrapperBeans(updateWrapperBeans(sessionAdvanceOptionsWrapperBeans,this.getUploadContext()
-					.getWrapperBeans()));
-
-			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
-			this.getUploadContext().setAuxList(lookupIdWrapperList);
-			
-			foundLookup = checkLookups(lookupIdWrapperList);
-
-				if (foundLookup) {
-					// there are no external IDs, but lookups, go to advance
-					// page 3
-//					salesforceObjects = salesforceService
-//							.getAllSalesforcObjects();
-					return "advanceOptionsThree";
-				} else {
-					//go to confirm page
-					optionsList = StringUtils.getOptions();
-					return "confirm";
-				}
-		} catch (Exception e) {
-			message = "There has been a problem";
-			log.error(message, e);
-			addActionMessage(e.getMessage());
-			return ERROR;
-
-		}
+		return null;
+//		//If Submit Is Null, we go to input
+//		if (this.getSubmit() == null) {
+//			this.advanceOptionsWrapperBeans = this.getUploadContext().getAdvanceOptionsWrapperBeans();
+//			fieldTypes = StringUtils.getAllFieldTypes();
+//			return Action.INPUT;
+//		}
+//		//"BACK" means we're not doing advanced options, so we don't care about any changes they made.
+//		if (this.getSubmit().equalsIgnoreCase(SUBMIT_BACK)) {
+//			return "back";
+//		}
+//		
+//		try {
+//			// get session structure information
+//			List<SheetOptionsBean> sessionAdvanceOptionsWrapperBeans = this
+//					.getUploadContext().getAdvanceOptionsWrapperBeans();
+//
+//			// merge edited information with session info
+//			int i = 0;
+//			for (SheetOptionsBean optionOne : sessionAdvanceOptionsWrapperBeans) {
+//				mergeInformation(optionOne.getAdvanceOptionsBeans(),
+//						advanceOptionsWrapperBeans.get(i)
+//								.getAdvanceOptionsBeans());
+//				i++;
+//			}
+//			// set edited information in session
+//			this.getUploadContext().setAdvanceOptionsWrapperBeans(
+//					sessionAdvanceOptionsWrapperBeans);
+//
+//			this.getUploadContext().setWrapperBeans(updateWrapperBeans(sessionAdvanceOptionsWrapperBeans,this.getUploadContext()
+//					.getWrapperBeans()));
+//
+//			lookupIdWrapperList = checkForSpecialData(sessionAdvanceOptionsWrapperBeans);
+//			this.getUploadContext().setAuxList(lookupIdWrapperList);
+//			
+//			foundLookup = checkLookups(lookupIdWrapperList);
+//
+//				if (foundLookup) {
+//					// there are no external IDs, but lookups, go to advance
+//					// page 3
+////					salesforceObjects = salesforceService
+////							.getAllSalesforcObjects();
+//					return "advanceOptionsThree";
+//				} else {
+//					//go to confirm page
+//					optionsList = StringUtils.getOptions();
+//					return "confirm";
+//				}
+//		} catch (Exception e) {
+//			message = "There has been a problem";
+//			log.error(message, e);
+//			addActionMessage(e.getMessage());
+//			return ERROR;
+//
+//		}
 	}
 	
-	private List<WrapperBean> updateWrapperBeans(
+	private List<ExcelWorksheetWrapperBean> updateWrapperBeans(
 			List<SheetOptionsBean> sessionAdvanceOptionsWrapperBeans,
-			List<WrapperBean> wrapperBeans) {
+			List<ExcelWorksheetWrapperBean> wrapperBeans) {
 		int j = 0;
 		for (SheetOptionsBean optionOne : sessionAdvanceOptionsWrapperBeans) {
-			WrapperBean bean = wrapperBeans.get(j);
+			ExcelWorksheetWrapperBean bean = wrapperBeans.get(j);
 			transformToWrapperBean(optionOne.getAdvanceOptionsBeans(), bean);
 			j++;
 		}
@@ -143,7 +144,7 @@ public class UploadActionCompositeOptionsOne extends AbstractUploadContextAware
 	}
 
 	private void transformToWrapperBean(List<SingleFieldOptionsBean> advanceBeans,
-			WrapperBean wrapperBean) {
+			ExcelWorksheetWrapperBean wrapperBean) {
 
 		List<String> types = new ArrayList<String>();
 		List<String> labels = new ArrayList<String>();

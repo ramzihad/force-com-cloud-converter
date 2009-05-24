@@ -13,8 +13,8 @@ public class FileServiceImplTest extends TestCaseWithLog {
 		
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		
-		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
-		WrapperBean wrapperBean = wrapperBeans.get(0);
+		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);
 		
 		assertEquals(Constants.STRING, wrapperBean.getTypes().get(0));
@@ -44,14 +44,14 @@ public class FileServiceImplTest extends TestCaseWithLog {
 		
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		
-		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
-		WrapperBean wrapperBean = wrapperBeans.get(0);
+		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);		
 		assertNotNull(wrapperBean);
 		
 		assertEquals(Constants.DATE, wrapperBean.getTypes().get(0));
 		
-		Date dateOne = (Date) wrapperBean.getObjects().get(0).get(0);
+		Date dateOne = (Date) wrapperBean.getData().get(0).get(0);
 		
 		log.info(dateOne.toString());
 
@@ -63,14 +63,14 @@ public class FileServiceImplTest extends TestCaseWithLog {
 		
 		FileServiceImpl fileServiceImpl = new FileServiceImpl();
 		
-		List<WrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
-		WrapperBean wrapperBean = wrapperBeans.get(0);
+		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);		
 		assertNotNull(wrapperBean);
 		
 		assertEquals(Constants.DATETIME, wrapperBean.getTypes().get(0));
 		
-		Date dateOne = (Date) wrapperBean.getObjects().get(0).get(0);
+		Date dateOne = (Date) wrapperBean.getData().get(0).get(0);
 		
 		log.info(dateOne.toString());
 

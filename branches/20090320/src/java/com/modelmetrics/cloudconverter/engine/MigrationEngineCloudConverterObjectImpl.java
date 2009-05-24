@@ -5,42 +5,28 @@ import java.util.List;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
-import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
+import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
-import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 
-public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
-		implements MigrationEngineIF {
+public class MigrationEngineCloudConverterObjectImpl extends
+		AbstractMigrationEngine {
 
-	
 	public void execute() throws Exception {
-		this.createCustomObject();
-	}
-
-
-	private void createCustomObject() throws Exception {
 
 		this.publishStatus("Beginning migration");
 		
-		ExcelWorksheetWrapperBean bean = this.getMigrationContext().getWrapperBean();
+		CloudConverterObject object = this.getMigrationContext().getCloudConverterObject();
 		
-		/*
-		 * 2009-03-21 RSC Convert that over to a MetadataProxy
-		 */
-		List<MetadataProxy> metadataProxies = new MetadataProxyCollectionBuilder()
-				.build(bean);
+		ExcelWorksheetWrapperBean bean = object.getOriginalData();
+
+		List<MetadataProxy> metadataProxies = object.getMetadataProxies();
 
 		this.getMigrationContext().setMetadataProxies(metadataProxies);
 
 		// check if it needs overriding	
-		this.cleanUpOrg(bean.getSheetName()+"__c", bean.getSheetName(), bean.getOverride().booleanValue());
-
-		/*
-		 * 2009-03-21 RSC //TODO rs should probably be a little more generic as
-		 * well but not changing for right now.
-		 */
+		this.cleanUpOrg(object.getObjectName(), object.getObjectLabel(), object.isExistsInSalesforce());
 
 		/*
 		 * build the basic custom object
@@ -53,7 +39,7 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 		 * Move the data
 		 */
 		try {
-			if (this.getMigrationContext().getExternalIdForUpsert() == null) {
+			if (object.getUpsertField() == null) {
 				new DataInsertExecutor().execute(this.getMigrationContext());
 			} else {
 				new DataUpsertExecutor().execute(this.getMigrationContext());
@@ -69,8 +55,5 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 		log.info("complete");
 
 	}
-
-
-
 
 }
