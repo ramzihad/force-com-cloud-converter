@@ -1,15 +1,8 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
-import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.LookupAndIdWrapper;
-import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cloudconverter.util.ExternalIdBean;
-import com.modelmetrics.cloudconverter.util.LookupBean;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class UploadContext  {
@@ -17,14 +10,31 @@ public class UploadContext  {
 	private Exception lastException;
 
 	private List<CloudConverterObject> cloudConverterObjects;
-	
-	private List<LookupBean> lookups = new ArrayList<LookupBean>();
-	
-
-	
-	
+		
 	private MigrationStatusSubscriber statusSubscriber;
+	
+	private int currentCloudConverterObjectIndex = -1;
 
+
+	public int getCurrentCloudConverterObjectIndex() {
+		return currentCloudConverterObjectIndex;
+	}
+
+	public void setCurrentCloudConverterObjectIndex(
+			int currentCloudConverterObjectIndex) {
+		this.currentCloudConverterObjectIndex = currentCloudConverterObjectIndex;
+	}
+	
+	public CloudConverterObject getCurrentCloudConverterObject() {
+		if (this.getCurrentCloudConverterObjectIndex() < 0 || this.getCurrentCloudConverterObjectIndex() > this.getCloudConverterObjects().size() -1) {
+			throw new RuntimeException("invalid cloud converter object index.");
+		}
+		return this.getCloudConverterObjects().get(this.getCurrentCloudConverterObjectIndex());
+	}
+	
+	public boolean isNextCloudConverterObjectPresent() {
+		return this.getCurrentCloudConverterObjectIndex() < this.getCloudConverterObjects().size() -1;
+	}
 
 	public Exception getLastException() {
 		return lastException;
@@ -45,14 +55,6 @@ public class UploadContext  {
 
 	public void setStatusSubscriber(MigrationStatusSubscriber statusSubscriber) {
 		this.statusSubscriber = statusSubscriber;
-	}
-
-	public List<LookupBean> getLookups() {
-		return lookups;
-	}
-
-	public void setLookups(List<LookupBean> lookups) {
-		this.lookups = lookups;
 	}
 
 	public List<CloudConverterObject> getCloudConverterObjects() {

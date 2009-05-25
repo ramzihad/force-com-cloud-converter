@@ -6,7 +6,7 @@ import com.modelmetrics.cloudconverter.mmimport.services.ExistsInSalesforceDecor
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.opensymphony.xwork2.Action;
 
-public class StandardImportPrepareAction extends AbstractUploadContextAware {
+public class ImportPrepareAction extends AbstractUploadContextAware {
 
 	private SalesforceService salesforceService;
 	

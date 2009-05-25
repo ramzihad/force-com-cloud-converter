@@ -42,7 +42,7 @@ public class StandardImportTest extends TestCaseWithDevOrg {
 		assertEquals(ActionSupport.SUCCESS, s);
 
 		// standard import prepare
-		StandardImportPrepareAction standardImportPrepareAction = new StandardImportPrepareAction();
+		ImportPrepareAction standardImportPrepareAction = new ImportPrepareAction();
 		standardImportPrepareAction.setUploadContext(uploadContext);
 		standardImportPrepareAction
 				.setSalesforceSessionContext(salesforceSessionContext);

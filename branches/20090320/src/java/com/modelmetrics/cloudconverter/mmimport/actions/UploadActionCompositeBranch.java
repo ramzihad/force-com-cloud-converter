@@ -1,21 +1,7 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.ServletRequestAware;
 
-import com.modelmetrics.cloudconverter.mmimport.services.SingleFieldOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.SheetOptionsBean;
-import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
-import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
-import com.modelmetrics.cloudconverter.mmimport.services.ValueId;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.opensymphony.xwork2.Action;
 
 public class UploadActionCompositeBranch extends AbstractUploadContextAware {

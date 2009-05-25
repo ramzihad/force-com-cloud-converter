@@ -65,43 +65,31 @@ public class StringUtils {
 		return buffer.toString();
 	}
 	
-	public static List<ValueId> getUniques() {
-		List<ValueId> types = new ArrayList<ValueId>();
-		types.add(new ValueId("false","false"));
-		types.add(new ValueId("true","true"));
-		return types;
-	}
-	
-	public static Map<Long, String> getOptions() {
-		 Map<Long, String> optionsList = new HashMap<Long, String>();
-		optionsList.put(Long.valueOf(0), "No");
-		optionsList.put(Long.valueOf(1), "Yes");
-		return optionsList;
-	}
+
 
 	/**
 	 * returns a list with all field types
 	 * 
 	 * @return
 	 */
-	public static List<ValueId> getAllFieldTypes() {
+	public static List<String> getAllFieldTypes() {
 
-		List<ValueId> types = new ArrayList<ValueId>();
+		List<String> types = new ArrayList<String>();
 
-		types.add(new ValueId(Constants.DATE,Constants.DATE));
-		types.add(new ValueId(Constants.DATETIME,Constants.DATETIME));
-		types.add(new ValueId(Constants.DOUBLE,Constants.DOUBLE));
-		types.add(new ValueId(Constants.FLOAT,Constants.FLOAT));
-		types.add(new ValueId(Constants.INT,Constants.INT));
-		types.add(new ValueId(Constants.PERCENTAGE,Constants.PERCENTAGE));
-		types.add(new ValueId(Constants.CURRENCY,Constants.CURRENCY));
-		types.add(new ValueId(Constants.EMAIL,Constants.EMAIL));
-		types.add(new ValueId(Constants.PHONE_NUMBER,Constants.PHONE_NUMBER));
-		types.add(new ValueId(Constants.STRING,Constants.STRING));
-		types.add(new ValueId(Constants.URL,Constants.URL));
-		types.add(new ValueId(Constants.EXTERNAL_ID,Constants.EXTERNAL_ID));
-		types.add(new ValueId(Constants.LOOKUP,Constants.LOOKUP));
-		types.add(new ValueId(Constants.PICKUPLIST,Constants.PICKUPLIST));
+		types.add(Constants.DATE);
+		types.add(Constants.DATETIME);
+		types.add(Constants.DOUBLE);
+		types.add(Constants.FLOAT);
+		types.add(Constants.INT);
+		types.add(Constants.PERCENTAGE);
+		types.add(Constants.CURRENCY);
+		types.add(Constants.EMAIL);
+		types.add(Constants.PHONE_NUMBER);
+		types.add(Constants.STRING);
+		types.add(Constants.URL);
+		types.add(Constants.EXTERNAL_ID);
+		types.add(Constants.LOOKUP);
+		types.add(Constants.PICKLIST);
 		return types;
 	}
 

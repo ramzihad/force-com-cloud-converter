@@ -144,9 +144,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
-	<bean id="importStandardPrepare" scope="prototype"
+	<bean id="importPrepare" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.mmimport.actions.StandardImportPrepareAction">
+		class="com.modelmetrics.cloudconverter.mmimport.actions.ImportPrepareAction">
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
@@ -155,7 +155,16 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		class="com.modelmetrics.cloudconverter.mmimport.actions.StandardImportExecuteAction">
 	</bean>
 
-
+	<bean id="importAdvancedLoopManager" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportLoopManagerAction">
+	</bean>
+	
+	<bean id="importAdvancedOptions" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportSetOptionsAction">
+	</bean>
+	
 	<!-- STRUTS2 -->
 	<bean id="abstractUtilityContextAware" abstract="true">
 		<property name="utilityContext">

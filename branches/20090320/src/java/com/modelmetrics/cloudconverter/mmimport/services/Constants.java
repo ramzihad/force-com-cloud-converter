@@ -28,5 +28,5 @@ public class Constants {
 	
 	public static final String LOOKUP = "Lookup";
 	
-	public static final String PICKUPLIST = "Pickuplist";
+	public static final String PICKLIST = "Picklist";
 }
