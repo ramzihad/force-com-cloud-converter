@@ -12,7 +12,7 @@
 
 		<s:actionerror />
 		<s:fielderror />
-		<s:form action="import2" method="POST" enctype="multipart/form-data" theme="simple">
+		<s:form action="processUpload" method="POST" enctype="multipart/form-data" theme="simple">
 
 			
 			

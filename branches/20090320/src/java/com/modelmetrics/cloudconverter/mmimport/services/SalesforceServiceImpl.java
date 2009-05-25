@@ -13,6 +13,12 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 		for (CloudConverterObject current : uploadContext
 				.getCloudConverterObjects()) {
 
+			// notify subscribers
+			uploadContext.getStatusSubscriber().publish(
+					"Starting object: " + current.getObjectLabel() + " ("
+							+ current.getObjectName() + ")");
+
+			// get started
 			MigrationContext migrationContext = new MigrationContextFactory()
 					.buildMigrationContext(this.getSalesforceSession());
 
@@ -21,7 +27,12 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 			MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
 					.build(migrationContext);
 			migrationEngineIF.setMigrationContext(migrationContext);
+			migrationEngineIF.subscribeToStatus(uploadContext.getStatusSubscriber());
 			migrationEngineIF.execute();
+			
+			uploadContext.getStatusSubscriber().publish(
+					"Object complete: " + current.getObjectLabel() + " ("
+							+ current.getObjectName() + ")");
 
 		}
 

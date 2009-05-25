@@ -26,9 +26,9 @@ public class UploadActionCompositeBranch extends AbstractUploadContextAware {
 
 	private static final String SUBMIT_ADVANCED = "Show Advanced Options";
 
-	private static final String SUCCESS_ADVANCED = "advancedOptionsOne";
+	private static final String SUCCESS_ADVANCED = "success_advanced";
 
-	private static final String SUCCESS_STANDARD = "standardCheckExisting";
+	private static final String SUCCESS_STANDARD = "success_standard";
 
 	private static final Logger log = Logger
 			.getLogger(UploadActionCompositeBranch.class);

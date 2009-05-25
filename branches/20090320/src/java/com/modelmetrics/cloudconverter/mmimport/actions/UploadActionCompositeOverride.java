@@ -6,7 +6,7 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 
 	private static final long serialVersionUID = 1760991341958287065L;
 
-	private static final String SUBMIT_CANCEL = "No";
+	private static final String SUBMIT_CONFIRM = "Yes";
 	
 	private static final String SUCCESS_CANCEL = "cancel";
 	
@@ -19,11 +19,11 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 			return Action.INPUT;
 		}
 		
-		if (this.getSubmit().startsWith(SUBMIT_CANCEL)) {
-			return SUCCESS_CANCEL;
+		if (this.getSubmit().startsWith(SUBMIT_CONFIRM)) {
+			return Action.SUCCESS;
 		}
 		
-		return SUCCESS;
+		return SUCCESS_CANCEL;
 	}
 
 

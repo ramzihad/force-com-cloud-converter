@@ -42,28 +42,19 @@
 			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
 		</action>
 		
-		<action name="import1" class="uploadActionCompositeInitialize">
+		<action name="startUpload" class="uploadActionCompositeInitialize">
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
-		<action name="import2" class="uploadActionComposite" >
-			<!--result name="success" >importExecute</result-->
-			<result name="success">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
+		<action name="processUpload" class="uploadActionComposite" >
+			<result name="success" type="redirectAction">importBranch</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
 		</action>
-		
-		<!-- RSC 2009-05-23
-		<action name="backToBranch" class="uploadActionCompositeBranch" method="back" >
-				<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
-		</action> -->
 		
 		<action name="importBranch" class="uploadActionCompositeBranch" >
-			<result name="view" type="redirectAction">importExecute</result>
-			<!--result name="view">/WEB-INF/jsp/uploadComposite/view.jsp</result-->
-			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="advanceOptionsOne" type="redirectAction">importOptionsOne</result>
+			<result name="success_standard" type="redirectAction">importStandardPrepare</result>
+			<result name="success_advanced" type="redirectAction">importOptionsOne</result>
 		</action>
 		
 		<!-- RSC 2009-05-23
@@ -114,12 +105,35 @@
 			<result name="success" type="redirectAction">importExecute</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
+				
 		<action name="importExecute" class="uploadActionCompositeExecute" >
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
 		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
 			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
+		</action>
+		
+		<action name="importStandardPrepare" class="importStandardPrepare" >
+			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="input" type="redirectAction">importStandardOverride</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+
+		<action name="importStandardOverride" class="uploadActionCompositeOverride" >
+			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="cancel" type="redirectAction">startUpload</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/standardOverride.jsp</result>
+		</action>
+
+		<action name="importStandardExecute" class="importStandardExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
+
 		</action>
 		
 		<!-- Force.com Platform Utilities -->
