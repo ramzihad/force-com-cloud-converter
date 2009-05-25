@@ -23,7 +23,12 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 						.getSalesforceSession());
 
 		//giddyup
-		salesforceService.execute(this.getUploadContext());
+		try {
+			salesforceService.execute(this.getUploadContext());
+		} catch (Exception e) {
+			this.getUploadContext().setLastException(e);
+			return ERROR;
+		}
 
 		//done
 		return SUCCESS;

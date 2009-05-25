@@ -62,100 +62,61 @@ public class DeleteExecutor {
 
 	}
 
-//	public void execute() throws Exception {
-//
-//		log.debug("Executing delete for ... " + metadata[0].getMetadata().getFullName()); 
-//				
-//		if (this.metadata == null) {
-//			throw new RuntimeException("no metadata to work with");
-//		}
-//
-//		int metadataIndex = -1;
-//		int metadataChunkIndex = -1;
-//
-//		UpdateMetadata[] metadataChunk = null;
-//
-//		if (metadata.length > 10) {
-//			while (metadataIndex < metadata.length) {
-//				metadataChunk = new UpdateMetadata[10];
-//				metadataChunkIndex = -1;
-//
-//				while (true) {
-//					metadataIndex++;
-//					metadataChunkIndex++;
-//
-//					if (metadataIndex < metadata.length)
-//						metadataChunk[metadataChunkIndex] = metadata[metadataIndex];
-//
-//					if (metadataChunkIndex == 9
-//							|| metadataIndex == metadata.length - 1) {
-//						break;
-//					}
-//				}
-//
-//				if (metadataChunk.length > 0 && metadataChunk[0] != null) {
-//					System.out.println("metadataChunk.length"
-//							+ metadataChunk.length);
-//					this.handleExecute(metadataChunk);
-//				}
-//			}
-//		} else {
-//			this.handleExecute(this.metadata);
-//		}
-//	}
-
 	private void handleExecute(Metadata[] metadataChunk) {
-
-		// log.debug("the type of Metadata is " +
-		// metadataChunk[0].getClass().getName());
-		// System.out.println("the type of Metadata is " +
-		// metadataChunk[0].getFullName());
-
+		AsyncResult[] ars = null;
 		try {
-			AsyncResult[] ars = metadatabinding.delete(metadataChunk);
-			if (ars == null) {
-				log.debug("The object was not deleted successfully");
+			ars = metadatabinding.delete(metadataChunk);
+		} catch (Exception e) {
+			throw new RuntimeException(
+					"Coulnd't check metadata binding status. ", e);
+		}
+		if (ars == null) {
+			log.debug("The object was not deleted successfully");
+			return;
+		}
+
+		String createdObjectId = ars[0].getId();
+		String[] ids = new String[] { createdObjectId };
+		boolean done = false;
+		long waitTimeMilliSecs = ONE_SECOND;
+		AsyncResult[] arsStatus = null;
+
+		/**
+		 * After the create() call completes, we must poll the results of the
+		 * checkStatus() call until it indicates that the create operation is
+		 * completed.
+		 */
+		while (!done) {
+			try {
+				arsStatus = metadatabinding.checkStatus(ids);
+			} catch (Exception e) {
+				throw new RuntimeException(
+						"Coulnd't check metadata binding status. ", e);
+			}
+			if (arsStatus == null) {
+				System.out.println("The object status cannot be retrieved");
 				return;
 			}
+			done = arsStatus[0].isDone();
+			if (arsStatus[0].getStatusCode() != null) {
+				log.debug("Error status code: " + arsStatus[0].getStatusCode());
+				log.debug("Error message: " + arsStatus[0].getMessage());
 
-			String createdObjectId = ars[0].getId();
-			String[] ids = new String[] { createdObjectId };
-			boolean done = false;
-			long waitTimeMilliSecs = ONE_SECOND;
-			AsyncResult[] arsStatus = null;
-
-			/**
-			 * After the create() call completes, we must poll the results of
-			 * the checkStatus() call until it indicates that the create
-			 * operation is completed.
-			 */
-			while (!done) {
-				arsStatus = metadatabinding.checkStatus(ids);
-				if (arsStatus == null) {
-					System.out.println("The object status cannot be retrieved");
-					return;
-				}
-				done = arsStatus[0].isDone();
-				if (arsStatus[0].getStatusCode() != null) {
-					log.debug("Error status code: "
-							+ arsStatus[0].getStatusCode());
-					log.debug("Error message: " + arsStatus[0].getMessage());
-				}
-				Thread.sleep(waitTimeMilliSecs);
-				// double the wait time for the next iteration
-				waitTimeMilliSecs *= 2;
-				log.debug("The object state is " + arsStatus[0].getState());
-				log.debug("The message is " + arsStatus[0].getMessage());
+				throw new RuntimeException("Failed to delete! "
+						+ arsStatus[0].getMessage());
 			}
-
-			log.debug("The ID for the deleted object is "
-					+ arsStatus[0].getId());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("failed! ");
-
+			try {
+				Thread.sleep(waitTimeMilliSecs);
+			} catch (Exception e) {
+				log.debug("during Thread,sleep", e);
+			}
+			// double the wait time for the next iteration
+			waitTimeMilliSecs *= 2;
+			log.debug("The object state is " + arsStatus[0].getState());
+			log.debug("The message is " + arsStatus[0].getMessage());
 		}
+
+		log.debug("The ID for the deleted object is " + arsStatus[0].getId());
 
 	}
 }

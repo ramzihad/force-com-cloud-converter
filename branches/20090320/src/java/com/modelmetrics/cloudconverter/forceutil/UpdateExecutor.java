@@ -69,8 +69,9 @@ public class UpdateExecutor {
 
 	public void execute() throws Exception {
 
-		log.debug("Executing update for ... " + metadata[0].getMetadata().getFullName()); 
-				
+		log.debug("Executing update for ... "
+				+ metadata[0].getMetadata().getFullName());
+
 		if (this.metadata == null) {
 			throw new RuntimeException("no metadata to work with");
 		}
@@ -116,56 +117,66 @@ public class UpdateExecutor {
 		// System.out.println("the type of Metadata is " +
 		// metadataChunk[0].getFullName());
 
+		AsyncResult[] ars = null;
+
 		try {
-			AsyncResult[] ars = metadatabinding.update(metadataChunk);
-			if (ars == null) {
-				log.debug("The object was not created successfully");
+			ars = metadatabinding.update(metadataChunk);
+		} catch (Exception e) {
+			throw new RuntimeException(
+					"Couldn't execute metadata binding update.", e);
+		}
+
+		if (ars == null) {
+			log.debug("The object was not created successfully");
+			return;
+		}
+
+		String createdObjectId = ars[0].getId();
+		String[] ids = new String[] { createdObjectId };
+		boolean done = false;
+		long waitTimeMilliSecs = ONE_SECOND;
+		AsyncResult[] arsStatus = null;
+
+		/**
+		 * After the create() call completes, we must poll the results of the
+		 * checkStatus() call until it indicates that the create operation is
+		 * completed.
+		 */
+		while (!done) {
+			try {
+				arsStatus = metadatabinding.checkStatus(ids);
+			} catch (Exception e) {
+				throw new RuntimeException(
+						"Couldn't execute metadata binding update.", e);
+			}
+			if (arsStatus == null) {
+				System.out.println("The object status cannot be retrieved");
 				return;
 			}
-
-			String createdObjectId = ars[0].getId();
-			String[] ids = new String[] { createdObjectId };
-			boolean done = false;
-			long waitTimeMilliSecs = ONE_SECOND;
-			AsyncResult[] arsStatus = null;
-
-			/**
-			 * After the create() call completes, we must poll the results of
-			 * the checkStatus() call until it indicates that the create
-			 * operation is completed.
-			 */
-			while (!done) {
-				arsStatus = metadatabinding.checkStatus(ids);
-				if (arsStatus == null) {
-					System.out.println("The object status cannot be retrieved");
-					return;
-				}
-				done = arsStatus[0].isDone();
-				if (arsStatus[0].getStatusCode() != null) {
-					log.debug("Error status code: "
-							+ arsStatus[0].getStatusCode());
-					log.debug("Error message: " + arsStatus[0].getMessage());
-				}
-				Thread.sleep(waitTimeMilliSecs);
-				// double the wait time for the next iteration
-				waitTimeMilliSecs *= 2;
-				log.debug("The object state is " + arsStatus[0].getState());
-				log.debug("The message is " + arsStatus[0].getMessage());
-				if (arsStatus[0].getState() == AsyncRequestState.Error) {
-					throw new RuntimeException(
-							"AsyncRequestState is 'Error' - Create not completed. Message is ["
-									+ arsStatus[0].getMessage() + "] (backets added)");
-				}
+			done = arsStatus[0].isDone();
+			if (arsStatus[0].getStatusCode() != null) {
+				log.debug("Error status code: " + arsStatus[0].getStatusCode());
+				log.debug("Error message: " + arsStatus[0].getMessage());
+				throw new RuntimeException("Update executor failed! " + arsStatus[0].getMessage());
 			}
-
-			log.debug("The ID for the created object is "
-					+ arsStatus[0].getId());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("failed! ");
-
+			try {
+				Thread.sleep(waitTimeMilliSecs);
+			} catch (Exception e) {
+				throw new RuntimeException("Thread sleep failed.", e);
+			}
+			// double the wait time for the next iteration
+			waitTimeMilliSecs *= 2;
+			log.debug("The object state is " + arsStatus[0].getState());
+			log.debug("The message is " + arsStatus[0].getMessage());
+			if (arsStatus[0].getState() == AsyncRequestState.Error) {
+				throw new RuntimeException(
+						"AsyncRequestState is 'Error' - Create not completed. Message is ["
+								+ arsStatus[0].getMessage()
+								+ "] (backets added)");
+			}
 		}
+
+		log.debug("The ID for the created object is " + arsStatus[0].getId());
 
 	}
 }

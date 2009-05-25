@@ -94,68 +94,76 @@ public class CreateExecutor {
 		// System.out.println("the type of Metadata is " +
 		// metadataChunk[0].getFullName());
 
+		AsyncResult[] ars = null;
 		try {
-			AsyncResult[] ars = metadatabinding.create(metadataChunk);
-			if (ars == null) {
-				log.debug("The object was not created successfully");
+			ars = metadatabinding.create(metadataChunk);
+		} catch (Exception e) {
+			throw new RuntimeException(
+					"Couldn't execute metadata binding create.", e);
+		}
+		if (ars == null) {
+			log.debug("The object was not created successfully");
+			return;
+		}
+
+		String createdObjectId = ars[0].getId();
+		String[] ids = new String[] { createdObjectId };
+		boolean done = false;
+		long waitTimeMilliSecs = ONE_SECOND;
+		AsyncResult[] arsStatus = null;
+
+		/**
+		 * After the create() call completes, we must poll the results of the
+		 * checkStatus() call until it indicates that the create operation is
+		 * completed.
+		 */
+		while (!done) {
+			try {
+				arsStatus = metadatabinding.checkStatus(ids);
+			} catch (Exception e) {
+				throw new RuntimeException(
+						"Couldn't execute metadata binding check status.", e);
+			}
+			if (arsStatus == null) {
+				System.out.println("The object status cannot be retrieved");
 				return;
 			}
-
-			String createdObjectId = ars[0].getId();
-			String[] ids = new String[] { createdObjectId };
-			boolean done = false;
-			long waitTimeMilliSecs = ONE_SECOND;
-			AsyncResult[] arsStatus = null;
-
-			/**
-			 * After the create() call completes, we must poll the results of
-			 * the checkStatus() call until it indicates that the create
-			 * operation is completed.
-			 */
-			while (!done) {
-				arsStatus = metadatabinding.checkStatus(ids);
-				if (arsStatus == null) {
-					System.out.println("The object status cannot be retrieved");
-					return;
-				}
-				done = arsStatus[0].isDone();
-				if (arsStatus[0].getStatusCode() != null) {
-					// RunUISWTInterface.setLabelAndBar(arsStatus[0].getStatusCode().toString(),
-					// 0);
-					log.debug("Error status code: "
-							+ arsStatus[0].getStatusCode());
-					log.debug("Error message: " + arsStatus[0].getMessage());
-				}
+			done = arsStatus[0].isDone();
+			if (arsStatus[0].getStatusCode() != null) {
+				// RunUISWTInterface.setLabelAndBar(arsStatus[0].getStatusCode().toString(),
+				// 0);
+				log.debug("Error status code: " + arsStatus[0].getStatusCode());
+				log.debug("Error message: " + arsStatus[0].getMessage());
+				throw new RuntimeException("Failed to execute create! " + arsStatus[0].getMessage());
+			}
+			try {
 				Thread.sleep(waitTimeMilliSecs);
-				// double the wait time for the next iteration
-				waitTimeMilliSecs *= 2;
-				log.debug("The object state is " + arsStatus[0].getState());
+			} catch (Exception e) {
+				throw new RuntimeException("Thread sleep failed", e);
+			}
+			// double the wait time for the next iteration
+			waitTimeMilliSecs *= 2;
+			log.debug("The object state is " + arsStatus[0].getState());
 
-				
-				StringBuffer errors = new StringBuffer();
-				log.debug("arsStatus Length is " + arsStatus.length);
-				for (int i = 0; i < arsStatus.length; i++) {
-					log.debug("arsStatus element: " + i + ", done? " + arsStatus[i].isDone());
-					if (arsStatus[i].getState() == AsyncRequestState.Error) {
-						errors.append(
-								"AsyncRequestState is 'Error' - Create not completed. Message is ["
-										+ arsStatus[0].getMessage() + "] (backets added)");
-					}
-				}
-				
-				if (errors.length() > 0) {
-					throw new RuntimeException(errors.toString());
+			StringBuffer errors = new StringBuffer();
+			log.debug("arsStatus Length is " + arsStatus.length);
+			for (int i = 0; i < arsStatus.length; i++) {
+				log.debug("arsStatus element: " + i + ", done? "
+						+ arsStatus[i].isDone());
+				if (arsStatus[i].getState() == AsyncRequestState.Error) {
+					errors
+							.append("AsyncRequestState is 'Error' - Create not completed. Message is ["
+									+ arsStatus[0].getMessage()
+									+ "] (backets added)");
 				}
 			}
 
-			log.debug("The ID for the created object is "
-					+ arsStatus[0].getId());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException("failed! ");
-
+			if (errors.length() > 0) {
+				throw new RuntimeException(errors.toString());
+			}
 		}
+
+		log.debug("The ID for the created object is " + arsStatus[0].getId());
 
 	}
 }

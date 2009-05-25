@@ -55,8 +55,7 @@ public class UploadContext  {
 	}
 
 	public String getErrorMessage() {
-		return this.getLastException().getMessage() + ", "
-				+ this.getLastException().getLocalizedMessage();
+		return this.getLastException().getMessage() ;
 	}
 
 	public MigrationStatusSubscriber getStatusSubscriber() {

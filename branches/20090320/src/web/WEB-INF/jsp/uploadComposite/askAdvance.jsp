@@ -11,13 +11,13 @@
 
 <h1>Standard Import</h1>
 
-<p>Perfect for standard object import. One click does it all!</p>
+<p>Perfect for one-click creation of objects and data in salesforce.com.</p>
 
 <p><s:submit name="submit" value="Standard Import" /></p>
 
 <h1>Advanced Import</h1>
 
-<p>Change field names, data types, specify external ID's, lookups and picklists.</p>
+<p>Review worksheet settings before creating objects in salesforce.com.  Change field names, data types, specify external ID's, lookups and picklists.</p>
 
 <p><s:submit name="submit" value="Show Advanced Options" /></p>
 
