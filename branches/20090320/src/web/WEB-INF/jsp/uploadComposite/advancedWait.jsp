@@ -7,7 +7,7 @@
 
 	<body>
 
-	<h2>Advanced Options: Importing Object <s:property value="uploadContext.currentCloudConverterObjectIndex + 1" /> of <s:property value="uploadContext.cloudConverterObjects.size" /></h2>
+	<h2>Advanced Options: Importing Object <s:property value="uploadContext.currentCloudConverterObjectIndex + 1" /> of <s:property value="uploadContext.cloudConverterObjects.size" /> - <s:property value="uploadContext.currentCloudConverterObject.objectLabel" /></h2>
 	
 	<p>Once this object is complete, you will be able to set options for the next.</p>
 	

@@ -1,5 +1,6 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
@@ -18,14 +19,21 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	private List<MetadataProxy> metadata;
 	
 	private List<String> fieldTypes = StringUtils.getAllFieldTypes();
+	
+	private Collection<String> lookupObjects;
 
 	public String execute() throws Exception {
-	
+		
+		//general prep
+		lookupObjects = this.getUploadContext().getObjectToIdMap().keySet();
+		
+		//first time here?
 		if (this.getSubmit() == null) {
 			metadata = this.getUploadContext().getCurrentCloudConverterObject().getMetadataProxies();
 			return Action.INPUT;
 		}
 		
+		//update
 		this.getUploadContext().getCurrentCloudConverterObject().setMetadataProxies(this.getMetadata());
 		
 		return Action.SUCCESS;
@@ -54,5 +62,13 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 	public void setFieldTypes(List<String> fieldTypes) {
 		this.fieldTypes = fieldTypes;
+	}
+
+	public Collection<String> getLookupObjects() {
+		return lookupObjects;
+	}
+
+	public void setLookupObjects(Collection<String> lookupObjects) {
+		this.lookupObjects = lookupObjects;
 	}
 }

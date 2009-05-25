@@ -21,6 +21,10 @@ public class MetadataProxy {
 	private String defaultValue;
 	
 	private String example;
+	
+	private String lookupObject;
+	
+	private String lookupField;
 
 	public String getExample() {
 		return example;
@@ -101,6 +105,22 @@ public class MetadataProxy {
 	public void setTypeString(String typeString) {
 		this.setType(FieldType.fromString(typeString));
 		
+	}
+
+	public String getLookupObject() {
+		return lookupObject;
+	}
+
+	public void setLookupObject(String lookupObject) {
+		this.lookupObject = lookupObject;
+	}
+
+	public String getLookupField() {
+		return lookupField;
+	}
+
+	public void setLookupField(String lookupField) {
+		this.lookupField = lookupField;
 	}
 	
 	

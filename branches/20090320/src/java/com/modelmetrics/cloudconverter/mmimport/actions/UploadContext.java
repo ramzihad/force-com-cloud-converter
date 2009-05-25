@@ -1,6 +1,7 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
 import java.util.List;
+import java.util.Map;
 
 import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
@@ -15,6 +16,15 @@ public class UploadContext  {
 	
 	private int currentCloudConverterObjectIndex = -1;
 
+	private Map<String, List<String>> objectToIdMap;
+	
+	public Map<String, List<String>> getObjectToIdMap() {
+		return objectToIdMap;
+	}
+
+	public void setObjectToIdMap(Map<String, List<String>> objectToIdMap) {
+		this.objectToIdMap = objectToIdMap;
+	}
 
 	public int getCurrentCloudConverterObjectIndex() {
 		return currentCloudConverterObjectIndex;

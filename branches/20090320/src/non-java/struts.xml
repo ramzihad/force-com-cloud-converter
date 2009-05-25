@@ -63,6 +63,13 @@
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
 		
+		<action name="importAdvancedPrepareNext" class="importAdvancedPrepareNext" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/preparingNext.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedOptions</result>
+		</action>
+		
 		<action name="importAdvancedOverride" class="uploadActionCompositeOverride" >
 			<result name="success" type="redirectAction">importAdvancedLoop</result>
 			<result name="cancel" type="redirectAction">startUpload</result>
@@ -71,7 +78,7 @@
 		</action>
 		
 		<action name="importAdvancedLoop" class="importAdvancedLoopManager" >
-			<result name="success_next" type="redirectAction">importAdvancedOptions</result>
+			<result name="success_next" type="redirectAction">importAdvancedPrepareNext</result>
 			<result name="success_finish" >/WEB-INF/jsp/uploadComposite/view.jsp</result>
 		</action>
 
