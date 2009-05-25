@@ -54,25 +54,25 @@
 		<action name="importBranch" class="uploadActionCompositeBranch" >
 			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
 			<result name="success_standard" type="redirectAction">importStandardPrepare</result>
-			<result name="success_advanced" type="redirectAction">importOptionsOne</result>
+			<result name="success_advanced" type="redirectAction">importAdvancedPrepare</result>
 		</action>
 
 		<action name="importAdvancedPrepare" class="importPrepare" >
-			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>
 			<result name="input" type="redirectAction">importAdvancedOverride</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
 		
 		<action name="importAdvancedOverride" class="uploadActionCompositeOverride" >
-			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>
 			<result name="cancel" type="redirectAction">startUpload</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="input">/WEB-INF/jsp/uploadComposite/standardOverride.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/advancedOverride.jsp</result>
 		</action>
 		
 		<action name="importAdvancedLoop" class="importAdvancedLoopManager" >
 			<result name="success_next" type="redirectAction">importAdvancedOptions</result>
-			<result name="success_finish" >/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="success_finish" >/WEB-INF/jsp/uploadComposite/view.jsp</result>
 		</action>
 
 		<action name="importAdvancedOptions" class="importAdvancedOptions" >
@@ -80,48 +80,22 @@
 			<result name="success" type="redirectAction">importAdvancedExecute</result>
 		</action>
 		
-		<!-- RSC 2009-05-23 Two Should be useless at this point -->
-		<action name="importOptionsTwo" class="uploadActionCompositeOptionsTwo" >
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="confirm">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
-			<result name="advanceOptionsThree" type="redirectAction">importOptionsThree</result>
+		<action name="importAdvancedExecute" class="importAdvancedExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/advancedWait.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>		
 		</action>
-		
-		<action name="importOptionsThree" class="uploadActionCompositeOptionsThree" >
-			<result name="input">/WEB-INF/jsp/uploadComposite/advanceOptionsThree.jsp</result>
-			<result name="back" type="redirectAction">importOptionsOne</result>
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="confirm">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
-		</action>
-		
-		<action name="loadObjectFields" class="uploadActionCompositeOptionsThree" method="loadObjectFields" >
-			<result name="success" type="stream">
-				<param name="contentType">text/plain</param>
-				<param name="inputName">inputStream</param>
-			</result>
-		</action>
-		
-		<action name="confirm" class="uploadActionCompositeConfirm" >
-			<result name="view" type="redirectAction">importExecute</result>
-			<result name="override">/WEB-INF/jsp/uploadComposite/override.jsp</result>
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="input">/WEB-INF/jsp/uploadComposite/confirmAdvance.jsp</result>
-			<result name="startOver">/WEB-INF/jsp/uploadComposite/advanceOptionsOne.jsp</result>
-		</action>
-		
-		<!-- RSC 2009-05-24
-		<action name="importOverride" class="uploadActionCompositeOverride" >
-			<result name="success" type="redirectAction">importExecute</result>
-			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-		</action> -->
-				
+
+		<!-- RSC 2009-05-23 DONE		
 		<action name="importExecute" class="uploadActionCompositeExecute" >
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
 		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
 			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
-		</action>
+		</action> -->
 		
 		<action name="importStandardPrepare" class="importPrepare" >
 			<result name="success" type="redirectAction">importStandardExecute</result>

@@ -12,6 +12,9 @@ public class ImportPrepareAction extends AbstractUploadContextAware {
 	
 	public String execute() throws Exception {
 		
+		//reset the current index number
+		this.getUploadContext().setCurrentCloudConverterObjectIndex(-1);
+		
 		//decorate with object names
 		new CustomObjectNameDecorator().decorate(this.getUploadContext().getCloudConverterObjects());
 		

@@ -162,7 +162,7 @@ public class CustomFieldBuilder {
 					field.setExternalId(Boolean.TRUE);
 					//RSC 2009-05-23 Modified to not use the bean - should always be unique (even though I thought it might be OK to allow them to select it).
 					field.setUnique(Boolean.TRUE);
-					field.setLength(current.getPrecision());
+					field.setLength(current.getLength());
 					field.setCaseSensitive(Boolean.FALSE);
 					field.setLabel(current.getLabel());
 					customFieldsCollection.add(field);

@@ -4,11 +4,16 @@ import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceServiceFactory;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
 
+/**
+ * proceeds only with the current cloud converter object.
+ * 
+ * @author Reid Carlberg rcarlberg@modelmetrics.com
+ * @since 2009-05-24
+ * 
+ */
 public class AdvancedImportExecuteAction extends AbstractUploadContextAware {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -1198350407323092698L;
 
 	public String execute() throws Exception {
@@ -23,7 +28,7 @@ public class AdvancedImportExecuteAction extends AbstractUploadContextAware {
 						.getSalesforceSession());
 
 		//giddyup
-		salesforceService.execute(this.getUploadContext());
+		salesforceService.execute(this.getUploadContext().getCurrentCloudConverterObject(), this.getUploadContext().getStatusSubscriber());
 
 		//done
 		return SUCCESS;

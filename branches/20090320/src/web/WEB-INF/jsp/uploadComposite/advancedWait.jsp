@@ -7,7 +7,9 @@
 
 	<body>
 
-	<h2>Importing Your App > Please Wait</h2>
+	<h2>Advanced Options: Importing Object <s:property value="uploadContext.currentCloudConverterObjectIndex + 1" /> of <s:property value="uploadContext.cloudConverterObjects.size" /></h2>
+	
+	<p>Once this object is complete, you will be able to set options for the next.</p>
 	
 	<h2>Current Status, Newest First</h2>
 	
@@ -26,6 +28,7 @@
 	<p>Have a suggestion on how to improve this application? Contact Reid Carlberg at <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a> or on Twitter at <a href="http://Twitter.com/ReidCarlberg" target="_blank">@ReidCarlberg</a>.</p>
 	
 	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
+	
 
 	</body>
 </html>

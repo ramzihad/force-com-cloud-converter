@@ -206,18 +206,22 @@ public class MigrationContext {
 		this.customLookupFields = customLookupFields;
 	}
 
+	//RSC Kill?
 	public List<MetadataProxy> getMetadataProxies() {
 		return metadataProxies;
 	}
 
+	//RSC Kill?
 	public void setMetadataProxies(List<MetadataProxy> metadataProxies) {
 		this.metadataProxies = metadataProxies;
 	}
 
+	//RSC Kill?
 	public ExcelWorksheetWrapperBean getWrapperBean() {
 		return wrapperBean;
 	}
 
+	//RSC Kill?
 	public void setWrapperBean(ExcelWorksheetWrapperBean wrapperBean) {
 		this.wrapperBean = wrapperBean;
 	}

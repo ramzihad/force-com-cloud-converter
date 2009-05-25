@@ -2,7 +2,7 @@ package com.modelmetrics.cloudconverter.mmimport.services;
 
 public class Constants {
 
-	public static final String STRING = "String";
+	public static final String TEXT = "Text";
 
 	public static final String DATE = "Date";
 

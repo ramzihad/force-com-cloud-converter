@@ -94,5 +94,14 @@ public class MetadataProxy {
 		this.uniqueExternalId = uniqueExternalId;
 	}
 	
+	public String getTypeString() {
+		return this.getType().getValue();
+	}
+	
+	public void setTypeString(String typeString) {
+		this.setType(FieldType.fromString(typeString));
+		
+	}
+	
 	
 }

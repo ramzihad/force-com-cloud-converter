@@ -17,7 +17,7 @@ public class FileServiceImplTest extends TestCaseWithLog {
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);
 		
-		assertEquals(Constants.STRING, wrapperBean.getTypes().get(0));
+		assertEquals(Constants.TEXT, wrapperBean.getTypes().get(0));
 		
 		assertEquals(Constants.DATE, wrapperBean.getTypes().get(1));
 		

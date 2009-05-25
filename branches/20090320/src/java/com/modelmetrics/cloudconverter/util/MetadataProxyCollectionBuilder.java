@@ -264,7 +264,7 @@ public class MetadataProxyCollectionBuilder {
 			field.setLabel(bean.getLabels().get(i));
 			field.setExample(bean.getExamples().get(i));
 			String value = bean.getTypes().get(i);
-			if (Constants.STRING.equals(value)) {
+			if (Constants.TEXT.equals(value)) {
 				field.setType(FieldType.Text);
 				field.setLength(255);
 			} else if (Constants.EMAIL.equals(value)) {

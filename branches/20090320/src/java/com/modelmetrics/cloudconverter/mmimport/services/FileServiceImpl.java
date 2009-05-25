@@ -93,7 +93,7 @@ public class FileServiceImpl implements FileService {
 								} else if (StringUtils.isURL(value)) {
 									bean.getTypes().add(Constants.URL);
 								} else {
-									bean.getTypes().add(Constants.STRING);
+									bean.getTypes().add(Constants.TEXT);
 								}
 							} else if (type.equals(CellType.NUMBER)) {
 								log.debug("Number: "
@@ -113,7 +113,7 @@ public class FileServiceImpl implements FileService {
 								}
 							} else {
 								// default.
-								bean.getTypes().add(Constants.STRING);
+								bean.getTypes().add(Constants.TEXT);
 							}
 						}
 						if (i >= 1) {

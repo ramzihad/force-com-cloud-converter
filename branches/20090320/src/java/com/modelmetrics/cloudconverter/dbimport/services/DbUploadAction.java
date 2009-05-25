@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.mmimport.actions;
+package com.modelmetrics.cloudconverter.dbimport.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceService;
+import com.modelmetrics.cloudconverter.mmimport.actions.AbstractUploadContextAware;
 import com.modelmetrics.cloudconverter.mmimport.services.PicklistInfo;
 
 public class DbUploadAction extends AbstractUploadContextAware implements

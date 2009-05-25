@@ -1,5 +1,6 @@
 package com.modelmetrics.cloudconverter.engine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
@@ -21,6 +22,14 @@ public class MigrationEngineCloudConverterObjectImpl extends
 		List<MetadataProxy> metadataProxies = cloudConverterObject.getMetadataProxies();
 
 		this.getMigrationContext().setMetadataProxies(metadataProxies);
+		
+		//build a list of external IDs
+		this.getMigrationContext().setExternalIds(new ArrayList<String>());
+		for (MetadataProxy metadataProxy: metadataProxies) {
+			if (metadataProxy.isUniqueExternalId()) {
+				this.getMigrationContext().getExternalIds().add(metadataProxy.getName());
+			}
+		}
 
 		// check if it needs overriding	
 		this.cleanUpOrg(cloudConverterObject.getObjectName(), cloudConverterObject.getObjectLabel(), cloudConverterObject.isExistsInSalesforce());

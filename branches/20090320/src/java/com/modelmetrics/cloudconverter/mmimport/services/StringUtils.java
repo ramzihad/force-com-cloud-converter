@@ -85,9 +85,8 @@ public class StringUtils {
 		types.add(Constants.CURRENCY);
 		types.add(Constants.EMAIL);
 		types.add(Constants.PHONE_NUMBER);
-		types.add(Constants.STRING);
+		types.add(Constants.TEXT);
 		types.add(Constants.URL);
-		types.add(Constants.EXTERNAL_ID);
 		types.add(Constants.LOOKUP);
 		types.add(Constants.PICKLIST);
 		return types;

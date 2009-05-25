@@ -24,7 +24,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	</bean>
 	
 	<bean id="dbSalesforceService"
-		class="com.modelmetrics.cloudconverter.mmimport.services.DbSalesforceServiceImpl" >
+		class="com.modelmetrics.cloudconverter.dbimport.services.DbSalesforceServiceImpl" >
 
 	</bean>
 	
@@ -80,7 +80,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="dbUploadAction" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction">
+		class="com.modelmetrics.cloudconverter.dbimport.services.DbUploadAction">
 		<property name="dbSalesforceService" ref="dbSalesforceService" />
 	</bean>
 
@@ -163,6 +163,11 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="importAdvancedOptions" scope="prototype"
 		parent="abstractUploadContextAware"
 		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportSetOptionsAction">
+	</bean>
+	
+	<bean id="importAdvancedExecute" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportExecuteAction">
 	</bean>
 	
 	<!-- STRUTS2 -->

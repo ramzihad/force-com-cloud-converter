@@ -5,37 +5,48 @@ import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.mmimport.actions.UploadContext;
+import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class SalesforceServiceImpl extends AbstractSalesforceService {
 
+	private UploadContext uploadContext;
+	
 	public void execute(UploadContext uploadContext) throws Exception {
 
+		this.uploadContext = uploadContext;
+		
 		for (CloudConverterObject current : uploadContext
 				.getCloudConverterObjects()) {
 
-			// notify subscribers
-			uploadContext.getStatusSubscriber().publish(
-					"Starting object: " + current.getObjectLabel() + " ("
-							+ current.getObjectName() + ")");
-
-			// get started
-			MigrationContext migrationContext = new MigrationContextFactory()
-					.buildMigrationContext(this.getSalesforceSession());
-
-			migrationContext.setCloudConverterObject(current);
-
-			MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
-					.build(migrationContext);
-			migrationEngineIF.setMigrationContext(migrationContext);
-			migrationEngineIF.subscribeToStatus(uploadContext.getStatusSubscriber());
-			migrationEngineIF.execute();
-			
-			uploadContext.getStatusSubscriber().publish(
-					"Object complete: " + current.getObjectLabel() + " ("
-							+ current.getObjectName() + ")");
+			this.execute(current, uploadContext.getStatusSubscriber());
 
 		}
 
+	}
+	
+	public void execute(CloudConverterObject current, MigrationStatusSubscriber migrationStatusSubscriber) throws Exception {
+		
+		// notify subscribers
+		migrationStatusSubscriber.publish(
+				"Starting object: " + current.getObjectLabel() + " ("
+						+ current.getObjectName() + ")");
+
+		// get started
+		MigrationContext migrationContext = new MigrationContextFactory()
+				.buildMigrationContext(this.getSalesforceSession());
+
+		migrationContext.setCloudConverterObject(current);
+
+		MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
+				.build(migrationContext);
+		migrationEngineIF.setMigrationContext(migrationContext);
+		migrationEngineIF.subscribeToStatus(migrationStatusSubscriber);
+		migrationEngineIF.execute();
+		
+		migrationStatusSubscriber.publish(
+				"Object complete: " + current.getObjectLabel() + " ("
+						+ current.getObjectName() + ")");
+		
 	}
 
 }

@@ -1,6 +1,5 @@
-package com.modelmetrics.cloudconverter.mmimport.services;
+package com.modelmetrics.cloudconverter.dbimport.services;
 
-import com.modelmetrics.cloudconverter.mmimport.actions.DbUploadAction;
 import com.modelmetrics.common.sforce.SalesforceSession;
 
 public interface DbSalesforceService {
