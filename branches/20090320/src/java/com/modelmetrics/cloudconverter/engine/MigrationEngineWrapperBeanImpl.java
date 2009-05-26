@@ -5,12 +5,16 @@ import java.util.List;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
-import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 
+/**
+ * @deprecated s
+ * @author reidcarlberg
+ *
+ */
 public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 		implements MigrationEngineIF {
 
@@ -35,7 +39,7 @@ public class MigrationEngineWrapperBeanImpl extends AbstractMigrationEngine
 		this.getMigrationContext().setMetadataProxies(metadataProxies);
 
 		// check if it needs overriding	
-		this.cleanUpOrg(bean.getSheetName()+"__c", bean.getSheetName(), bean.getOverride().booleanValue());
+//		this.cleanUpOrg(bean.getSheetName()+"__c", bean.getSheetName(), bean.getOverride().booleanValue());
 
 		/*
 		 * 2009-03-21 RSC //TODO rs should probably be a little more generic as

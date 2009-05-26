@@ -17,6 +17,10 @@ public class AdvancedImportLoopManagerAction extends AbstractUploadContextAware 
 		
 		//first visit through
 		if (this.getUploadContext().getCurrentCloudConverterObjectIndex() == -1) {
+			
+			/*
+			 * not in love with the here.  kind hacky.
+			 */
 			this.getUploadContext().setCurrentCloudConverterObjectIndex(0);
 			return SUCCESS_NEXT;
 		}

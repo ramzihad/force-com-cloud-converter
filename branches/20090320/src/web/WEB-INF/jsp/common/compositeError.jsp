@@ -10,9 +10,11 @@
 
 <body>
 
-<h1>Composite Error</h1>
+<h1>Session Error</h1>
 
 <p>There has been an error configuring your session.</p>
+
+<p>Click on the main salesforce.com tab to start again.</p>
 
 </body>
 </html>

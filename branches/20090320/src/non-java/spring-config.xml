@@ -169,6 +169,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		parent="abstractUploadContextAware"
 		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportSetOptionsAction">
 	</bean>
+
+	<bean id="importAdvancedDeleteExisting" scope="prototype"
+		parent="abstractUploadContextAware"
+		class="com.modelmetrics.cloudconverter.mmimport.actions.AdvancedImportDeleteExistingAction">
+	</bean>
+
 	
 	<bean id="importAdvancedExecute" scope="prototype"
 		parent="abstractUploadContextAware"

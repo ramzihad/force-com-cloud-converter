@@ -190,20 +190,5 @@ public abstract class AbstractMigrationEngine extends
 
 	}
 
-	public void cleanUpOrg(String objectName, String objectLable, boolean delete) throws Exception {
-		
-		// check if it needs overriding
-		if (delete) {
-			
-			this.publishStatus("Deleting existing object");
-			// delete object here
-			CustomObject co = new CustomObject();
-			co.setFullName(objectName);
-			new DeleteExecutor(this.getMigrationContext()
-					.getSalesforceSession().getMetadataService())
-					.executeSimpleDelete(co);
-			log.info("Deleting object "+objectLable+" from salesforce...");
-			this.publishStatus("Delete complete");
-		}
-	}
+
 }

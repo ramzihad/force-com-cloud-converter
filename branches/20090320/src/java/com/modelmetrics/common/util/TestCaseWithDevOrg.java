@@ -11,9 +11,9 @@ public class TestCaseWithDevOrg extends TestCaseWithLog {
 
 	protected SalesforceCredentials salesforceCredentials;
 
-	protected String sampleSfdcUsername = "reid_carlberg@modelmetrics.com";
+	protected String sampleSfdcUsername = "reid.carlberg.mmimport@gmail.com";
 
-	protected String sampleSfdcPassword = "goody2shoes";
+	protected String sampleSfdcPassword = "Test12345";
 
 	private String sampleObject = "mytable__c";
 

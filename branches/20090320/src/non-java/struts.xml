@@ -71,12 +71,20 @@
 		</action>
 		
 		<action name="importAdvancedOverride" class="uploadActionCompositeOverride" >
-			<result name="success" type="redirectAction">importAdvancedLoop</result>
+			<result name="success" type="redirectAction">importAdvancedDeleteExisting</result>
 			<result name="cancel" type="redirectAction">startUpload</result>
 			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="input">/WEB-INF/jsp/uploadComposite/advancedOverride.jsp</result>
 		</action>
-		
+
+		<action name="importAdvancedDeleteExisting" class="importAdvancedDeleteExisting" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/deleteWait.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>
+		</action>
+				
 		<action name="importAdvancedLoop" class="importAdvancedLoopManager" >
 			<result name="success_next" type="redirectAction">importAdvancedPrepareNext</result>
 			<result name="success_finish" >/WEB-INF/jsp/uploadComposite/view.jsp</result>

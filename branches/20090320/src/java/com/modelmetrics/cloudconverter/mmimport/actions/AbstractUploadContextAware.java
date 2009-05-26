@@ -1,8 +1,5 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
-import java.util.List;
-
-import com.modelmetrics.cloudconverter.mmimport.services.LookupAndIdWrapper;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -34,13 +31,6 @@ public abstract class AbstractUploadContextAware extends ActionSupport {
 		this.salesforceSessionContext = salesforceSessionContext;
 	}
 	
-	public boolean checkLookups(List<LookupAndIdWrapper> lookupIdWrapperList2) {
-		for (LookupAndIdWrapper lookupAndIdWrapper : lookupIdWrapperList2) {
-			if (!lookupAndIdWrapper.getLookups().isEmpty()) {
-				return true;
-			}
-		}
-		return false;
-	}
+
 	
 }

@@ -1,5 +1,6 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceService;
 import com.modelmetrics.cloudconverter.mmimport.services.SalesforceServiceFactory;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
@@ -13,16 +14,23 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 
 	public String execute() throws Exception {
 
-		//subscribe to the updates
+		// subscribe to the updates
 		this.getUploadContext().setStatusSubscriber(
 				new MigrationStatusSubscriberLifoImpl());
 
-		//instantiate the salesforce service
+		// instantiate the salesforce service
 		SalesforceService salesforceService = new SalesforceServiceFactory()
 				.build(this.getSalesforceSessionContext()
 						.getSalesforceSession());
 
-		//giddyup
+		// cleanup the target org first -- delete needs to be done here due to
+		// the potential for running into related objects.
+		new ObjectDeleteHandler().execute(this.getSalesforceSessionContext()
+				.getSalesforceSession(), this.getUploadContext()
+				.getCloudConverterObjects(), this.getUploadContext()
+				.getStatusSubscriber());
+
+		// giddyup
 		try {
 			salesforceService.execute(this.getUploadContext());
 		} catch (Exception e) {
@@ -30,7 +38,7 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 			return ERROR;
 		}
 
-		//done
+		// done
 		return SUCCESS;
 	}
 }

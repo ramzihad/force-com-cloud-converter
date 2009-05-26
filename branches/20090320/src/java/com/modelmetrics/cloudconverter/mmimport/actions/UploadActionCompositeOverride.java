@@ -20,6 +20,7 @@ public class UploadActionCompositeOverride extends AbstractUploadContextAware {
 		}
 		
 		if (this.getSubmit().startsWith(SUBMIT_CONFIRM)) {
+			this.getUploadContext().setOkToDelete(true);
 			return Action.SUCCESS;
 		}
 		

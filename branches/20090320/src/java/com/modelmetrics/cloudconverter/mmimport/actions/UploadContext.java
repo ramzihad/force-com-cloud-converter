@@ -18,6 +18,8 @@ public class UploadContext  {
 
 	private Map<String, List<String>> objectToIdMap;
 	
+	private boolean okToDelete;
+	
 	public Map<String, List<String>> getObjectToIdMap() {
 		return objectToIdMap;
 	}
@@ -73,6 +75,14 @@ public class UploadContext  {
 	public void setCloudConverterObjects(
 			List<CloudConverterObject> cloudConverterObjects) {
 		this.cloudConverterObjects = cloudConverterObjects;
+	}
+
+	public boolean isOkToDelete() {
+		return okToDelete;
+	}
+
+	public void setOkToDelete(boolean okToDelete) {
+		this.okToDelete = okToDelete;
 	}
 
 

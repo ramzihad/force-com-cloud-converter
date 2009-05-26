@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>Import</title>
+<title>Standard Import</title>
 </head>
 <body>
 
