@@ -22,10 +22,13 @@ public class AdvancedImportDeleteExistingAction extends
 		
 		// giddyup
 		try {
+			
+			this.getUploadContext().setStatusSubscriber(new MigrationStatusSubscriberLifoImpl());
+			
 			new ObjectDeleteHandler().execute(this
 					.getSalesforceSessionContext().getSalesforceSession(), this
 					.getUploadContext().getCloudConverterObjects(),
-					new MigrationStatusSubscriberLifoImpl());
+					this.getUploadContext().getStatusSubscriber());
 		} catch (Exception e) {
 			this.getUploadContext().setLastException(e);
 			return ERROR;

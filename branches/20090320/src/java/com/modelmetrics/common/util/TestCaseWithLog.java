@@ -51,6 +51,7 @@ public class TestCaseWithLog extends TestCase {
     	context.getBeanFactory().registerScope("session", new SessionScope());
     	
     	MockHttpServletRequest request = new MockHttpServletRequest();
+    	
     	ServletRequestAttributes attributes = new ServletRequestAttributes(request);
     	RequestContextHolder.setRequestAttributes(attributes);
     	

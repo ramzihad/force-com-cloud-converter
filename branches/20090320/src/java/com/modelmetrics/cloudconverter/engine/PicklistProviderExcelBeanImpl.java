@@ -2,6 +2,8 @@ package com.modelmetrics.cloudconverter.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,17 +20,22 @@ public class PicklistProviderExcelBeanImpl implements PicklistProvider {
 	
 	public PicklistProviderExcelBeanImpl(MetadataProxy metadataProxy, ExcelWorksheetWrapperBean excelWorksheetWrapperBean) {
 		this.metadataProxy = metadataProxy;
+		this.excelWorksheetWrapperBean = excelWorksheetWrapperBean;
 	}
 	
 	public List<String> getPicklistValues() throws Exception {
 		
-		List<String> ret = new ArrayList<String>();
+		Set<String> uniques = new TreeSet<String>();
 		
 		List<List<Object>> data = excelWorksheetWrapperBean.getData();
 		
 		for (List<Object> current : data) {
-			ret.add(current.get(this.metadataProxy.getIndex()).toString());
+			uniques.add(current.get(this.metadataProxy.getIndex()).toString());
 		}
+		
+		List<String> ret = new ArrayList<String>();
+		
+		ret.addAll(uniques);
 		
 		return ret;
 		

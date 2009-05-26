@@ -98,8 +98,9 @@ public class CreateExecutor {
 		try {
 			ars = metadatabinding.create(metadataChunk);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(
-					"Couldn't execute metadata binding create.", e);
+					"Couldn't execute metadata binding create. (" + e.getLocalizedMessage() + ")", e);
 		}
 		if (ars == null) {
 			log.debug("The object was not created successfully");
