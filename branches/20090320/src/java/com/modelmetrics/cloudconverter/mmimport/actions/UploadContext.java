@@ -1,8 +1,10 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
@@ -84,6 +86,7 @@ public class UploadContext  {
 	public void setOkToDelete(boolean okToDelete) {
 		this.okToDelete = okToDelete;
 	}
+
 
 
 

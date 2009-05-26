@@ -36,6 +36,8 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 				.buildMigrationContext(this.getSalesforceSession());
 
 		migrationContext.setCloudConverterObject(current);
+		
+		migrationContext.setPicklistFields(current.getPicklistFields());
 
 		MigrationEngineIF migrationEngineIF = new MigrationEngineFactory()
 				.build(migrationContext);

@@ -46,6 +46,8 @@ import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
+import com.modelmetrics.cloudconverter.engine.PicklistProviderFactory;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
@@ -57,17 +59,17 @@ import com.modelmetrics.common.sforce.SalesforceCredentials;
  * This sample can be used as a template for creating your own object specific
  * script.
  * 
- * Additional documentation is in the CloudConverterScript_Template, which
- * you should use to create your own scripts.
+ * Additional documentation is in the CloudConverterScript_Template, which you
+ * should use to create your own scripts.
  * 
  * IMPORTANT - IMPORTANT - IMPORTANT
  * 
- * There is a Lookup Field setting below that relies on your dev org's configuration.  
- * You should change this to match your dev org OR create an object matching this sample.
+ * There is a Lookup Field setting below that relies on your dev org's
+ * configuration. You should change this to match your dev org OR create an
+ * object matching this sample.
  * 
- * Object Name: "AAA__c"
- * External Id Field: "TestExternalId__c"
- * Valid values: "CC001" or "CC002"
+ * Object Name: "AAA__c" External Id Field: "TestExternalId__c" Valid values:
+ * "CC001" or "CC002"
  * 
  * @author reidcarlberg
  * 
@@ -79,9 +81,8 @@ public class CloudConverterScript_Sample {
 		CloudConverterScript_Sample script = new CloudConverterScript_Sample();
 
 		try {
-			script.execute("marianocolombo.dev@gmail.com",
-					"police78aV9NiOCnvUNs3VC2FzoVX1Dt" );
-			//"yourpasswordYOURSECURITYTOKEN"
+			script.execute("", "");
+			// "yourpasswordYOURSECURITYTOKEN"
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -95,38 +96,29 @@ public class CloudConverterScript_Sample {
 		 * The following are optional components. -- they can be empty but not
 		 * null.
 		 */
-		// setup some known field characteristics -- will be used during custom
-		// object creation
-		// if there are no picklists you can leave this blank
-		Map<String, String> picklistFields = new HashMap<String, String>();
-		// key should be the fieldname, value should be the sql the gives you a
-		// list of picklist values
-		picklistFields.put("MYPICKLIST",
-				"select distinct mypicklist from mytable");
 
 		// if there are not external ids, you can leave this blank
 		Collection<String> externalIds = new ArrayList<String>();
 		// these should be unique strings
 		externalIds.add("MYID");
 
-		
 		/*
-		 * ********************************
-		 * You should change this to match your target dev org OR
-		 * implement an object that works with this.  See specs above.
+		 * ******************************** You should change this to match your
+		 * target dev org OR implement an object that works with this. See specs
+		 * above.
 		 * 
-		 * Since this is a sample, I've commented this out.  If you uncomment it
+		 * Since this is a sample, I've commented this out. If you uncomment it
 		 * without creating a matching object in your dev org, this will fail.
 		 * ********************************
 		 */
+		Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
 		// if there are no lookups to other objects, you can leave this blank
 		Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
 		// key should be the field name, value should be how to resolve that on
 		// sfdc (object__r:externalObjectName:externalidfieldname)
-	
+
 		lookupFields.put("MYLOOKUP", new LookupSettings("MYLOOKUP", "AAA__c",
 				"MYLOOKUP__r:AAA__c:TestExternalId__c"));
-	
 
 		/*
 		 * the following are required components
@@ -154,6 +146,15 @@ public class CloudConverterScript_Sample {
 		migrationContext.setPicklistFields(picklistFields);
 		migrationContext.setDirtConnection(new DirtConnectionFactory()
 				.build(databaseCredentials));
+
+		// setup some known field characteristics -- will be used during custom
+		// object creation
+		// if there are no picklists you can leave this blank
+		// key should be the fieldname, value should be the sql the gives you a
+		// list of picklist values
+		picklistFields.put("MYPICKLIST", new PicklistProviderFactory().build(
+				migrationContext.getDirtConnection().getConnection(),
+				"select distinct mypicklist from mytable"));
 
 		// external id
 		migrationContext.setExternalIdForUpsert("MYID__c");

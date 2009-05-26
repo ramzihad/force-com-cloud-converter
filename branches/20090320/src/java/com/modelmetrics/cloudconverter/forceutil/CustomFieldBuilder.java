@@ -40,6 +40,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.sforce.soap._2006._04.metadata.CustomField;
@@ -103,36 +104,9 @@ public class CustomFieldBuilder {
 
 				try {
 
-					log.debug("dirtconnection? "
-							+ migrationContext.getDirtConnection()
-									.getConnection().getClass().getName());
-
-					Statement statement = migrationContext.getDirtConnection()
-							.getConnection().createStatement();
-
-					String sql = (String) migrationContext.getPicklistFields()
-							.get(current.getName());
-
-					log.info("Picklist sql: " + sql);
-
-					ResultSet rs = statement.executeQuery(sql);
-
-					if (rs.getMetaData().getColumnCount() != 1) {
-						rs.close();
-						statement.close();
-						throw new RuntimeException(
-								"Column count not right on picklist; should be 1 but is "
-										+ rs.getMetaData().getColumnCount());
-					}
-					ArrayList<String> values = new ArrayList<String>();
-
-					while (rs.next()) {
-						log.debug("picklist value is: " + rs.getString(1));
-						values.add(rs.getString(1));
-					}
-
-					rs.close();
-					statement.close();
+					PicklistProvider picklistProvider = migrationContext.getPicklistFields().get(current.getName());
+					
+					List<String> values = picklistProvider.getPicklistValues();
 
 					PicklistValue[] picklistValues = new PicklistValue[values
 							.size()];

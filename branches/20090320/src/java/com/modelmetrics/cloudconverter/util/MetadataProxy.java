@@ -4,6 +4,8 @@ import com.sforce.soap._2006._04.metadata.FieldType;
 
 public class MetadataProxy {
 
+	private int index; 
+	
 	private String name;
 	
 	private String label;
@@ -121,6 +123,14 @@ public class MetadataProxy {
 
 	public void setLookupField(String lookupField) {
 		this.lookupField = lookupField;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
 	}
 	
 	

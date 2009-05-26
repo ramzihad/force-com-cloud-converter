@@ -41,6 +41,9 @@ function areYouSure() {
 	</head>
 	<body>
 		<h1>Advanced Options: <s:property value="uploadContext.currentCloudConverterObject.objectLabel" /></h1>
+		
+		<p><s:actionmessage /></p>
+		
 		<s:form action="importAdvancedOptions" method="POST" onsubmit="return areYouSure();">
 			<table>
 				<tr>
@@ -62,6 +65,10 @@ function areYouSure() {
 									id="metadata[%{#status.index}].name"
 									name="metadata[%{#status.index}].name"
 									value="%{metadata[#status.index].name}" />
+						<s:hidden
+									id="metadata[%{#status.index}].index"
+									name="metadata[%{#status.index}].index"
+									value="%{metadata[#status.index].index}" />									
 						</td>
 						<td><s:textfield
 									id="metadata[%{#status.index}].label"

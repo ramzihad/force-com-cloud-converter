@@ -27,6 +27,7 @@ public class MetadataProxyCollectionBuilder {
 
 			field.setName(rsmd.getColumnName(i + 1));
 			field.setLabel(rsmd.getColumnName(i + 1));
+			field.setIndex(i);
 
 			switch (rsmd.getColumnType(i + 1)) {
 			case Types.BIGINT:
@@ -263,6 +264,7 @@ public class MetadataProxyCollectionBuilder {
 			field.setName(bean.getNames().get(i));
 			field.setLabel(bean.getLabels().get(i));
 			field.setExample(bean.getExamples().get(i));
+			field.setIndex(i);
 			String value = bean.getTypes().get(i);
 			if (Constants.TEXT.equals(value)) {
 				field.setType(FieldType.Text);

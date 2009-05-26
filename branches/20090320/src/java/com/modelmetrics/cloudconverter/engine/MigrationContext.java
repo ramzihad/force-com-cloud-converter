@@ -75,7 +75,7 @@ public class MigrationContext {
 	
 	private DirtConnectionIF dirtConnection;
 	
-	private Map<String, String> picklistFields;
+	private Map<String, PicklistProvider> picklistFields;
 	
 	private Map<String, LookupSettings> lookupFields;
 	
@@ -166,11 +166,11 @@ public class MigrationContext {
 		this.customFieldShortNames = customFieldShortNames;
 	}
 
-	public Map<String, String> getPicklistFields() {
+	public Map<String, PicklistProvider> getPicklistFields() {
 		return picklistFields;
 	}
 
-	public void setPicklistFields(Map<String, String> picklistFields) {
+	public void setPicklistFields(Map<String, PicklistProvider> picklistFields) {
 		this.picklistFields = picklistFields;
 	}
 

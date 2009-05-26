@@ -1,7 +1,10 @@
 package com.modelmetrics.cloudconverter.mmimport.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 
@@ -20,6 +23,10 @@ public class CloudConverterObject {
 	private boolean existsInSalesforce;
 	
 	private String upsertField;
+	
+	private Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
+	
+
 
 	public ExcelWorksheetWrapperBean getOriginalData() {
 		return originalData;
@@ -75,6 +82,14 @@ public class CloudConverterObject {
 
 	public void setExistsInSalesforce(boolean existsInSalesforce) {
 		this.existsInSalesforce = existsInSalesforce;
+	}
+
+	public Map<String, PicklistProvider> getPicklistFields() {
+		return picklistFields;
+	}
+
+	public void setPicklistFields(Map<String, PicklistProvider> picklistFields) {
+		this.picklistFields = picklistFields;
 	}
 	
 }

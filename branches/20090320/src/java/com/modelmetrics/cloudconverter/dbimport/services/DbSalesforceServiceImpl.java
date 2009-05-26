@@ -9,6 +9,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.mmimport.services.PicklistInfo;
 import com.modelmetrics.common.sforce.SalesforceSession;
@@ -20,11 +21,11 @@ public class DbSalesforceServiceImpl implements DbSalesforceService {
 	public void generateObjectFromDB(DbUploadAction action)
 			throws Exception {
 
-		Map<String, String> picklistFields = new HashMap<String, String>();
-		for (PicklistInfo picklist : action.getPicklistInfos()) {
-			picklistFields
-					.put(picklist.getFieldName(), picklist.getSourceSql());
-		}
+		Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
+//		for (PicklistInfo picklist : action.getPicklistInfos()) {
+//			picklistFields
+//					.put(picklist.getFieldName(), picklist.getSourceSql());
+//		}
 
 		Map<String, LookupSettings> lookupFields = new HashMap<String, LookupSettings>();
 		for (LookupSettings lookup : action.getLookupSettings()) {

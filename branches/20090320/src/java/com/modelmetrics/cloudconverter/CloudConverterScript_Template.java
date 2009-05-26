@@ -46,6 +46,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.SalesforceCredentialsBuilder;
@@ -85,7 +86,7 @@ public class CloudConverterScript_Template {
 		// setup some known field characteristics -- will be used during custom
 		// object creation
 		// if there are no picklists you can leave this blank
-		Map<String, String> picklistFields = new HashMap<String, String>();
+		Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
 		// key should be the fieldname, value should be the sql the gives you a
 		// list of picklist values
 		//picklistFields.put("MYPICKLIST",
