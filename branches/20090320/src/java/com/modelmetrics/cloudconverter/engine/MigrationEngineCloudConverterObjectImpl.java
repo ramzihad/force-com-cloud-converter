@@ -55,16 +55,10 @@ public class MigrationEngineCloudConverterObjectImpl extends
 			}
 		}
 
-//		// check if it needs overriding --moved to actions.
-//		this.cleanUpOrg(cloudConverterObject.getObjectName(),
-//				cloudConverterObject.getObjectLabel(), cloudConverterObject
-//						.isExistsInSalesforce());
-
 		/*
 		 * build the basic custom object
 		 */
-		CustomObject co = new CustomObjectBuilder().build(cloudConverterObject
-				.getObjectName(), cloudConverterObject.getObjectLabel());
+		CustomObject co = new CustomObjectBuilder().build(cloudConverterObject);
 
 		this.executeCommon(co);
 

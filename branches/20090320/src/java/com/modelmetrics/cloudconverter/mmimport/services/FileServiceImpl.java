@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import jxl.BooleanCell;
 import jxl.Cell;
 import jxl.CellType;
 import jxl.DateCell;
@@ -33,7 +34,8 @@ public class FileServiceImpl implements FileService {
 	 * @throws ParseException
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ExcelWorksheetWrapperBean> parseXLS(File file) throws ParseException {
+	public List<ExcelWorksheetWrapperBean> parseXLS(File file)
+			throws ParseException {
 
 		// keeps date fields real.
 		TimeZone.setDefault(TimeZone.getTimeZone("-0"));
@@ -78,13 +80,19 @@ public class FileServiceImpl implements FileService {
 							// parse data types
 							CellType type = c.getType();
 
-							if (type.equals(CellType.DATE)) {
+							if (type.equals(CellType.DATE)
+									|| type.equals(CellType.DATE_FORMULA)) {
 								if (value.contains(":")) {
 									bean.getTypes().add(Constants.DATETIME);
 								} else {
 									bean.getTypes().add(Constants.DATE);
 								}
-							} else if (type.equals(CellType.LABEL)) {
+							} else if (type.equals(CellType.BOOLEAN)
+									|| type.equals(CellType.BOOLEAN_FORMULA)) {
+
+								bean.getTypes().add(Constants.CHECKBOX);
+							} else if (type.equals(CellType.LABEL)
+									|| type.equals(CellType.STRING_FORMULA)) {
 
 								if (GenericValidator.isEmail(value)) {
 									bean.getTypes().add(Constants.EMAIL);
@@ -95,7 +103,8 @@ public class FileServiceImpl implements FileService {
 								} else {
 									bean.getTypes().add(Constants.TEXT);
 								}
-							} else if (type.equals(CellType.NUMBER)) {
+							} else if (type.equals(CellType.NUMBER)
+									|| type.equals(CellType.NUMBER_FORMULA)) {
 								log.debug("Number: "
 										+ value
 										+ " : format : "
@@ -118,21 +127,28 @@ public class FileServiceImpl implements FileService {
 						}
 						if (i >= 1) {
 							// parse data values
+
 							CellType type = c.getType();
-							if (type.equals(CellType.DATE)) {
+
+							if (type.equals(CellType.BOOLEAN)
+									|| type.equals(CellType.BOOLEAN_FORMULA)) {
+								list.add(((BooleanCell) c).getValue());
+							} else if (type.equals(CellType.DATE)
+									|| type.equals(CellType.DATE_FORMULA)) {
 
 								Date aux = ((DateCell) c).getDate();
 								list.add(aux);
 
 								// }
-							} else if (type.equals(CellType.LABEL)) {
+							} else if (type.equals(CellType.LABEL)
+									|| type.equals(CellType.STRING_FORMULA)) {
 
 								list.add(value);
 							} else if (type.equals(CellType.EMPTY)) {
 
 								list.add(null);
-							} else if (type.equals(CellType.NUMBER)) {
-
+							} else if (type.equals(CellType.NUMBER)
+									|| type.equals(CellType.NUMBER_FORMULA)) {
 								if (value.contains("%")) {
 									// otherwise "percentages" show up in SFDC
 									// as
@@ -146,7 +162,7 @@ public class FileServiceImpl implements FileService {
 								bean.getExamples().add(value);
 							}
 						}
-						
+
 					}
 					if (i >= 1) {
 						bean.getData().add(list);

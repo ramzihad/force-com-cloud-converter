@@ -24,6 +24,7 @@ public class ImportPrepareAction extends AbstractUploadContextAware {
 		//does anything already exist? if so, we need to get confirmation that it's OK to continue
 		boolean needsOverride = false;
 		
+		//do basic prepare on every item
 		for (CloudConverterObject current: this.getUploadContext().getCloudConverterObjects()) {
 			if (current.isExistsInSalesforce()) {
 				needsOverride = true;

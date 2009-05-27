@@ -142,6 +142,15 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 							metadataProxy.getName()), type.get(i));
 				}
 
+				/*
+				 * some work for names that aren't about autonumber
+				 */
+				if (!migrationContext.getCloudConverterObject().isNameUseAutonumber()) {
+					if (metadataProxy.getName().equalsIgnoreCase(migrationContext.getCloudConverterObject().getNameUseField())) {
+						current.setValue("Name", type.get(i));
+					}
+				}
+				
 				i++;
 			}
 

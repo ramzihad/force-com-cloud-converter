@@ -62,8 +62,9 @@ public class CustomFieldBuilder {
 		List<MetadataProxy> metadataProxies = migrationContext
 				.getMetadataProxies();
 
-		//2009-03-21 RSC probably needs some MetadataProxy style refactoring as well.
-		//built in migration engine
+		// 2009-03-21 RSC probably needs some MetadataProxy style refactoring as
+		// well.
+		// built in migration engine
 		CustomObject newCustomObject = migrationContext.getCustomObject();
 
 		// standard fields
@@ -77,12 +78,13 @@ public class CustomFieldBuilder {
 		migrationContext.setFieldMap(fieldMap);
 
 		/*
-		 * 2009-03-20 RSC Will need to find a way to handle External ID, Lookups, etc., with
-		 * non-SQL datasources (Excel).  For now, we can just leave these collections empty and
-		 * the rest of the engine will ignore them.
+		 * 2009-03-20 RSC Will need to find a way to handle External ID,
+		 * Lookups, etc., with non-SQL datasources (Excel). For now, we can just
+		 * leave these collections empty and the rest of the engine will ignore
+		 * them.
 		 */
 		for (MetadataProxy current : metadataProxies) {
-			
+
 			boolean isPicklist = migrationContext.getPicklistFields() != null
 					&& migrationContext.getPicklistFields().containsKey(
 							current.getName());
@@ -104,8 +106,9 @@ public class CustomFieldBuilder {
 
 				try {
 
-					PicklistProvider picklistProvider = migrationContext.getPicklistFields().get(current.getName());
-					
+					PicklistProvider picklistProvider = migrationContext
+							.getPicklistFields().get(current.getName());
+
 					List<String> values = picklistProvider.getPicklistValues();
 
 					PicklistValue[] picklistValues = new PicklistValue[values
@@ -131,18 +134,20 @@ public class CustomFieldBuilder {
 				customFieldsCollection.add(field);
 				fieldMap.put(current.getName(), sfdcColumnName);
 			} else if (migrationContext.getExternalIds() != null
-					&& migrationContext.getExternalIds().contains(current.getName())) {
-					field.setType(FieldType.Text);
-					field.setExternalId(Boolean.TRUE);
-					//RSC 2009-05-23 Modified to not use the bean - should always be unique (even though I thought it might be OK to allow them to select it).
-					field.setUnique(Boolean.TRUE);
-					field.setLength(current.getLength());
-					field.setCaseSensitive(Boolean.FALSE);
-					field.setLabel(current.getLabel());
-					customFieldsCollection.add(field);
-					fieldMap.put(current.getName(), sfdcColumnName);
-				
-				
+					&& migrationContext.getExternalIds().contains(
+							current.getName())) {
+				field.setType(FieldType.Text);
+				field.setExternalId(Boolean.TRUE);
+				// RSC 2009-05-23 Modified to not use the bean - should always
+				// be unique (even though I thought it might be OK to allow them
+				// to select it).
+				field.setUnique(Boolean.TRUE);
+				field.setLength(current.getLength());
+				field.setCaseSensitive(Boolean.FALSE);
+				field.setLabel(current.getLabel());
+				customFieldsCollection.add(field);
+				fieldMap.put(current.getName(), sfdcColumnName);
+
 			} else if (migrationContext.getLookupFields() != null
 					&& migrationContext.getLookupFields().containsKey(
 							current.getName())) {
@@ -150,20 +155,23 @@ public class CustomFieldBuilder {
 						.getLookupFields().get(current.getName());
 				field.setType(FieldType.Lookup);
 				field.setReferenceTo(lookupSettings.getRelationshipObject());
-				
-				//RSC 2009-05-23 Modified to pick the name out rather than hard code it.
-				
-				String relName = lookupSettings.getRelationshipObject();
-				
-				if (relName.endsWith("__c")) {
-					relName = relName.substring(0, relName.length()-3);
-				}
-				
-				field.setRelationshipName(relName + "s");
-				field.setRelationshipLabel(relName + "s");
 
-//				field.setRelationshipName("AAAs");
-//				field.setRelationshipLabel("Lookup1");
+				// RSC 2009-05-23 Modified to pick the name out rather than hard
+				// code it.
+
+				String relName = lookupSettings.getRelationshipObject();
+
+				if (relName.endsWith("__c")) {
+					relName = relName.substring(0, relName.length() - 3);
+				}
+
+				field.setRelationshipName(migrationContext
+						.getCloudConverterObject().getObjectName().substring(
+								0,
+								migrationContext.getCloudConverterObject()
+										.getObjectName().length() - 3)
+						+ relName + "s");
+				field.setRelationshipLabel(relName + "s");
 
 				customLookupFieldsCollection.add(field);
 				fieldMap.put(current.getName(), lookupSettings
@@ -194,17 +202,14 @@ public class CustomFieldBuilder {
 				if (current.getType() == FieldType.Checkbox) {
 					field.setDefaultValue(current.getDefaultValue());
 				}
-				
-				
+
 				if (current.getLength() == 32000) {
 					field.setVisibleLines(5);
 				}
 
-
 				customFieldsCollection.add(field);
 				fieldMap.put(current.getName(), sfdcColumnName);
 			}
-
 
 		}
 
@@ -223,7 +228,7 @@ public class CustomFieldBuilder {
 	private ExternalIdBean foundInList(Collection<ExternalIdBean> externalIds,
 			String name) {
 		for (ExternalIdBean externalIdBean : externalIds) {
-			if (externalIdBean.getName().equals(name)){
+			if (externalIdBean.getName().equals(name)) {
 				return externalIdBean;
 			}
 		}

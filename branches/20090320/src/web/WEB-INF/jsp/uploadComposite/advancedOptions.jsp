@@ -43,8 +43,24 @@ function areYouSure() {
 		<h1>Advanced Options: <s:property value="uploadContext.currentCloudConverterObject.objectLabel" /></h1>
 		
 		<p><s:actionmessage /></p>
-		
+
 		<s:form action="importAdvancedOptions" method="POST" onsubmit="return areYouSure();">
+		
+		<h2>Object Detail</h2>
+		
+		<p>Use Autonumber ("A-{00000}") for object name? 
+				<s:checkbox
+					id="nameUseAutonumber"
+					name="nameUseAutonumber"
+					fieldValue="true"
+					value="nameUseAutonumber" /> </p>
+					
+		<p>Use data from field named <s:select list="metadata" listKey="name" listValue="name"
+									name="nameUseField"
+									value="nameUseField" emptyOption="true" /> for object name.</p>
+	
+		<h2>Field Detail</h2>
+		
 			<table>
 				<tr>
 					<th>API Name</th>

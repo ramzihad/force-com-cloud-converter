@@ -3,6 +3,15 @@
 <html>
 	<head>
 		<title>Confirm</title>
+		
+		
+<script language="javascript">
+
+function areYouSure() {
+	return confirm("Are you sure.");
+}
+
+</script>
 	</head>
 
 	<body>
@@ -18,7 +27,7 @@
 				</s:iterator>
 			</ul>
 
-			<s:form action="importStandardOverride" method="POST">
+			<s:form action="importStandardOverride" method="POST" onsubmit="return areYouSure();">
 		
 			<p>If you continue, the current objects and data will be deleted.</p>
 			

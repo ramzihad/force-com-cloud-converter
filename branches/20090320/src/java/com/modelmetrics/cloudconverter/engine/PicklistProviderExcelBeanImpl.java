@@ -30,6 +30,9 @@ public class PicklistProviderExcelBeanImpl implements PicklistProvider {
 		List<List<Object>> data = excelWorksheetWrapperBean.getData();
 		
 		for (List<Object> current : data) {
+			if (this.metadataProxy.getIndex() == current.size() ) {
+				log.info("too big.");
+			}
 			uniques.add(current.get(this.metadataProxy.getIndex()).toString());
 		}
 		

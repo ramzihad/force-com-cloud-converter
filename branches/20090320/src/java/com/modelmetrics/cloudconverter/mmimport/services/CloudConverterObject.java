@@ -26,6 +26,10 @@ public class CloudConverterObject {
 	
 	private Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
 	
+	private boolean nameUseAutonumber = true;
+	
+	private String nameUseField;
+	
 
 
 	public ExcelWorksheetWrapperBean getOriginalData() {
@@ -90,6 +94,22 @@ public class CloudConverterObject {
 
 	public void setPicklistFields(Map<String, PicklistProvider> picklistFields) {
 		this.picklistFields = picklistFields;
+	}
+
+	public boolean isNameUseAutonumber() {
+		return nameUseAutonumber;
+	}
+
+	public void setNameUseAutonumber(boolean nameUseAutonumber) {
+		this.nameUseAutonumber = nameUseAutonumber;
+	}
+
+	public String getNameUseField() {
+		return nameUseField;
+	}
+
+	public void setNameUseField(String nameUseField) {
+		this.nameUseField = nameUseField;
 	}
 	
 }

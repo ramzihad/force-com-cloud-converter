@@ -78,14 +78,13 @@ public class StringUtils {
 
 		types.add(Constants.DATE);
 		types.add(Constants.DATETIME);
-		types.add(Constants.DOUBLE);
-		types.add(Constants.FLOAT);
-		types.add(Constants.INT);
+		types.add(Constants.NUMBER);
 		types.add(Constants.PERCENTAGE);
 		types.add(Constants.CURRENCY);
 		types.add(Constants.EMAIL);
 		types.add(Constants.PHONE_NUMBER);
 		types.add(Constants.TEXT);
+		types.add(Constants.CHECKBOX);
 		types.add(Constants.URL);
 		types.add(Constants.LOOKUP);
 		types.add(Constants.PICKLIST);

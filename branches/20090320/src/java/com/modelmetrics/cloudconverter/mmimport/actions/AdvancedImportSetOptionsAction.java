@@ -1,7 +1,10 @@
 package com.modelmetrics.cloudconverter.mmimport.actions;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import com.modelmetrics.cloudconverter.engine.PicklistProviderFactory;
 import com.modelmetrics.cloudconverter.mmimport.services.StringUtils;
@@ -23,6 +26,10 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	private List<String> fieldTypes = StringUtils.getAllFieldTypes();
 
 	private Collection<String> lookupObjects;
+	
+	private boolean nameUseAutonumber;
+	
+	private String nameUseField;
 
 	public String execute() throws Exception {
 
@@ -31,6 +38,7 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 		// first time here?
 		if (this.getSubmit() == null) {
+			this.setNameUseAutonumber(this.getUploadContext().getCurrentCloudConverterObject().isNameUseAutonumber());
 			metadata = this.getUploadContext().getCurrentCloudConverterObject()
 					.getMetadataProxies();
 			return Action.INPUT;
@@ -41,13 +49,11 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 				.setMetadataProxies(this.getMetadata());
 
 		// validate
-		for (MetadataProxy metadataProxy : this.getMetadata()) {
-			if (!validate(metadataProxy)) {
-				return Action.INPUT;
-			}
+		if (!this.validateInput()) {
+			return Action.INPUT;
 		}
 
-		// picklists
+		// picklist processing.
 		for (MetadataProxy metadataProxy : this.getMetadata()) {
 			if (metadataProxy.getType() == FieldType.Picklist) {
 				this.getUploadContext().getCurrentCloudConverterObject().getPicklistFields().put(
@@ -58,20 +64,84 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 								.getOriginalData()));
 			}
 		}
+		
+		//populate name information
+		this.getUploadContext().getCurrentCloudConverterObject().setNameUseAutonumber(this.isNameUseAutonumber());
+		this.getUploadContext().getCurrentCloudConverterObject().setNameUseField(this.getNameUseField());
 
 		return Action.SUCCESS;
 
 	}
 	
-	public boolean validate(MetadataProxy metadataProxy) throws Exception {
+	public boolean validateInput() throws Exception {
+	
+		//validate that lookups also include an external ID
+		boolean hasLookup = false;
+		boolean hasExternalId = false;
+		Set<String> relatedObjects = new TreeSet<String>();
+		
+		for (MetadataProxy metadataProxy : this.getMetadata()) {
+			if (metadataProxy.getType() == FieldType.Lookup) {
+				hasLookup = true;
+				if (relatedObjects.contains(metadataProxy.getLookupObject())) {
+					this.addActionMessage("You can only have a one relation to " + metadataProxy.getLookupObject() + " on this object.");
+					return false;
+				} else {
+					relatedObjects.add(metadataProxy.getLookupObject());
+				}
+			}
+			if (metadataProxy.isUniqueExternalId()) {
+				hasExternalId = true;
+			}
+			
+		}
+		
+		if (hasLookup && !hasExternalId) {
+			this.addActionMessage("If you specify a field as a lookup, you must also have an external ID.");
+			return false;
+		}
+		
+		//validate individual
+		for (MetadataProxy metadataProxy : this.getMetadata()) {
+			if (!validateSingle(metadataProxy)) {
+				return false;
+			}
+		}
+		
+		if (this.isNameUseAutonumber() && this.hasText(this.getNameUseField())) {
+			this.addActionMessage("You have specified both 'use autonumber' and a field to use for name data.  You must select one or the other.");
+			return false;
+		}
+
+		if (!this.isNameUseAutonumber() && !this.hasText(this.getNameUseField())) {
+			this.addActionMessage("You have specified neither 'use autonumber' nor a field to use for name data.  You must select one or the other.");
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	
+	public boolean validateSingle(MetadataProxy metadataProxy) throws Exception {
 		boolean ret = true;
 		
-		//field type
+		//field type is Lookup -- requires additional data.
 		if (metadataProxy.getType() == FieldType.Lookup) {
 			if (!hasText(metadataProxy.getLookupObject()) || !hasText(metadataProxy.getLookupField())) {
 				this.addActionMessage("Lookup fields must have both a lookup object and a lookup field specified.");
 				return false;
 			}
+		}
+		
+		if (metadataProxy.isUniqueExternalId() && metadataProxy.getType() != FieldType.Text) {
+			this.addActionMessage("Cloud Converter requires external ID fields to be Text.");
+			return false;			
+		}
+		
+		if ((hasText(metadataProxy.getLookupField()) || hasText(metadataProxy.getLookupField())) && metadataProxy.getType() != FieldType.Lookup) {
+			this.addActionMessage("You had a lookup object specified for a field type other than text.");
+			return false;
 		}
 		
 		
@@ -111,5 +181,21 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 	public void setLookupObjects(Collection<String> lookupObjects) {
 		this.lookupObjects = lookupObjects;
+	}
+
+	public boolean isNameUseAutonumber() {
+		return nameUseAutonumber;
+	}
+
+	public void setNameUseAutonumber(boolean nameUseAutonumber) {
+		this.nameUseAutonumber = nameUseAutonumber;
+	}
+
+	public String getNameUseField() {
+		return nameUseField;
+	}
+
+	public void setNameUseField(String nameUseField) {
+		this.nameUseField = nameUseField;
 	}
 }

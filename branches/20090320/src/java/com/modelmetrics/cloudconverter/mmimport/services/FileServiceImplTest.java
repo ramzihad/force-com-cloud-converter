@@ -77,6 +77,16 @@ public class FileServiceImplTest extends TestCaseWithLog {
 		
 	}
 	
+	public void testSampleSheetMultipleTabsFormulas() throws Exception {
+		String fileName = "./src/sampledbs/excel/Project-Management-Demo-2009-05-26.xls";
+		
+		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		
+		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
+		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
+		
+		
+	}
 
 	
 }

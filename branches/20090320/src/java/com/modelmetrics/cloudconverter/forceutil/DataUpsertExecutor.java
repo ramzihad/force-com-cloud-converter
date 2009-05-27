@@ -113,6 +113,16 @@ public class DataUpsertExecutor extends AbstractDataExecutor {
 					current.setValue(migrationContext.getFieldMap().get(
 							metadataProxy.getName()), type.get(i));
 				}
+				
+				/*
+				 * some work for names that aren't about autonumber
+				 */
+				if (!migrationContext.getCloudConverterObject().isNameUseAutonumber()) {
+					if (metadataProxy.getName().equalsIgnoreCase(migrationContext.getCloudConverterObject().getNameUseField())) {
+						current.setValue("Name", type.get(i));
+					}
+				}
+
 
 				i++;
 			}

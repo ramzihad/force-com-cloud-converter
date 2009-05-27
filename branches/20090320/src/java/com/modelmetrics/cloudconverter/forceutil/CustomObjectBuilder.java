@@ -29,6 +29,7 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
+import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
@@ -71,7 +72,7 @@ public class CustomObjectBuilder {
 		co.setFullName(objectName);
 		co.setDeploymentStatus(DeploymentStatus.Deployed);
 		co
-				.setDescription("Created by the CloudConverter from http://ModelMetrics.com");
+				.setDescription("Created by the Cloud Converter from http://ModelMetrics.com");
 		co.setEnableActivities(true);
 		co.setLabel(objectLabel);
 		co.setPluralLabel(co.getLabel() + "s");
@@ -83,6 +84,50 @@ public class CustomObjectBuilder {
 		nf.setType(FieldType.AutoNumber);
 		nf.setStartingNumber(0);
 		nf.setDisplayFormat("A-{000000}");
+		nf
+				.setDescription("The custom object identifier on page layouts, related lists, etc.");
+		nf.setLabel(objectLabel + " Name");
+		nf.setFullName(objectName + " __c");
+
+		co.setNameField(nf);
+
+		return co;
+	}
+	
+	public CustomObject build(CloudConverterObject cloudConverterObject) throws Exception {
+		
+		String objectName = cloudConverterObject.getObjectName();
+		String objectLabel = cloudConverterObject.getObjectLabel();
+		
+		if (!objectName.endsWith("__c")) {
+			throw new RuntimeException("Bad object name. " + objectName);
+		}
+		
+		CustomObject co = new CustomObject();
+		
+		co.setFullName(objectName);
+		co.setDeploymentStatus(DeploymentStatus.Deployed);
+		co
+				.setDescription("Created by the Cloud Converter from http://ModelMetrics.com");
+		co.setEnableActivities(true);
+		co.setLabel(objectLabel);
+		co.setPluralLabel(co.getLabel() + "s");
+		co.setSharingModel(SharingModel.ReadWrite);
+
+		// just putting this in for now -- no technical reason although we
+		// always need a name
+		CustomField nf = new CustomField();
+		
+		//new! to get the 
+		if (cloudConverterObject.isNameUseAutonumber()) {
+			nf.setType(FieldType.AutoNumber);
+			nf.setStartingNumber(0);
+			nf.setDisplayFormat("A-{000000}");
+		} else {
+			nf.setType(FieldType.Text);
+			nf.setRequired(Boolean.TRUE);
+		}
+		
 		nf
 				.setDescription("The custom object identifier on page layouts, related lists, etc.");
 		nf.setLabel(objectLabel + " Name");

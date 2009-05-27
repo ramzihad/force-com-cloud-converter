@@ -16,7 +16,7 @@ public class Constants {
 	
 	public static final String CURRENCY = "Currency";
 	
-	public static final String PERCENTAGE = "PERCENT";
+	public static final String PERCENTAGE = "Percent";
 	
 	public static final String NUMBER = "Number";
 	
@@ -31,4 +31,6 @@ public class Constants {
 	public static final String LOOKUP = "Lookup";
 	
 	public static final String PICKLIST = "Picklist";
+	
+	public static final String CHECKBOX = "Checkbox";
 }

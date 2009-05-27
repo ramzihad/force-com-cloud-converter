@@ -61,8 +61,17 @@ public class LayoutBuilder extends AbstractMigrationContextAware {
 
 		LayoutColumn[] layoutColumnsOne = new LayoutColumn[2];
 		layoutColumnsOne[0] = new LayoutColumn();
+		
+		/*
+		 * 2009-05-26 RSC Updated to allow for non-autonumber names
+		 */
+		if (this.getMigrationContext().getCloudConverterObject().isNameUseAutonumber()) {
 		layoutColumnsOne[0].setLayoutItems(this.getLayoutItemArray(
 				UiBehavior.Readonly, "Name"));
+		} else {
+			layoutColumnsOne[0].setLayoutItems(this.getLayoutItemArray(
+					UiBehavior.Required, "Name"));
+		}
 
 		layoutColumnsOne[1] = new LayoutColumn();
 		layoutColumnsOne[1].setLayoutItems(this.getLayoutItemArray(
