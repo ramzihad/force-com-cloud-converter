@@ -111,7 +111,7 @@ public class CustomObjectBuilder {
 				.setDescription("Created by the Cloud Converter from http://ModelMetrics.com");
 		co.setEnableActivities(true);
 		co.setLabel(objectLabel);
-		co.setPluralLabel(co.getLabel() + "s");
+		co.setPluralLabel(cloudConverterObject.getObjectPlural());
 		co.setSharingModel(SharingModel.ReadWrite);
 
 		// just putting this in for now -- no technical reason although we

@@ -11,6 +11,14 @@ public class ObjectDeleteBeanComparator implements Comparator {
 		ObjectDeleteBean bean1 = (ObjectDeleteBean) o1;
 		ObjectDeleteBean bean2 = (ObjectDeleteBean) o2;
 		
+		// see if there's a reference to one or the other
+		if (bean1.getOtherObjectRef().contains(bean2.getOriginal().getObjectName())) {
+			return -1;
+		} else if (bean2.getOtherObjectRef().contains(bean1.getOriginal().getObjectName())) {
+			return 1;
+		}
+		
+		//raw
 		if (bean1.getRefToOtherObjectCount() > bean2.getRefToOtherObjectCount()) {
 			return -1;
 		} else if (bean1.getRefToOtherObjectCount() < bean2.getRefToOtherObjectCount()) {

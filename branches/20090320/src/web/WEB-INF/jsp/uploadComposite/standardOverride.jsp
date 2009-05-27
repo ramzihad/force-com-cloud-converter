@@ -8,7 +8,7 @@
 <script language="javascript">
 
 function areYouSure() {
-	return confirm("Are you sure.");
+	return confirm("Are you sure?");
 }
 
 </script>
@@ -26,6 +26,8 @@ function areYouSure() {
 					</s:if>
 				</s:iterator>
 			</ul>
+			
+			<p><strong>If these are not the object names you want to work with, please rename the tabs in your source document and start again.</strong></p>
 
 			<s:form action="importStandardOverride" method="POST" onsubmit="return areYouSure();">
 		
@@ -34,7 +36,7 @@ function areYouSure() {
 			<p>Do you want to continue?</p>
 
 			<p><s:submit name="submit" value="No - Start Over" />	
-			<s:submit name="submit" value="Yes - Continue" /></p>
+			<s:submit name="submit" value="Yes - Continue to Import" /></p>
 
 			</s:form>
 	

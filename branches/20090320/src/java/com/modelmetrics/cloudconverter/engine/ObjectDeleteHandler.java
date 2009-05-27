@@ -119,6 +119,8 @@ public class ObjectDeleteHandler {
 		//sort them by reference count, highest first then return
 		Set<ObjectDeleteBean> sortedSet = new TreeSet<ObjectDeleteBean>(new ObjectDeleteBeanComparator());
 		sortedSet.addAll(sobjects.values());
+		
+		
 
 		List<CloudConverterObject> ret = new ArrayList<CloudConverterObject>();
 		

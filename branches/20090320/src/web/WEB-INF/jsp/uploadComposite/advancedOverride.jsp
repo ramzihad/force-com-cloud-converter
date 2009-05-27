@@ -3,6 +3,14 @@
 <html>
 	<head>
 		<title>Confirm</title>
+		
+<script language="javascript">
+
+function areYouSure() {
+	return confirm("Are you sure?");
+}
+
+</script>
 	</head>
 
 	<body>
@@ -18,7 +26,9 @@
 				</s:iterator>
 			</ul>
 
-			<s:form action="importAdvancedOverride" method="POST">
+			<p><strong>If these are not the object names you want to work with, please rename the tabs in your source document and start again.</strong></p>
+
+			<s:form action="importAdvancedOverride" method="POST" onsubmit="return areYouSure();">
 		
 			<p>If you continue, the current objects and data will be deleted.</p>
 			

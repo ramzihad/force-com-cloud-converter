@@ -20,6 +20,8 @@ public class CloudConverterObject {
 	
 	private String objectLabel;
 	
+	private String objectPlural;
+	
 	private boolean existsInSalesforce;
 	
 	private String upsertField;
@@ -110,6 +112,14 @@ public class CloudConverterObject {
 
 	public void setNameUseField(String nameUseField) {
 		this.nameUseField = nameUseField;
+	}
+
+	public String getObjectPlural() {
+		return objectPlural;
+	}
+
+	public void setObjectPlural(String objectPlural) {
+		this.objectPlural = objectPlural;
 	}
 	
 }

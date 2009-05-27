@@ -58,6 +58,12 @@ function areYouSure() {
 		<p>Use data from field named <s:select list="metadata" listKey="name" listValue="name"
 									name="nameUseField"
 									value="nameUseField" emptyOption="true" /> for object name.</p>
+									
+		<p>Object Label: <s:textfield
+									key="objectLabel" /></p>
+		
+		<p>Object Plural: <s:textfield
+									key="objectPlural"/></p>
 	
 		<h2>Field Detail</h2>
 		

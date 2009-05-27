@@ -30,6 +30,12 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	private boolean nameUseAutonumber;
 	
 	private String nameUseField;
+	
+	private String objectLabel;
+	
+	private String objectPlural;
+
+
 
 	public String execute() throws Exception {
 
@@ -41,6 +47,8 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 			this.setNameUseAutonumber(this.getUploadContext().getCurrentCloudConverterObject().isNameUseAutonumber());
 			metadata = this.getUploadContext().getCurrentCloudConverterObject()
 					.getMetadataProxies();
+			this.setObjectLabel(this.getUploadContext().getCurrentCloudConverterObject().getObjectLabel());
+			this.setObjectPlural(this.getUploadContext().getCurrentCloudConverterObject().getObjectPlural());
 			return Action.INPUT;
 		}
 
@@ -68,6 +76,8 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 		//populate name information
 		this.getUploadContext().getCurrentCloudConverterObject().setNameUseAutonumber(this.isNameUseAutonumber());
 		this.getUploadContext().getCurrentCloudConverterObject().setNameUseField(this.getNameUseField());
+		this.getUploadContext().getCurrentCloudConverterObject().setObjectLabel(this.getObjectLabel());
+		this.getUploadContext().getCurrentCloudConverterObject().setObjectPlural(this.getObjectPlural());
 
 		return Action.SUCCESS;
 
@@ -197,5 +207,21 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 	public void setNameUseField(String nameUseField) {
 		this.nameUseField = nameUseField;
+	}
+	
+	public String getObjectLabel() {
+		return objectLabel;
+	}
+
+	public void setObjectLabel(String objectLabel) {
+		this.objectLabel = objectLabel;
+	}
+
+	public String getObjectPlural() {
+		return objectPlural;
+	}
+
+	public void setObjectPlural(String objectPlural) {
+		this.objectPlural = objectPlural;
 	}
 }

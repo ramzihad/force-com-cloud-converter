@@ -30,6 +30,12 @@ public class CloudConverterObjectBuilder {
 			
 			current.setObjectLabel(currentWorksheet.getSheetName());
 			
+			if (currentWorksheet.getSheetName().endsWith("s")) {
+				current.setObjectPlural(currentWorksheet.getSheetName());
+			} else {
+				current.setObjectPlural(currentWorksheet.getSheetName() + "s");
+			}
+			
 			List<MetadataProxy> metadataProxies = new MetadataProxyCollectionBuilder()
 					.build(currentWorksheet);
 
