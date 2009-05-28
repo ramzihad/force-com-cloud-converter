@@ -40,7 +40,7 @@ function areYouSure() {
 </script>
 	</head>
 	<body>
-		<h1>Advanced Options: <s:property value="uploadContext.currentCloudConverterObject.objectLabel" /></h1>
+		<h2>Advanced Options: <s:property value="uploadContext.currentCloudConverterObject.objectLabel" /></h2>
 		
 		<p><s:actionmessage /></p>
 

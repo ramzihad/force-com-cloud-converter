@@ -15,7 +15,7 @@ function areYouSure() {
 
 	<body>
 
-			<h1>Please Confirm:</h1>
+			<h2>Please Confirm:</h2>
 
 			<p>These objects already exist in your org.</p>
 			<ul>

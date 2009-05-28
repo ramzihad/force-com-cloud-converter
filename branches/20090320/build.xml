@@ -23,9 +23,13 @@
 	<tstamp />
 
 	<path id="classpath">
-		<fileset dir="lib">
+		<fileset dir="lib/dist">
 			<include name="**/*.jar" />
 		</fileset>
+		<fileset dir="lib/build">
+			<include name="**/*.jar" />
+		</fileset>
+
 	</path>
 
 	<target name="init">
@@ -127,7 +131,7 @@
 		<war basedir="src/web/ui" destfile="${tomcat.webapp.war}" webxml="src/web/conf/web.xml">
 			<classes dir="${build}" />
 			<webinf dir="src/web/WEB-INF" />
-			<lib dir="lib" />
+			<lib dir="lib/dist" />
 		</war>
 		
 		<!--

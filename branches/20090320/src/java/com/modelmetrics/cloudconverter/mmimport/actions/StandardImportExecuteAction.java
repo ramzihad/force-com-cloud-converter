@@ -15,7 +15,7 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 	public String execute() throws Exception {
 
 		if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
-			this.getUploadContext().setLastException(new RuntimeException("Missing Salesforce Session.  (This is sometimes an issue with Internet Explorer.)"));
+			this.getUploadContext().setLastException(new RuntimeException("Missing Salesforce Session.  (This is sometimes an issue when your browser blocks cookies.)"));
 			return ERROR;
 		}
 

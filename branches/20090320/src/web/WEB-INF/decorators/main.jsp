@@ -10,12 +10,12 @@
         </head>
         <body>
 		
-		<div id="puHeader" style="float:left; text-align: center;"><a href="http://www.modelmetrics.com/solutions/cloudconverter/" target="_blank"><img src="./img/logo_cloudconverterx300.png" /></a><br/><a href="http://www.modelmetrics.com/solutions/cloudconverter/" target="_blank">Cloud Converter from Model Metrics</a></div>
+		<div id="puHeader" style="float:left; text-align: center;"><a href="http://www.modelmetrics.com/solutions/cloudconverter/" target="_blank"><img src="./img/logo_cloudconverter_white.gif" /></a><br/><a href="http://www.modelmetrics.com/solutions/cloudconverter/" target="_blank">Cloud Converter from Model Metrics</a></div>
 		
-		<div id="puHeader" style="float:right; text-align: center;"><a href="http://modelmetrics.com" target="_blank"><img src="./img/mmlogo.jpg" /></a><br/><a href="http://modelmetrics.com" target="_blank">Platform Utilities from Model Metrics</a></div>
+		<div id="puHeader2" style="float:right; text-align: center;"><a href="http://modelmetrics.com" target="_blank"><img src="./img/mmlogo.jpg" /></a><br/><a href="http://modelmetrics.com" target="_blank">Platform Utilities from Model Metrics</a></div>
 
 		<div id="puMain" style="clear: both">
-        
+			<p>&nbsp;</p>        
             <decorator:body />
             
         </div>
