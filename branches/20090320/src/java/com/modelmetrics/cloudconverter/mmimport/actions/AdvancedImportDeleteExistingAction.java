@@ -20,6 +20,12 @@ public class AdvancedImportDeleteExistingAction extends
 			return ERROR;
 		}
 		
+		if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
+			this.getUploadContext().setLastException(new RuntimeException("Missing Salesforce Session.  (This is sometimes an issue with Internet Explorer.)"));
+			return ERROR;
+		}
+
+		
 		// giddyup
 		try {
 			

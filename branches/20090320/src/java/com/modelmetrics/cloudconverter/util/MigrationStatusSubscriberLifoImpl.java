@@ -1,5 +1,6 @@
 package com.modelmetrics.cloudconverter.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,4 +17,7 @@ public class MigrationStatusSubscriberLifoImpl implements
 		return status;
 	}
 
+	public void reset() {
+		status = new ArrayList<String>();
+	}
 }

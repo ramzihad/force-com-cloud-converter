@@ -7,4 +7,6 @@ public interface MigrationStatusSubscriber {
 	public void publish(String migrationEvent);
 	
 	public List<String> getStatus();
+	
+	public void reset();
 }

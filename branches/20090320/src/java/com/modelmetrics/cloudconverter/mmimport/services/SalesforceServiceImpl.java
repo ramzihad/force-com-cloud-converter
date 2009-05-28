@@ -26,6 +26,9 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 	
 	public void execute(CloudConverterObject current, MigrationStatusSubscriber migrationStatusSubscriber) throws Exception {
 		
+		// reset status
+		migrationStatusSubscriber.reset();
+		
 		// notify subscribers
 		migrationStatusSubscriber.publish(
 				"Starting object: " + current.getObjectLabel() + " ("
