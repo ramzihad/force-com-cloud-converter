@@ -19,7 +19,7 @@
 	<s:iterator value="describeContext.types"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator>
 </p>
 
-<a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes during which time your browser will appear non-responsive.)</a> | 
+<p><a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes during which time your browser will appear non-responsive.)</a></p> 
 
 <p><a href="<s:url action="describeOutputAsTemplate"></s:url>">Get Multiple Objects</a></p>
 

@@ -76,13 +76,13 @@ public class UploadActionCompositeInitialize extends AbstractUploadContextAware 
 
 	public String execute() throws Exception {
 
-		if (this.getSalesforceSessionContext().getSalesforceSession() == null
-				&& this.getExistingSessionId() != null
+		if (this.getExistingSessionId() != null
 				&& this.getExistingLocationUrl() != null) {
+			this.getSalesforceSessionContext().setSalesforceSession(null);
 			this.getSalesforceSessionContext().setSalesforceExistingSession(
 					this.getExistingSessionId(), this.getExistingLocationUrl());
-
-			log.info("salesforce existing session was null??");
+		} else {
+			return ERROR;
 		}
 		return INPUT;
 	}

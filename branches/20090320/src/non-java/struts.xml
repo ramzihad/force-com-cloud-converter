@@ -221,6 +221,18 @@
 			</result>
 		</action>	
 
+		<action name="migrateSetup" class="migrateSetupAction">
+			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
+			<result name="success" type="chain">migratePreview</result>			
+		</action>		
+		
+		<action name="migratePreview" class="migratePreviewAction">
+			<result name="success">/WEB-INF/jsp/migrate/preview.jsp</result>
+		</action>			
+		
+		<action name="migrateExecute" class="migrateExecuteAction">
+			<result name="success">/WEB-INF/jsp/migrate/execute.jsp</result>
+		</action>		
 
 	</package>
 </struts>

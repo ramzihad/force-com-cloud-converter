@@ -4,7 +4,7 @@
     <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
     <html>
         <head>
-            <title><decorator:title default="Welcome!" /> - Model Metrics Force.com Platform Utilities</title>
+            <title><decorator:title default="Welcome!" /> - Model Metrics' Cloud Converter & Force.com Platform Utilities</title>
 			<link rel="stylesheet" href="https://na4.salesforce.com/sCSS/15.0/1238015590000/Theme2/common.css" />
             <decorator:head />
         </head>
@@ -19,10 +19,10 @@
             <decorator:body />
             
         </div>
-            
-        <div id="puFooter" style="font-size: 75%; color: #000066;">
+
+        <div id="puFooter" style="font-size: 75%; color: #000066; clear: both">
        <p class="footer">
-       	Version: May 24, 2009 - Profile (mb):
+       	Version: June 1, 2009 - Profile (mb):
        	
        	<%
        	

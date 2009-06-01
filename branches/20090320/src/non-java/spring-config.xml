@@ -40,30 +40,40 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="uploadContext"
 		class="com.modelmetrics.cloudconverter.mmimport.actions.UploadContext"
 		scope="session">
-		<!-- <aop:scoped-proxy />  -->
 	</bean>
 
 	<bean id="salesforceSessionContext"
 		class="com.modelmetrics.common.sforce.struts2.SalesforceSessionContext"
 		scope="session">
-		<!-- <aop:scoped-proxy /> -->
 	</bean>
 	
 	<bean id="utilityContext"
 		class="com.modelmetrics.utility.common.struts2.UtilityContext"
 		scope="session">
-		<!-- <aop:scoped-proxy /> -->
 	</bean>
 	
 	<bean id="describeContext"
 		class="com.modelmetrics.utility.describe.struts2.DescribeContext"
 		scope="session">
-		<!-- <aop:scoped-proxy /> -->
+	</bean>
+
+	<bean id="migrateContext"
+		class="com.modelmetrics.cloudconverter.utility.migrate.MigrateContext"
+		scope="session">
 	</bean>
 		
 	<bean id="abstractUploadContextAware" abstract="true" >
 		<property name="uploadContext">
 			<ref bean="uploadContext" />
+		</property>
+		<property name="salesforceSessionContext" >
+			<ref bean="salesforceSessionContext" />
+		</property>
+	</bean>
+	
+	<bean id="abstractMigrateContextAware" abstract="true" >
+		<property name="migrateContext">
+			<ref bean="migrateContext" />
 		</property>
 		<property name="salesforceSessionContext" >
 			<ref bean="salesforceSessionContext" />
@@ -278,11 +288,23 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	
 	<bean id="layoutsExcelAction" parent="abstractDescribeContextAware"
 		class="com.modelmetrics.utility.describe.struts2.LayoutAsExcelAction"
-		scope="prototype">
-		
+		scope="prototype">		
 	</bean>	
 
-
+	<bean id="migrateSetupAction" parent="abstractMigrateContextAware"
+		class="com.modelmetrics.utility.migrate.struts2.MigrateSetupAction"
+		scope="prototype">
+	</bean>	
+	
+	<bean id="migratePreviewAction" parent="abstractMigrateContextAware"
+		class="com.modelmetrics.utility.migrate.struts2.MigratePreviewAction"
+		scope="prototype">
+	</bean>				
+		
+	<bean id="migrateExecuteAction" parent="abstractMigrateContextAware"
+		class="com.modelmetrics.utility.migrate.struts2.MigrateExecuteAction"
+		scope="prototype">
+	</bean>	
 
 </beans>
 

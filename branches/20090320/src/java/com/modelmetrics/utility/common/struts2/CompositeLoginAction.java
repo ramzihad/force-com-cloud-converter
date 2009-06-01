@@ -59,9 +59,9 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 
 		boolean error = false;
 		
-		if (this.getSalesforceSessionContext().getSalesforceSession() != null) {
-			return SUCCESS;
-		}
+//		if (this.getSalesforceSessionContext().getSalesforceSession() != null) {
+//			return SUCCESS;
+//		}
 
 		if ("".equals(this.getExistingLocationUrl())) {
 			addActionMessage("locationUrl is required");
@@ -80,6 +80,9 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 		 * let's check the session id and location url
 		 */
 		try {
+			//RSC 2009-05-29 cleans out session.  useful when switching back and forth between orgs in the same browser.
+			this.getSalesforceSessionContext().setSalesforceSession(null);
+			
 			this.getSalesforceSessionContext().setSalesforceExistingSession(
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 

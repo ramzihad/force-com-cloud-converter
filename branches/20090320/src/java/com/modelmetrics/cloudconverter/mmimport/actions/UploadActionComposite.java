@@ -105,7 +105,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		try {
 			beans = fileService.parseXLS(upload);
 		} catch (ParseException e) {
-			message = "There has been a problem uploading the file";
+			message = "There has been a problem uploading and parsing the file. (" + e.getLocalizedMessage() + ")";
 			log.error(message, e);
 			this.getUploadContext().setLastException(e);
 			return ERROR;
