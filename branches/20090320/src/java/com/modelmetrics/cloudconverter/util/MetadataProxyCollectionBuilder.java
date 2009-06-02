@@ -31,6 +31,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 import com.modelmetrics.cloudconverter.mmimport.services.Constants;
 import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.FieldType;
@@ -285,6 +287,10 @@ public class MetadataProxyCollectionBuilder {
 
 		List<MetadataProxy> ret = new ArrayList<MetadataProxy>();
 		for (int i = 0; i < bean.getNames().size(); i++) {
+			//validate content
+			if (!StringUtils.hasText(bean.getNames().get(i))) {
+				throw new RuntimeException("Empty field name.  Check row 1, the column at position " + (i+1) + " appears to be blank.");
+			}
 			MetadataProxy field = new MetadataProxy();
 
 			field.setName(bean.getNames().get(i));
@@ -333,6 +339,10 @@ public class MetadataProxyCollectionBuilder {
 			} 
 			else if (Constants.EXTERNAL_ID.equals(value)) {
 				field.setType(FieldType.ExternalId);
+			} 
+			else if (Constants.CHECKBOX.equals(value)) {
+				field.setType(FieldType.Checkbox);
+				field.setDefaultValue("false");
 			} 
 			
 			

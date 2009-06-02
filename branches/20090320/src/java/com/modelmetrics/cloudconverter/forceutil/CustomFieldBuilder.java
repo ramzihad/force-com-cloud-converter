@@ -38,6 +38,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.StringUtils;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.PicklistProvider;
@@ -85,6 +86,9 @@ public class CustomFieldBuilder {
 		 */
 		for (MetadataProxy current : metadataProxies) {
 
+			if (!StringUtils.hasText(current.getName())) {
+				throw new RuntimeException("Empty field name.  Check row 1, the column at position " + (current.getIndex() + 1) + " appears to be blank.");
+			}
 			boolean isPicklist = migrationContext.getPicklistFields() != null
 					&& migrationContext.getPicklistFields().containsKey(
 							current.getName());

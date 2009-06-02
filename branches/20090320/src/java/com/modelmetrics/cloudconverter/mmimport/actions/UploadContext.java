@@ -22,6 +22,8 @@ public class UploadContext  {
 	
 	private boolean okToDelete;
 	
+	private String message;
+	
 	public Map<String, List<String>> getObjectToIdMap() {
 		return objectToIdMap;
 	}
@@ -85,6 +87,14 @@ public class UploadContext  {
 
 	public void setOkToDelete(boolean okToDelete) {
 		this.okToDelete = okToDelete;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 

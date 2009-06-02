@@ -22,7 +22,7 @@
 
         <div id="puFooter" style="font-size: 75%; color: #000066; clear: both">
        <p class="footer">
-       	Version: June 1, 2009 - Profile (mb):
+       	Version: June 2, 2009 - Profile (mb):
        	
        	<%
        	

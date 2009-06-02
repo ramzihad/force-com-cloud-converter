@@ -153,7 +153,7 @@ public class FileServiceImpl implements FileService {
 						}
 						if (i >= 1) {
 							// parse data values
-
+						
 							CellType type = c.getType();
 
 							if (type.equals(CellType.BOOLEAN)
@@ -191,6 +191,19 @@ public class FileServiceImpl implements FileService {
 
 					}
 					if (i >= 1) {
+						/*
+						 * RSC 2009-06-02 Check to be sure there is data in a list
+						 */
+						boolean notEmpty = false;
+						for (Object o: list) {
+							if (o != null && o.toString().trim().length() != 0) {
+								notEmpty = true;
+								break;
+							}
+						}
+						if (!notEmpty) {
+							throw new RuntimeException("Found an empty row.  Your spreadsheet should not contain an empty row. Check sheet " + sheet.getName() + ", row " + (i+1) + ".");
+						}
 						bean.getData().add(list);
 						bean.setOverride(Boolean.FALSE);
 					}

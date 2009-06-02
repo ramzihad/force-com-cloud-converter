@@ -104,7 +104,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 		try {
 			beans = fileService.parseXLS(upload);
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			message = "There has been a problem uploading and parsing the file. (" + e.getLocalizedMessage() + ")";
 			log.error(message, e);
 			this.getUploadContext().setLastException(e);
@@ -120,6 +120,9 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 			message = "There has been a problem converting the file to metadata";
 			log.error(message, e);
 			this.getUploadContext().setLastException(e);
+			if (e instanceof IndexOutOfBoundsException) {
+				this.getUploadContext().setMessage("This message is usually caused by an Excel document that is not properly formatted.");
+			}
 			return ERROR;
 		}
 		

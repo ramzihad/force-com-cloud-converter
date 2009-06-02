@@ -44,6 +44,7 @@
 		
 		<action name="startUpload" class="uploadActionCompositeInitialize">
 			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
 		<action name="processUpload" class="uploadActionComposite" >
 			<result name="success" type="redirectAction">importBranch</result>

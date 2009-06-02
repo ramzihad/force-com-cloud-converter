@@ -37,6 +37,9 @@ public class AdvancedImportExecuteAction extends AbstractUploadContextAware {
 					.getStatusSubscriber());
 		} catch (Exception e) {
 			this.getUploadContext().setLastException(e);
+			if (e instanceof IndexOutOfBoundsException) {
+				this.getUploadContext().setMessage("This message is usually caused by an Excel document that is not properly formatted.");
+			}
 			return ERROR;
 		}
 		// done

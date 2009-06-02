@@ -19,7 +19,13 @@ public class ImportPrepareAction extends AbstractUploadContextAware {
 		new CustomObjectNameDecorator().decorate(this.getUploadContext().getCloudConverterObjects());
 		
 		//decorate with exists
+		try {
 		new ExistsInSalesforceDecorator().decorate(this.getUploadContext().getCloudConverterObjects(), this.getSalesforceService());
+		} catch (Exception e) {
+			this.getUploadContext().setLastException(e);
+			this.getUploadContext().setMessage("This error is often caused by lack of access to the Salesforce API. Check your edition (EE, UE, Dev) and your porfile (API Enabled).");
+			return Action.ERROR;
+		}
 		
 		//does anything already exist? if so, we need to get confirmation that it's OK to continue
 		boolean needsOverride = false;
