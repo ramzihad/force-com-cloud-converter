@@ -222,6 +222,11 @@
 			</result>
 		</action>	
 
+		<action name="migrate" class="migrateSetupAction">
+			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
+			<result name="success" type="chain">migratePreview</result>			
+		</action>		
+
 		<action name="migrateSetup" class="migrateSetupAction">
 			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
 			<result name="success" type="chain">migratePreview</result>			
@@ -232,6 +237,10 @@
 		</action>			
 		
 		<action name="migrateExecute" class="migrateExecuteAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
 			<result name="success">/WEB-INF/jsp/migrate/execute.jsp</result>
 		</action>		
 
