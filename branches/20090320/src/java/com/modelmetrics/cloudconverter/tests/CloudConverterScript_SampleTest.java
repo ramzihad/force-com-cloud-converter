@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter;
+package com.modelmetrics.cloudconverter.tests;
 
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
