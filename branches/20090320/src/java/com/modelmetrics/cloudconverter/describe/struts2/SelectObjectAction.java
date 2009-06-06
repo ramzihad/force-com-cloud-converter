@@ -33,8 +33,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
+import com.modelmetrics.cloudconverter.util.InterestingSobjectFilter;
 import com.modelmetrics.cloudconverter.util.SelectObjectFilterProvider;
-import com.modelmetrics.common.sforce.util.InterestingSobjectFilter;
 import com.sforce.soap.partner.DescribeGlobalResult;
 
 public class SelectObjectAction extends AbstractDescribeContextAware {
@@ -58,7 +58,8 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 
 		} else {
-			return ERROR;
+			//not an error condition -- just possibly repopulating if cookie lost.
+//			return ERROR;
 		}
 
 		if (this.getTarget() == null) {

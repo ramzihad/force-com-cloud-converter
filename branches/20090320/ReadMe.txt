@@ -77,6 +77,7 @@ HISTORY:
 * Extensive work around a Web Based interface for importing data from Excel files.
 * Added Explore Your Metadata
 * Updates support libs from Spring 2.0 to 2.5.
+* Summer 09 integration
 
 2009-02-17
 

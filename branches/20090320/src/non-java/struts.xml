@@ -153,6 +153,7 @@
 				/WEB-INF/jsp/describe/selectObject.jsp
 			</result>
 			<result name="success" type="redirectAction">describe</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 		</action>
 
 		<action name="describe" class="describeAction">

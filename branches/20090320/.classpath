@@ -2,8 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src/non-java"/>
 	<classpathentry kind="src" path="src/java"/>
-	<classpathentry kind="src" path="src/java-summer09"/>
-	<classpathentry kind="src" path="src/java-test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="SWT_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/dist/antlr-2.7.2.jar"/>

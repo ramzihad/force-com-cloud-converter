@@ -28,7 +28,7 @@ package com.modelmetrics.cloudconverter.compare;
 
 import java.util.Set;
 
-import com.modelmetrics.common.sforce.util.InterestingSobjectFilter;
+import com.modelmetrics.cloudconverter.util.InterestingSobjectFilter;
 import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 
