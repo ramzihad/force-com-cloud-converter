@@ -62,12 +62,21 @@ client configuration.
 ###################################################################
 HOW TO:
 
+Learn More -- Search YouTube for Cloud Converter to see the latest demos and instructional
+videos.
+
 Get Started -- use a toy database (for example, use the one included in this) and a 
 dev org to get used to the general flow of the app.  
 
 
 ###################################################################
 HISTORY:
+
+2009-06-01
+
+* Extensive work around a Web Based interface for importing data from Excel files.
+* Added Explore Your Metadata
+* Updates support libs from Spring 2.0 to 2.5.
 
 2009-02-17
 
