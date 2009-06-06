@@ -338,9 +338,9 @@ public class MetadataProxyCollectionBuilder {
 			else if (Constants.LOOKUP.equals(value)) {
 				field.setType(FieldType.Lookup);
 			} 
-			else if (Constants.EXTERNAL_ID.equals(value)) {
-				field.setType(FieldType.ExternalId);
-			} 
+//			else if (Constants.EXTERNAL_ID.equals(value)) {
+//				field.setType(FieldType.ExternalId);
+//			} 
 			else if (Constants.CHECKBOX.equals(value)) {
 				field.setType(FieldType.Checkbox);
 				field.setDefaultValue("false");
