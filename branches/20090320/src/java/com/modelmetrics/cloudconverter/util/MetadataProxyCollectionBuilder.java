@@ -33,9 +33,9 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import com.modelmetrics.cloudconverter.importxls.svcs.Constants;
-import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.FieldType;
+import com.temp.Constants;
+import com.temp.ExcelWorksheetWrapperBean;
 
 public class MetadataProxyCollectionBuilder {
 
