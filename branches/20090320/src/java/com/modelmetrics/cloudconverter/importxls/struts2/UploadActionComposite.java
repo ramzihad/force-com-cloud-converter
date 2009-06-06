@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObjectBuilder;
-import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cc.importxls.svcs.FileService;
-import com.modelmetrics.cc.importxls.svcs.SalesforceService;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObjectBuilder;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.services.FileService;
+import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
 

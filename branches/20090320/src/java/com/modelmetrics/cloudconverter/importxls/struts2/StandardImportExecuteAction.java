@@ -1,8 +1,8 @@
 package com.modelmetrics.cloudconverter.importxls.struts2;
 
-import com.modelmetrics.cc.importxls.svcs.SalesforceService;
-import com.modelmetrics.cc.importxls.svcs.SalesforceServiceFactory;
 import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
+import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
+import com.modelmetrics.cloudconverter.importxls.services.SalesforceServiceFactory;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
 
 public class StandardImportExecuteAction extends AbstractUploadContextAware {

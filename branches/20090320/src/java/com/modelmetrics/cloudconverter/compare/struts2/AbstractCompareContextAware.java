@@ -1,6 +1,5 @@
 package com.modelmetrics.cloudconverter.compare.struts2;
 
-import com.modelmetrics.cloudconverter.compare.ComparisonGroup;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.opensymphony.xwork2.ActionSupport;
 

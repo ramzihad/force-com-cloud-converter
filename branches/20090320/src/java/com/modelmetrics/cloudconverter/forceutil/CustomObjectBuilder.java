@@ -29,8 +29,8 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
-import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.DeploymentStatus;

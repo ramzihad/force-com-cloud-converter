@@ -29,7 +29,6 @@ package com.modelmetrics.cloudconverter.migrate.struts2;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import org.springframework.core.CollectionFactory;
 import org.springframework.util.StringUtils;
 
 import com.modelmetrics.common.sforce.util.FieldComparator;

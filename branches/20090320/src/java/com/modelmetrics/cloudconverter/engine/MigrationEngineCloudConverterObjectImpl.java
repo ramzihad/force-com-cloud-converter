@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.FieldType;

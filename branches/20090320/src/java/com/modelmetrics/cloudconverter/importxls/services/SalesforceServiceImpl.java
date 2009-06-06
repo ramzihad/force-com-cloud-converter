@@ -26,11 +26,11 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cc.importxls.svcs;
 
-import com.modelmetrics.cc.importxls.struts2.UploadContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
+import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class SalesforceServiceImpl extends AbstractSalesforceService {

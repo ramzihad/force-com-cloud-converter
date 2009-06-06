@@ -36,8 +36,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 

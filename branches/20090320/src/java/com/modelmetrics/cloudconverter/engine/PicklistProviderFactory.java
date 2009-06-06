@@ -28,7 +28,7 @@ package com.modelmetrics.cloudconverter.engine;
 
 import java.sql.Connection;
 
-import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 
 public class PicklistProviderFactory {

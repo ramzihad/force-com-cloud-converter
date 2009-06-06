@@ -2,7 +2,7 @@ package com.modelmetrics.cloudconverter.importxls.struts2;
 
 import java.io.File;
 
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;

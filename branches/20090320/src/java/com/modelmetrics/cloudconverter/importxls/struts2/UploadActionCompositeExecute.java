@@ -2,7 +2,7 @@ package com.modelmetrics.cloudconverter.importxls.struts2;
 
 import org.apache.log4j.Logger;
 
-import com.modelmetrics.cc.importxls.svcs.SalesforceService;
+import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
 
 public class UploadActionCompositeExecute extends AbstractUploadContextAware {
 

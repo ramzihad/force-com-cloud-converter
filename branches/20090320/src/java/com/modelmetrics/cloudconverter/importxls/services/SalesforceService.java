@@ -26,7 +26,7 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cc.importxls.svcs;
 
-import com.modelmetrics.cc.importxls.struts2.UploadContext;
+import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 

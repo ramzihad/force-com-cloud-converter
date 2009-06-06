@@ -3,7 +3,7 @@ package com.modelmetrics.cloudconverter.importxls.struts2;
 import java.util.List;
 import java.util.Map;
 
-import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 
 public class UploadContext  {

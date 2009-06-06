@@ -26,14 +26,13 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.forceutil;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.sforce.soap.partner.Field;
-
-import junit.framework.TestCase;
 
 public class MetadataReadinessCheckerTest extends TestCase {
 
