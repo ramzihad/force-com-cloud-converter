@@ -31,7 +31,7 @@ import java.util.List;
 import com.modelmetrics.cloudconverter.forceutil.CustomObjectBuilder;
 import com.modelmetrics.cloudconverter.forceutil.DataInsertExecutor;
 import com.modelmetrics.cloudconverter.forceutil.DataUpsertExecutor;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.sforce.soap._2006._04.metadata.CustomObject;

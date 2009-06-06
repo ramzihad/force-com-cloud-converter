@@ -38,8 +38,8 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;

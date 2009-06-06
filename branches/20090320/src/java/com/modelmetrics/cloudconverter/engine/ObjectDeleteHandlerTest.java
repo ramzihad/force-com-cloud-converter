@@ -28,9 +28,9 @@ package com.modelmetrics.cloudconverter.engine;
 
 import java.io.File;
 
-import com.modelmetrics.cloudconverter.mmimport.actions.ImportPrepareAction;
-import com.modelmetrics.cloudconverter.mmimport.actions.UploadActionComposite;
-import com.modelmetrics.cloudconverter.mmimport.actions.UploadContext;
+import com.modelmetrics.cloudconverter.importxls.actions.ImportPrepareAction;
+import com.modelmetrics.cloudconverter.importxls.actions.UploadActionComposite;
+import com.modelmetrics.cloudconverter.importxls.actions.UploadContext;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;

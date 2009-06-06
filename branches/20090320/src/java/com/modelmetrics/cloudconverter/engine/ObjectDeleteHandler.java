@@ -37,7 +37,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
-import com.modelmetrics.cloudconverter.mmimport.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.svcs.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomObject;
