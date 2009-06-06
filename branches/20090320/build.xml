@@ -117,6 +117,10 @@
 				<include name="**/*.hbm.xml" />
 				<include name="**/*.properties" />
 			</fileset>
+			<fileset dir="src/java-test">
+				<include name="**/*.hbm.xml" />
+				<include name="**/*.properties" />
+			</fileset>
 		</copy>
 
 		<copy todir="${build}">

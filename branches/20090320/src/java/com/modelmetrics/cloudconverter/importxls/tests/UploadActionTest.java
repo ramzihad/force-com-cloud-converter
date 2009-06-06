@@ -1,4 +1,4 @@
-package com.modelmetrics.cloudconverter.importxls.struts2;
+package com.modelmetrics.cloudconverter.importxls.tests;
 
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 

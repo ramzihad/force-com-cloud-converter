@@ -1,8 +1,12 @@
-package com.modelmetrics.cloudconverter.importxls.struts2;
+package com.modelmetrics.cloudconverter.importxls.tests;
 
 import java.io.File;
 
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
+import com.modelmetrics.cloudconverter.importxls.struts2.ImportPrepareAction;
+import com.modelmetrics.cloudconverter.importxls.struts2.StandardImportExecuteAction;
+import com.modelmetrics.cloudconverter.importxls.struts2.UploadActionComposite;
+import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;

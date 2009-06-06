@@ -24,12 +24,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-package com.modelmetrics.cloudconverter.importxls.services;
+package com.modelmetrics.cloudconverter.importxls.tests;
 
 import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import com.modelmetrics.cloudconverter.importxls.services.Constants;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.services.FileServiceImpl;
 import com.modelmetrics.common.util.TestCaseWithLog;
 
 public class FileServiceImplTest extends TestCaseWithLog {
