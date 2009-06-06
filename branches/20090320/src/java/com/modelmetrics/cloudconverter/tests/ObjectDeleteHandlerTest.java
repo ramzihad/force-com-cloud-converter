@@ -24,10 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-package com.modelmetrics.cloudconverter.engine;
+package com.modelmetrics.cloudconverter.tests;
 
 import java.io.File;
 
+import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
 import com.modelmetrics.cloudconverter.importxls.struts2.ImportPrepareAction;
 import com.modelmetrics.cloudconverter.importxls.struts2.UploadActionComposite;
 import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;

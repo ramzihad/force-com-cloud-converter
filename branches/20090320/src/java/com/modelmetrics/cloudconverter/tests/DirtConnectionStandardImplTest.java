@@ -24,10 +24,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-package com.modelmetrics.cloudconverter.dirtdb;
+package com.modelmetrics.cloudconverter.tests;
 
 import java.sql.ResultSet;
 
+import com.modelmetrics.cloudconverter.dirtdb.DatabaseCredentials;
+import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionStandardImpl;
 import com.modelmetrics.common.util.TestCaseWithLog;
 
 public class DirtConnectionStandardImplTest extends TestCaseWithLog {

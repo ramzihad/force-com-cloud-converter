@@ -24,9 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-package com.modelmetrics.cloudconverter.describe.struts2;
+package com.modelmetrics.cloudconverter.tests;
 
 import com.modelmetrics.cloudconverter.common.struts2.UtilityContext;
+import com.modelmetrics.cloudconverter.describe.struts2.DescribeContext;
+import com.modelmetrics.cloudconverter.describe.struts2.SelectObjectAction;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
