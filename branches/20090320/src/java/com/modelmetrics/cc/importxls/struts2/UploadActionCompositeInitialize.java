@@ -4,9 +4,9 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 
-import com.temp.ExcelWorksheetWrapperBean;
-import com.temp.FileService;
-import com.temp.SalesforceService;
+import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cc.importxls.svcs.FileService;
+import com.modelmetrics.cc.importxls.svcs.SalesforceService;
 
 public class UploadActionCompositeInitialize extends AbstractUploadContextAware {
 

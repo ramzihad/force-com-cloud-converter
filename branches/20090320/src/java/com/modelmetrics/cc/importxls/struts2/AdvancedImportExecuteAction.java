@@ -1,8 +1,8 @@
 package com.modelmetrics.cc.importxls.struts2;
 
+import com.modelmetrics.cc.importxls.svcs.SalesforceService;
+import com.modelmetrics.cc.importxls.svcs.SalesforceServiceFactory;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
-import com.temp.SalesforceService;
-import com.temp.SalesforceServiceFactory;
 
 /**
  * proceeds only with the current cloud converter object.

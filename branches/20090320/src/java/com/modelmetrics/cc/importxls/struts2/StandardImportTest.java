@@ -2,13 +2,13 @@ package com.modelmetrics.cc.importxls.struts2;
 
 import java.io.File;
 
+import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
-import com.temp.CloudConverterObject;
 
 public class StandardImportTest extends TestCaseWithDevOrg {
 

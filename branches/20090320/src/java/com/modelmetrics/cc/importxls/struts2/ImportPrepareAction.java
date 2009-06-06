@@ -1,10 +1,10 @@
 package com.modelmetrics.cc.importxls.struts2;
 
+import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cc.importxls.svcs.CustomObjectNameDecorator;
+import com.modelmetrics.cc.importxls.svcs.ExistsInSalesforceDecorator;
+import com.modelmetrics.cc.importxls.svcs.SalesforceService;
 import com.opensymphony.xwork2.Action;
-import com.temp.CloudConverterObject;
-import com.temp.CustomObjectNameDecorator;
-import com.temp.ExistsInSalesforceDecorator;
-import com.temp.SalesforceService;
 
 public class ImportPrepareAction extends AbstractUploadContextAware {
 

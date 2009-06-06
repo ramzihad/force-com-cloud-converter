@@ -1,12 +1,10 @@
 package com.modelmetrics.cc.importxls.struts2;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.modelmetrics.cloudconverter.engine.PicklistProvider;
+import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
-import com.temp.CloudConverterObject;
 
 public class UploadContext  {
 
