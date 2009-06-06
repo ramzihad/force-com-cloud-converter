@@ -32,8 +32,8 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
-import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.FileServiceImpl;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
