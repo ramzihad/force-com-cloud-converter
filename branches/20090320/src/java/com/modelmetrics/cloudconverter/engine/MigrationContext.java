@@ -36,16 +36,15 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.dirtdb.DirtConnectionIF;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.util.ExternalIdBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
-import com.temp.CloudConverterObject;
-import com.temp.ExcelWorksheetWrapperBean;
 
 /**
  * Tracks information about the migration.

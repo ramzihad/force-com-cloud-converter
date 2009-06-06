@@ -31,14 +31,15 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cc.importxls.svcs.FileServiceImpl;
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.FieldType;
-import com.temp.ExcelWorksheetWrapperBean;
-import com.temp.FileServiceImpl;
+
 
 public class CustomFieldBuilderTest extends TestCase {
 

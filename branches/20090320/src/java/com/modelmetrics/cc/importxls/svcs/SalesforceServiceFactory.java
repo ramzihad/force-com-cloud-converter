@@ -26,7 +26,6 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cc.importxls.svcs;
 
-import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
 import com.modelmetrics.common.sforce.SalesforceSession;
 
 public class SalesforceServiceFactory {

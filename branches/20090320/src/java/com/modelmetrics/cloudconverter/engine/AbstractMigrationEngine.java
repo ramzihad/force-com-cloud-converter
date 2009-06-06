@@ -37,7 +37,6 @@ import org.apache.commons.logging.LogFactory;
 import com.modelmetrics.cloudconverter.forceutil.CreateExecutor;
 import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
-import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;

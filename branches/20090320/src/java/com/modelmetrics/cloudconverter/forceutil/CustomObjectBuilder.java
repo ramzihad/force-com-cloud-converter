@@ -29,13 +29,14 @@ package com.modelmetrics.cloudconverter.forceutil;
 
 import java.sql.ResultSetMetaData;
 
+import com.modelmetrics.cc.importxls.svcs.CloudConverterObject;
+import com.modelmetrics.cc.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.DeploymentStatus;
 import com.sforce.soap._2006._04.metadata.FieldType;
 import com.sforce.soap._2006._04.metadata.SharingModel;
-import com.temp.CloudConverterObject;
-import com.temp.ExcelWorksheetWrapperBean;
+
 
 public class CustomObjectBuilder {
 

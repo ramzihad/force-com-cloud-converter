@@ -1,16 +1,16 @@
 package com.modelmetrics.cc.importxls.struts2;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.modelmetrics.cc.importxls.svcs.StringUtils;
 import com.modelmetrics.cloudconverter.engine.PicklistProviderFactory;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.opensymphony.xwork2.Action;
 import com.sforce.soap._2006._04.metadata.FieldType;
-import com.temp.StringUtils;
+
 
 /**
  * 
