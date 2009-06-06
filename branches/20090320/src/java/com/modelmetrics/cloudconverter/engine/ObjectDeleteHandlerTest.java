@@ -28,15 +28,15 @@ package com.modelmetrics.cloudconverter.engine;
 
 import java.io.File;
 
-import com.modelmetrics.cloudconverter.importxls.actions.ImportPrepareAction;
-import com.modelmetrics.cloudconverter.importxls.actions.UploadActionComposite;
-import com.modelmetrics.cloudconverter.importxls.actions.UploadContext;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
 import com.opensymphony.xwork2.ActionSupport;
+import com.temp2.ImportPrepareAction;
+import com.temp2.UploadActionComposite;
+import com.temp2.UploadContext;
 
 /**
  * Requires Publisher__c and Publications__c to be useful.
