@@ -24,11 +24,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
  */
-package com.modelmetrics.cloudconverter.forceutil;
+package com.modelmetrics.cloudconverter.tests;
 
 import java.util.List;
 import java.util.Map;
 
+import com.modelmetrics.cloudconverter.forceutil.ObjectToIdMapBuilder;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
