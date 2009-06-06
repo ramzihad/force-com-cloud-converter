@@ -26,7 +26,12 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.engine;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -36,6 +41,7 @@ import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomObject;
+import com.sforce.soap.partner.Field;
 
 /**
  * We often need to clean objects out of an org. If these objects are related to
@@ -74,7 +80,7 @@ public class ObjectDeleteHandler {
 		if (cloudConverterObjects.size() > 1) {
 			targetList = determineOrder(cloudConverterObjects);
 		} else {
-			targetList = new ArrayList<CloudConverterObject>();
+			targetList = new ArrayList<CloudConverterObject>(); 
 			targetList.add(cloudConverterObjects.get(0));
 		}
 

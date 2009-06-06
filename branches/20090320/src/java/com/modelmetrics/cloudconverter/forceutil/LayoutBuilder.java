@@ -65,7 +65,7 @@ public class LayoutBuilder extends AbstractMigrationContextAware {
 		/*
 		 * 2009-05-26 RSC Updated to allow for non-autonumber names
 		 */
-		if (this.getMigrationContext().getCloudConverterObject().isNameUseAutonumber()) {
+		if (this.getMigrationContext().getCloudConverterObject().isNameUseAutonumber()) { 
 		layoutColumnsOne[0].setLayoutItems(this.getLayoutItemArray(
 				UiBehavior.Readonly, "Name"));
 		} else {

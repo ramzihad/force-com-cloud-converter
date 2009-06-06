@@ -167,8 +167,8 @@ public class CustomFieldBuilder {
 					relName = relName.substring(0, relName.length() - 3);
 				}
 
-				field.setRelationshipName(migrationContext
-						.getCloudConverterObject().getObjectName().substring(
+				field.setRelationshipName(migrationContext.getCloudConverterObject()
+						.getObjectName().substring(
 								0,
 								migrationContext.getCloudConverterObject()
 										.getObjectName().length() - 3)
