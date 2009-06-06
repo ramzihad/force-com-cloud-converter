@@ -45,7 +45,7 @@ public class DbSalesforceServiceImpl implements DbSalesforceService {
 
 	public void generateObjectFromDB(DbUploadAction action)
 			throws Exception {
-
+//tt
 		Map<String, PicklistProvider> picklistFields = new HashMap<String, PicklistProvider>();
 //		for (PicklistInfo picklist : action.getPicklistInfos()) {
 //			picklistFields
