@@ -38,7 +38,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 
 	<bean id="uploadContext"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadContext"
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadContext"
 		scope="session">
 	</bean>
 
@@ -82,7 +82,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="uploadAction" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadAction">
 		
 		<property name="fileService" ref="fileService" />
 		<property name="salesforceService" ref="salesforceService" />
@@ -97,7 +97,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="uploadActionComposite" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionComposite">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionComposite">
 		
 		<property name="fileService" ref="fileService" />
 		<property name="salesforceService" ref="salesforceService" />
@@ -105,38 +105,38 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	
 	<bean id="uploadActionCompositeBranch" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeBranch">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeBranch">
 	</bean>
 	
 	<bean id="uploadActionCompositeOptionsOne" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeOptionsOne">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeOptionsOne">
 		
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 	
 	<bean id="uploadActionCompositeOptionsTwo" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeOptionsTwo">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeOptionsTwo">
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 	
 	<bean id="uploadActionCompositeOptionsThree" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeOptionsThree">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeOptionsThree">
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 	
 	<bean id="uploadActionCompositeConfirm" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeConfirm">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeConfirm">
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
 
 	<bean id="uploadActionCompositeInitialize" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeInitialize">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeInitialize">
 		
 		<property name="fileService" ref="fileService" />
 		<property name="salesforceService" ref="salesforceService" />
@@ -144,51 +144,51 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="uploadActionCompositeOverride" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeOverride">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeOverride">
 	</bean>
 
 	<bean id="uploadActionCompositeExecute" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.UploadActionCompositeExecute">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.UploadActionCompositeExecute">
 		<property name="fileService" ref="fileService" />
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
 	<bean id="importPrepare" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.ImportPrepareAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.ImportPrepareAction">
 		<property name="salesforceService" ref="salesforceService" />
 	</bean>
 
 	<bean id="importStandardExecute" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.StandardImportExecuteAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.StandardImportExecuteAction">
 	</bean>
 
 	<bean id="importAdvancedLoopManager" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.AdvancedImportLoopManagerAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.AdvancedImportLoopManagerAction">
 	</bean>
 
 	<bean id="importAdvancedPrepareNext" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.AdvancedImportPrepareSingleAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.AdvancedImportPrepareSingleAction">
 	</bean>
 	
 	<bean id="importAdvancedOptions" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.AdvancedImportSetOptionsAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.AdvancedImportSetOptionsAction">
 	</bean>
 
 	<bean id="importAdvancedDeleteExisting" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.AdvancedImportDeleteExistingAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.AdvancedImportDeleteExistingAction">
 	</bean>
 
 	
 	<bean id="importAdvancedExecute" scope="prototype"
 		parent="abstractUploadContextAware"
-		class="com.modelmetrics.cloudconverter.importxls.actions.AdvancedImportExecuteAction">
+		class="com.modelmetrics.cloudconverter.importxls.struts2.AdvancedImportExecuteAction">
 	</bean>
 	
 	<!-- STRUTS2 -->
