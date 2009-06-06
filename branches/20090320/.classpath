@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src/non-java"/>
 	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="src/java-test"/>
+	<classpathentry kind="src" path="src/java-legacy"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="SWT_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/dist/antlr-2.7.2.jar"/>
@@ -37,8 +39,6 @@
 	<classpathentry kind="lib" path="lib/dist/poi-3.2.0.jar"/>
 	<classpathentry kind="lib" path="lib/dist/saaj.jar"/>
 	<classpathentry kind="lib" path="lib/dist/sitemesh-2.3.jar"/>
-	<classpathentry kind="lib" path="lib/dist/spring-2.0.5.jar"/>
-	<classpathentry kind="lib" path="lib/dist/spring-mock.jar"/>
 	<classpathentry kind="lib" path="lib/dist/spring-support.jar"/>
 	<classpathentry kind="lib" path="lib/dist/standard.jar"/>
 	<classpathentry kind="lib" path="lib/dist/struts2-core-2.1.6.jar"/>
@@ -54,5 +54,8 @@
 	<classpathentry kind="lib" path="lib/build/javaee.jar"/>
 	<classpathentry kind="lib" path="lib/build/junit-3.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/build/mysql-connector-java-5.0.6-bin.jar"/>
+	<classpathentry kind="lib" path="lib/dist/spring-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/build/spring-test-2.5.6.jar"/>
+	<classpathentry kind="lib" path="lib/build/spring-sources-2.5.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
