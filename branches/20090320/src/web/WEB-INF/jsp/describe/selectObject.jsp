@@ -9,11 +9,16 @@
 
 <body>
 
-<h1>Select Target Object - Beta</h1>
+<h1>Select Target Object</h1>
 
 <s:if test="describeContext.lastMessage != null">
 <br/><h2><s:property value="describeContext.lastMessageWithReset" /></h2>
 </s:if>
+
+<p>Filter by: 
+	<a href="<s:url action="select"><s:param name="filter" value="" /></s:url>">Interesting</a>
+	<s:iterator value="filterPrompts" status="#stat"> | <a href="<s:url action="select"><s:param name="filter" value="[0].top" /></s:url>"><s:property /></a> </s:iterator>
+</p>
 
 <p>
 	<s:iterator value="describeContext.types"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator>
