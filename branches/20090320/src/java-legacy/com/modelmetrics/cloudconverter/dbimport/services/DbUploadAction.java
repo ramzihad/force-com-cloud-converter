@@ -34,9 +34,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 
+import com.modelmetrics.cc.importxls.struts2.AbstractUploadContextAware;
+import com.modelmetrics.cc.importxls.svcs.PicklistInfo;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.importxls.actions.AbstractUploadContextAware;
-import com.modelmetrics.cloudconverter.importxls.svcs.PicklistInfo;
 
 public class DbUploadAction extends AbstractUploadContextAware implements
 		ServletRequestAware {

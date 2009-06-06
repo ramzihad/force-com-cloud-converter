@@ -37,7 +37,6 @@ import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.engine.PicklistProvider;
 import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
-import com.modelmetrics.cloudconverter.importxls.svcs.PicklistInfo;
 import com.modelmetrics.common.sforce.SalesforceSession;
 
 public class DbSalesforceServiceImpl implements DbSalesforceService {
