@@ -29,8 +29,8 @@ package com.modelmetrics.cloudconverter.engine;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.modelmetrics.cloudconverter.importxls.svcs.CloudConverterObject;
 import com.sforce.soap.partner.DescribeSObjectResult;
+import com.temp.CloudConverterObject;
 
 public class ObjectDeleteBean {
 
