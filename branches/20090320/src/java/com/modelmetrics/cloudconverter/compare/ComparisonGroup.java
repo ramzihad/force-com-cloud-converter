@@ -26,29 +26,41 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.compare;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ComparisonGroup {
 
-	private String groupKey;
+	private final String groupKey;
 	
-	private List<ComparisonSession> comparisonSessions;
+	private List<ComparisonSession> comparisonSessions = new ArrayList<ComparisonSession>();
 
+	public ComparisonGroup(String groupKey) {
+		this.groupKey = groupKey;
+	}
+	
 	public String getGroupKey() {
 		return groupKey;
 	}
 
-	public void setGroupKey(String groupKey) {
-		this.groupKey = groupKey;
+	public void addComparisonSession(ComparisonSession comparisonSession) {
+		if (this.getComparisonSessions().contains(comparisonSession)) {
+			throw new RuntimeException("Comparison group " + this.groupKey + " already contains session " + comparisonSession.getSalesforceSession());
+		}
+		if (!this.groupKey.equals(comparisonSession.getGroupKey())) {
+			throw new RuntimeException("Group keys are wrong.");
+		}
+		this.getComparisonSessions().add(comparisonSession);
 	}
-
+	
+	public boolean isValid() {
+		return this.comparisonSessions.size() > 1;
+	}
+	
 	public List<ComparisonSession> getComparisonSessions() {
 		return comparisonSessions;
 	}
 
-	public void setComparisonSessions(List<ComparisonSession> comparisonSessions) {
-		this.comparisonSessions = comparisonSessions;
-	}
 	
 	
 }

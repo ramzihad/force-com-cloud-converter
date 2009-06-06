@@ -26,6 +26,9 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.compare;
 
+import java.util.Set;
+
+import com.modelmetrics.common.sforce.util.InterestingSobjectFilter;
 import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 
@@ -39,66 +42,23 @@ public class ComparisonSessionObjectInfoDecorator {
 
 		comparisonSession.setDescribeGlobalResult(describeGlobalResult);
 
+		// get interesting sobjects
+		Set<String> interestingSobjects = new InterestingSobjectFilter()
+				.getInterestSobjects(describeGlobalResult);
+
 		// get for each object
-		for (String sobject : describeGlobalResult.getTypes()) {
-			if (this.isInteresting(sobject)) {
-				
-				DescribeSObjectResult describeSObjectResult = comparisonSession.getSalesforceSession().getSalesforceService().describeSObject(sobject);
-				
-				
-				comparisonSession.getSobjectMap().put(sobject, describeSObjectResult);
-				
-				comparisonSession.getInterestingTypes().add(sobject);
-			}
+		for (String sobject : interestingSobjects) {
+
+			DescribeSObjectResult describeSObjectResult = comparisonSession
+					.getSalesforceSession().getSalesforceService()
+					.describeSObject(sobject);
+
+			comparisonSession.getSobjectMap().put(sobject,
+					describeSObjectResult);
+
+			comparisonSession.getInterestingTypes().add(sobject);
 		}
 
 	}
 
-	/*
-	 * filter out the stuff I don't need to worry about.
-	 */
-	public boolean isInteresting(String string) {
-
-		boolean ret = true;
-
-		if (string.endsWith("History") || string.endsWith("Share"))
-			return false;
-
-		if (string.equalsIgnoreCase("ApexComponent")
-				|| string.equalsIgnoreCase("ApexClass")
-				|| string.equalsIgnoreCase("ApexTrigger")
-				|| string.equalsIgnoreCase("ApexPage"))
-			return false;
-
-		if (string.equalsIgnoreCase("ProcessInstance")
-				|| string.equalsIgnoreCase("ProcessInstanceHistory")
-				|| string.equalsIgnoreCase("ProcessInstanceStep")
-				|| string.equals("ProcessInstanceHistory"))
-			return false;
-		
-		if (string.equalsIgnoreCase("Document")
-				|| string.equalsIgnoreCase("DocumentAttachmentMap")
-				|| string.equalsIgnoreCase("Note")
-				|| string.equals("NoteAndAttachment"))
-			return false;
-		
-		if (string.equalsIgnoreCase("EmailServicesAddress")
-				|| string.equalsIgnoreCase("EmailServicesFunction")
-				|| string.equalsIgnoreCase("EmailStatus"))
-			return false;
-		
-		if (string.equalsIgnoreCase("FiscalYearSettings")
-				|| string.equalsIgnoreCase("Folder")
-				|| string.equalsIgnoreCase("ForecastShare")
-				|| string.equalsIgnoreCase("Group")
-				|| string.equalsIgnoreCase("GroupMember"))
-			return false;
-		
-		//for testing only -- just to keep the list short.
-		if (!string.equalsIgnoreCase("Account") && !string.equalsIgnoreCase("Contact")) {
-			return false;
-		}
-
-		return ret;
-	}
 }

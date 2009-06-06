@@ -37,11 +37,11 @@ import com.sforce.soap.partner.DescribeSObjectResult;
 
 public class ComparisonSession {
 
-	private String groupKey;
+	private final String groupKey;
 	
 	private String name;
 	
-	private SalesforceSession salesforceSession;
+	private final SalesforceSession salesforceSession;
 	
 	private DescribeGlobalResult describeGlobalResult;
 	
@@ -49,6 +49,11 @@ public class ComparisonSession {
 	
 	private Map<String, DescribeSObjectResult> sobjectMap = new HashMap<String, DescribeSObjectResult>();
 
+	public ComparisonSession(String groupKey, SalesforceSession salesforceSession) {
+		this.salesforceSession = salesforceSession;
+		this.groupKey = groupKey;
+	}
+	
 	public DescribeGlobalResult getDescribeGlobalResult() {
 		return describeGlobalResult;
 	}
@@ -69,9 +74,6 @@ public class ComparisonSession {
 		return groupKey;
 	}
 
-	public void setGroupKey(String groupKey) {
-		this.groupKey = groupKey;
-	}
 
 	public String getName() {
 		return name;
@@ -83,10 +85,6 @@ public class ComparisonSession {
 
 	public SalesforceSession getSalesforceSession() {
 		return salesforceSession;
-	}
-
-	public void setSalesforceSession(SalesforceSession salesforceSession) {
-		this.salesforceSession = salesforceSession;
 	}
 
 	public Set<String> getInterestingTypes() {
