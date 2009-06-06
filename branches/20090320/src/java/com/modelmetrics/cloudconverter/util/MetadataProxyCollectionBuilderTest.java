@@ -31,8 +31,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.modelmetrics.cloudconverter.mmimport.services.FileServiceImpl;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.FileServiceImpl;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.sforce.soap._2006._04.metadata.FieldType;
 

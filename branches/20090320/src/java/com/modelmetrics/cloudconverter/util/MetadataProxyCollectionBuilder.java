@@ -33,8 +33,8 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
-import com.modelmetrics.cloudconverter.mmimport.services.Constants;
-import com.modelmetrics.cloudconverter.mmimport.services.ExcelWorksheetWrapperBean;
+import com.modelmetrics.cloudconverter.importxls.svcs.Constants;
+import com.modelmetrics.cloudconverter.importxls.svcs.ExcelWorksheetWrapperBean;
 import com.sforce.soap._2006._04.metadata.FieldType;
 
 public class MetadataProxyCollectionBuilder {
