@@ -1,5 +1,6 @@
 package com.modelmetrics.cloudconverter.tests;
 
+import com.modelmetrics.cloudconverter.CloudConverterScript_Sample;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.util.TestCaseWithDevOrg;
