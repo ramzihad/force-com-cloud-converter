@@ -32,6 +32,8 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegate;
+import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
+import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
 import com.modelmetrics.common.poi.ExcelSupport;
 import com.opensymphony.xwork2.Action;
 
@@ -59,8 +61,10 @@ public class DescribeOutputAsTemplateAction extends DescribeAction
 			this.setTarget(objectType);
 			super.execute();
 
-			
-			delegate.handleBuild(this.getObjectFields(), excelSupport, workbook, this.getTarget());
+			delegate.handleBuild(this.getDisplayableFields(), excelSupport, workbook, this.getDescribeContext().getTarget());
+
+//			
+//			delegate.handleBuild(this.getObjectFields(), excelSupport, workbook, this.getTarget());
 		}
 		
 		this.setWorkbook(workbook);

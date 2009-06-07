@@ -54,7 +54,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	</bean>
 
 	<bean id="migrateContext"
-		class="com.modelmetrics.cloudconverter.cloudconverter.migrate.MigrateContext"
+		class="com.modelmetrics.cloudconverter.migrate.struts2.MigrateContext"
 		scope="session">
 	</bean>
 		
@@ -282,6 +282,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		class="com.modelmetrics.cloudconverter.describe.struts2.LayoutAsExcelAction"
 		scope="prototype">		
 	</bean>	
+	
+	
+	
 
 	<bean id="migrateSetupAction" parent="abstractMigrateContextAware"
 		class="com.modelmetrics.cloudconverter.migrate.struts2.MigrateSetupAction"

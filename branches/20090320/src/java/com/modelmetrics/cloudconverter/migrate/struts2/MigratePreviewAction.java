@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.springframework.util.StringUtils;
+
 import com.modelmetrics.cloudconverter.migrate.DataMigrator;
 import com.modelmetrics.cloudconverter.migrate.DataMigratorFactory;
 import com.modelmetrics.common.sforce.dao.SalesforceDAO;
@@ -38,10 +40,16 @@ import com.opensymphony.xwork2.Action;
 
 public class MigratePreviewAction extends AbstractMigrateContextAware {
 
+	private String submit;
+	
 	private Collection<MigrateVO> results;
 
 	public String execute() throws Exception {
 
+		if (!StringUtils.hasText(this.getSubmit())) {
+			return INPUT;
+		}
+		
 		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(this.getSalesforceSessionContext()
 				.getSalesforceSession());
@@ -78,5 +86,13 @@ public class MigratePreviewAction extends AbstractMigrateContextAware {
 
 	public void setResults(Collection<MigrateVO> results) {
 		this.results = results;
+	}
+
+	public String getSubmit() {
+		return submit;
+	}
+
+	public void setSubmit(String submit) {
+		this.submit = submit;
 	}
 }

@@ -56,7 +56,8 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 		
 		this.setWorkbook(workbook);
 		} catch (Exception e) {
-			this.getDescribeContext().setLastMessage("Layouts not supported for object '" + this.getDescribeContext().getTarget() + "'.");
+			e.printStackTrace();
+			this.getDescribeContext().setLastMessage("Data template generation error. not supported for object '" + this.getDescribeContext().getTarget() + "'.");
 			return Action.ERROR;
 		}
 

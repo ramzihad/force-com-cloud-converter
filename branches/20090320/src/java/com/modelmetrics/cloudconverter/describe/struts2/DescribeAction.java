@@ -26,10 +26,15 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.describe.struts2;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.modelmetrics.cloudconverter.describe.DisplayableFieldMetadataBean;
+import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldPropertyBean;
+import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
 import com.modelmetrics.cloudconverter.describe.FieldComparator;
+import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
 import com.opensymphony.xwork2.Action;
 import com.sforce.soap.partner.DescribeSObjectResult;
 import com.sforce.soap.partner.Field;
@@ -41,9 +46,16 @@ public class DescribeAction extends AbstractDescribeContextAware {
 	private DescribeSObjectResult results;
 	
 	private Set<Field> objectFields;
+	
+	private Collection<SobjectFieldPropertyBean> fields = SobjectFieldPropertyBean.getFieldBeans();
+	
+	private Collection<DisplayableFieldMetadataBean> displayableFields;
+	
+	private boolean showAll;
 
 	public String execute() throws Exception {
 
+	
 		if (this.getTarget() != null) {
 			this.getDescribeContext().setTarget(this.getTarget());
 		}
@@ -54,6 +66,8 @@ public class DescribeAction extends AbstractDescribeContextAware {
 				.getSalesforceService().describeSObject(
 						this.getDescribeContext().getTarget());
 
+		this.setResults(r);
+		
 		if (r != null) {
 
 			Field[] fields = r.getFields();
@@ -62,16 +76,10 @@ public class DescribeAction extends AbstractDescribeContextAware {
 
 			for (int i = 0; i < fields.length; i++) {
 				results.add(fields[i]);
-
 			}
 
-			this.setObjectFields(results);
+			this.displayableFields = new DisplayableSobjectFieldMetadataBeanBuilder().build(SobjectFieldPropertyBean.getFieldBeans(), results);
 
-			/*
-			 * 2007-09-05 disabled to test larger orgs.
-			 */
-			// this.getDescribeContext().getDescriptions().put(this.getTarget(),
-			// r);
 			this.getDescribeContext().setLastResult(r);
 
 			
@@ -105,6 +113,31 @@ public class DescribeAction extends AbstractDescribeContextAware {
 
 	public void setResults(DescribeSObjectResult results) {
 		this.results = results;
+	}
+
+	public Collection<DisplayableFieldMetadataBean> getDisplayableFields() {
+		return displayableFields;
+	}
+
+	public void setDisplayableFields(
+			Collection<DisplayableFieldMetadataBean> displayableFields) {
+		this.displayableFields = displayableFields;
+	}
+
+	public Collection<SobjectFieldPropertyBean> getFields() {
+		return fields;
+	}
+
+	public void setFields(Collection<SobjectFieldPropertyBean> fields) {
+		this.fields = fields;
+	}
+
+	public boolean isShowAll() {
+		return showAll;
+	}
+
+	public void setShowAll(boolean showAll) {
+		this.showAll = showAll;
 	}
 
 }

@@ -29,6 +29,8 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegate;
+import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
+import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
 import com.modelmetrics.common.poi.ExcelSupport;
 import com.opensymphony.xwork2.Action;
 
@@ -49,7 +51,7 @@ public class DescribeAllInExcelAction extends DescribeAction {
 			this.setTarget(this.getDescribeContext().getTypesArray()[i]);
 			super.execute();
 			
-			delegate.handleBuild(this.getObjectFields(), excelSupport, workbook, this.getTarget());
+			delegate.handleBuild(new DisplayableSobjectFieldMetadataBeanBuilder().build(SobjectFieldPropertyBean.getFieldBeans(), this.getObjectFields()), excelSupport, workbook, this.getTarget());
 
 
 		}

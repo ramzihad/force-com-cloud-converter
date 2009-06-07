@@ -53,6 +53,7 @@ public class DescribeContext {
 
 		this.typesArray = null;
 
+
 		this.descriptions = new HashMap<String, DescribeSObjectResult>();
 	}
 

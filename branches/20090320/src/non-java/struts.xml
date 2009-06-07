@@ -223,9 +223,9 @@
 			</result>
 		</action>	
 
-		<action name="migrate" class="migrateSetupAction">
-			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
-			<result name="success" type="chain">migratePreview</result>			
+		<action name="migrate" class="selectTarget">
+			<result name="input">/WEB-INF/jsp/migrate/selectObject.jsp</result>
+			<result name="success" type="chain">migrateSetup</result>			
 		</action>		
 
 		<action name="migrateSetup" class="migrateSetupAction">
@@ -234,6 +234,7 @@
 		</action>		
 		
 		<action name="migratePreview" class="migratePreviewAction">
+		<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
 			<result name="success">/WEB-INF/jsp/migrate/preview.jsp</result>
 		</action>			
 		

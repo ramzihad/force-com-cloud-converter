@@ -61,9 +61,9 @@ public class InterestingSobjectFilter {
 			return false;
 		
 		//for testing only -- just to keep the list short.
-		if (!string.equalsIgnoreCase("Account") && !string.equalsIgnoreCase("Contact")) {
-			return false;
-		}
+//		if (!string.equalsIgnoreCase("Account") && !string.equalsIgnoreCase("Contact")) {
+//			return false;
+//		}
 
 		return ret;
 	}

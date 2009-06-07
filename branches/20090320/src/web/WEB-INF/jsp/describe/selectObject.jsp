@@ -17,11 +17,11 @@
 
 <p>Filter by: 
 	<a href="<s:url action="select"><s:param name="filter" value="" /></s:url>">Interesting</a>
-	<s:iterator value="filterPrompts" status="#stat"> | <a href="<s:url action="select"><s:param name="filter" value="[0].top" /></s:url>"><s:property /></a> </s:iterator>
+	<s:iterator value="filterPrompts" status="stat"> | <a href="<s:url action="select"><s:param name="filter" value="[0].top" /></s:url>"><s:property /></a> </s:iterator>
 </p>
 
 <p>
-	<s:iterator value="describeContext.types"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a> | </s:iterator>
+	<s:iterator value="describeContext.types" status="stat"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a><s:if test="!#stat.last"> | </s:if> </s:iterator>
 </p>
 
 <p><a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes during which time your browser will appear non-responsive.)</a></p> 

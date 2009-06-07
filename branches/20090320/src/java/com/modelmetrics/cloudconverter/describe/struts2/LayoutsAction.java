@@ -79,6 +79,7 @@ public class LayoutsAction extends AbstractDescribeContextAware {
 				this.getDescribeContext().setTarget(this.getTarget());
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.getDescribeContext().setLastMessage("Layouts not supported for object '" + this.getDescribeContext().getTarget() + "'.");
 			return Action.ERROR;
 		}
