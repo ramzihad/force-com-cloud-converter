@@ -225,24 +225,25 @@
 
 		<action name="migrate" class="selectTarget">
 			<result name="input">/WEB-INF/jsp/migrate/selectObject.jsp</result>
-			<result name="success" type="chain">migrateSetup</result>			
+			<result name="success" type="redirectAction">migrateSetup</result>			
 		</action>		
 
 		<action name="migrateSetup" class="migrateSetupAction">
 			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
-			<result name="success" type="chain">migratePreview</result>			
+			<result name="success" type="redirectAction">migratePreview</result>			
 		</action>		
 		
 		<action name="migratePreview" class="migratePreviewAction">
-		<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="success">/WEB-INF/jsp/migrate/preview.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/migrate/preview.jsp</result>
+			<result name="success" type="redirectAction">migrateExecuteAction</result>
 		</action>			
 		
 		<action name="migrateExecute" class="migrateExecuteAction">
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
 		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
-			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="wait">/WEB-INF/jsp/migrate/wait.jsp</result>
 			<result name="success">/WEB-INF/jsp/migrate/execute.jsp</result>
 		</action>		
 

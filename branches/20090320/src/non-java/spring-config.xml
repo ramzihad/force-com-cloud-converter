@@ -68,6 +68,9 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	</bean>
 	
 	<bean id="abstractMigrateContextAware" abstract="true" >
+		<property name="describeContext">
+			<ref bean="describeContext" />
+		</property>	
 		<property name="migrateContext">
 			<ref bean="migrateContext" />
 		</property>
