@@ -41,6 +41,7 @@ import com.modelmetrics.cloudconverter.forceutil.LookupSettings;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomField;

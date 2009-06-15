@@ -27,6 +27,7 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
 import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 
 public interface MigrationEngineIF extends MigrationContextAwareIF, OperationStatusPublisher {

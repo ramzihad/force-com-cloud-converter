@@ -40,6 +40,7 @@ import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
 import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
