@@ -88,7 +88,7 @@ public class MigrationContext {
 	
 	private CloudConverterObject cloudConverterObject;
 	
-	private MigrationStatusPublisher migrationStatusPublisher;
+	private OperationStatusPublisher migrationStatusPublisher;
 	
 	public String getExternalIdForUpsert() {
 		return externalIdForUpsert;
@@ -225,12 +225,12 @@ public class MigrationContext {
 		this.wrapperBean = wrapperBean;
 	}
 
-	public MigrationStatusPublisher getMigrationStatusPublisher() {
+	public OperationStatusPublisher getMigrationStatusPublisher() {
 		return migrationStatusPublisher;
 	}
 
 	public void setMigrationStatusPublisher(
-			MigrationStatusPublisher migrationStatusPublisher) {
+			OperationStatusPublisher migrationStatusPublisher) {
 		this.migrationStatusPublisher = migrationStatusPublisher;
 	}
 

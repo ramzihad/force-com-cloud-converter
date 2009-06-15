@@ -26,7 +26,7 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.engine;
 
-public interface MigrationStatusPublisher {
+public interface OperationStatusPublisher {
 
 	public void publishStatus(String string);
 }

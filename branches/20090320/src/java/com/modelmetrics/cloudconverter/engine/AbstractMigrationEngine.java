@@ -48,7 +48,7 @@ import com.sforce.soap._2006._04.metadata.Layout;
 
 public abstract class AbstractMigrationEngine extends
 		AbstractMigrationContextAware implements MigrationEngineIF,
-		MigrationStatusPublisher {
+		OperationStatusPublisher {
 
 	protected static final Log log = LogFactory
 			.getLog(AbstractMigrationEngine.class);

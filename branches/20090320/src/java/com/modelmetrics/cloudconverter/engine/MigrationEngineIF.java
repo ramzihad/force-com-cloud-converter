@@ -29,7 +29,7 @@ package com.modelmetrics.cloudconverter.engine;
 
 import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 
-public interface MigrationEngineIF extends MigrationContextAwareIF, MigrationStatusPublisher {
+public interface MigrationEngineIF extends MigrationContextAwareIF, OperationStatusPublisher {
 
 	public void execute() throws Exception;
 

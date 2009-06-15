@@ -35,6 +35,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.migrate.DataMigrator;
 import com.modelmetrics.cloudconverter.migrate.DataMigratorFactory;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.sforce.dao.SalesforceDAO;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 import com.modelmetrics.common.sforce.dao.SproxySaveResult;
@@ -48,6 +49,8 @@ public class MigrateExecuteAction extends AbstractMigrateContextAware {
 
 	public String execute() throws Exception {
 
+		this.getMigrateContext().setStatusSubscriber(new OperationStatusSubscriberLifoImpl());
+		
 //		MigrationRecordDelegate migrateServiceDelegate = new MigrationRecordDelegate();
 
 //		migrateServiceDelegate.getHeader(this.getUtilityContext(), this

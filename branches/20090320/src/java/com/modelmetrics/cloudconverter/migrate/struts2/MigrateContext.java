@@ -26,6 +26,8 @@ THE SOFTWARE.
  */
 package com.modelmetrics.cloudconverter.migrate.struts2;
 
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
+
 public class MigrateContext {
 
 	private String name;
@@ -45,6 +47,8 @@ public class MigrateContext {
 	private int previewQuantity;
 	
 	private int executeQuantity;
+	
+	private OperationStatusSubscriber statusSubscriber;
 
 	public int getExecuteQuantity() {
 		return executeQuantity;
@@ -116,6 +120,14 @@ public class MigrateContext {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public OperationStatusSubscriber getStatusSubscriber() {
+		return statusSubscriber;
+	}
+
+	public void setStatusSubscriber(OperationStatusSubscriber statusSubscriber) {
+		this.statusSubscriber = statusSubscriber;
 	}
 	
 	
