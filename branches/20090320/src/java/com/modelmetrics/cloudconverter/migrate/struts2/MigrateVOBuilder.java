@@ -37,9 +37,9 @@ public class MigrateVOBuilder {
 
 		MigrateVO vo = new MigrateVO();
 
-		vo.setPreview(element.getValue(migrateContext.getPreview()));
-		vo.setSource(element.getValue(migrateContext.getSource()));
-		vo.setTarget(element.getValue(migrateContext.getTarget()));
+		vo.setPreview(element.getValue(migrateContext.getPreviewField()));
+		vo.setSource(element.getValue(migrateContext.getSourceField()));
+		vo.setTarget(element.getValue(migrateContext.getTargetField()));
 		vo.setResult(dataMigrator.migrate(vo.getSource(), vo.getTarget()));
 
 		if (migrateContext.getDisposition() == SourceDispositionType.SET_TO_NULL) {

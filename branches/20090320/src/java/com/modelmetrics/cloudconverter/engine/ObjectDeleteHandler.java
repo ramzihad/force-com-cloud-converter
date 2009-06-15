@@ -38,7 +38,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.cloudconverter.forceutil.DeleteExecutor;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap.partner.Field;
@@ -56,12 +56,12 @@ public class ObjectDeleteHandler {
 
 	private static final Log log = LogFactory.getLog(ObjectDeleteHandler.class);
 
-	private MigrationStatusSubscriber statusSubscriber;
+	private OperationStatusSubscriber statusSubscriber;
 	private SalesforceSession salesforceSession;
 
 	public void execute(SalesforceSession salesforceSession,
 			List<CloudConverterObject> cloudConverterObjects,
-			MigrationStatusSubscriber migrationStatusSubscriber)
+			OperationStatusSubscriber migrationStatusSubscriber)
 			throws Exception {
 
 		// quick sanity check

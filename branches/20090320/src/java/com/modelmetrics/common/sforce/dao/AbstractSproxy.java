@@ -122,7 +122,7 @@ public abstract class AbstractSproxy implements Sproxy {
 				ret = FORCE_DATETIME.format(value);
 			}
 
-//			ret = FORCE_DATE.format(value);
+			// ret = FORCE_DATE.format(value);
 
 		} else if (value instanceof java.lang.Double) {
 			// 2008-12-30 rsc specially called out since we had some trouble
@@ -130,7 +130,9 @@ public abstract class AbstractSproxy implements Sproxy {
 			ret = ((Double) value).toString();
 
 		} else {
-			ret = value.toString();
+			if (value != null) {
+				ret = value.toString();
+			}
 		}
 
 		return ret;

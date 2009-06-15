@@ -30,11 +30,11 @@ public class MigrateContext {
 
 	private String name;
 	
-	private String preview;
+	private String previewField;
 	
-	private String source;
+	private String sourceField;
 	
-	private String target;
+	private String targetField;
 	
 	private ConflictResolutionType conflict;
 	
@@ -78,28 +78,28 @@ public class MigrateContext {
 		this.conflict = conflict;
 	}
 
-	public String getSource() {
-		return source;
+	public String getSourceField() {
+		return sourceField;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setSourceField(String source) {
+		this.sourceField = source;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getTargetField() {
+		return targetField;
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTargetField(String target) {
+		this.targetField = target;
 	}
 
-	public String getPreview() {
-		return preview;
+	public String getPreviewField() {
+		return previewField;
 	}
 
-	public void setPreview(String preview) {
-		this.preview = preview;
+	public void setPreviewField(String preview) {
+		this.previewField = preview;
 	}
 
 	public SourceDispositionType getDisposition() {

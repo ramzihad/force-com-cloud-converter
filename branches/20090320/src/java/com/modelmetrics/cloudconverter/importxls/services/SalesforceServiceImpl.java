@@ -31,7 +31,7 @@ import com.modelmetrics.cloudconverter.engine.MigrationContextFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineFactory;
 import com.modelmetrics.cloudconverter.engine.MigrationEngineIF;
 import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 
 public class SalesforceServiceImpl extends AbstractSalesforceService {
 
@@ -50,7 +50,7 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 
 	}
 	
-	public void execute(CloudConverterObject current, MigrationStatusSubscriber migrationStatusSubscriber) throws Exception {
+	public void execute(CloudConverterObject current, OperationStatusSubscriber migrationStatusSubscriber) throws Exception {
 		
 		// reset status
 		migrationStatusSubscriber.reset();

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 
 public class UploadContext  {
 
@@ -12,7 +12,7 @@ public class UploadContext  {
 
 	private List<CloudConverterObject> cloudConverterObjects;
 		
-	private MigrationStatusSubscriber statusSubscriber;
+	private OperationStatusSubscriber statusSubscriber;
 	
 	private int currentCloudConverterObjectIndex = -1;
 
@@ -62,11 +62,11 @@ public class UploadContext  {
 		return this.getLastException().getMessage() ;
 	}
 
-	public MigrationStatusSubscriber getStatusSubscriber() {
+	public OperationStatusSubscriber getStatusSubscriber() {
 		return statusSubscriber;
 	}
 
-	public void setStatusSubscriber(MigrationStatusSubscriber statusSubscriber) {
+	public void setStatusSubscriber(OperationStatusSubscriber statusSubscriber) {
 		this.statusSubscriber = statusSubscriber;
 	}
 

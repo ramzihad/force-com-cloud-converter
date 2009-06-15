@@ -46,9 +46,7 @@ public class MigratePreviewAction extends AbstractMigrateContextAware {
 
 	public String execute() throws Exception {
 
-		if (!StringUtils.hasText(this.getSubmit())) {
-			return INPUT;
-		}
+
 		
 		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(this.getSalesforceSessionContext()
@@ -77,7 +75,7 @@ public class MigratePreviewAction extends AbstractMigrateContextAware {
 
 		this.setResults(results);
 
-		return Action.SUCCESS;
+		return Action.INPUT;
 	}
 
 	public Collection<MigrateVO> getResults() {

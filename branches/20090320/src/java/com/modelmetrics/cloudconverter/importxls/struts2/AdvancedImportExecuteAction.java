@@ -2,7 +2,7 @@ package com.modelmetrics.cloudconverter.importxls.struts2;
 
 import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
 import com.modelmetrics.cloudconverter.importxls.services.SalesforceServiceFactory;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 
 /**
  * proceeds only with the current cloud converter object.
@@ -23,7 +23,7 @@ public class AdvancedImportExecuteAction extends AbstractUploadContextAware {
 		}
 		// subscribe to the updates
 		this.getUploadContext().setStatusSubscriber(
-				new MigrationStatusSubscriberLifoImpl());
+				new OperationStatusSubscriberLifoImpl());
 
 		// instantiate the salesforce service
 		SalesforceService salesforceService = new SalesforceServiceFactory()

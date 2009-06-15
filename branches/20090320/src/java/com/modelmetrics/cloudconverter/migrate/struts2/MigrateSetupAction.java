@@ -37,29 +37,30 @@ import com.sforce.soap.partner.Field;
 
 public class MigrateSetupAction extends AbstractMigrateContextAware {
 
-	private String name;
-	
-	private String preview;
 
-	private String source;
 
-	private String target;
+	private String previewField;
+
+	private String sourceField;
+
+	private String targetField;
 
 	private String resolution;
-	
+
 	private String disposition;
 
 	private String concatenator;
 
 	private String submit;
-	
+
 	private Collection<Field> fields;
 
 	public String execute() throws Exception {
 
 		if (this.getSubmit() == null) {
+			//2009-06-15 RSC
 			this.setConcatenator(this.getMigrateContext().getConcatenator());
-			this.setPreview(this.getMigrateContext().getPreview());
+			this.setPreviewField(this.getMigrateContext().getPreviewField());
 			if (this.getMigrateContext().getConflict() != null) {
 				this.setResolution(this.getMigrateContext().getConflict()
 						.getName());
@@ -68,34 +69,60 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 				this.setDisposition(this.getMigrateContext().getDisposition()
 						.getName());
 			}
-			this.setSource(this.getMigrateContext().getSource());
-			this.setTarget(this.getMigrateContext().getTarget());
-			this.setName(this.getMigrateContext().getName());
+			this.setSourceField(this.getMigrateContext().getSourceField());
+			this.setTargetField(this.getMigrateContext().getTargetField());
+			
+
 			return Action.INPUT;
 		}
 
 		if (this.getResolution().indexOf("concat") > -1) {
 			if (this.getConcatenator() == null) {
+				this.addActionMessage("If you are concatenating, you much enter a concatenation character.");
 				return Action.INPUT;
 			}
 		}
 		
-		if (!StringUtils.hasText(this.getName() )) {
+		if (!this.isValid()) {
 			return Action.INPUT;
 		}
 
-		this.getMigrateContext().setPreview(this.getPreview());
-		this.getMigrateContext().setSource(this.getSource());
-		this.getMigrateContext().setTarget(this.getTarget());
+		this.getMigrateContext().setPreviewField(this.getPreviewField());
+		this.getMigrateContext().setSourceField(this.getSourceField());
+		this.getMigrateContext().setTargetField(this.getTargetField());
 		this.getMigrateContext().setConflict(
 				ConflictResolutionType.getType(this.getResolution()));
 		this.getMigrateContext().setDisposition(SourceDispositionType.getType(this.getDisposition()));
 		this.getMigrateContext().setConcatenator(this.getConcatenator());
-		this.getMigrateContext().setName(this.getName());
+		
 
 		return Action.SUCCESS;
 	}
 
+	public boolean isValid() {
+		
+		if (!StringUtils.hasText(this.getPreviewField())) {
+			this.addActionMessage("You must select a preview field.");
+		}
+		
+		if (!StringUtils.hasText(this.getSourceField())) {
+			this.addActionMessage("You must select a source field.");
+		}
+		if (!StringUtils.hasText(this.getTargetField())) {
+			this.addActionMessage("You must select a target field.");
+		}
+		if (!StringUtils.hasText(this.getResolution())) {
+			this.addActionMessage("You must select a conflict resolution type.");
+		}
+		if (!StringUtils.hasText(this.getDisposition())) {
+			this.addActionMessage("You must select a source disposition value.");
+		}
+
+		return !this.hasActionMessages();
+
+		
+		
+	}
 	public String getResolution() {
 		return resolution;
 	}
@@ -104,12 +131,12 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 		this.resolution = resolution;
 	}
 
-	public String getSource() {
-		return source;
+	public String getSourceField() {
+		return sourceField;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setSourceField(String source) {
+		this.sourceField = source;
 	}
 
 	public String getSubmit() {
@@ -120,21 +147,21 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 		this.submit = submit;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getTargetField() {
+		return targetField;
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTargetField(String target) {
+		this.targetField = target;
 	}
 
 	public Collection<ConflictResolutionType> getConflictResolutionTypes() {
 		return ConflictResolutionType.getTypes();
 	}
-	
+
 	public Collection<SourceDispositionType> getSourceDispositionTypes() {
 		return SourceDispositionType.getTypes();
-	}	
+	}
 
 	public String getConcatenator() {
 		return concatenator;
@@ -144,20 +171,33 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 		this.concatenator = concatenator;
 	}
 
-	public String getPreview() {
-		return preview;
+	public String getPreviewField() {
+		return previewField;
 	}
 
-	public void setPreview(String preview) {
-		this.preview = preview;
+	public void setPreviewField(String preview) {
+		this.previewField = preview;
 	}
 
 	public Collection<Field> getFields() {
-		
+
 		if (this.fields == null) {
+			if (this.getDescribeContext().getLastResult() == null) {
+				try {
+					this.getDescribeContext().setLastResult(
+							this.getSalesforceSessionContext()
+									.getSalesforceSession()
+									.getSalesforceService().describeSObject(
+											this.getDescribeContext().getTarget()));
+				} catch (Exception e) {
+e.printStackTrace();
+				}
+			}
 			fields = new TreeSet<Field>(new FieldComparator());
-			for (int i = 0; i < this.getDescribeContext().getLastResult().getFields().length; i++) {
-				fields.add(this.getDescribeContext().getLastResult().getFields()[i]);
+			for (int i = 0; i < this.getDescribeContext().getLastResult()
+					.getFields().length; i++) {
+				fields.add(this.getDescribeContext().getLastResult()
+						.getFields()[i]);
 			}
 		}
 		return this.fields;
@@ -171,11 +211,4 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 		this.disposition = disposition;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

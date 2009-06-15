@@ -40,7 +40,7 @@ import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
@@ -53,17 +53,17 @@ public abstract class AbstractMigrationEngine extends
 	protected static final Log log = LogFactory
 			.getLog(AbstractMigrationEngine.class);
 
-	public List<MigrationStatusSubscriber> subscribers = new ArrayList<MigrationStatusSubscriber>();
+	public List<OperationStatusSubscriber> subscribers = new ArrayList<OperationStatusSubscriber>();
 
 	public void subscribeToStatus(
-			MigrationStatusSubscriber migrationStatusSubscriber) {
+			OperationStatusSubscriber migrationStatusSubscriber) {
 		subscribers.add(migrationStatusSubscriber);
 	}
 
 	public void publishStatus(String status) {
-		for (Iterator<MigrationStatusSubscriber> iterator = subscribers
+		for (Iterator<OperationStatusSubscriber> iterator = subscribers
 				.iterator(); iterator.hasNext();) {
-			MigrationStatusSubscriber type = iterator.next();
+			OperationStatusSubscriber type = iterator.next();
 			if (type != null)
 				type.publish(status);
 

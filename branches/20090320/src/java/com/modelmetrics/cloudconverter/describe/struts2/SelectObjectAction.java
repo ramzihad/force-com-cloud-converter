@@ -85,6 +85,9 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 						new InterestingSobjectFilter()
 								.getInterestSobjects(describeGlobalResult));
 			}
+			
+			//make sure we reset the context
+			this.getDescribeContext().setLastResult(null);
 
 			return INPUT;
 		}

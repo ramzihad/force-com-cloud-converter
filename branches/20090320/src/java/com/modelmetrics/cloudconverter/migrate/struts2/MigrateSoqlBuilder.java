@@ -42,11 +42,11 @@ public class MigrateSoqlBuilder {
 		StringBuffer ret = new StringBuffer();
 		
 		ret.append("SELECT Id, ");
-		ret.append(migrateContext.getPreview() + ", ");
-		ret.append(migrateContext.getSource() + ", ");
-		ret.append(migrateContext.getTarget() + " FROM ");
+		ret.append(migrateContext.getPreviewField() + ", ");
+		ret.append(migrateContext.getSourceField() + ", ");
+		ret.append(migrateContext.getTargetField() + " FROM ");
 		ret.append(describeContext.getTarget() + " ORDER BY " 
-				+ migrateContext.getPreview());
+				+ migrateContext.getPreviewField());
 	
 		log.info("SOQL: " + ret.toString());
 		
@@ -59,8 +59,8 @@ public class MigrateSoqlBuilder {
 		StringBuffer ret = new StringBuffer();
 		
 		ret.append("SELECT Id, ");
-		ret.append(migrateContext.getSource() + ", ");
-		ret.append(migrateContext.getTarget() + " FROM ");
+		ret.append(migrateContext.getSourceField() + ", ");
+		ret.append(migrateContext.getTargetField() + " FROM ");
 		ret.append(describeContext.getTarget() );
 	
 		log.info("SOQL: " + ret.toString());

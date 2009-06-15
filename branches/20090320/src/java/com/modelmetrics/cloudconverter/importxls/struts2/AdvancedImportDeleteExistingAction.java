@@ -1,7 +1,7 @@
 package com.modelmetrics.cloudconverter.importxls.struts2;
 
 import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 
 /**
  * deletes existing objects in the correct order. a separate action becuase of
@@ -29,7 +29,7 @@ public class AdvancedImportDeleteExistingAction extends
 		// giddyup
 		try {
 			
-			this.getUploadContext().setStatusSubscriber(new MigrationStatusSubscriberLifoImpl());
+			this.getUploadContext().setStatusSubscriber(new OperationStatusSubscriberLifoImpl());
 			
 			new ObjectDeleteHandler().execute(this
 					.getSalesforceSessionContext().getSalesforceSession(), this

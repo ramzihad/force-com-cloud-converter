@@ -3,7 +3,7 @@ package com.modelmetrics.cloudconverter.importxls.struts2;
 import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
 import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
 import com.modelmetrics.cloudconverter.importxls.services.SalesforceServiceFactory;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 
 public class StandardImportExecuteAction extends AbstractUploadContextAware {
 
@@ -21,7 +21,7 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 
 		// subscribe to the updates
 		this.getUploadContext().setStatusSubscriber(
-				new MigrationStatusSubscriberLifoImpl());
+				new OperationStatusSubscriberLifoImpl());
 
 		// instantiate the salesforce service
 		SalesforceService salesforceService = new SalesforceServiceFactory()

@@ -70,28 +70,28 @@ public class MigrateExecuteAction extends AbstractMigrateContextAware {
 			Sproxy element = (Sproxy) iter.next();
 
 			String originalTarget = element.getValue(this.getMigrateContext()
-					.getTarget());
+					.getTargetField());
 
 			String newResult = dataMigrator.migrate(element.getValue(this
-					.getMigrateContext().getSource()), originalTarget);
+					.getMigrateContext().getSourceField()), originalTarget);
 
 			if ((newResult != null) && !(newResult.equalsIgnoreCase(originalTarget))) {
 //				migrateServiceDelegate.saveDetail(element, newResult);
 
-				element.setValue(this.getMigrateContext().getTarget(),
+				element.setValue(this.getMigrateContext().getTargetField(),
 						newResult);
 
 				if (this.getMigrateContext().getDisposition() == SourceDispositionType.SET_TO_NULL) {
-					element.setNull(this.getMigrateContext().getSource());
+					element.setNull(this.getMigrateContext().getSourceField());
 				}
 
 				toUpdate.add(element);
 			} else if (originalTarget != null && newResult == null) {
-				element.setNull(this.getMigrateContext().getTarget());
+				element.setNull(this.getMigrateContext().getTargetField());
 			}
 		}
 
-		Collection<SproxySaveResult> errors = dao.update(toUpdate);
+		Collection<SproxySaveResult> errors = dao.updateAll(toUpdate);
 
 		Collection<MigrateVO> errorVos = new ArrayList<MigrateVO>();
 		MigrateVOBuilder builder = new MigrateVOBuilder();

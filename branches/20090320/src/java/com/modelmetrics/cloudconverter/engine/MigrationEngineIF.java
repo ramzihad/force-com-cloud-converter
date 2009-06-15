@@ -27,13 +27,13 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 
 public interface MigrationEngineIF extends MigrationContextAwareIF, MigrationStatusPublisher {
 
 	public void execute() throws Exception;
 
-	public void subscribeToStatus(MigrationStatusSubscriber migrationStatusSubscriber);
+	public void subscribeToStatus(OperationStatusSubscriber migrationStatusSubscriber);
 
 	// public DirtConnectionIF getDirtConnection();
 	//	
