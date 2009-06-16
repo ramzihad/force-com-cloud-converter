@@ -72,6 +72,7 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 		if (queryResult.getSize() == 1) {
 			ret = new SproxyBuilder().build(queryResult.getRecords()[0]);
 		} else {
+
 			throw new SalesforceDaoException("Expected one record, Found "
 					+ queryResult.getSize());
 		}
@@ -158,15 +159,22 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 		}
 	}
 
+	public Collection<SproxySaveResult> updateAll(Collection<Sproxy> toUpdate, int updateBatchSize)
+			throws SalesforceDaoException {
+
+		return this.saveAll(toUpdate, SalesforceDAO.UPDATE, updateBatchSize);
+
+	}
+
 	public Collection<SproxySaveResult> updateAll(Collection<Sproxy> toUpdate)
 			throws SalesforceDaoException {
 
-		return this.saveAll(toUpdate, SalesforceDAO.INSERT);
+		return this.saveAll(toUpdate, SalesforceDAO.UPDATE, 100);
 
 	}
 
 	private Collection<SproxySaveResult> saveAll(Collection<Sproxy> toSave,
-			String operation) throws SalesforceDaoException {
+			String operation, int maxBatchSize) throws SalesforceDaoException {
 		Collection<SproxySaveResult> errors = new ArrayList<SproxySaveResult>();
 
 		int totalCountSoFar = 0;
@@ -180,12 +188,14 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 			batchCount++;
 			totalCountSoFar++;
 
-			if (batchCount == 100) {
+			if (batchCount == maxBatchSize) {
 				Collection<SproxySaveResult> batchErrors = this.save(
 						batchToUpdate, operation);
 				errors.addAll(batchErrors);
 				batchCount = 0;
 				batchToUpdate = new ArrayList<Sproxy>();
+				this.publishStatus("Updated batch. Total updated: "
+						+ totalCountSoFar);
 				log.info("Completed batch save");
 			}
 
@@ -261,10 +271,11 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 						SproxySaveResult sproxySaveResult = new SproxySaveResult();
 						sproxySaveResult.setSproxy(new SproxyBuilder()
 								.build(saveTargets[i]));
-						//sproxySaveResult.setSaveResult(upsertResults[i]);
+						// sproxySaveResult.setSaveResult(upsertResults[i]);
 						errors.add(sproxySaveResult);
 						for (int j = 0; j < upsertResults[i].getErrors().length; j++) {
-							log.info(upsertResults[i].getErrors()[j].getMessage());
+							log.info(upsertResults[i].getErrors()[j]
+									.getMessage());
 						}
 						// log.info(results[i].getErrors());
 					}

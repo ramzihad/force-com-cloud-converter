@@ -18,6 +18,8 @@ public class UploadContext  {
 
 	private Map<String, List<String>> objectToIdMap;
 	
+	private Map<String, List<String>> objectToFieldMap;
+	
 	private boolean okToDelete;
 	
 	private String message;
@@ -93,6 +95,14 @@ public class UploadContext  {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Map<String, List<String>> getObjectToFieldMap() {
+		return objectToFieldMap;
+	}
+
+	public void setObjectToFieldMap(Map<String, List<String>> objectToFieldMap) {
+		this.objectToFieldMap = objectToFieldMap;
 	}
 
 

@@ -94,6 +94,26 @@ public class CustomObjectBuilder {
 
 		return co;
 	}
+
+	public CustomObject buildExisting(String objectName) throws Exception {
+		
+		if (!objectName.endsWith("__c")) {
+			throw new RuntimeException("Bad object name. " + objectName);
+		}
+		
+		CustomObject co = new CustomObject();
+		
+		co.setFullName(objectName);
+		co.setDeploymentStatus(DeploymentStatus.Deployed);
+		co
+				.setDescription("Created by the Cloud Converter from http://ModelMetrics.com");
+		co.setEnableActivities(true);
+
+
+
+
+		return co;
+	}
 	
 	public CustomObject build(CloudConverterObject cloudConverterObject) throws Exception {
 		

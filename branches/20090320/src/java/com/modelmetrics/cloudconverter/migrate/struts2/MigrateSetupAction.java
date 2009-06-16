@@ -54,6 +54,8 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 	private String submit;
 
 	private Collection<Field> fields;
+	
+	private int updateBatchSize = 100;
 
 	public String execute() throws Exception {
 
@@ -117,6 +119,11 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 		if (!StringUtils.hasText(this.getDisposition())) {
 			this.addActionMessage("You must select a source disposition value.");
 		}
+		
+		if (this.getUpdateBatchSize() < 5 || this.updateBatchSize > 200) {
+			this.addActionMessage("You must enter a batch size between 5 and 200.");
+		}
+		
 
 		return !this.hasActionMessages();
 
@@ -209,6 +216,14 @@ e.printStackTrace();
 
 	public void setDisposition(String disposition) {
 		this.disposition = disposition;
+	}
+
+	public int getUpdateBatchSize() {
+		return updateBatchSize;
+	}
+
+	public void setUpdateBatchSize(int updateBatchSize) {
+		this.updateBatchSize = updateBatchSize;
 	}
 
 }

@@ -51,12 +51,12 @@ public class MigrateExecuteAction extends AbstractMigrateContextAware {
 
 		this.getMigrateContext().setStatusSubscriber(new OperationStatusSubscriberLifoImpl());
 		
-//		MigrationRecordDelegate migrateServiceDelegate = new MigrationRecordDelegate();
-
-//		migrateServiceDelegate.getHeader(this.getUtilityContext(), this
-//				.getDescribeContext(), this.getMigrateContext());
+		this.getMigrateContext().getStatusSubscriber().publish("Beginning field migration.");
 
 		SalesforceDAO dao = new SalesforceDAO();
+		
+		dao.subscribeToStatus(this.getMigrateContext().getStatusSubscriber());
+		
 		dao.setSalesforceSession(this.getSalesforceSessionContext()
 				.getSalesforceSession());
 
@@ -94,7 +94,7 @@ public class MigrateExecuteAction extends AbstractMigrateContextAware {
 			}
 		}
 
-		Collection<SproxySaveResult> errors = dao.updateAll(toUpdate);
+		Collection<SproxySaveResult> errors = dao.updateAll(toUpdate, this.getMigrateContext().getUpdateBatchSize());
 
 		Collection<MigrateVO> errorVos = new ArrayList<MigrateVO>();
 		MigrateVOBuilder builder = new MigrateVOBuilder();

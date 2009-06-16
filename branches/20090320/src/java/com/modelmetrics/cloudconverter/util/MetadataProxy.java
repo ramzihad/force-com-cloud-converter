@@ -53,6 +53,8 @@ public class MetadataProxy {
 	private String lookupObject;
 	
 	private String lookupField;
+	
+	private String existingField;
 
 	public String getExample() {
 		return example;
@@ -157,6 +159,14 @@ public class MetadataProxy {
 
 	public void setIndex(int index) {
 		this.index = index;
+	}
+
+	public String getExistingField() {
+		return existingField;
+	}
+
+	public void setExistingField(String existingField) {
+		this.existingField = existingField;
 	}
 	
 	

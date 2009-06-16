@@ -60,9 +60,10 @@ public class MigrationEngineCloudConverterObjectImpl extends
 			if (metadataProxy.isUniqueExternalId()) {
 				this.getMigrationContext().getExternalIds().add(
 						metadataProxy.getName());
-				//hacky tacky
+				// hacky tacky
 				if (cloudConverterObject.getUpsertField() == null) {
-					cloudConverterObject.setUpsertField(metadataProxy.getName()+"__c");
+					cloudConverterObject.setUpsertField(metadataProxy.getName()
+							+ "__c");
 				}
 			}
 		}
@@ -77,14 +78,23 @@ public class MigrationEngineCloudConverterObjectImpl extends
 						metadataProxy.getName() + "__r:"
 								+ metadataProxy.getLookupObject() + ":"
 								+ metadataProxy.getLookupField());
-				this.getMigrationContext().getLookupFields().put(metadataProxy.getName(), settings);
+				this.getMigrationContext().getLookupFields().put(
+						metadataProxy.getName(), settings);
 			}
 		}
 
 		/*
 		 * build the basic custom object
 		 */
-		CustomObject co = new CustomObjectBuilder().build(cloudConverterObject);
+		CustomObject co = null;
+
+		if (cloudConverterObject.getExistingObject() == null) {
+			co = new CustomObjectBuilder().build(cloudConverterObject);
+		} else {
+			co = new CustomObjectBuilder().buildExisting(this
+					.getMigrationContext().getCloudConverterObject()
+					.getExistingObject());
+		}
 
 		this.executeCommon(co);
 
@@ -94,7 +104,8 @@ public class MigrationEngineCloudConverterObjectImpl extends
 
 		this.getMigrationContext().setWrapperBean(
 				cloudConverterObject.getOriginalData());
-		this.getMigrationContext().setExternalIdForUpsert(cloudConverterObject.getUpsertField());
+		this.getMigrationContext().setExternalIdForUpsert(
+				cloudConverterObject.getUpsertField());
 		try {
 			if (cloudConverterObject.getUpsertField() == null) {
 				new DataInsertExecutor().execute(this.getMigrationContext());

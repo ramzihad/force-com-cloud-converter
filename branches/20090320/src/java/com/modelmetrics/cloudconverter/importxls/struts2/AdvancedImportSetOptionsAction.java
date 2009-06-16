@@ -27,6 +27,8 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 	private Collection<String> lookupObjects;
 	
+	private Collection<String> existingObjects;
+	
 	private boolean nameUseAutonumber;
 	
 	private String nameUseField;
@@ -35,12 +37,14 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	
 	private String objectPlural;
 
+	private String existingObject;
 
 
 	public String execute() throws Exception {
 
 		// general prep
 		lookupObjects = this.getUploadContext().getObjectToIdMap().keySet();
+		existingObjects = this.getUploadContext().getObjectToFieldMap().keySet();
 
 		// first time here?
 		if (this.getSubmit() == null) {
@@ -50,6 +54,11 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 			this.setObjectLabel(this.getUploadContext().getCurrentCloudConverterObject().getObjectLabel());
 			this.setObjectPlural(this.getUploadContext().getCurrentCloudConverterObject().getObjectPlural());
 			return Action.INPUT;
+		}
+		
+		// skip this object?
+		if (this.getSubmit().equalsIgnoreCase("skip this object")) {
+			return "success-skip";
 		}
 
 		// update
@@ -74,6 +83,11 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 		}
 		
 		//populate name information
+		if (org.springframework.util.StringUtils.hasText(this.getExistingObject())) {
+			this.getUploadContext().getCurrentCloudConverterObject().setExistingObject(this.getExistingObject());
+		} else {
+			this.getUploadContext().getCurrentCloudConverterObject().setExistingObject(null);
+		}
 		this.getUploadContext().getCurrentCloudConverterObject().setNameUseAutonumber(this.isNameUseAutonumber());
 		this.getUploadContext().getCurrentCloudConverterObject().setNameUseField(this.getNameUseField());
 		this.getUploadContext().getCurrentCloudConverterObject().setObjectLabel(this.getObjectLabel());
@@ -223,5 +237,21 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 
 	public void setObjectPlural(String objectPlural) {
 		this.objectPlural = objectPlural;
+	}
+
+	public Collection<String> getExistingObjects() {
+		return existingObjects;
+	}
+
+	public void setExistingObjects(Collection<String> existingObjects) {
+		this.existingObjects = existingObjects;
+	}
+
+	public String getExistingObject() {
+		return existingObject;
+	}
+
+	public void setExistingObject(String existingObject) {
+		this.existingObject = existingObject;
 	}
 }

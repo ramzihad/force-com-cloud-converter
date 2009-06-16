@@ -38,31 +38,45 @@ import com.sforce.soap.partner.Field;
 
 public class ObjectToIdMapBuilder {
 
-	public Map<String, List<String>> getMap(SalesforceSession salesforceSession) throws Exception {
+	private Map<String, List<String>> objectToIdMap;
+	
+	private Map<String, List<String>> objectToFieldMap;
+	
+	public void build(SalesforceSession salesforceSession) throws Exception {
 		
-		Map<String, List<String>> ret = new HashMap<String, List<String>>();
+		Map<String, List<String>> objectToIdMap = new HashMap<String, List<String>>();
+		
+		Map<String, List<String>> objectToFieldMap = new HashMap<String, List<String>>();
 		
 		DescribeGlobalResult describeGlobalResult = salesforceSession.getSalesforceService().describeGlobal();
 		
 		for (String current:describeGlobalResult.getTypes()) {
 			if (this.include(current)) {
-				ret.put(current, new ArrayList<String>());
+				objectToIdMap.put(current, new ArrayList<String>());
+				objectToFieldMap.put(current, new ArrayList<String>());
 			}
 		}
 		
-		for (String current:ret.keySet()) {
+		for (String current:objectToIdMap.keySet()) {
 			DescribeSObjectResult describeSObjectResult = salesforceSession.getSalesforceService().describeSObject(current);
 			
 			for(Field currentField:describeSObjectResult.getFields()) {
+				//object to Id map
 				if (currentField.getName().equalsIgnoreCase("id")) {
-					ret.get(current).add(currentField.getName());
+					objectToIdMap.get(current).add(currentField.getName());
 				} else if (currentField.getExternalId() != null && currentField.getExternalId().booleanValue()) {
-					ret.get(current).add(currentField.getName());
+					objectToIdMap.get(current).add(currentField.getName());
+				}
+				//object to Field map
+				if (currentField.isUpdateable()) {
+					objectToFieldMap.get(current).add(currentField.getName());
 				}
 			}
 		}
 		
-		return ret;
+		this.setObjectToIdMap(objectToIdMap);
+		
+		this.setObjectToFieldMap(objectToFieldMap);
 		
 	}
 	
@@ -82,6 +96,22 @@ public class ObjectToIdMapBuilder {
             return true;
         }
         return false;
+	}
+
+	public Map<String, List<String>> getObjectToIdMap() {
+		return objectToIdMap;
+	}
+
+	public void setObjectToIdMap(Map<String, List<String>> objectToIdMap) {
+		this.objectToIdMap = objectToIdMap;
+	}
+
+	public Map<String, List<String>> getObjectToFieldMap() {
+		return objectToFieldMap;
+	}
+
+	public void setObjectToFieldMap(Map<String, List<String>> objectToFieldMap) {
+		this.objectToFieldMap = objectToFieldMap;
 	}
 	
 	

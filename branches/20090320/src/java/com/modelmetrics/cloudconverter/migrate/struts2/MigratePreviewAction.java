@@ -54,7 +54,7 @@ public class MigratePreviewAction extends AbstractMigrateContextAware {
 
 		Collection<Sproxy> preview = dao.query(new MigrateSoqlBuilder().build(
 				this.getDescribeContext(), this.getMigrateContext())
-				+ " limit 100 ");
+				+ " limit 25 ");
 
 		Collection<MigrateVO> results = new ArrayList<MigrateVO>();
 

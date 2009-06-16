@@ -58,7 +58,7 @@ public class CloudConverterObject {
 	
 	private String nameUseField;
 	
-
+	private String existingObject;
 
 	public ExcelWorksheetWrapperBean getOriginalData() {
 		return originalData;
@@ -146,6 +146,14 @@ public class CloudConverterObject {
 
 	public void setObjectPlural(String objectPlural) {
 		this.objectPlural = objectPlural;
+	}
+
+	public String getExistingObject() {
+		return existingObject;
+	}
+
+	public void setExistingObject(String existingObject) {
+		this.existingObject = existingObject;
 	}
 	
 }

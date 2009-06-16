@@ -49,6 +49,8 @@ public class MigrateContext {
 	private int executeQuantity;
 	
 	private OperationStatusSubscriber statusSubscriber;
+	
+	private int updateBatchSize = 100;
 
 	public int getExecuteQuantity() {
 		return executeQuantity;
@@ -128,6 +130,14 @@ public class MigrateContext {
 
 	public void setStatusSubscriber(OperationStatusSubscriber statusSubscriber) {
 		this.statusSubscriber = statusSubscriber;
+	}
+
+	public int getUpdateBatchSize() {
+		return updateBatchSize;
+	}
+
+	public void setUpdateBatchSize(int updateBatchSize) {
+		this.updateBatchSize = updateBatchSize;
 	}
 	
 	

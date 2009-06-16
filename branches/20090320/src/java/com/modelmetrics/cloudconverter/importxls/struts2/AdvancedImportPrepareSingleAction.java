@@ -1,8 +1,5 @@
 package com.modelmetrics.cloudconverter.importxls.struts2;
 
-import java.util.List;
-import java.util.Map;
-
 import com.modelmetrics.cloudconverter.forceutil.ObjectToIdMapBuilder;
 import com.opensymphony.xwork2.Action;
 
@@ -10,9 +7,16 @@ public class AdvancedImportPrepareSingleAction extends AbstractUploadContextAwar
 
 	public String execute() throws Exception {
 		
-		Map<String, List<String>> objectToIdMap = new ObjectToIdMapBuilder().getMap(this.getSalesforceSessionContext().getSalesforceSession());
+		ObjectToIdMapBuilder builder = new ObjectToIdMapBuilder();
 		
-		this.getUploadContext().setObjectToIdMap(objectToIdMap);
+		builder.build(this.getSalesforceSessionContext().getSalesforceSession());
+		
+		
+
+		this.getUploadContext().setObjectToIdMap(builder.getObjectToIdMap());
+		
+		this.getUploadContext().setObjectToFieldMap(builder.getObjectToFieldMap());
+		
 		
 		return Action.SUCCESS;
 		

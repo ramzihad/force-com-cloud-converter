@@ -27,10 +27,6 @@ THE SOFTWARE.
 
 package com.modelmetrics.cloudconverter.engine;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -41,59 +37,53 @@ import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
-import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisherSupport;
 import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
 import com.sforce.soap._2006._04.metadata.Layout;
 
 public abstract class AbstractMigrationEngine extends
-		AbstractMigrationContextAware implements MigrationEngineIF,
+		OperationStatusPublisherSupport implements MigrationEngineIF,
 		OperationStatusPublisher {
 
 	protected static final Log log = LogFactory
 			.getLog(AbstractMigrationEngine.class);
 
-	public List<OperationStatusSubscriber> subscribers = new ArrayList<OperationStatusSubscriber>();
-
-	public void subscribeToStatus(
-			OperationStatusSubscriber migrationStatusSubscriber) {
-		subscribers.add(migrationStatusSubscriber);
-	}
-
-	public void publishStatus(String status) {
-		for (Iterator<OperationStatusSubscriber> iterator = subscribers
-				.iterator(); iterator.hasNext();) {
-			OperationStatusSubscriber type = iterator.next();
-			if (type != null)
-				type.publish(status);
-
-		}
-	}
+	private MigrationContext migrationContext;
 
 	public void executeCommon(CustomObject co) throws Exception {
 
 		this.getMigrationContext().setCustomObject(co);
 
-		this.publishStatus("creating new object");
-
-		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-				.getMetadataService(), new CustomObject[] { co }).execute();
+		// 2009-06-15 Do we need this?
+		if (this.getMigrationContext().getCloudConverterObject()
+				.getExistingObject() == null) {
+			this.publishStatus("creating new object");
+			new CreateExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService(),
+					new CustomObject[] { co }).execute();
+		}
 
 		/*
 		 * create custom fields 2009-03-21 RSC This has the migration context so
 		 * it is now aware of the metadata proxy collection
+		 */
+		/*
+		 * 2009-06-15 Filters out existing fields
 		 */
 		CustomField[] fields = new CustomFieldBuilder().build(this
 				.getMigrationContext());
 
 		this.publishStatus("creating new fields");
 
-		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-				.getMetadataService(), fields).execute();
-
-		// reseting the session
-		this.pauseSession();
+		if (fields.length > 0) {
+			new CreateExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService(), fields)
+					.execute();
+			// reseting the session
+			this.pauseSession();
+		}
 
 		// moving to the lookups
 		if (this.getMigrationContext().getCustomLookupFields() != null
@@ -107,23 +97,27 @@ public abstract class AbstractMigrationEngine extends
 		}
 
 		/*
-		 * Custom Tab
+		 * Custom Tab // does not execute if using existing
 		 */
 
-		this.pauseSession();
-		this.publishStatus("creating custom tab");
+		if (this.getMigrationContext().getCloudConverterObject()
+				.getExistingObject() == null) {
+			this.pauseSession();
+			this.publishStatus("creating custom tab");
 
-		CustomTab customTab = new CustomTabBuilder().build(co);
-		log.debug("CustomTab - local definition complete - "
-				+ customTab.getFullName());
+			CustomTab customTab = new CustomTabBuilder().build(co);
+			log.debug("CustomTab - local definition complete - "
+					+ customTab.getFullName());
 
-		new CreateExecutor(this.getMigrationContext().getSalesforceSession()
-				.getMetadataService(), new CustomTab[] { customTab }).execute();
+			new CreateExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService(),
+					new CustomTab[] { customTab }).execute();
+		}
 
 		/*
 		 * check to see if we're ready to proceed.
 		 */
-		 
+
 		MetadataReadinessChecker checker = new MetadataReadinessChecker();
 
 		boolean ready = false;
@@ -131,30 +125,32 @@ public abstract class AbstractMigrationEngine extends
 		for (int i = 0; i < 5; i++) {
 			ready = checker.isMetadataReady(this.getMigrationContext());
 			log.debug("is metadata ready? " + ready);
-			if (ready) 
+			if (ready)
 				break;
 			this.pauseSession();
 		}
 
-		
-
 		/*
-		 * update the layout
+		 * update the layout // does not execute if existing object
 		 */
 
-		this.pauseSession();
-		this.publishStatus("updating default layout");
+		if (this.getMigrationContext().getCloudConverterObject()
+				.getExistingObject() == null) {
+			this.pauseSession();
+			this.publishStatus("updating default layout");
 
-		LayoutBuilder layoutBuilder = new LayoutBuilder();
-		layoutBuilder.setMigrationContext(this.getMigrationContext());
-		Layout layout = layoutBuilder.build();
+			LayoutBuilder layoutBuilder = new LayoutBuilder();
+			layoutBuilder.setMigrationContext(this.getMigrationContext());
+			Layout layout = layoutBuilder.build();
 
-		this.pauseSession();
-		this.pauseSession();
-		new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
-				.getMetadataService()).executeSimpleUpdate(layout);
+			this.pauseSession();
+			this.pauseSession();
+			new UpdateExecutor(this.getMigrationContext()
+					.getSalesforceSession().getMetadataService())
+					.executeSimpleUpdate(layout);
 
-		this.pauseSession();
+			this.pauseSession();
+		}
 
 		/*
 		 * update profile permissions
@@ -190,5 +186,12 @@ public abstract class AbstractMigrationEngine extends
 
 	}
 
+	public MigrationContext getMigrationContext() {
+		return migrationContext;
+	}
+
+	public void setMigrationContext(MigrationContext migrationContext) {
+		this.migrationContext = migrationContext;
+	}
 
 }

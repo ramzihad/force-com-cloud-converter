@@ -85,14 +85,25 @@ public class CustomFieldBuilder {
 		for (MetadataProxy current : metadataProxies) {
 
 			if (!StringUtils.hasText(current.getName())) {
-				throw new RuntimeException("Empty field name.  Check row 1, the column at position " + (current.getIndex() + 1) + " appears to be blank.");
+				throw new RuntimeException(
+						"Empty field name.  Check row 1, the column at position "
+								+ (current.getIndex() + 1)
+								+ " appears to be blank.");
 			}
 			boolean isPicklist = migrationContext.getPicklistFields() != null
 					&& migrationContext.getPicklistFields().containsKey(
 							current.getName());
 
+			boolean isExisting = migrationContext.getCloudConverterObject()
+					.getExistingObject() != null
+					&& StringUtils.hasText(current.getExistingField());
+
 			CustomField field = new CustomField();
 			String sfdcColumnName = current.getName() + "__c".toLowerCase();
+			if (isExisting) {
+				sfdcColumnName = current.getExistingField();
+			}
+			
 			customFieldShortNames.add(sfdcColumnName);
 			field.setFullName(newCustomObject.getFullName() + "."
 					+ sfdcColumnName);
@@ -133,7 +144,9 @@ public class CustomFieldBuilder {
 				}
 
 				field.setPicklist(picklist);
-				customFieldsCollection.add(field);
+				if (!isExisting)
+					customFieldsCollection.add(field);
+
 				fieldMap.put(current.getName(), sfdcColumnName);
 			} else if (migrationContext.getExternalIds() != null
 					&& migrationContext.getExternalIds().contains(
@@ -147,7 +160,10 @@ public class CustomFieldBuilder {
 				field.setLength(current.getLength());
 				field.setCaseSensitive(Boolean.FALSE);
 				field.setLabel(current.getLabel());
-				customFieldsCollection.add(field);
+
+				if (!isExisting)
+					customFieldsCollection.add(field);
+
 				fieldMap.put(current.getName(), sfdcColumnName);
 
 			} else if (migrationContext.getLookupFields() != null
@@ -167,15 +183,17 @@ public class CustomFieldBuilder {
 					relName = relName.substring(0, relName.length() - 3);
 				}
 
-				field.setRelationshipName(migrationContext.getCloudConverterObject()
-						.getObjectName().substring(
+				field.setRelationshipName(migrationContext
+						.getCloudConverterObject().getObjectName().substring(
 								0,
 								migrationContext.getCloudConverterObject()
 										.getObjectName().length() - 3)
 						+ relName + "s");
 				field.setRelationshipLabel(relName + "s");
 
-				customLookupFieldsCollection.add(field);
+				if (!isExisting)
+					customLookupFieldsCollection.add(field);
+
 				fieldMap.put(current.getName(), lookupSettings
 						.getApiResolutionString());
 			} else {
@@ -209,7 +227,9 @@ public class CustomFieldBuilder {
 					field.setVisibleLines(5);
 				}
 
-				customFieldsCollection.add(field);
+				if (!isExisting)
+					customFieldsCollection.add(field);
+				
 				fieldMap.put(current.getName(), sfdcColumnName);
 			}
 

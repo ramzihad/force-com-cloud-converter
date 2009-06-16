@@ -27,7 +27,9 @@ THE SOFTWARE.
 
 package com.modelmetrics.common.sforce;
 
-public abstract class AbstractSalesforceSessionAware {
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisherSupport;
+
+public abstract class AbstractSalesforceSessionAware extends OperationStatusPublisherSupport {
 
 	private SalesforceSession salesforceSession;
 
