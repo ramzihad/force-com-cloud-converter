@@ -32,7 +32,7 @@ import com.modelmetrics.cloudconverter.engine.ObjectDeleteHandler;
 import com.modelmetrics.cloudconverter.importxls.struts2.ImportPrepareAction;
 import com.modelmetrics.cloudconverter.importxls.struts2.UploadActionComposite;
 import com.modelmetrics.cloudconverter.importxls.struts2.UploadContext;
-import com.modelmetrics.cloudconverter.util.MigrationStatusSubscriberLifoImpl;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
 import com.modelmetrics.common.sforce.struts2.SalesforceSessionContext;
@@ -86,7 +86,7 @@ public class ObjectDeleteHandlerTest extends TestCaseWithDevOrg {
 		s = standardImportPrepareAction.execute();		
 		
 		ObjectDeleteHandler objectDeleteHandler = new ObjectDeleteHandler();
-		objectDeleteHandler.execute(salesforceSession, uploadContext.getCloudConverterObjects(), new MigrationStatusSubscriberLifoImpl());
+		objectDeleteHandler.execute(salesforceSession, uploadContext.getCloudConverterObjects(), new OperationStatusSubscriberLifoImpl());
 		
 	}
 }

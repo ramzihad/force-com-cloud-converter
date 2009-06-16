@@ -42,7 +42,9 @@ public class ObjectToIdMapBuilderTest extends TestCaseWithDevOrg {
 		
 		ObjectToIdMapBuilder builder = new ObjectToIdMapBuilder();
 		
-		Map<String, List<String>> map = builder.getMap(salesforceSession);
+		builder.build(salesforceSession);
+		
+		Map<String, List<String>> map = builder.getObjectToIdMap();
 		
 		assertNotNull(map);
 		
