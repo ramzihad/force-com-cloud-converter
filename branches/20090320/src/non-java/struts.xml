@@ -94,6 +94,7 @@
 		<action name="importAdvancedOptions" class="importAdvancedOptions" >
 			<result name="input">/WEB-INF/jsp/uploadComposite/advancedOptions.jsp</result>
 			<result name="success" type="redirectAction">importAdvancedExecute</result>
+			<result name="success-skip" type="redirectAction">importAdvancedLoop</result>
 		</action>
 		
 		<action name="importAdvancedExecute" class="importAdvancedExecute" >
