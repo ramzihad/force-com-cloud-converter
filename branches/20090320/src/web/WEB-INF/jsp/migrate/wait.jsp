@@ -23,7 +23,7 @@
 
 	<h1>What Do You Think?</h1>
 	
-	<p>Have a suggestion on how to improve this application? Visit <a href="http://community.modelmetrics.com" target="_blank">Community.ModelMetrics.com</a> or contact Reid Carlberg at <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a> or on Twitter at <a href="http://Twitter.com/ReidCarlberg" target="_blank">@ReidCarlberg</a>.</p>
+	<p>Have a suggestion on how to improve this application? Visit <a href="http://community.modelmetrics.com" target="_blank">Community@ModelMetrics.com</a> or contact Reid Carlberg at <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a> or on Twitter at <a href="http://Twitter.com/ReidCarlberg" target="_blank">@ReidCarlberg</a>.</p>
 	
 	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
 

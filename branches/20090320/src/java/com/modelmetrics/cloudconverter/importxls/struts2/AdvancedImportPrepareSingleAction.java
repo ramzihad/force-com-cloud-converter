@@ -11,12 +11,12 @@ public class AdvancedImportPrepareSingleAction extends AbstractUploadContextAwar
 		
 		builder.build(this.getSalesforceSessionContext().getSalesforceSession());
 		
-		
-
 		this.getUploadContext().setObjectToIdMap(builder.getObjectToIdMap());
 		
 		this.getUploadContext().setObjectToFieldMap(builder.getObjectToFieldMap());
 		
+		//HACK
+		this.getUploadContext().setStatusSubscriber(null);
 		
 		return Action.SUCCESS;
 		

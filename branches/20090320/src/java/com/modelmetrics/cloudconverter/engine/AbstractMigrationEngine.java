@@ -124,6 +124,7 @@ public abstract class AbstractMigrationEngine extends
 
 		for (int i = 0; i < 5; i++) {
 			ready = checker.isMetadataReady(this.getMigrationContext());
+			this.publishStatus("Checking to see if metadata is ready yet. (" + ready + ")");
 			log.debug("is metadata ready? " + ready);
 			if (ready)
 				break;

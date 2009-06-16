@@ -56,9 +56,14 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 		migrationStatusSubscriber.reset();
 		
 		// notify subscribers
+		String objectName = current.getObjectName();
+		
+		if (current.getExistingObject() != null) 
+			objectName = current.getExistingObject();
+		
 		migrationStatusSubscriber.publish(
 				"Starting object: " + current.getObjectLabel() + " ("
-						+ current.getObjectName() + ")");
+						+ objectName + ")");
 
 		// get started
 		MigrationContext migrationContext = new MigrationContextFactory()
@@ -76,7 +81,7 @@ public class SalesforceServiceImpl extends AbstractSalesforceService {
 		
 		migrationStatusSubscriber.publish(
 				"Object complete: " + current.getObjectLabel() + " ("
-						+ current.getObjectName() + ")");
+						+ objectName+ ")");
 		
 	}
 

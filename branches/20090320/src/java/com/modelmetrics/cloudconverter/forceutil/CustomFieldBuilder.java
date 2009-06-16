@@ -94,16 +94,20 @@ public class CustomFieldBuilder {
 					&& migrationContext.getPicklistFields().containsKey(
 							current.getName());
 
-			boolean isExisting = migrationContext.getCloudConverterObject()
-					.getExistingObject() != null
+			boolean isExistingObject = migrationContext
+					.getCloudConverterObject().getExistingObject() != null;
+
+			boolean isExistingField = migrationContext
+					.getCloudConverterObject().getExistingObject() != null
 					&& StringUtils.hasText(current.getExistingField());
 
 			CustomField field = new CustomField();
+			// RSC 2009-06-16 Should be ok...
 			String sfdcColumnName = current.getName() + "__c".toLowerCase();
-			if (isExisting) {
+			if (isExistingField) {
 				sfdcColumnName = current.getExistingField();
 			}
-			
+
 			customFieldShortNames.add(sfdcColumnName);
 			field.setFullName(newCustomObject.getFullName() + "."
 					+ sfdcColumnName);
@@ -144,7 +148,7 @@ public class CustomFieldBuilder {
 				}
 
 				field.setPicklist(picklist);
-				if (!isExisting)
+				if (!isExistingField)
 					customFieldsCollection.add(field);
 
 				fieldMap.put(current.getName(), sfdcColumnName);
@@ -161,7 +165,7 @@ public class CustomFieldBuilder {
 				field.setCaseSensitive(Boolean.FALSE);
 				field.setLabel(current.getLabel());
 
-				if (!isExisting)
+				if (!isExistingField)
 					customFieldsCollection.add(field);
 
 				fieldMap.put(current.getName(), sfdcColumnName);
@@ -191,7 +195,7 @@ public class CustomFieldBuilder {
 						+ relName + "s");
 				field.setRelationshipLabel(relName + "s");
 
-				if (!isExisting)
+				if (!isExistingField)
 					customLookupFieldsCollection.add(field);
 
 				fieldMap.put(current.getName(), lookupSettings
@@ -227,9 +231,9 @@ public class CustomFieldBuilder {
 					field.setVisibleLines(5);
 				}
 
-				if (!isExisting)
+				if (!isExistingField)
 					customFieldsCollection.add(field);
-				
+
 				fieldMap.put(current.getName(), sfdcColumnName);
 			}
 

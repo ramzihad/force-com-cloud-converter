@@ -64,9 +64,10 @@ public class CustomObjectBuilder {
 
 	public CustomObject build(String objectName, String objectLabel) throws Exception {
 		
-		if (!objectName.endsWith("__c")) {
-			throw new RuntimeException("Bad object name. " + objectName);
-		}
+		//2009-06-16 RSC no longer an error.
+//		if (!objectName.endsWith("__c")) {
+//			throw new RuntimeException("Bad object name. " + objectName);
+//		}
 		
 		CustomObject co = new CustomObject();
 		
@@ -97,9 +98,9 @@ public class CustomObjectBuilder {
 
 	public CustomObject buildExisting(String objectName) throws Exception {
 		
-		if (!objectName.endsWith("__c")) {
-			throw new RuntimeException("Bad object name. " + objectName);
-		}
+//		if (!objectName.endsWith("__c")) {
+//			throw new RuntimeException("Bad object name. " + objectName);
+//		}
 		
 		CustomObject co = new CustomObject();
 		

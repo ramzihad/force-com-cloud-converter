@@ -43,8 +43,8 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	public String execute() throws Exception {
 
 		// general prep
-		lookupObjects = this.getUploadContext().getObjectToIdMap().keySet();
-		existingObjects = this.getUploadContext().getObjectToFieldMap().keySet();
+		lookupObjects = new TreeSet<String>();lookupObjects.addAll(this.getUploadContext().getObjectToIdMap().keySet());
+		existingObjects = new TreeSet<String>();existingObjects.addAll(this.getUploadContext().getObjectToFieldMap().keySet());
 
 		// first time here?
 		if (this.getSubmit() == null) {
@@ -92,7 +92,7 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 		this.getUploadContext().getCurrentCloudConverterObject().setNameUseField(this.getNameUseField());
 		this.getUploadContext().getCurrentCloudConverterObject().setObjectLabel(this.getObjectLabel());
 		this.getUploadContext().getCurrentCloudConverterObject().setObjectPlural(this.getObjectPlural());
-
+		
 		return Action.SUCCESS;
 
 	}
@@ -137,9 +137,13 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 			return false;
 		}
 
-		if (!this.isNameUseAutonumber() && !this.hasText(this.getNameUseField())) {
+		if (!this.isNameUseAutonumber() && !this.hasText(this.getNameUseField()) && !this.hasText(this.getExistingObject())) {
 			this.addActionMessage("You have specified neither 'use autonumber' nor a field to use for name data.  You must select one or the other.");
 			return false;
+		}
+		
+		if (this.hasText(this.getExistingObject()) & this.isNameUseAutonumber()) {
+			this.addActionMessage("You have specified and existing object and use autonumber.  You must select one or the other.");
 		}
 		
 		return true;
