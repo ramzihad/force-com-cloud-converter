@@ -13,6 +13,7 @@ CONTACT:
 
 Reid Carlberg, Model Metrics, Inc.
 rcarlberg@modelmetrics.com
+http://community.modelmetrics.com
 
 ###################################################################
 INTRODUCTION:
@@ -22,7 +23,11 @@ Watch the intro video: http://www.youtube.com/watch?v=yGAuTzrf8OM
 You should read AT LEAST the BASIC FLOW and IMPORTANT NOTES section.
 
 Look in the package "com.modelmetrics.cloudconverter" for the classes you might want to run.
-This package is in 
+
+You can add this to your org using the following Salesforce.com Web Tab URL:
+
+https://cloudconverter.modelmetrics.com/mmimport/home.action?s={!$Api.Session_ID}&u={!$Api.Partner_Server_URL_150}
+
 
 ###################################################################
 PROJECT STATUS:
@@ -71,6 +76,11 @@ dev org to get used to the general flow of the app.
 
 ###################################################################
 HISTORY:
+
+2009-06-16
+
+* Explore your metadata includes more field detail and greater ability to find the object you need.
+* Import from Excel includes the ability to import to an existing object.
 
 2009-06-01
 
