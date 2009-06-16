@@ -7,68 +7,66 @@
 
 <body>
 
-<h1>Migrate Setup</h1>
+<h1>NEW! Migrate A Field - Setup</h1>
 
-<p>Note: because this is just working quickly, I'm being lazy and forcing you to configure the object in Describe.</p>
+<p>If you haven't used this before, you should use it on a dev org or in your sandbox first to get used to it.</p>
 
-<p>If you haven't used this before, you should work it on a dev org first to get used to it.</p>
+<p>This is an aggressive routine.  It will go through every object record in the org.  If you have a million records of the object you're working with, it will attempt to do that.</p>
 
-<p>Also, this technical is supposed to have some rollback functionality, but it doesn't just yet.  SO BE CAREFUL.</p>
-
-<p>FINALLY: this is an aggressive routine.  It will go through every object record in the org.  If you have a million records of the object you're working with, it will attempt to do that.</p>
-
+<p><s:actionmessage /></p>
 
 <s:form action="migrateSetup.action">
 
-<s:select label="Preview Field"
-       name="preview"
+<p>Preview Field: <s:select label="Preview Field"
+       name="previewField"
        list="fields"
        listKey="name"
        listValue="label + ' (' + name + ')'" emptyOption="true"
        required="true"
-/>
+/></p>
 
-<s:select label="Source Field"
-       name="source"
+<p>Source Field: <s:select label="Source Field"
+       name="sourceField"
        list="fields"
        listKey="name"
        listValue="label + ' (' + name + ')'" emptyOption="true"
        required="true"
-/>
+/></p>
 
-<s:select label="Target Field"
-       name="target"
+<p>Target Field: <s:select label="Target Field"
+       name="targetField"
        list="fields"
        listKey="name"
        listValue="label + ' (' + name + ')'" emptyOption="true"
        required="true"
-/>
+/></p>
 
-<s:select label="Conflict Resolution"
+<p>Conflict Resolution: <s:select label="Conflict Resolution"
        name="resolution"
        list="conflictResolutionTypes"
        listKey="name"
        listValue="name"  emptyOption="true"
        required="true"
-/>
+/></p>
 
-<s:select label="Source Disposition"
+<p>Source Disposition: <s:select label="Source Disposition"
        name="disposition"
        list="sourceDispositionTypes"
        listKey="name"
        listValue="name"  emptyOption="true"
        required="true"
-/>
+/></p>
 
-<s:textfield label="Concatenator" key="concatenator"/>
+<p>Update Batch Size: <s:textfield label="Update Batch Size" key="updateBatchSize"/></p>
 
-<s:textfield label="Name (records in database)" key="name" required="true" />
+<p>Concatenator: <s:textfield label="Concatenator" key="concatenator"/></p>
+
 
 <s:submit name="submit" />
 
 </s:form>
 
-<p>Notes</p>
+
 
 </body>
 </html>

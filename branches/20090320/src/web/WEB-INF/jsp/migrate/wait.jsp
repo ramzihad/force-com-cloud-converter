@@ -7,7 +7,7 @@
 
 	<body>
 
-	<h2>Importing Your App > Please Wait</h2>
+	<h2>Migrating Your Data > Please Wait</h2>
 	
 	<h2>Current Status, Newest First</h2>
 	
@@ -15,7 +15,7 @@
 	
 	<p>
 	
-	<s:iterator value="uploadContext.statusSubscriber.status">
+	<s:iterator value="migrateContext.statusSubscriber.status">
 		- <s:property /><br/>
 	</s:iterator>
 	
@@ -26,6 +26,7 @@
 	<p>Have a suggestion on how to improve this application? Visit <a href="http://community.modelmetrics.com" target="_blank">Community.ModelMetrics.com</a> or contact Reid Carlberg at <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a> or on Twitter at <a href="http://Twitter.com/ReidCarlberg" target="_blank">@ReidCarlberg</a>.</p>
 	
 	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
+
 	</body>
 </html>
 

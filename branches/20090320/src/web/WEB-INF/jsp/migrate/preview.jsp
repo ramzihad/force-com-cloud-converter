@@ -2,23 +2,23 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Migrate Utility</title>
-
+    <title>Cloud Converter - Migrate Utility</title>
+	<link rel="stylesheet" type="text/css" media="all" href="./css/describe.css" />
 </head>
 
 <body>
 
 <h1>Migrate Preview</h1>
 
-<p>If all this looks right, go to the bottom and hit "execute".  If it doesn't look right, hit the back button and try again.</p>
+<p>If all this looks right, go to the bottom and hit "execute".  If it doesn't look right, <a href="migrateSetup.action">try again</a>.</p>
 
-<p>Strategy: <s:property value="migrateContext.conflict.name" /> | <a href="migrateSetup.action">Edit</a></p>
+<p>Conflict Resolution Strategy: <s:property value="migrateContext.conflict.name" /> </p>
 <table>
 	<tr>
-		<th><s:property value="migrateContext.preview" /></th>
-		<th>Source (<s:property value="migrateContext.source" />)</th>
-		<th>Target (<s:property value="migrateContext.target" />)</th>
-		<th>Result</th>
+		<th><s:property value="migrateContext.previewField" /></th>
+		<th>Source (<s:property value="migrateContext.sourceField" />)</th>
+		<th>Target (<s:property value="migrateContext.targetField" />)</th>
+		<th>Target Becomes</th>
 		<th>Source Becomes</th>
 	</tr>
 	<s:iterator value="results">
