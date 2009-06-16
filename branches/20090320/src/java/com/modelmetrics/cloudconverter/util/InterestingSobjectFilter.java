@@ -59,11 +59,6 @@ public class InterestingSobjectFilter {
 				|| string.equalsIgnoreCase("Group")
 				|| string.equalsIgnoreCase("GroupMember"))
 			return false;
-		
-		//for testing only -- just to keep the list short.
-//		if (!string.equalsIgnoreCase("Account") && !string.equalsIgnoreCase("Contact")) {
-//			return false;
-//		}
 
 		return ret;
 	}

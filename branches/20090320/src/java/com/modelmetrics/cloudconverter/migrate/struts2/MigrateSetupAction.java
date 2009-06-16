@@ -27,6 +27,7 @@ THE SOFTWARE.
 package com.modelmetrics.cloudconverter.migrate.struts2;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.util.StringUtils;
@@ -102,6 +103,15 @@ public class MigrateSetupAction extends AbstractMigrateContextAware {
 	}
 
 	public boolean isValid() {
+		
+		Set<String> fields = new TreeSet<String>();
+		fields.add(this.getPreviewField());
+		fields.add(this.getSourceField());
+		fields.add(this.getTargetField());
+		
+		if (fields.size() != 3) {
+			this.addActionMessage("Preview, Source and Target must be different fields.");
+		}
 		
 		if (!StringUtils.hasText(this.getPreviewField())) {
 			this.addActionMessage("You must select a preview field.");
