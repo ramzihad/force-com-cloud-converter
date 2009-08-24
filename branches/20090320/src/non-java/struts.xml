@@ -138,9 +138,12 @@
 		
 		<!-- Force.com Platform Utilities -->
 		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
  			<result name="input">
  				/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp
  			</result>
+ 			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
  			<result name="success" type="excel" />
  		</action>
 
@@ -190,6 +193,9 @@
 		
 		
 		<action name="describeWorkbookAll" class="describeAllInExcelAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
 			<result name="success" type="excel" />
 		</action>		
 

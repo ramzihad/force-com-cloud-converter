@@ -7,7 +7,7 @@
 
 	<body>
 
-	<h2>Migrating Your Data > Please Wait</h2>
+	<h2>Describing Objects > Please Wait</h2>
 	
 	<h2>Current Status, Newest First</h2>
 	
@@ -15,7 +15,7 @@
 	
 	<p>
 	
-	<s:iterator value="migrateContext.statusSubscriber.status">
+	<s:iterator value="describeContext.statusSubscriber.status">
 		- <s:property /><br/>
 	</s:iterator>
 	
@@ -24,6 +24,7 @@
 	<h1>What Do You Think?</h1>
 	
 	<p>Questions? Comments? <a href="http://community.salesforce.com/sforce/?category.id=developers">Join the conversation.</a></p>
+	
 	
 	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
 

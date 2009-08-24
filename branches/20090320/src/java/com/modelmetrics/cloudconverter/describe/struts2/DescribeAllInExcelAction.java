@@ -29,8 +29,7 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegate;
-import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
-import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.poi.ExcelSupport;
 import com.opensymphony.xwork2.Action;
 
@@ -40,23 +39,37 @@ public class DescribeAllInExcelAction extends DescribeAction {
 
 	public String execute() throws Exception {
 
+		this.getDescribeContext().setStatusSubscriber(new OperationStatusSubscriberLifoImpl());
+		
+		this.getDescribeContext().getStatusSubscriber().publish("Beginning describe all.");
+
+		
 		ExcelSupport excelSupport = new ExcelSupport();
 
 		HSSFWorkbook workbook = excelSupport.getWorkbook();
 
 		DescribeExcelBuilderDelegate delegate = new DescribeExcelBuilderDelegate();
-		
-		for (int i = 0; i < this.getDescribeContext().getTypesArray().length; i++) {
 
-			this.setTarget(this.getDescribeContext().getTypesArray()[i]);
+		for (String currentType: this.getDescribeContext().getTypes()) {
+
+			this.setTarget(currentType);
+			
+			this.getDescribeContext().getStatusSubscriber().publish("Exporting " + currentType);
+
 			super.execute();
 			
-			delegate.handleBuild(new DisplayableSobjectFieldMetadataBeanBuilder().build(SobjectFieldPropertyBean.getFieldBeans(), this.getObjectFields()), excelSupport, workbook, this.getTarget());
+			delegate.handleBuild(this.getDisplayableFields(), excelSupport, workbook, this.getTarget());
 
 
 		}
+
+		this.getDescribeContext().getStatusSubscriber().publish("Complete.");
+
 		
+
 		this.setWorkbook(workbook);
+		
+		
 
 		return Action.SUCCESS;
 	}

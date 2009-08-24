@@ -31,11 +31,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.sforce.soap.partner.DescribeSObjectResult;
 
 public class DescribeContext {
 
-	private Collection<String> objectTypes;
+//	private Collection<String> objectTypes;
 	
 	private String[] typesArray;
 
@@ -49,6 +50,17 @@ public class DescribeContext {
 
 	private String lastMessage;
 	
+	private OperationStatusSubscriber statusSubscriber;
+
+	
+	public OperationStatusSubscriber getStatusSubscriber() {
+		return statusSubscriber;
+	}
+
+	public void setStatusSubscriber(OperationStatusSubscriber statusSubscriber) {
+		this.statusSubscriber = statusSubscriber;
+	}
+
 	public void initialize() {
 
 		this.typesArray = null;
@@ -89,16 +101,16 @@ public class DescribeContext {
 		this.lastResult = lastResult;
 	}
 
-	public Collection<String> getObjectTypes()
-	{
-		objectTypes = Arrays.asList(typesArray);
-		return objectTypes;
-	}
-
-	public void setObjectTypes(Collection<String> objectTypes)
-	{
-		this.objectTypes = objectTypes;
-	}
+//	public Collection<String> getObjectTypes()
+//	{
+//		objectTypes = Arrays.asList(typesArray);
+//		return objectTypes;
+//	}
+//
+//	public void setObjectTypes(Collection<String> objectTypes)
+//	{
+//		this.objectTypes = objectTypes;
+//	}
 
 	public String getLastMessage() {
 		return lastMessage;

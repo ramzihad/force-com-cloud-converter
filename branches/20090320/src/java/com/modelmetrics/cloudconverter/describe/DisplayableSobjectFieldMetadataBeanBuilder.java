@@ -14,6 +14,10 @@ public class DisplayableSobjectFieldMetadataBeanBuilder {
 			Collection<SobjectFieldPropertyBean> sobjectFieldBeans,
 			Collection<Field> fields) {
 
+		if (fields == null) {
+			throw new RuntimeException("No fields work with.");
+		}
+		
 		Collection<DisplayableFieldMetadataBean> metadata = new ArrayList<DisplayableFieldMetadataBean>();
 		
 		for (Field element : fields) {

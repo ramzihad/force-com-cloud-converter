@@ -10,7 +10,7 @@
 <h1>Excel Data Template</h1>
 <s:form name="checkboxForm" action="describeAsTemplate.xls" >
 	<p>
-		<s:checkboxlist list="describeContext.objectTypes" name="selectedObjects" > <br/> </s:checkboxlist>
+		<s:checkboxlist list="describeContext.types" name="selectedObjects" > <br/> </s:checkboxlist>
 		<s:submit name="submit" />
 	</p>
 </s:form>

@@ -22,10 +22,9 @@
 
         <div id="puFooter" style="font-size: 75%; color: #000066; clear: both">
         
-        <p class="footer">Visit <a href="http://community.modelmetrics.com">Community@ModelMetrics.com</a> for more information.</p>
-        
+        <p class="footer">Questions? Comments? <a href="http://community.salesforce.com/sforce/?category.id=developers">Join the conversation.</a></p>
        <p class="footer">
-       	Version: June 16, 2009 - Profile (mb):
+       	Version: August 24, 2009 - Profile (mb):
        	
        	<%
        	

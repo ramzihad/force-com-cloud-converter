@@ -31,7 +31,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.modelmetrics.cloudconverter.describe.DisplayableFieldMetadataBean;
-import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldPropertyBean;
 import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
 import com.modelmetrics.cloudconverter.describe.FieldComparator;
 import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
