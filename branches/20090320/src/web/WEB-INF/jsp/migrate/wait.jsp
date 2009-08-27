@@ -21,11 +21,9 @@
 	
 	</p>
 
-	<h1>What Do You Think?</h1>
+	<h1>More Information</h1>
 	
-	<p>Questions? Comments? <a href="http://community.salesforce.com/sforce/?category.id=developers">Join the conversation.</a></p>
-	
-	<p>Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services.</p>
+	<p>Have a suggestion on how to improve this application? Visit <a href="http://modelmetrics.com" target="_blank">Model Metrics</a> on the web to learn more about our services or provide feedback.</p>
 
 	</body>
 </html>

@@ -24,7 +24,7 @@
         
         <p class="footer">Questions? Comments? <a href="http://community.salesforce.com/sforce/?category.id=developers">Join the conversation.</a></p>
        <p class="footer">
-       	Version: August 24, 2009 - Profile (mb):
+       	Version: August 27, 2009 - Profile (mb):
        	
        	<%
        	
