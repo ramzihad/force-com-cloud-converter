@@ -75,9 +75,9 @@ public class DataTemplateExcelBuilderDelegate {
 		int column = 1;
 		
 
-		for (Iterator iter = fields.iterator(); iter.hasNext();) 
+		for (Field element: fields) 
 		{
-			Field element = (Field) iter.next();
+			
 			
 			if (!element.getType().getValue().equals("id"))
 			{	

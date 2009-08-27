@@ -81,6 +81,8 @@ public class DescribeAction extends AbstractDescribeContextAware {
 
 			this.getDescribeContext().setLastResult(r);
 
+			//used for data template as excel
+			this.objectFields = results;
 			
 		}
 		

@@ -57,7 +57,7 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 		this.setWorkbook(workbook);
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.getDescribeContext().setLastMessage("Data template generation error. not supported for object '" + this.getDescribeContext().getTarget() + "'.");
+			this.getDescribeContext().setLastMessage("Data template generation error. Not supported for object '" + this.getDescribeContext().getTarget() + "'.");
 			return Action.ERROR;
 		}
 

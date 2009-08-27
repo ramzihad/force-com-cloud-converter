@@ -35,6 +35,7 @@ import com.modelmetrics.cloudconverter.forceutil.CustomFieldBuilder;
 import com.modelmetrics.cloudconverter.forceutil.CustomTabBuilder;
 import com.modelmetrics.cloudconverter.forceutil.LayoutBuilder;
 import com.modelmetrics.cloudconverter.forceutil.MetadataReadinessChecker;
+import com.modelmetrics.cloudconverter.forceutil.ProfileTabVisibilityBuilder;
 import com.modelmetrics.cloudconverter.forceutil.UpdateExecutor;
 import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
 import com.modelmetrics.cloudconverter.util.OperationStatusPublisherSupport;
@@ -42,6 +43,8 @@ import com.sforce.soap._2006._04.metadata.CustomField;
 import com.sforce.soap._2006._04.metadata.CustomObject;
 import com.sforce.soap._2006._04.metadata.CustomTab;
 import com.sforce.soap._2006._04.metadata.Layout;
+import com.sforce.soap._2006._04.metadata.Profile;
+import com.sforce.soap.partner.GetUserInfoResult;
 
 public abstract class AbstractMigrationEngine extends
 		OperationStatusPublisherSupport implements MigrationEngineIF,
@@ -54,6 +57,11 @@ public abstract class AbstractMigrationEngine extends
 
 	public void executeCommon(CustomObject co) throws Exception {
 
+		// 2009-08-27 RSC
+		GetUserInfoResult userInfo = this.getMigrationContext().getSalesforceSession().getSalesforceService().getUserInfo();
+
+		log.info("***USER**** " + userInfo.getOrganizationName() + ", " + userInfo.getUserFullName() + ", " + userInfo.getUserEmail());
+		
 		this.getMigrationContext().setCustomObject(co);
 
 		// 2009-06-15 Do we need this?
@@ -112,6 +120,16 @@ public abstract class AbstractMigrationEngine extends
 			new CreateExecutor(this.getMigrationContext()
 					.getSalesforceSession().getMetadataService(),
 					new CustomTab[] { customTab }).execute();
+			
+			/*
+			 * update profile permissions - Testing.
+			 */
+//			 Profile profile = new ProfileTabVisibilityBuilder().build("Platform System Admin",
+//			 customTab.getFullName());
+//			 new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
+//			 .getMetadataService()).executeSimpleUpdate(profile);
+//					
+//			 this.pauseSession();
 		}
 
 		/*
@@ -153,15 +171,7 @@ public abstract class AbstractMigrationEngine extends
 			this.pauseSession();
 		}
 
-		/*
-		 * update profile permissions
-		 */
-		// Profile profile = new ProfileTabVisibilityBuilder().build("Admin",
-		// customTab.getFullName());
-		// new UpdateExecutor(this.getMigrationContext().getSalesforceSession()
-		// .getMetadataService()).executeSimpleUpdate(profile);
-		//		
-		// this.pauseSession();
+
 	}
 
 	/**

@@ -15,7 +15,11 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 	public String execute() throws Exception {
 
 		if (this.getSalesforceSessionContext().getSalesforceSession() == null) {
-			this.getUploadContext().setLastException(new RuntimeException("Missing Salesforce Session.  (This is sometimes an issue when your browser blocks cookies.)"));
+			this
+					.getUploadContext()
+					.setLastException(
+							new RuntimeException(
+									"Missing Salesforce Session.  (This is sometimes an issue when your browser blocks cookies.)"));
 			return ERROR;
 		}
 
@@ -30,10 +34,15 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 
 		// cleanup the target org first -- delete needs to be done here due to
 		// the potential for running into related objects.
-		new ObjectDeleteHandler().execute(this.getSalesforceSessionContext()
-				.getSalesforceSession(), this.getUploadContext()
-				.getCloudConverterObjects(), this.getUploadContext()
-				.getStatusSubscriber());
+		try {
+			new ObjectDeleteHandler().execute(this
+					.getSalesforceSessionContext().getSalesforceSession(), this
+					.getUploadContext().getCloudConverterObjects(), this
+					.getUploadContext().getStatusSubscriber());
+		} catch (Exception e) {
+			this.getUploadContext().setLastException(e);
+			return ERROR;
+		}
 
 		// giddyup
 		try {
@@ -41,11 +50,17 @@ public class StandardImportExecuteAction extends AbstractUploadContextAware {
 		} catch (Exception e) {
 			this.getUploadContext().setLastException(e);
 			if (e instanceof IndexOutOfBoundsException) {
-				this.getUploadContext().setMessage("This message is usually caused by an Excel document that is not properly formatted.");
+				this
+						.getUploadContext()
+						.setMessage(
+								"This message is usually caused by an Excel document that is not properly formatted.  Correct this by deleting extra rows below your data, extra columns to the right of your data, and by removing any blank columns in the middle of your data.");
 			}
 			return ERROR;
 		}
 
+		//clear out the status 
+		this.getUploadContext().getStatusSubscriber().reset();
+		
 		// done
 		return SUCCESS;
 	}
