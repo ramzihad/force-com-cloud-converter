@@ -1,0 +1,258 @@
+
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+
+
+<struts>
+
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.devMode" value="false" />
+
+	<!-- Configuration for the default package. -->
+	<package name="default" extends="struts-default">
+
+		<!-- interceptors>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="logger" />
+				<interceptor-ref name="completeStack" />			
+				<interceptor-ref name="execAndWait" />
+				
+			</interceptor-stack>
+			
+		</interceptors-->
+
+		<result-types>
+			<result-type name="excel"
+				class="com.modelmetrics.common.poi.ExcelResult" default="false" />
+		</result-types>
+
+
+
+		<!--************************** COMPOSITE **************************************
+			************************** COMPOSITE **************************************
+			************************** COMPOSITE **************************************
+		-->
+		<action name="import" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/uploadComposite/intro.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
+		</action>
+
+		<action name="home" class="compositeLogin" >
+			<result name="success">/WEB-INF/jsp/common/main.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/compositeError.jsp</result>
+		</action>
+		
+		<action name="startUpload" class="uploadActionCompositeInitialize">
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		<action name="processUpload" class="uploadActionComposite" >
+			<result name="success" type="redirectAction">importBranch</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/upload.jsp</result>
+		</action>
+		
+		<action name="importBranch" class="uploadActionCompositeBranch" >
+			<result name="input">/WEB-INF/jsp/uploadComposite/askAdvance.jsp</result>
+			<result name="success_standard" type="redirectAction">importStandardPrepare</result>
+			<result name="success_advanced" type="redirectAction">importAdvancedPrepare</result>
+		</action>
+
+		<action name="importAdvancedPrepare" class="importPrepare" >
+			<result name="success" type="redirectAction">importAdvancedLoop</result>
+			<result name="input" type="redirectAction">importAdvancedOverride</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+		
+		<action name="importAdvancedPrepareNext" class="importAdvancedPrepareNext" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/preparingNext.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedOptions</result>
+		</action>
+		
+		<action name="importAdvancedOverride" class="uploadActionCompositeOverride" >
+			<result name="success" type="redirectAction">importAdvancedDeleteExisting</result>
+			<result name="cancel" type="redirectAction">startUpload</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/advancedOverride.jsp</result>
+		</action>
+
+		<action name="importAdvancedDeleteExisting" class="importAdvancedDeleteExisting" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/deleteWait.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>
+		</action>
+				
+		<action name="importAdvancedLoop" class="importAdvancedLoopManager" >
+			<result name="success_next" type="redirectAction">importAdvancedPrepareNext</result>
+			<result name="success_finish" >/WEB-INF/jsp/uploadComposite/view.jsp</result>
+		</action>
+
+		<action name="importAdvancedOptions" class="importAdvancedOptions" >
+			<result name="input">/WEB-INF/jsp/uploadComposite/advancedOptions.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedExecute</result>
+			<result name="success-skip" type="redirectAction">importAdvancedLoop</result>
+		</action>
+		
+		<action name="importAdvancedExecute" class="importAdvancedExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/advancedWait.jsp</result>
+			<result name="success" type="redirectAction">importAdvancedLoop</result>		
+		</action>
+
+		<!-- RSC 2009-05-23 DONE		
+		<action name="importExecute" class="uploadActionCompositeExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
+		</action> -->
+		
+		<action name="importStandardPrepare" class="importPrepare" >
+			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="input" type="redirectAction">importStandardOverride</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+
+		<action name="importStandardOverride" class="uploadActionCompositeOverride" >
+			<result name="success" type="redirectAction">importStandardExecute</result>
+			<result name="cancel" type="redirectAction">startUpload</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/uploadComposite/standardOverride.jsp</result>
+		</action>
+
+		<action name="importStandardExecute" class="importStandardExecute" >
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/uploadComposite/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/uploadComposite/view.jsp</result>		
+
+		</action>
+		
+		<!-- Force.com Platform Utilities -->
+		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+ 			<result name="input">
+ 				/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp
+ 			</result>
+ 			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
+ 			<result name="success" type="excel" />
+ 		</action>
+
+		<action name="start" class="compositeLogin" >
+			<result name="success" type="redirectAction">select</result>
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
+		</action>	
+
+		<action name="select" class="selectTarget">
+			<result name="input">
+				/WEB-INF/jsp/describe/selectObject.jsp
+			</result>
+			<result name="success" type="redirectAction">describe</result>
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+		</action>
+
+		<action name="describe" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describe.jsp
+			</result>
+		</action>
+
+		<action name="describeAsTemplate" class="describeAsTemplateAction">
+			<result name="input">
+				/WEB-INF/jsp/describe/dataTemplateCheckboxlist.jsp
+			</result>
+			<result name="success" type="excel" />
+		</action>
+		
+
+		<action name="describeForm" class="describeAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/describeForm.jsp
+			</result>
+		</action>
+		
+		
+
+		<action name="describeWorkbook" class="describeExcelAction">
+			<result name="success" type="excel" />
+		</action>
+		
+		<action name="dataTemplateWorkbook" class="dataTemplateExcelAction">
+			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		
+		<action name="describeWorkbookAll" class="describeAllInExcelAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
+			<result name="success" type="excel" />
+		</action>		
+
+		<action name="layouts" class="layoutsAction">
+			<result name="success">
+				/WEB-INF/jsp/describe/layouts.jsp
+			</result>
+			<result name="error" type="redirectAction">select</result>
+		</action>
+
+		<action name="layoutsv2" class="layoutsActionV2">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2.jsp
+			</result>
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		<action name="layoutsv2form" class="layoutsActionV2Form">
+			<result name="success">
+				/WEB-INF/jsp/describe/layoutsV2form.jsp
+			</result>
+		</action>		
+				
+		<action name="layoutsWorkbook" class="layoutsExcelAction">
+			<result name="success" type="excel" />
+			<result name="error" type="redirectAction">select</result>
+		</action>
+		
+		<action name="mmmain" class="basicAction">
+			<result name="success">
+				/WEB-INF/jsp/mm/main.jsp
+			</result>
+		</action>	
+
+		<action name="migrate" class="selectTarget">
+			<result name="input">/WEB-INF/jsp/migrate/selectObject.jsp</result>
+			<result name="success" type="redirectAction">migrateSetup</result>			
+		</action>		
+
+		<action name="migrateSetup" class="migrateSetupAction">
+			<result name="input">/WEB-INF/jsp/migrate/setup.jsp</result>
+			<result name="success" type="redirectAction">migratePreview</result>			
+		</action>		
+		
+		<action name="migratePreview" class="migratePreviewAction">
+			<result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/migrate/preview.jsp</result>
+			<result name="success" type="redirectAction">migrateExecuteAction</result>
+		</action>			
+		
+		<action name="migrateExecute" class="migrateExecuteAction">
+		    <interceptor-ref name="completeStack"/>
+		    <interceptor-ref name="execAndWait"/>
+		    <result name="error">/WEB-INF/jsp/uploadComposite/error.jsp</result>
+			<result name="wait">/WEB-INF/jsp/migrate/wait.jsp</result>
+			<result name="success">/WEB-INF/jsp/migrate/execute.jsp</result>
+		</action>		
+
+	</package>
+</struts>
