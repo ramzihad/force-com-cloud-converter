@@ -18,7 +18,9 @@ http://community.modelmetrics.com
 ###################################################################
 INTRODUCTION:
 
-Watch the intro video: http://www.youtube.com/watch?v=yGAuTzrf8OM
+There are some demo's on YouTube you will find helpful.
+
+http://www.youtube.com/results?search_query=cloud+converter&search_type=&aq=f
 
 You should read AT LEAST the BASIC FLOW and IMPORTANT NOTES section.
 
