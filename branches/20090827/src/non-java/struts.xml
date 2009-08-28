@@ -137,14 +137,16 @@
 		</action>
 		
 		<!-- Force.com Platform Utilities -->
+		<action name="describeOutputAsTemplateSetup" class="describeOutputAsTemplateAction">
+ 			<result name="input">/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp</result>
+ 		</action>
+		
 		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
- 			<result name="input">
- 				/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp
- 			</result>
  			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
  			<result name="success" type="excel" />
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
  		</action>
 
 		<action name="start" class="compositeLogin" >
