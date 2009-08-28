@@ -24,9 +24,9 @@
 	<s:iterator value="describeContext.types" status="stat"><a href="<s:url action="describe"><s:param name="target" value="[0].top" /></s:url>"><s:property /></a><s:if test="!#stat.last"> | </s:if> </s:iterator>
 </p>
 
-<p><a href="<s:url value="describeWorkbookAll.xls" />">Excel All (Careful: this may take a couple of minutes during which time your browser will appear non-responsive.)</a></p> 
+<p><a href="<s:url value="describeWorkbookAll.xls" />">Export All Objects to Excel (Careful: this may take a couple of minutes.)</a></p> 
 
-<p><a href="<s:url action="describeOutputAsTemplate"></s:url>">Get Multiple Objects</a></p>
+<p><a href="<s:url action="describeOutputAsTemplateSetup"></s:url>">Export Selected Objects to Excel</a></p>
 
 </body>
 </html>

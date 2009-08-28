@@ -11,7 +11,10 @@
 <s:form name="checkboxForm" action="describeOutputAsTemplate.xls" >
 	<p>
 		<s:checkboxlist list="describeContext.types" name="selectedObjects" > <br/> </s:checkboxlist>
-		<s:submit name="submit" />
+	</p>
+	<p>
+		<s:submit name="submitMetadata" value="Export as Metadata" />
+		<s:submit name="submitTemplate" value="Export as Data Templates" />
 	</p>
 </s:form>
 </body>
