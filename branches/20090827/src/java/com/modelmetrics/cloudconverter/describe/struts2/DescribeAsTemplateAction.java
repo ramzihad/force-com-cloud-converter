@@ -31,7 +31,7 @@ import java.util.Iterator;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.modelmetrics.cloudconverter.describe.DataTemplateExcelBuilderDelegate;
+import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateTemplateImpl;
 import com.modelmetrics.cloudconverter.describe.LayoutsBuilderV2;
 import com.modelmetrics.cloudconverter.describe.LayoutsSummary;
 import com.modelmetrics.common.poi.ExcelSupport;
@@ -62,9 +62,9 @@ public class DescribeAsTemplateAction extends DescribeAction
 			LayoutsBuilderV2 builder = new LayoutsBuilderV2();
 			LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
 
-			DataTemplateExcelBuilderDelegate delegate = new DataTemplateExcelBuilderDelegate();
+			DescribeExcelBuilderDelegateTemplateImpl delegate = new DescribeExcelBuilderDelegateTemplateImpl(excelSupport, workbook, this.getSalesforceSessionContext().getSalesforceSession());
 			
-			delegate.handleBuild(this.getObjectFields(), summary, excelSupport, workbook, this.getTarget());
+			delegate.handleBuild(this.getDisplayableFields(), this.getTarget());
 
 		}
 		

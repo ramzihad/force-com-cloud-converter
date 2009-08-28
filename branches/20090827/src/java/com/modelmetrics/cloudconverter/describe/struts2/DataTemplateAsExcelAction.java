@@ -28,7 +28,7 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.modelmetrics.cloudconverter.describe.DataTemplateExcelBuilderDelegate;
+import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateTemplateImpl;
 import com.modelmetrics.cloudconverter.describe.LayoutsBuilderV2;
 import com.modelmetrics.cloudconverter.describe.LayoutsSummary;
 import com.modelmetrics.common.poi.ExcelSupport;
@@ -47,12 +47,12 @@ public class DataTemplateAsExcelAction extends DescribeAction {
 
 		HSSFWorkbook workbook = excelSupport.getWorkbook();
 
-		LayoutsBuilderV2 builder = new LayoutsBuilderV2();
-		LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
+//		LayoutsBuilderV2 builder = new LayoutsBuilderV2();
+//		LayoutsSummary summary = builder.execute(this.getSalesforceSessionContext().getSalesforceSession(), this.getDescribeContext().getTarget());
 
-		DataTemplateExcelBuilderDelegate delegate = new DataTemplateExcelBuilderDelegate();
+		DescribeExcelBuilderDelegateTemplateImpl delegate = new DescribeExcelBuilderDelegateTemplateImpl(excelSupport, workbook, this.getSalesforceSessionContext().getSalesforceSession());
 		
-		delegate.handleBuild(this.getObjectFields(), summary, excelSupport, workbook, this.getDescribeContext().getTarget());
+		delegate.handleBuild(this.getDisplayableFields(), this.getDescribeContext().getTarget());
 		
 		this.setWorkbook(workbook);
 		} catch (Exception e) {

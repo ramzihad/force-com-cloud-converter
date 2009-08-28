@@ -32,71 +32,97 @@ import java.util.Iterator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegate;
+import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateMetadataImpl;
+import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateTemplateImpl;
 import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
 import com.modelmetrics.cloudconverter.describe.SobjectFieldPropertyBean;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriberLifoImpl;
 import com.modelmetrics.common.poi.ExcelSupport;
 import com.opensymphony.xwork2.Action;
 
-public class DescribeOutputAsTemplateAction extends DescribeAction
-{
-	private String submit;
+public class DescribeOutputAsTemplateAction extends DescribeAction {
+	private String submitMetadata;
+	private String submitTemplate;
 	private Collection<String> selectedObjects;
 	private HSSFWorkbook workbook;
-	
-	public String execute() throws Exception 
-	{
-		if (this.getSubmit() == null)
+
+	public String execute() throws Exception {
+		if (this.getSubmitMetadata() == null
+				&& this.getSubmitTemplate() == null)
 			return Action.INPUT;
-		
-		
+
 		ExcelSupport excelSupport = new ExcelSupport();
 
 		HSSFWorkbook workbook = excelSupport.getWorkbook();
-		
-		DescribeExcelBuilderDelegate delegate = new DescribeExcelBuilderDelegate();
-		
-		for (Iterator iter = selectedObjects.iterator(); iter.hasNext();)
-		{
-			String objectType = (String) iter.next();
-			this.setTarget(objectType);
-			super.execute();
 
-			delegate.handleBuild(this.getDisplayableFields(), excelSupport, workbook, this.getDescribeContext().getTarget());
+		DescribeExcelBuilderDelegate delegate = null;
 
-//			
-//			delegate.handleBuild(this.getObjectFields(), excelSupport, workbook, this.getTarget());
+		if (this.getSubmitMetadata() != null) {
+
+			delegate = new DescribeExcelBuilderDelegateMetadataImpl(
+					excelSupport, workbook);
+		} else {
+			delegate = new DescribeExcelBuilderDelegateTemplateImpl(
+					excelSupport, workbook, this.getSalesforceSessionContext()
+							.getSalesforceSession());
 		}
 		
+		//status
+		this.getDescribeContext().setStatusSubscriber(new OperationStatusSubscriberLifoImpl());
+
+		for (Iterator iter = selectedObjects.iterator(); iter.hasNext();) {
+			String objectType = (String) iter.next();
+			this.setTarget(objectType);
+			
+			this.getDescribeContext().getStatusSubscriber().publish("Describing " + objectType);
+			
+			super.execute();
+
+			delegate.handleBuild(this.getDisplayableFields(), this
+					.getDescribeContext().getTarget());
+
+			//			
+			// delegate.handleBuild(this.getObjectFields(), excelSupport,
+			// workbook, this.getTarget());
+		}
+
 		this.setWorkbook(workbook);
+		
+		this.getDescribeContext().getStatusSubscriber().reset();
+		
 		return Action.SUCCESS;
 	}
-	
-	public String getSubmit()
-	{
-		return submit;
+
+	public String getSubmitMetadata() {
+		return submitMetadata;
 	}
 
-	public void setSubmit(String submit)
-	{
-		this.submit = submit;
+	public void setSubmitMetadata(String submit) {
+		this.submitMetadata = submit;
 	}
 
-	public Collection<String> getSelectedObjects()
-	{
+	public Collection<String> getSelectedObjects() {
 		return selectedObjects;
 	}
 
-	public void setSelectedObjects(Collection<String> selectedObjects)
-	{
+	public void setSelectedObjects(Collection<String> selectedObjects) {
 		this.selectedObjects = selectedObjects;
 	}
-	
+
 	public HSSFWorkbook getWorkbook() {
 		return workbook;
 	}
 
 	public void setWorkbook(HSSFWorkbook workbook) {
 		this.workbook = workbook;
+	}
+
+	public String getSubmitTemplate() {
+		return submitTemplate;
+	}
+
+	public void setSubmitTemplate(String submitTemplate) {
+		this.submitTemplate = submitTemplate;
 	}
 
 }

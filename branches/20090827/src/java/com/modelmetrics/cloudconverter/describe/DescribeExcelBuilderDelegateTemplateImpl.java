@@ -32,19 +32,34 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.poi.hssf.extractor.ExcelExtractor;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import com.modelmetrics.common.poi.ExcelSupport;
+import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.Field;
 import com.sforce.soap.partner.PicklistEntry;
 
-public class DataTemplateExcelBuilderDelegate {
+public class DescribeExcelBuilderDelegateTemplateImpl implements DescribeExcelBuilderDelegate {
 
+	private SalesforceSession salesforceSession;
+	private ExcelSupport excelSupport;
+	private HSSFWorkbook workbook;
+	
+	public DescribeExcelBuilderDelegateTemplateImpl (ExcelSupport excelSupport, HSSFWorkbook workbook, SalesforceSession salesforceSession) {
+		this.excelSupport = excelSupport;
+		this.workbook = workbook;
+		this.salesforceSession = salesforceSession;
+	}
+	
 	private Collection<String> requiredFields = new ArrayList<String>();
 	
-	public void handleBuild(Set<Field> fields, LayoutsSummary summary, ExcelSupport excelSupport, HSSFWorkbook workbook, String sheetName) {
+	public void handleBuild(Collection<DisplayableFieldMetadataBean> metadata, String sheetName) throws Exception  {
 		
+		LayoutsBuilderV2 builder = new LayoutsBuilderV2();
+		LayoutsSummary summary = builder.execute(salesforceSession, sheetName);
+
 		Map<String, Collection<String>> fieldNamesToRecordTypeNames =  summary.getFieldNamesToRecordTypeNames();
 		excelSupport.addSheet(sheetName);
 		
@@ -75,9 +90,9 @@ public class DataTemplateExcelBuilderDelegate {
 		int column = 1;
 		
 
-		for (Field element: fields) 
+		for (DisplayableFieldMetadataBean current: metadata) 
 		{
-			
+			Field element = current.getField();
 			
 			if (!element.getType().getValue().equals("id"))
 			{	
@@ -150,39 +165,47 @@ public class DataTemplateExcelBuilderDelegate {
 					column++;
 				}
 			}
-//			row = excelSupport.addRow();
-			
-//			excelSupport.decorateRowWithCell(1, row, element.getName());
-//			
-//			String type = element.getType().getValue();
-//			if (element.getExternalId() != null && element.getExternalId().booleanValue()) {
-//				type += " (ext id)";
-//			}
-//			excelSupport.decorateRowWithCell(2, row, type);
-//			
-//			excelSupport.decorateRowWithCell(3, row, element.getLength());
-//			excelSupport.decorateRowWithCell(4, row, element.getPrecision());
-//			excelSupport.decorateRowWithCell(5, row, element.getScale());
-//			excelSupport.decorateRowWithCell(6, row, element.getDigits());
-////			excelSupport.decorateRowWithCell(7, row, this.getValues(element
-////					.getPicklistValues()));
-//			excelSupport.decorateRowWithMultilineTextCell(7, row, this.getValues(element
-//					.getPicklistValues()));
-//			
-//			excelSupport.decorateRowWithMultilineTextCell(8, row, element
-//					.getCalculatedFormula());
-//			excelSupport.decorateRowWithMultilineTextCell(9, row, element
-//					.getDefaultValueFormula());
-//			excelSupport.decorateRowWithMultilineTextCell(10, row, this.getValues(element
-//					.getReferenceTo()));
-//			excelSupport.decorateRowWithCell(11, row, element
-//					.getControllerName());
-
+			excelSupport.setColumnWidthAuto(column);
 		}
-
-		excelSupport.setColumnWidthAuto(column);
-
+			
 	}
+	
+//	public void handleBuild(Set<Field> fields, LayoutsSummary summary, ExcelSupport excelSupport, HSSFWorkbook workbook, String sheetName) {
+//		
+//
+////			row = excelSupport.addRow();
+//			
+////			excelSupport.decorateRowWithCell(1, row, element.getName());
+////			
+////			String type = element.getType().getValue();
+////			if (element.getExternalId() != null && element.getExternalId().booleanValue()) {
+////				type += " (ext id)";
+////			}
+////			excelSupport.decorateRowWithCell(2, row, type);
+////			
+////			excelSupport.decorateRowWithCell(3, row, element.getLength());
+////			excelSupport.decorateRowWithCell(4, row, element.getPrecision());
+////			excelSupport.decorateRowWithCell(5, row, element.getScale());
+////			excelSupport.decorateRowWithCell(6, row, element.getDigits());
+//////			excelSupport.decorateRowWithCell(7, row, this.getValues(element
+//////					.getPicklistValues()));
+////			excelSupport.decorateRowWithMultilineTextCell(7, row, this.getValues(element
+////					.getPicklistValues()));
+////			
+////			excelSupport.decorateRowWithMultilineTextCell(8, row, element
+////					.getCalculatedFormula());
+////			excelSupport.decorateRowWithMultilineTextCell(9, row, element
+////					.getDefaultValueFormula());
+////			excelSupport.decorateRowWithMultilineTextCell(10, row, this.getValues(element
+////					.getReferenceTo()));
+////			excelSupport.decorateRowWithCell(11, row, element
+////					.getControllerName());
+//
+//		}
+//
+//		excelSupport.setColumnWidthAuto(column);
+//
+//	}
 	
 	private String getValues(PicklistEntry[] target) {
 
