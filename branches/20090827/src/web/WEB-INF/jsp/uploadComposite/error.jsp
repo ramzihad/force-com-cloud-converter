@@ -5,12 +5,12 @@
 
 
 	<head>
-		<title>Error</title>
+		<title>Cloud Converter Cannot Continue</title>
 
 	</head>
 
 	<body>
-		<h1>An Error Has Occurred</h1>
+		<h1>Cloud Converter Cannot Continue</h1>
 		
 		<p>Message: <s:property value="uploadContext.errorMessage" /></p>
 		
@@ -18,9 +18,9 @@
 			<p><s:property value="uploadContext.message" /></p>
 		</s:if>
 		
-		<!-- <p><a href="startUpload.action">Try Again.</a></p> -->
+		<p>Read our <a href="<s:url action="troubleshooting"></s:url>">Troubleshooting tips</a>.</p>
 
-		<p>Questions? Contact Model Metrics - <a href="mailto:rcarlberg@modelmetrics.com">rcarlberg@modelmetrics.com</a></p>
+		<p>Questions? Contact Model Metrics - <a href="mailto:cloudconverter@modelmetrics.com">cloudconverter@modelmetrics.com</a></p>
 
 
 	</body>

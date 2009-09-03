@@ -7,9 +7,9 @@
 
 	<body>
 
-	<h2>Describing Objects > Please Wait</h2>
+	<h1>Describing Objects > Please Wait</h1>
 	
-	<h2>Current Status, Newest First</h2>
+	<p><strong>Current Status, Newest First</strong></p>
 	
 	<p>This page refreshes automatically every five seconds.  Please be patient.</p>
 	

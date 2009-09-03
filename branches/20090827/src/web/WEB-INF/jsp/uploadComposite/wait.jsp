@@ -7,9 +7,9 @@
 
 	<body>
 
-	<h2>Importing Your App > Please Wait</h2>
+	<h1>Importing Your App > Please Wait</h1>
 	
-	<h2>Current Status, Newest First</h2>
+	<p><strong>Current Status, Newest First</strong></p>
 	
 	<p>This page refreshes automatically every five seconds.  Please be patient.</p>
 	
