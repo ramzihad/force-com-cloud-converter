@@ -54,6 +54,15 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 		if (this.getSalesforceSessionContext().getSalesforceSession() == null
 				&& this.getExistingSessionId() != null
 				&& this.getExistingLocationUrl() != null) {
+			
+			/*
+			 * 2009-09-03
+			 */
+			if (!this.getExistingLocationUrl().matches("https://[^/]+\\.(sales|visual\\.)force\\.com/services/(S|s)(O|o)(A|a)(P|p)/(u|c)/.*")) {
+				addActionMessage("Location URL is invalid.");
+				return ERROR;
+			}
+			
 			this.getSalesforceSessionContext().setSalesforceExistingSession(
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 

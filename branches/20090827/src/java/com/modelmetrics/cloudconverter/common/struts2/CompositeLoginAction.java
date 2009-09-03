@@ -71,6 +71,14 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 			addActionMessage("Session Id is required");
 			error = true;
 		}
+		
+		/*
+		 * 2009-09-03
+		 */
+		if (!this.getExistingLocationUrl().matches("https://[^/]+\\.(sales|visual\\.)force\\.com/services/(S|s)(O|o)(A|a)(P|p)/(u|c)/.*")) {
+			addActionMessage("Location URL is invalid.");
+			error=true;
+		}
 
 		if (error) {
 			return ERROR;
