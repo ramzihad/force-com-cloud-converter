@@ -46,9 +46,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
 
-public class FileServiceImpl implements ExcelFileParserService {
+public class ExcelFileParserServiceImpl implements ExcelFileParserService {
 
-	private static final Log log = LogFactory.getLog(FileServiceImpl.class);
+	private static final Log log = LogFactory.getLog(ExcelFileParserServiceImpl.class);
 
 	/**
 	 * Parses an XLS file into a WrapperBean

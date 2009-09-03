@@ -33,7 +33,7 @@ import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cloudconverter.importxls.services.FileServiceImpl;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelFileParserServiceImpl;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.cloudconverter.util.MetadataProxyCollectionBuilder;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
@@ -47,7 +47,7 @@ public class CustomFieldBuilderTest extends TestCase {
 
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 
-		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker
+		ExcelFileParserServiceImpl fileServiceImpl = (ExcelFileParserServiceImpl) SpringBeanBroker
 				.getBeanFactory().getBean("fileService");
 
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));

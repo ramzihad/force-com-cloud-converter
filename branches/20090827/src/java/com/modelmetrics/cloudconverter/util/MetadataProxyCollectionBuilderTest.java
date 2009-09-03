@@ -32,7 +32,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cloudconverter.importxls.services.FileServiceImpl;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelFileParserServiceImpl;
 import com.modelmetrics.common.spring.util.SpringBeanBroker;
 import com.sforce.soap._2006._04.metadata.FieldType;
 
@@ -42,7 +42,7 @@ public class MetadataProxyCollectionBuilderTest extends TestCase {
 		
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 		
-		FileServiceImpl fileServiceImpl = (FileServiceImpl) SpringBeanBroker.getBeanFactory().getBean("fileService");
+		ExcelFileParserServiceImpl fileServiceImpl = (ExcelFileParserServiceImpl) SpringBeanBroker.getBeanFactory().getBean("fileService");
 		
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
@@ -77,7 +77,7 @@ public class MetadataProxyCollectionBuilderTest extends TestCase {
 		
 		String fileName = "./src/sampledbs/excel/Sample-Error-Index-OutOfBounds-2009-05-03.xls";
 		
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		ExcelFileParserServiceImpl fileServiceImpl = new ExcelFileParserServiceImpl();
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
 		assertNotNull(wrapperBean);		
