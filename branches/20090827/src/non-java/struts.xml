@@ -232,6 +232,10 @@
 			</result>
 		</action>	
 
+		<action name="troubleshooting" class="basicAction">
+			<result name="success">/WEB-INF/jsp/uploadComposite/troubleshooting.jsp</result>
+		</action>	
+		
 		<action name="migrate" class="selectTarget">
 			<result name="input">/WEB-INF/jsp/migrate/selectObject.jsp</result>
 			<result name="success" type="redirectAction">migrateSetup</result>			
