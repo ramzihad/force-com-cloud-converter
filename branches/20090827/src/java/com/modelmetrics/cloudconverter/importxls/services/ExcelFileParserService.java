@@ -30,7 +30,7 @@ import java.io.File;
 import java.util.List;
 
 
-public interface FileService {
+public interface ExcelFileParserService {
 
 	List<ExcelWorksheetWrapperBean> parseXLS(File file)
 			throws ParseException;

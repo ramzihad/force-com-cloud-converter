@@ -30,30 +30,30 @@ import com.sforce.soap._2006._04.metadata.FieldType;
 
 public class MetadataProxy {
 
-	private int index; 
-	
+	private int index;
+
 	private String name;
-	
+
 	private String label;
-	
+
 	private FieldType type;
-	
+
 	private int length;
-	
+
 	private int scale;
-	
+
 	private int precision;
-	
+
 	private boolean uniqueExternalId;
-	
+
 	private String defaultValue;
-	
+
 	private String example;
-	
+
 	private String lookupObject;
-	
+
 	private String lookupField;
-	
+
 	private String existingField;
 
 	public String getExample() {
@@ -127,14 +127,18 @@ public class MetadataProxy {
 	public void setUniqueExternalId(boolean uniqueExternalId) {
 		this.uniqueExternalId = uniqueExternalId;
 	}
-	
+
 	public String getTypeString() {
 		return this.getType().getValue();
 	}
-	
+
 	public void setTypeString(String typeString) {
-		this.setType(FieldType.fromString(typeString));
-		
+		if (typeString.equalsIgnoreCase("url")) {
+			this.setType(FieldType.Url);
+		} else {
+			this.setType(FieldType.fromString(typeString));
+		}
+
 	}
 
 	public String getLookupObject() {
@@ -168,6 +172,5 @@ public class MetadataProxy {
 	public void setExistingField(String existingField) {
 		this.existingField = existingField;
 	}
-	
-	
+
 }

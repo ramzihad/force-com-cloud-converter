@@ -46,7 +46,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.validator.GenericValidator;
 
-public class FileServiceImpl implements FileService {
+public class FileServiceImpl implements ExcelFileParserService {
 
 	private static final Log log = LogFactory.getLog(FileServiceImpl.class);
 

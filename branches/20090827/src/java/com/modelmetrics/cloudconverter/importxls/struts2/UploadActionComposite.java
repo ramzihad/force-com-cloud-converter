@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObjectBuilder;
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cloudconverter.importxls.services.FileService;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelFileParserService;
 import com.modelmetrics.cloudconverter.importxls.services.SalesforceService;
 
 public class UploadActionComposite extends AbstractUploadContextAware {
@@ -18,7 +18,7 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 
 	private static final long serialVersionUID = 1760991341958287065L;
 
-	private FileService fileService;
+	private ExcelFileParserService fileService;
 
 	private SalesforceService salesforceService;
 
@@ -156,11 +156,11 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		this.uploadFileName = uploadFileName;
 	}
 
-	public void setFileService(FileService fileService) {
+	public void setFileService(ExcelFileParserService fileService) {
 		this.fileService = fileService;
 	}
 
-	public FileService getFileService() {
+	public ExcelFileParserService getFileService() {
 		return fileService;
 	}
 
