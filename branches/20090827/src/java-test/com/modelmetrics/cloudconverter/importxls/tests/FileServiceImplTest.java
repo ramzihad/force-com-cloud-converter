@@ -32,7 +32,7 @@ import java.util.List;
 
 import com.modelmetrics.cloudconverter.importxls.services.Constants;
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
-import com.modelmetrics.cloudconverter.importxls.services.FileServiceImpl;
+import com.modelmetrics.cloudconverter.importxls.services.ExcelFileParserServiceImpl;
 import com.modelmetrics.common.util.TestCaseWithLog;
 
 public class FileServiceImplTest extends TestCaseWithLog {
@@ -40,7 +40,7 @@ public class FileServiceImplTest extends TestCaseWithLog {
 	public void testSampleSheet() throws Exception {
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v1.xls";
 		
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		ExcelFileParserServiceImpl fileServiceImpl = new ExcelFileParserServiceImpl();
 		
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
@@ -71,7 +71,7 @@ public class FileServiceImplTest extends TestCaseWithLog {
 	public void testSampleSheetWithDates() throws Exception {
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v2.xls";
 		
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		ExcelFileParserServiceImpl fileServiceImpl = new ExcelFileParserServiceImpl();
 		
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
@@ -90,7 +90,7 @@ public class FileServiceImplTest extends TestCaseWithLog {
 	public void testSampleSheetWithDateTimes() throws Exception {
 		String fileName = "./src/sampledbs/excel/TestSpreadsheet-DoNotChange-v3.xls";
 		
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		ExcelFileParserServiceImpl fileServiceImpl = new ExcelFileParserServiceImpl();
 		
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
@@ -109,7 +109,7 @@ public class FileServiceImplTest extends TestCaseWithLog {
 	public void testSampleSheetMultipleTabsFormulas() throws Exception {
 		String fileName = "./src/sampledbs/excel/Project-Management-Demo-2009-05-26.xls";
 		
-		FileServiceImpl fileServiceImpl = new FileServiceImpl();
+		ExcelFileParserServiceImpl fileServiceImpl = new ExcelFileParserServiceImpl();
 		
 		List<ExcelWorksheetWrapperBean> wrapperBeans = fileServiceImpl.parseXLS(new File(fileName));
 		ExcelWorksheetWrapperBean wrapperBean = wrapperBeans.get(0);
