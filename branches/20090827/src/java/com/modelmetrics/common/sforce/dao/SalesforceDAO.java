@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.modelmetrics.common.sforce.AbstractSalesforceSessionAware;
 import com.modelmetrics.common.sforce.SalesforceSession;
+import com.sforce.soap._2006._04.metadata.StatusCode;
 import com.sforce.soap.partner.QueryResult;
 import com.sforce.soap.partner.SaveResult;
 import com.sforce.soap.partner.SoapBindingStub;
@@ -159,8 +160,8 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 		}
 	}
 
-	public Collection<SproxySaveResult> updateAll(Collection<Sproxy> toUpdate, int updateBatchSize)
-			throws SalesforceDaoException {
+	public Collection<SproxySaveResult> updateAll(Collection<Sproxy> toUpdate,
+			int updateBatchSize) throws SalesforceDaoException {
 
 		return this.saveAll(toUpdate, SalesforceDAO.UPDATE, updateBatchSize);
 
@@ -276,6 +277,15 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 						for (int j = 0; j < upsertResults[i].getErrors().length; j++) {
 							log.info(upsertResults[i].getErrors()[j]
 									.getMessage());
+							if (upsertResults[i].getErrors()[j].getStatusCode()
+									.getValue().equalsIgnoreCase(
+											StatusCode.STORAGE_LIMIT_EXCEEDED
+													.getValue())) {
+								
+								
+								throw new RuntimeException(
+										"Could not migrate data (upsert) -- Storage Limit Exceeded.");
+							}
 						}
 						// log.info(results[i].getErrors());
 					}
@@ -296,6 +306,13 @@ public class SalesforceDAO extends AbstractSalesforceSessionAware {
 						errors.add(sproxySaveResult);
 						for (int j = 0; j < results[i].getErrors().length; j++) {
 							log.info(results[i].getErrors()[j].getMessage());
+							if (results[i].getErrors()[j].getStatusCode()
+									.getValue().equalsIgnoreCase(
+											StatusCode.STORAGE_LIMIT_EXCEEDED
+													.getValue())) {
+								throw new RuntimeException(
+										"Could not migrate data (insert) -- Storage Limit Exceeded.");
+							}
 						}
 						// log.info(results[i].getErrors());
 					}
