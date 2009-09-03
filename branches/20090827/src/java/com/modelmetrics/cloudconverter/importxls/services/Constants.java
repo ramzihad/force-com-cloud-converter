@@ -48,7 +48,7 @@ public class Constants {
 	
 	public static final String EMAIL = "Email";
 	
-	public static final String URL = "URL";
+	public static final String URL = "Url";
 	
 	public static final String PHONE_NUMBER = "Phone";
 	
