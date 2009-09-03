@@ -25,7 +25,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	
 	
 	<bean id="fileService"
-		class="com.modelmetrics.cloudconverter.importxls.services.FileServiceImpl" />
+		class="com.modelmetrics.cloudconverter.importxls.services.ExcelFileParserServiceImpl" />
 	
 	<bean id="salesforceCredentials"
 		class="com.modelmetrics.common.sforce.SalesforceCredentials" >
