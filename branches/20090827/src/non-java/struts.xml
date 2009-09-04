@@ -145,7 +145,7 @@
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
  			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
- 			<result name="success" type="excel" />
+ 			<result name="success">/WEB-INF/jsp/describe/downloadDescribeWorkbook.jsp</result>
 			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
  		</action>
 
@@ -198,8 +198,16 @@
 		    <interceptor-ref name="completeStack"/>
 		    <interceptor-ref name="execAndWait"/>
 			<result name="wait">/WEB-INF/jsp/describe/wait.jsp</result>
-			<result name="success" type="excel" />
+			<result name="success">/WEB-INF/jsp/describe/downloadDescribeWorkbook.jsp</result>
 		</action>		
+		
+		<action name="downloadWorkbook" class="downloadDescribeWorkbookAction">
+			<result name="error" type="redirectAction">select</result>
+			<result name="success" type="excel" />
+		</action>	
+		
+		
+		
 
 		<action name="layouts" class="layoutsAction">
 			<result name="success">

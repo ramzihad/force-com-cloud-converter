@@ -257,8 +257,13 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 	<bean id="describeAllInExcelAction" parent="abstractDescribeContextAware"
 		class="com.modelmetrics.cloudconverter.describe.struts2.DescribeAllInExcelAction"
 		scope="prototype">
-		
 	</bean>		
+	
+	<bean id="downloadDescribeWorkbookAction" parent="abstractDescribeContextAware"
+		class="com.modelmetrics.cloudconverter.describe.struts2.DownloadDescribeWorkbookAction"
+		scope="prototype">
+		
+	</bean>	
 
 	<bean id="layoutsAction" parent="abstractDescribeContextAware"
 		class="com.modelmetrics.cloudconverter.describe.struts2.LayoutsAction"
