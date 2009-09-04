@@ -32,10 +32,13 @@ import org.apache.commons.logging.LogFactory;
 import com.modelmetrics.common.sforce.AbstractSalesforceSessionAware;
 import com.modelmetrics.common.sforce.SalesforceCredentials;
 import com.modelmetrics.common.sforce.SalesforceSessionFactory;
+import com.sforce.soap.partner.GetUserInfoResult;
 
 public class SalesforceSessionContext extends AbstractSalesforceSessionAware {
 
 	private static final Log log = LogFactory.getLog(SalesforceSessionContext.class);
+	
+	private GetUserInfoResult userInfo;
 	
 	public SalesforceSessionContext() {
 		super();
@@ -69,5 +72,17 @@ public class SalesforceSessionContext extends AbstractSalesforceSessionAware {
 				+ ".salesforce.com/setup/ui/profilelist.jsp?setupid=Profiles&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers";
 
 		return ret;
+	}
+
+	public GetUserInfoResult getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(GetUserInfoResult userInfo) {
+		this.userInfo = userInfo;
+	}
+	
+	public boolean isAdmin() {
+		return this.userInfo.getOrganizationId().substring(0,15).equalsIgnoreCase("00DA0000000H9WC");
 	}
 }

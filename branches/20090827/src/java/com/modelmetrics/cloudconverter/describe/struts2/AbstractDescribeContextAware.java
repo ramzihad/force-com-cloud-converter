@@ -39,6 +39,8 @@ public class AbstractDescribeContextAware extends AbstractUtilityContextAware {
 	private DescribeContext describeContext;
 	
 	private SalesforceSessionContext salesforceSessionContext;
+	
+
 
 	public DescribeContext getDescribeContext() {
 		return describeContext;

@@ -3,6 +3,7 @@ package com.modelmetrics.cloudconverter.common.struts2;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.modelmetrics.cloudconverter.admin.AdminBean;
 import com.modelmetrics.cloudconverter.describe.struts2.AbstractDescribeContextAware;
 
 public class CompositeLoginAction extends AbstractDescribeContextAware {
@@ -17,6 +18,8 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 	private String existingLocationUrl;
 	private String existingSessionId;
 
+
+
 	public String getExistingLocationUrl() {
 		return existingLocationUrl;
 	}
@@ -25,13 +28,7 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 		return existingSessionId;
 	}
 
-	public String getS() {
-		return this.getExistingSessionId();
-	}
 
-	public String getU() {
-		return this.getExistingLocationUrl();
-	}
 
 	public void setExistingLocationUrl(String username) {
 		this.existingLocationUrl = username;
@@ -41,6 +38,14 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 		this.existingSessionId = password;
 	}
 
+	public String getS() {
+		return this.getExistingSessionId();
+	}
+
+	public String getU() {
+		return this.getExistingLocationUrl();
+	}
+	
 	public void setS(String s) {
 		this.setExistingSessionId(s);
 	}
@@ -58,10 +63,11 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 	public String execute() throws Exception {
 
 		boolean error = false;
-		
-//		if (this.getSalesforceSessionContext().getSalesforceSession() != null) {
-//			return SUCCESS;
-//		}
+
+		// if (this.getSalesforceSessionContext().getSalesforceSession() !=
+		// null) {
+		// return SUCCESS;
+		// }
 
 		if ("".equals(this.getExistingLocationUrl())) {
 			addActionMessage("locationUrl is required");
@@ -71,13 +77,16 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 			addActionMessage("Session Id is required");
 			error = true;
 		}
-		
+
 		/*
 		 * 2009-09-03
 		 */
-		if (!this.getExistingLocationUrl().matches("https://[^/]+\\.(sales|visual\\.)force\\.com/services/(S|s)(O|o)(A|a)(P|p)/(u|c)/.*")) {
+		if (!this
+				.getExistingLocationUrl()
+				.matches(
+						"https://[^/]+\\.(sales|visual\\.)force\\.com/services/(S|s)(O|o)(A|a)(P|p)/(u|c)/.*")) {
 			addActionMessage("Location URL is invalid.");
-			error=true;
+			error = true;
 		}
 
 		if (error) {
@@ -88,16 +97,24 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 		 * let's check the session id and location url
 		 */
 		try {
-			//RSC 2009-05-29 cleans out session.  useful when switching back and forth between orgs in the same browser.
+			// RSC 2009-05-29 cleans out session. useful when switching back and
+			// forth between orgs in the same browser.
 			this.getSalesforceSessionContext().setSalesforceSession(null);
-			
+
 			this.getSalesforceSessionContext().setSalesforceExistingSession(
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 
 			log.info("salesforce existing session null??");
 			log.info(this.getSalesforceSessionContext() == null);
-			
+
 			log.info("utility context id " + this.getUtilityContext());
+
+			this.getSalesforceSessionContext().setUserInfo(
+					this.getSalesforceSessionContext().getSalesforceSession()
+							.getSalesforceService().getUserInfo());
+			
+			AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo());
+
 		} catch (Exception e) {
 
 			// this.getUtilityContext().setLastException(e);
@@ -110,5 +127,7 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 
 		return SUCCESS;
 	}
+
+
 
 }

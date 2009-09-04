@@ -66,10 +66,7 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 			this.getSalesforceSessionContext().setSalesforceExistingSession(
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 
-		} else {
-			//not an error condition -- just possibly repopulating if cookie lost.
-//			return ERROR;
-		}
+		} 
 
 		if (this.getTarget() == null) {
 			// get describe global
