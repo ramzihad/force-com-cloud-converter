@@ -44,7 +44,7 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 	private String submitMetadata;
 	private String submitTemplate;
 	private Collection<String> selectedObjects;
-	private HSSFWorkbook workbook;
+//	private HSSFWorkbook workbook;
 
 	public String execute() throws Exception {
 		if (this.getSubmitMetadata() == null
@@ -86,7 +86,7 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 			// workbook, this.getTarget());
 		}
 
-		this.setWorkbook(workbook);
+		this.getDescribeContext().setWorkbook(workbook);
 		
 		this.getDescribeContext().getStatusSubscriber().reset();
 		
@@ -109,13 +109,13 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 		this.selectedObjects = selectedObjects;
 	}
 
-	public HSSFWorkbook getWorkbook() {
-		return workbook;
-	}
-
-	public void setWorkbook(HSSFWorkbook workbook) {
-		this.workbook = workbook;
-	}
+//	public HSSFWorkbook getWorkbook() {
+//		return workbook;
+//	}
+//
+//	public void setWorkbook(HSSFWorkbook workbook) {
+//		this.workbook = workbook;
+//	}
 
 	public String getSubmitTemplate() {
 		return submitTemplate;

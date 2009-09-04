@@ -51,7 +51,6 @@ public class DescribeAsExcelAction extends DescribeAction {
 		
 		delegate.handleBuild(this.getDisplayableFields(),  this.getDescribeContext().getTarget());
 
-		
 		this.setWorkbook(workbook);
 
 		return Action.SUCCESS;

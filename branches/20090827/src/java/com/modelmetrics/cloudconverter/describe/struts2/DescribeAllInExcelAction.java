@@ -35,7 +35,7 @@ import com.opensymphony.xwork2.Action;
 
 public class DescribeAllInExcelAction extends DescribeAction {
 
-	private HSSFWorkbook workbook;
+//	private HSSFWorkbook workbook;
 
 	public String execute() throws Exception {
 
@@ -67,19 +67,13 @@ public class DescribeAllInExcelAction extends DescribeAction {
 
 		
 
-		this.setWorkbook(workbook);
+		this.getDescribeContext().setWorkbook(workbook);
 		
 		
 
 		return Action.SUCCESS;
 	}
 
-	public HSSFWorkbook getWorkbook() {
-		return workbook;
-	}
 
-	public void setWorkbook(HSSFWorkbook workbook) {
-		this.workbook = workbook;
-	}
 
 }

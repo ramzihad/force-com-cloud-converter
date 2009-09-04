@@ -41,7 +41,7 @@ public class DescribeAsTemplateAction extends DescribeAction
 {
 	private String submit;
 	private Collection<String> selectedObjects;
-	private HSSFWorkbook workbook;
+//	private HSSFWorkbook workbook;
 	
 	public String execute() throws Exception 
 	{
@@ -68,7 +68,7 @@ public class DescribeAsTemplateAction extends DescribeAction
 
 		}
 		
-		this.setWorkbook(workbook);
+		this.getDescribeContext().setWorkbook(workbook);
 		return Action.SUCCESS;
 	}
 	
@@ -92,12 +92,12 @@ public class DescribeAsTemplateAction extends DescribeAction
 		this.selectedObjects = selectedObjects;
 	}
 	
-	public HSSFWorkbook getWorkbook() {
-		return workbook;
-	}
-
-	public void setWorkbook(HSSFWorkbook workbook) {
-		this.workbook = workbook;
-	}
+//	public HSSFWorkbook getWorkbook() {
+//		return workbook;
+//	}
+//
+//	public void setWorkbook(HSSFWorkbook workbook) {
+//		this.workbook = workbook;
+//	}
 
 }

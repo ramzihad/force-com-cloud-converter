@@ -31,6 +31,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.poi.hssf.model.Workbook;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.sforce.soap.partner.DescribeSObjectResult;
 
@@ -51,6 +54,8 @@ public class DescribeContext {
 	private String lastMessage;
 	
 	private OperationStatusSubscriber statusSubscriber;
+	
+	private HSSFWorkbook workbook;
 
 	
 	public OperationStatusSubscriber getStatusSubscriber() {
@@ -132,6 +137,21 @@ public class DescribeContext {
 
 	public void setTypes(Collection<String> types) {
 		this.types = types;
+	}
+
+	public boolean isWorkbookPresent() {
+		return this.workbook != null;
+	}
+	public HSSFWorkbook getWorkbook() {
+//		HSSFWorkbook ret = this.workbook;
+		
+//		this.workbook = null;
+		
+		return workbook;
+	}
+
+	public void setWorkbook(HSSFWorkbook workbook) {
+		this.workbook = workbook;
 	}
 
 
