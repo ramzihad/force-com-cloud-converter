@@ -260,5 +260,10 @@
 			<result name="success">/WEB-INF/jsp/migrate/execute.jsp</result>
 		</action>		
 
+		<action name="admin" class="adminAction">
+			<result name="success">/WEB-INF/jsp/admin/main.jsp</result>
+			<result name="error">/whoops.jsp</result>			
+		</action>	
+		
 	</package>
 </struts>

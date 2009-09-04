@@ -304,5 +304,12 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 		scope="prototype">
 	</bean>	
 
+	<bean id="adminAction" scope="prototype"
+		class="com.modelmetrics.cloudconverter.admin.struts2.AdminHome">
+		<property name="salesforceSessionContext" >
+			<ref bean="salesforceSessionContext" />
+		</property>
+	</bean>
+	
 </beans>
 
