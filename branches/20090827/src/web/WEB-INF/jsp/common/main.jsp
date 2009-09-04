@@ -10,18 +10,15 @@
 
 <body>
 
-<!--
-<h1>IMPORTANT: Down for maintenance.</h1>
-<br/>
--->
-
 <h1>Main Menu</h1>
 
 <p><a href="<s:url action="import"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Import Your App from Excel</a></p>
 <p><a href="<s:url action="select"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Explore Your Metadata</a></p>
 <p><a href="<s:url action="migrate"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Migrate A Field</a></p>
 
-
+<s:if test="salesforceSessionContext.admin">
+<p><a href="<s:url action="admin"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Admin</a></p>
+</s:if>
 
 
 
