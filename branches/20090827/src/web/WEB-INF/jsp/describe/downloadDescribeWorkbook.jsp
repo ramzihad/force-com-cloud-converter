@@ -13,5 +13,8 @@
 
 <p><a href="<s:url value="downloadWorkbook.xls" />">Download your workbook</a>.</p>
 
+<p><a href="<s:url action="select" />">Back to Explore Your Metadata.</a></p>
+
+
 </body>
 </html>
