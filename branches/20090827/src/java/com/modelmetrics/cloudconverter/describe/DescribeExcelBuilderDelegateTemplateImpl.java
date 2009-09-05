@@ -28,6 +28,7 @@ package com.modelmetrics.cloudconverter.describe;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +47,7 @@ public class DescribeExcelBuilderDelegateTemplateImpl implements DescribeExcelBu
 	private SalesforceSession salesforceSession;
 	private ExcelSupport excelSupport;
 	private HSSFWorkbook workbook;
+	private Collection<String> requiredFields = new ArrayList<String>();
 	
 	public DescribeExcelBuilderDelegateTemplateImpl (ExcelSupport excelSupport, HSSFWorkbook workbook, SalesforceSession salesforceSession) {
 		this.excelSupport = excelSupport;
@@ -53,18 +55,32 @@ public class DescribeExcelBuilderDelegateTemplateImpl implements DescribeExcelBu
 		this.salesforceSession = salesforceSession;
 	}
 	
-	private Collection<String> requiredFields = new ArrayList<String>();
+	
 	
 	public void handleBuild(Collection<DisplayableFieldMetadataBean> metadata, String sheetName) throws Exception  {
 		
 		LayoutsBuilderV2 builder = new LayoutsBuilderV2();
-		LayoutsSummary summary = builder.execute(salesforceSession, sheetName);
+		LayoutsSummary summary = null;
+		
+		try { 
+			summary = builder.execute(salesforceSession, sheetName);
+		} catch (Exception e) {
+			//do nothing;
+		}
 
-		Map<String, Collection<String>> fieldNamesToRecordTypeNames =  summary.getFieldNamesToRecordTypeNames();
+		Map<String, Collection<String>> fieldNamesToRecordTypeNames = null;  
+		if (summary != null) {
+			fieldNamesToRecordTypeNames = summary.getFieldNamesToRecordTypeNames();
+		} else {
+			fieldNamesToRecordTypeNames = new HashMap<String, Collection<String>>();
+		}
 		excelSupport.addSheet(sheetName);
 		
-		addRequiredFields(summary);
-		
+		//in case we're doing a template for something that can't build a layout
+		if (summary != null) {
+			addRequiredFields(summary);
+		}
+			
 		HSSFRow fieldNameRow = excelSupport.addRow();
 		excelSupport.decorateRowWithBoldCellBlueBackground(0, fieldNameRow, "FIELD NAME");
 		
