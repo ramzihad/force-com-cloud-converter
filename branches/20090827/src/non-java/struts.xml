@@ -273,5 +273,9 @@
 			<result name="error">/whoops.jsp</result>			
 		</action>	
 		
+		<action name="experimentalOpportunityOverview" class="basicAction">
+			<result name="success">/WEB-INF/jsp/experimental/OpportunityOverview.jsp</result>
+		</action>	
+		
 	</package>
 </struts>
