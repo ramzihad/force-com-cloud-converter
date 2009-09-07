@@ -140,13 +140,20 @@ public abstract class AbstractMigrationEngine extends
 
 		boolean ready = false;
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			ready = checker.isMetadataReady(this.getMigrationContext());
 			this.publishStatus("Checking to see if metadata is ready yet. (" + ready + ")");
 			log.debug("is metadata ready? " + ready);
 			if (ready)
 				break;
-			this.pauseSession();
+			for (int j = 0; j < i+1; j++) {
+				this.pauseSession();	
+			}
+			
+		}
+		
+		if (!ready) {
+			this.publishStatus("Failed to confirm metadata readiness.");
 		}
 
 		/*

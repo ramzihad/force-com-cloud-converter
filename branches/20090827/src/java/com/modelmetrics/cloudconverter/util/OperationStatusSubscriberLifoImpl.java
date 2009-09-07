@@ -39,7 +39,13 @@ public class OperationStatusSubscriberLifoImpl implements
 	}
 	
 	public List<String> getStatus() {
-		return status;
+		/*
+		 * 2009-09-05
+		 * doing this to avoid the odd concurrent access exception
+		 */
+		List<String> ret = new ArrayList<String>();
+		ret.addAll(status);
+		return ret;
 	}
 
 	public void reset() {
