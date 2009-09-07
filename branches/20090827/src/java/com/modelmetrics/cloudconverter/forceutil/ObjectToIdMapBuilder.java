@@ -31,6 +31,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisherSupport;
+import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.DescribeGlobalResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
@@ -41,7 +43,10 @@ public class ObjectToIdMapBuilder {
 	private Map<String, List<String>> objectToIdMap;
 	
 	private Map<String, List<String>> objectToFieldMap;
-	
+
+	private OperationStatusPublisherSupport operationStatusPublisherSupport;
+
+
 	public void build(SalesforceSession salesforceSession) throws Exception {
 		
 		Map<String, List<String>> objectToIdMap = new HashMap<String, List<String>>();
@@ -49,6 +54,8 @@ public class ObjectToIdMapBuilder {
 		Map<String, List<String>> objectToFieldMap = new HashMap<String, List<String>>();
 		
 		DescribeGlobalResult describeGlobalResult = salesforceSession.getSalesforceService().describeGlobal();
+		
+		this.getOperationStatusPublisherSupport().publishStatus("Refreshing metadata target list.");
 		
 		for (String current:describeGlobalResult.getTypes()) {
 			if (this.include(current)) {
@@ -58,6 +65,9 @@ public class ObjectToIdMapBuilder {
 		}
 		
 		for (String current:objectToIdMap.keySet()) {
+			
+			this.getOperationStatusPublisherSupport().publishStatus("Refreshing metadata for " + current + ".");
+			
 			DescribeSObjectResult describeSObjectResult = salesforceSession.getSalesforceService().describeSObject(current);
 			
 			for(Field currentField:describeSObjectResult.getFields()) {
@@ -113,6 +123,15 @@ public class ObjectToIdMapBuilder {
 	public void setObjectToFieldMap(Map<String, List<String>> objectToFieldMap) {
 		this.objectToFieldMap = objectToFieldMap;
 	}
-	
+
+
+	public OperationStatusPublisherSupport getOperationStatusPublisherSupport() {
+		return operationStatusPublisherSupport;
+	}
+
+	public void setOperationStatusPublisherSupport(
+			OperationStatusPublisherSupport operationStatusPublisherSupport) {
+		this.operationStatusPublisherSupport = operationStatusPublisherSupport;
+	}
 	
 }

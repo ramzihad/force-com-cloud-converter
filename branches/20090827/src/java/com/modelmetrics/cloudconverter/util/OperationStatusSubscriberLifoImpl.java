@@ -31,20 +31,21 @@ import java.util.List;
 
 public class OperationStatusSubscriberLifoImpl implements
 		OperationStatusSubscriber {
-	
+
 	private List<String> status = new ArrayList<String>();
-	
+
 	public void publish(String migrationEvent) {
 		status.add(0, migrationEvent);
 	}
-	
+
 	public List<String> getStatus() {
 		/*
-		 * 2009-09-05
-		 * doing this to avoid the odd concurrent access exception
+		 * 2009-09-05 doing this to avoid the odd concurrent access exception
 		 */
 		List<String> ret = new ArrayList<String>();
-		ret.addAll(status);
+		synchronized (status) {
+			ret.addAll(status);
+		}
 		return ret;
 	}
 
