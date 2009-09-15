@@ -148,7 +148,16 @@ public class DataInsertExecutor extends AbstractDataExecutor {
 				 */
 				if (!migrationContext.getCloudConverterObject().isNameUseAutonumber()) {
 					if (metadataProxy.getName().equalsIgnoreCase(migrationContext.getCloudConverterObject().getNameUseField())) {
-						current.setValue("Name", type.get(i));
+						if (i >= type.size()-1) {
+							//with bad data, it's possible to have empty columns that make this throw an exception.
+							try {
+								current.setValue("Name", type.get(i));
+							} catch (IndexOutOfBoundsException exception) {
+								exception.printStackTrace();
+							}
+						} else {
+							//do nothing -- will insert the Object ID.
+						}
 					}
 				}
 				

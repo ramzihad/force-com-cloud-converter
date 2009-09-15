@@ -41,7 +41,6 @@ import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperB
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
 import com.modelmetrics.common.sforce.dao.Sproxy;
 
-
 public class DataUpsertExecutor extends AbstractDataExecutor {
 
 	private static final Log log = LogFactory.getLog(DataInsertExecutor.class);
@@ -140,16 +139,25 @@ public class DataUpsertExecutor extends AbstractDataExecutor {
 					current.setValue(migrationContext.getFieldMap().get(
 							metadataProxy.getName()), type.get(i));
 				}
-				
+
 				/*
 				 * some work for names that aren't about autonumber
 				 */
-				if (!migrationContext.getCloudConverterObject().isNameUseAutonumber()) {
-					if (metadataProxy.getName().equalsIgnoreCase(migrationContext.getCloudConverterObject().getNameUseField())) {
-						current.setValue("Name", type.get(i));
+				if (!migrationContext.getCloudConverterObject()
+						.isNameUseAutonumber()) {
+					if (metadataProxy.getName().equalsIgnoreCase(
+							migrationContext.getCloudConverterObject()
+									.getNameUseField())) {
+						if (i <= type.size() - 1) {
+							try {
+								current.setValue("Name", type.get(i));
+							} catch (IndexOutOfBoundsException e) {
+								e.printStackTrace();
+							}
+						}
+
 					}
 				}
-
 
 				i++;
 			}
@@ -159,14 +167,14 @@ public class DataUpsertExecutor extends AbstractDataExecutor {
 			if (toUpsert.size() == MAX_SPROXY_BATCH_SIZE) {
 				migrationContext.getMigrationStatusPublisher().publishStatus(
 						"executing data insert");
-				dao.upsert(migrationContext.getExternalIdForUpsert(),toUpsert);
+				dao.upsert(migrationContext.getExternalIdForUpsert(), toUpsert);
 				toUpsert = new ArrayList<Sproxy>();
 			}
 		}
 
 		log.debug("starting the insert...");
 
-		dao.upsert(migrationContext.getExternalIdForUpsert(),toUpsert);
+		dao.upsert(migrationContext.getExternalIdForUpsert(), toUpsert);
 
 		log.debug("insert complete...");
 

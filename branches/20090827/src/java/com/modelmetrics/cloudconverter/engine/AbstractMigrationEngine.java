@@ -142,7 +142,11 @@ public abstract class AbstractMigrationEngine extends
 
 		for (int i = 0; i < 10; i++) {
 			ready = checker.isMetadataReady(this.getMigrationContext());
-			this.publishStatus("Checking to see if metadata is ready yet. (" + ready + ")");
+			String status = "Ready!";
+			if (!ready) {
+				status = "Not quite yet.";
+			}
+			this.publishStatus("Checking to see if metadata is ready yet. (" + status + ")");
 			log.debug("is metadata ready? " + ready);
 			if (ready)
 				break;
@@ -154,6 +158,7 @@ public abstract class AbstractMigrationEngine extends
 		
 		if (!ready) {
 			this.publishStatus("Failed to confirm metadata readiness.");
+			throw new RuntimeException("Failed to confirm metadata readiness.  This usually resolves itself quickly.  Please try again in a few moments.");
 		}
 
 		/*
