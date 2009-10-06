@@ -5,7 +5,7 @@ IMPORTANT: This software is provided AS IS without warranty or
 support of any kind. If you would like paid support, please
 contact rcarlberg@modelmetrics.com.
 
-Last Update: 2009-04-09 (See history below for details.)
+Last Update: 2009-10-05 (See history below for details.)
 dd
 
 ###################################################################
@@ -13,7 +13,6 @@ CONTACT:
 
 Reid Carlberg, Model Metrics, Inc.
 rcarlberg@modelmetrics.com
-http://community.modelmetrics.com
 
 ###################################################################
 INTRODUCTION:
