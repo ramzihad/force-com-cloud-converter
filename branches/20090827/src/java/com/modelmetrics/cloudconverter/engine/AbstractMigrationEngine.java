@@ -121,6 +121,7 @@ public abstract class AbstractMigrationEngine extends
 					.getSalesforceSession().getMetadataService(),
 					new CustomTab[] { customTab }).execute();
 			
+			//TODO DB Figure out why this isn't working.
 			/*
 			 * update profile permissions - Testing.
 			 */

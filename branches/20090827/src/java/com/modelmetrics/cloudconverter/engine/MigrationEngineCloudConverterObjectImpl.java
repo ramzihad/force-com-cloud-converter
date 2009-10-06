@@ -96,6 +96,9 @@ public class MigrationEngineCloudConverterObjectImpl extends
 					.getExistingObject());
 		}
 
+		/*
+		 * standard stuff.
+		 */
 		this.executeCommon(co);
 
 		/*

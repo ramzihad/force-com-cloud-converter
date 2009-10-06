@@ -61,6 +61,8 @@ public class ExcelFileParserServiceImpl implements ExcelFileParserService {
 	public List<ExcelWorksheetWrapperBean> parseXLS(File file)
 			throws ParseException {
 
+		//TODO DB -- validate that dates are working with TZ and SFDC properly.  Use sample input v1 
+		
 		// keeps date fields real.
 		TimeZone.setDefault(TimeZone.getTimeZone("-0"));
 
@@ -188,6 +190,7 @@ public class ExcelFileParserServiceImpl implements ExcelFileParserService {
 						}
 
 					}
+					//TODO DB make sure this is working for worksheets that have no row with DATA (Think Erin's email)
 					if (i >= 1) {
 						/*
 						 * RSC 2009-06-02 Check to be sure there is data in a list
