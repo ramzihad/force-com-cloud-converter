@@ -138,7 +138,7 @@
 		
 		<!-- Force.com Platform Utilities -->
 		<action name="describeOutputAsTemplateSetup" class="describeOutputAsTemplateAction">
- 			<result name="input">/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp</result>
+			<result name="input">/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp</result>
  		</action>
 		
 		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">

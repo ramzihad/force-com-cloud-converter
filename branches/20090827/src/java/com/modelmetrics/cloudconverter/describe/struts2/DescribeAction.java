@@ -29,7 +29,12 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Pattern;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.modelmetrics.cloudconverter.common.struts2.CompositeLoginAction;
 import com.modelmetrics.cloudconverter.describe.DisplayableFieldMetadataBean;
 import com.modelmetrics.cloudconverter.describe.DisplayableSobjectFieldMetadataBeanBuilder;
 import com.modelmetrics.cloudconverter.describe.FieldComparator;
@@ -51,20 +56,30 @@ public class DescribeAction extends AbstractDescribeContextAware {
 	private Collection<DisplayableFieldMetadataBean> displayableFields;
 	
 	private boolean showAll;
+	
+	static Pattern escaper = Pattern.compile("([^a-zA-Z0-9_])");
+	
+	private static Log log = LogFactory.getLog(DescribeAction.class);
 
 	public String execute() throws Exception {
 
 	
 		if (this.getTarget() != null) {
-			this.getDescribeContext().setTarget(this.getTarget());
+			//this.getDescribeContext().setTarget(this.getTarget().replace(/[^a-z A-Z 0-9 =&'.]/g, ''));
+			this.getDescribeContext().setTarget(escaper.matcher(this.getTarget()).replaceAll(""));
+			log.info("Cleaned target: " + escaper.matcher(this.getTarget()).replaceAll(""));
 		}
 
 		DescribeSObjectResult r = null;
-
+		//try {
 		r = this.getSalesforceSessionContext().getSalesforceSession()
 				.getSalesforceService().describeSObject(
 						this.getDescribeContext().getTarget());
-
+		//	}
+		//catch {
+		//	addActionMessage(this.getDescribeContext().getTarget() + " is not a valid SObject.");
+		//	return Action.ERROR;
+		//}
 		this.setResults(r);
 		
 		if (r != null) {

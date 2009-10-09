@@ -21,9 +21,7 @@
 <body>
 
 
-
 <h1>Describe: "<s:property value="describeContext.target" />"</h1>
-
 
 
 

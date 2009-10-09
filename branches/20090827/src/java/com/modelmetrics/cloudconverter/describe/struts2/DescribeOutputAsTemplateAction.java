@@ -29,8 +29,11 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.modelmetrics.cloudconverter.common.struts2.CompositeLoginAction;
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegate;
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateMetadataImpl;
 import com.modelmetrics.cloudconverter.describe.DescribeExcelBuilderDelegateTemplateImpl;
@@ -45,11 +48,26 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 	private String submitTemplate;
 	private Collection<String> selectedObjects;
 //	private HSSFWorkbook workbook;
+	private static Log log = LogFactory.getLog(DescribeOutputAsTemplateAction.class);
 
 	public String execute() throws Exception {
+		
+		log.info("submit metadata " + this.getSubmitMetadata());
+		log.info("submit template " + this.getSubmitTemplate());
 		if (this.getSubmitMetadata() == null
-				&& this.getSubmitTemplate() == null)
+				&& this.getSubmitTemplate() == null) {
 			return Action.INPUT;
+			//addActionMessage("Invalid submission.");
+			//return Action.ERROR;
+		}
+		if (this.getSubmitMetadata() != null && !this.getSubmitMetadata().equals("Export as Metadata")) {
+			addActionMessage("Invalid submission.");
+			return Action.ERROR;
+		}
+		if (this.getSubmitTemplate() != null && !this.getSubmitTemplate().equals("Export as Data Templates")) {
+			addActionMessage("Invalid submission.");
+			return Action.ERROR;
+		}
 
 		ExcelSupport excelSupport = new ExcelSupport();
 
