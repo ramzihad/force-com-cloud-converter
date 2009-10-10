@@ -139,6 +139,7 @@
 		<!-- Force.com Platform Utilities -->
 		<action name="describeOutputAsTemplateSetup" class="describeOutputAsTemplateAction">
 			<result name="input">/WEB-INF/jsp/describe/describeTemplateCheckboxlist.jsp</result>
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
  		</action>
 		
 		<action name="describeOutputAsTemplate" class="describeOutputAsTemplateAction">
@@ -166,6 +167,7 @@
 			<result name="success">
 				/WEB-INF/jsp/describe/describe.jsp
 			</result>
+			<result name="error">/WEB-INF/jsp/describe/error.jsp</result>
 		</action>
 
 		<action name="describeAsTemplate" class="describeAsTemplateAction">

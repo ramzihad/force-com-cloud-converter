@@ -19,6 +19,6 @@
 		<s:actionmessage />
 		<br />
 		<br />
-		<a href="<s:url action="home"/>">Start fresh again</a>
+		<a href="<s:url action="select"/>">Start fresh again</a>
 	</body>
 </html>

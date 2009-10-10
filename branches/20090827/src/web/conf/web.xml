@@ -97,11 +97,9 @@
     	<location>/whoops.jsp</location> 
 	</error-page>
 
-	<!-- 
 	<error-page> 
     	<error-code>500</error-code> 
     	<location>/whoops.jsp</location> 
 	</error-page>
-	 -->
 
 </web-app>

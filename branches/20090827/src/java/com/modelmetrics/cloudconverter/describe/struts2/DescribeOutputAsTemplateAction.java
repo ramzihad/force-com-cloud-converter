@@ -28,6 +28,7 @@ package com.modelmetrics.cloudconverter.describe.struts2;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,6 +50,7 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 	private Collection<String> selectedObjects;
 //	private HSSFWorkbook workbook;
 	private static Log log = LogFactory.getLog(DescribeOutputAsTemplateAction.class);
+	static Pattern escaper = Pattern.compile("([^a-zA-Z0-9 ])");
 
 	public String execute() throws Exception {
 		
@@ -60,6 +62,12 @@ public class DescribeOutputAsTemplateAction extends DescribeAction {
 			//addActionMessage("Invalid submission.");
 			//return Action.ERROR;
 		}
+		if (this.getSubmitMetadata() != null)
+			this.setSubmitMetadata(escaper.matcher(this.getSubmitMetadata()).replaceAll(""));
+		
+		if (this.getSubmitTemplate() != null)
+			this.setSubmitTemplate(escaper.matcher(this.getSubmitTemplate()).replaceAll(""));
+		
 		if (this.getSubmitMetadata() != null && !this.getSubmitMetadata().equals("Export as Metadata")) {
 			addActionMessage("Invalid submission.");
 			return Action.ERROR;

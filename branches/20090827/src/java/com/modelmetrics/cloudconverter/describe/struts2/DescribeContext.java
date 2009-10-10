@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.model.Workbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -56,7 +57,8 @@ public class DescribeContext {
 	private OperationStatusSubscriber statusSubscriber;
 	
 	private HSSFWorkbook workbook;
-
+	
+	static Pattern escaper = Pattern.compile("([^a-zA-Z0-9_])");
 	
 	public OperationStatusSubscriber getStatusSubscriber() {
 		return statusSubscriber;
@@ -94,7 +96,12 @@ public class DescribeContext {
 		return target;
 	}
 
-	public void setTarget(String target) {
+	public void setTarget(String target) throws InvalidTypeException {
+		target = escaper.matcher(target).replaceAll("");
+		if (this.getTypes() == null || !this.getTypes().contains(target)) {
+			// Throw invalid type exception
+			throw new InvalidTypeException();
+		}
 		this.target = target;
 	}
 
