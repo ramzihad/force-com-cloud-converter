@@ -31,7 +31,11 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	
 	private boolean nameUseAutonumber;
 	
+	private boolean upsertUseId;
+	
 	private String nameUseField;
+	
+	
 	
 	private String objectLabel;
 	
@@ -93,6 +97,11 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 		this.getUploadContext().getCurrentCloudConverterObject().setObjectLabel(this.getObjectLabel());
 		this.getUploadContext().getCurrentCloudConverterObject().setObjectPlural(this.getObjectPlural());
 		
+		// RSC 2009-11-01
+		if (this.isUpsertUseId()) {
+			this.getUploadContext().getCurrentCloudConverterObject().setUpsertField("id");
+		}
+		
 		return Action.SUCCESS;
 
 	}
@@ -120,8 +129,8 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 			
 		}
 		
-		if (hasLookup && !hasExternalId) {
-			this.addActionMessage("If you specify a field as a lookup, you must also have an external ID.");
+		if (hasLookup && !hasExternalId && !this.upsertUseId) {
+			this.addActionMessage("If you specify a field as a lookup, you must also specify a different field as an external ID or check 'Use object ID field with upsert'.");
 			return false;
 		}
 		
@@ -157,18 +166,23 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 		//field type is Lookup -- requires additional data.
 		if (metadataProxy.getType() == FieldType.Lookup) {
 			if (!hasText(metadataProxy.getLookupObject()) || !hasText(metadataProxy.getLookupField())) {
-				this.addActionMessage("Lookup fields must have both a lookup object and a lookup field specified.");
+				this.addActionMessage("Lookup fields must have both a lookup object and a lookup field specified. (" + metadataProxy.getLabel() + ")" );
 				return false;
 			}
 		}
 		
+		if (metadataProxy.getType() == FieldType.Text && metadataProxy.getLength() == 0) {
+			this.addActionMessage("Fields with a data type of Text cannot have a length of 0. (" + metadataProxy.getLabel() + ")");
+			return false;
+		}
+		
 		if (metadataProxy.isUniqueExternalId() && metadataProxy.getType() != FieldType.Text) {
-			this.addActionMessage("Cloud Converter requires external ID fields to be Text.");
+			this.addActionMessage("Cloud Converter requires fields with the external ID checkbox selected to be of data type Text. (" + metadataProxy.getLabel() + ")");
 			return false;			
 		}
 		
 		if ((hasText(metadataProxy.getLookupField()) || hasText(metadataProxy.getLookupField())) && metadataProxy.getType() != FieldType.Lookup) {
-			this.addActionMessage("You had a lookup object specified for a field type other than text.");
+			this.addActionMessage("You had a lookup object specified for a field type other than lookup. (" + metadataProxy.getLabel() + ")");
 			return false;
 		}
 		
@@ -258,4 +272,14 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 	public void setExistingObject(String existingObject) {
 		this.existingObject = existingObject;
 	}
+
+	public boolean isUpsertUseId() {
+		return upsertUseId;
+	}
+
+	public void setUpsertUseId(boolean upsertUseId) {
+		this.upsertUseId = upsertUseId;
+	}
+
+
 }

@@ -12,7 +12,7 @@ public class AdminBean {
 	private List<GetUserInfoResult> users = new ArrayList<GetUserInfoResult>();
 	
 	public void addUser(GetUserInfoResult user) {
-		if (users.size() == 50) {
+		if (users.size() == 200) {
 			users.remove(0);
 		}
 		users.add(user);

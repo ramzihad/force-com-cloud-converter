@@ -24,7 +24,7 @@
         
         <p class="footer">Questions? Comments? Email <a href="mailto:cloudconverter@modelmetrics.com">cloudconverter@modelmetrics.com</a> or <a href="http://community.salesforce.com/sforce/?category.id=developers">Join the conversation.</a></p>
        <p class="footer">
-       	Version: October 11, 2009 - Profile (mb):
+       	Version: November 1, 2009 - Profile (mb):
        	
        	<%
        	

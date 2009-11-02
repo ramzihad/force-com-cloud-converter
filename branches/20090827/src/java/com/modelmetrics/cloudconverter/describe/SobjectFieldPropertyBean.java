@@ -30,6 +30,7 @@ public class SobjectFieldPropertyBean {
 			fieldBeans.add(new SobjectFieldPropertyBean("Digits","digits",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Scale","scale",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Precision","precision",true));
+			fieldBeans.add(new SobjectFieldPropertyBean("External ID","externalId",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Unique","unique",true));
 //			fieldBeans.add(new SobjectFieldBean("Autonumber","autonumber",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Relationship Name","relationshipName",true));
@@ -42,6 +43,7 @@ public class SobjectFieldPropertyBean {
 			fieldBeans.add(new SobjectFieldPropertyBean("Controller Name","controllerName",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Defaulted On Create","defaultedOnCreate",true));
 			fieldBeans.add(new SobjectFieldPropertyBean("Default Value Formula","defaultValueFormula",true));
+			
 			
 			
 //			fieldBeans.add(new SobjectFieldBean("filterable","filterable",false));

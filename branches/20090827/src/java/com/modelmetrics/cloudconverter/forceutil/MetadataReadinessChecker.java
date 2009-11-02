@@ -33,6 +33,7 @@ import java.util.TreeSet;
 
 import com.modelmetrics.cloudconverter.engine.MigrationContext;
 import com.modelmetrics.cloudconverter.util.MetadataProxy;
+import com.modelmetrics.cloudconverter.util.OperationStatusPublisher;
 import com.sforce.soap.partner.Field;
 
 /*
@@ -40,40 +41,55 @@ import com.sforce.soap.partner.Field;
  * 
  * checks to see if the metadata API reflects all the field changes.
  * 
- * useful since layout builder occasionally gets exceptions thrown at it. 
+ * useful since layout builder occasionally gets exceptions thrown at it.
  * 
  */
 public class MetadataReadinessChecker {
 
-	public boolean isMetadataReady(MigrationContext migrationContext) throws Exception {
-		
-		Field[] fields = migrationContext.getSalesforceSession().getSalesforceService().describeSObject(migrationContext.getCustomObject().getFullName()).getFields();
+	public boolean isMetadataReady(MigrationContext migrationContext)
+			throws Exception {
 
-		return this.isMetadataReady(migrationContext.getMetadataProxies(), fields);
+		Field[] fields = migrationContext.getSalesforceSession()
+				.getSalesforceService().describeSObject(
+						migrationContext.getCustomObject().getFullName())
+				.getFields();
+
+		return this.isMetadataReady(migrationContext.getMetadataProxies(),
+				fields, migrationContext.getMigrationStatusPublisher());
 	}
-	
-	public boolean isMetadataReady(List<MetadataProxy> metadataProxies, Field[] fields) throws Exception {
-		
+
+	public boolean isMetadataReady(List<MetadataProxy> metadataProxies,
+			Field[] fields, OperationStatusPublisher publisher)
+			throws Exception {
+
 		Set<String> potential = new TreeSet<String>();
+
+		String knownFields = "knowns: ";
 		
 		for (int i = 0; i < fields.length; i++) {
 			potential.add(fields[i].getName().toLowerCase());
+			knownFields += ", " + fields[i].getName().toLowerCase();
 		}
-		
+
 		boolean ret = true;
-		
-		for (Iterator<MetadataProxy> iterator = metadataProxies.iterator(); iterator.hasNext();) {
+
+		for (Iterator<MetadataProxy> iterator = metadataProxies.iterator(); iterator
+				.hasNext();) {
 			MetadataProxy current = iterator.next();
-			
-			if (!potential.contains(current.getName().toLowerCase() + "__c")) {
+
+			if (current.getExistingField() == null && !potential.contains(current.getName().toLowerCase() + "__c")) {
+				if (publisher != null) {
+					publisher.publishStatus("(still missing "
+							+ current.getName().toLowerCase() + "__c; " + knownFields);
+				}
+
 				ret = false;
 				break;
 			}
-			
+
 		}
-		
-		
+
 		return ret;
-		
+
 	}
 }

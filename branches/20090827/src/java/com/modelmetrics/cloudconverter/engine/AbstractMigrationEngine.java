@@ -135,13 +135,14 @@ public abstract class AbstractMigrationEngine extends
 
 		/*
 		 * check to see if we're ready to proceed.
+		 * 2009-11-01 RSC this was 10, changed to 5 since if it's not working for 5 it has never self corrected before 10.
 		 */
 
 		MetadataReadinessChecker checker = new MetadataReadinessChecker();
 
 		boolean ready = false;
 
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 5; i++) {
 			ready = checker.isMetadataReady(this.getMigrationContext());
 			String status = "Ready!";
 			if (!ready) {

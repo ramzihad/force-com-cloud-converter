@@ -83,6 +83,6 @@ public class SalesforceSessionContext extends AbstractSalesforceSessionAware {
 	}
 	
 	public boolean isAdmin() {
-		return this.userInfo.getOrganizationId().substring(0,15).equalsIgnoreCase("00DA0000000H9WC");
+		return this.userInfo.getOrganizationId().substring(0,15).equalsIgnoreCase("00DA0000000HYF4");
 	}
 }

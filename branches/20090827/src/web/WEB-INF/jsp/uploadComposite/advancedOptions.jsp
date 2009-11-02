@@ -185,7 +185,18 @@ function areYouSure() {
 
 									value="nameUseField" emptyOption="true" /> for object name.</p>
 
-									
+
+		<p>Use object ID field with upsert? 
+
+				<s:checkbox
+
+					id="upsertUseId"
+
+					name="upsertUseId"
+
+					fieldValue="true"
+
+					value="upsertUseId" /> </p>
 
 		<p>Object Label: <s:textfield
 

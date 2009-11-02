@@ -30,6 +30,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.util.StringUtils;
 
@@ -286,12 +288,37 @@ public class MetadataProxyCollectionBuilder {
 
 	public List<MetadataProxy> build(ExcelWorksheetWrapperBean bean) throws Exception {
 
+		Set<String> existingNames = new TreeSet<String>();
+		
+		//RSC 2009-11-01 validate row lengths -- they must be the same. 
+		if (bean.getNames().size() != bean.getExamples().size()) {
+			throw new RuntimeException("Your first and second rows must be the same size. Correct the worksheet called '" + bean.getSheetName() + "' and try again.");
+		}
+		
+		if (bean.getSheetName().length() > 20) {
+			throw new RuntimeException("Worksheet named '" + bean.getSheetName() + "' is longer than 20 characters.  All worksheets and fields must have names of 20 characters or less.");
+		}
+		
+		
+		
+		
 		List<MetadataProxy> ret = new ArrayList<MetadataProxy>();
 		for (int i = 0; i < bean.getNames().size(); i++) {
 			//validate content
 			if (!StringUtils.hasText(bean.getNames().get(i))) {
 				throw new RuntimeException("Empty field name.  Check row 1, the column at position " + (i+1) + " appears to be blank.");
 			}
+			
+			if (bean.getNames().get(i).length() > 20) {
+				throw new RuntimeException("On sheet '" + bean.getSheetName() + "' field '" + bean.getNames().get(i) + "' is longer than 20 characters.  Please correct and try again.");
+			}
+			
+			if (existingNames.contains(bean.getNames().get(i))) {
+				throw new RuntimeException("On sheet '" + bean.getSheetName() + "' field '" + bean.getNames().get(i) + "' exists more than once.  Please make sure each column name is unique and try again.");
+			}
+
+			existingNames.add(bean.getNames().get(i));
+			
 			MetadataProxy field = new MetadataProxy();
 
 			field.setName(bean.getNames().get(i));

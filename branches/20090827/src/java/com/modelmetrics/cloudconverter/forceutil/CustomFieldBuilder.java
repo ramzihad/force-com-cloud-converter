@@ -193,7 +193,10 @@ public class CustomFieldBuilder {
 								migrationContext.getCloudConverterObject()
 										.getObjectName().length() - 3)
 						+ relName + "s");
-				field.setRelationshipLabel(relName + "s");
+				
+				//RSC 2009-11-01 To make the related list name a little friendlier.
+				field.setRelationshipLabel(relName + "s " + migrationContext
+						.getCloudConverterObject().getObjectLabel());
 
 				if (!isExistingField)
 					customLookupFieldsCollection.add(field);

@@ -21,7 +21,9 @@
 		
 			<ul>
 				<s:iterator value="uploadContext.cloudConverterObjects" var="object">
+						<s:if test="existingObject == null">
 						<li><s:property value="objectLabel" /> (<s:property value="objectName" />)</li>
+						</s:if>
 				</s:iterator>
 			</ul>
 		

@@ -60,7 +60,9 @@ public class MetadataReadinessCheckerTest extends TestCase {
 		
 		MetadataReadinessChecker checker = new MetadataReadinessChecker();
 		
-		assertTrue(checker.isMetadataReady(proxies, fields));
+		
+		
+		assertTrue(checker.isMetadataReady(proxies, fields, null));
 	}
 	
 	public void testContainsFails() throws Exception {
@@ -87,6 +89,6 @@ public class MetadataReadinessCheckerTest extends TestCase {
 		
 		MetadataReadinessChecker checker = new MetadataReadinessChecker();
 		
-		assertFalse(checker.isMetadataReady(proxies, fields));
+		assertFalse(checker.isMetadataReady(proxies, fields, null));
 	}
 }
