@@ -5,17 +5,22 @@ IMPORTANT: This software is provided AS IS without warranty or
 support of any kind. If you would like paid support, please
 contact rcarlberg@modelmetrics.com.
 
-Last Update: 2009-10-05 (See history below for details.)
-dd
+Last Update: 2009-11-01 (See history below for details.)
+
 
 ###################################################################
 CONTACT:
 
 Reid Carlberg, Model Metrics, Inc.
 rcarlberg@modelmetrics.com
+cloudconverter@modelmetrics.com
 
 ###################################################################
 INTRODUCTION:
+
+Find CloudConverter on AppExchange:
+
+http://sites.force.com/appexchange/listingDetail?listingId=a0N300000016cVIEAY
 
 There are some demo's on YouTube you will find helpful.
 
