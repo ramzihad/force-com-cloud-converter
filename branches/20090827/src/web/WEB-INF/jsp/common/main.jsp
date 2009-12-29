@@ -10,11 +10,7 @@
 
 <body>
 
-<table width="100%" border="0">
-
-<tr>
-
-<td valign="top">
+<div id="puHeader" style="float:left; text-align: left;">
 
 <h1>Main Menu</h1>
 
@@ -26,24 +22,15 @@
 	<p><a href="<s:url action="admin"><s:param name="s" value="existingSessionId" /><s:param name="u" value="existingLocationUrl" /></s:url>">Admin</a></p>
 </s:if>
 
-</td>
+</div>
 
-<td valign="top">
+<div id="puHeader" style="float:right; text-align: center;">
 
-<h1>Four Minutes With CloudConverter</h1>
 
-<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/BI0_eJbqa8c&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/BI0_eJbqa8c&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed></object>
+<h2>CloudConverter on YouTube</h2>
 
-<h1>How To Prepare Your Spreadsheet For CloudConverter</h1>
-
-<object width="480" height="295"><param name="movie" value="http://www.youtube.com/v/Tyq1Vm-Xq38&hl=en&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/Tyq1Vm-Xq38&hl=en&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="295"></embed></object>
-
-</td>
-
-</tr>
-
-</table>
-
+<p><object width="480" height="385"><param name="movie" value="http://www.youtube.com/p/B82E027A6915FB20&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/p/B82E027A6915FB20&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" width="480" height="385" allowscriptaccess="always" allowfullscreen="true"></embed></object></p>
+</div>
 
 </body>
 </html>

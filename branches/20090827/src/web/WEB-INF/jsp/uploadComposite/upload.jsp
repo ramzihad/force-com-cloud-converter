@@ -29,6 +29,7 @@
 		<h2>Important Excel File Formatting Tips</h2>
 		
 		<ul>
+		<li>There are some <a href="http://www.youtube.com/view_play_list?p=B82E027A6915FB20">great short videos</a> over on YouTube that will help you.</li>
 		<li>Maximum file size is 1 MB.</li>
 		<li>The object name comes from the work sheet name.  </li>
 		<li>You must ensure that empty columns and rows are empty.  To do this, select empty columns to the right of your data and empty rows below your data and use "Edit" and then "Delete" from the Excel menu.</li>

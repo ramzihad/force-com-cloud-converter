@@ -13,7 +13,7 @@
 
 <ul>
 	<s:iterator value="adminBean.users" status="stat">
-		<li><s:property value="organizationName" />: <s:property value="userFullName" />: <s:property value="userEmail" /> </li>
+		<li><s:property value="info.organizationName" />: <s:property value="info.userFullName" />: <s:property value="info.userEmail" /> (<s:property value="formattedDate" />)</li>
 	</s:iterator>
 </ul>
 
