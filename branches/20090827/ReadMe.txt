@@ -5,14 +5,13 @@ IMPORTANT: This software is provided AS IS without warranty or
 support of any kind. If you would like paid support, please
 contact rcarlberg@modelmetrics.com.
 
-Last Update: 2009-11-01 (See history below for details.)
+Last Update: 2009-12-29 (See history below for details.)
 
 
 ###################################################################
 CONTACT:
 
-Reid Carlberg, Model Metrics, Inc.
-rcarlberg@modelmetrics.com
+Model Metrics, Inc.
 cloudconverter@modelmetrics.com
 
 ###################################################################
