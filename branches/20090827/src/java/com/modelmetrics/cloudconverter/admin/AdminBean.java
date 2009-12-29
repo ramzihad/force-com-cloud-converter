@@ -9,22 +9,22 @@ public class AdminBean {
 
 	public static AdminBean instance = new AdminBean();
 	
-	private List<GetUserInfoResult> users = new ArrayList<GetUserInfoResult>();
+	private List<AdminUserInfoResult> users = new ArrayList<AdminUserInfoResult>();
 	
 	public void addUser(GetUserInfoResult user) {
-		if (users.size() == 200) {
+		if (users.size() == 400) {
 			users.remove(0);
 		}
-		users.add(user);
+		users.add(new AdminUserInfoResult(user));
 	}
 
-	public List<GetUserInfoResult> getUsers() {
+	public List<AdminUserInfoResult> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<GetUserInfoResult> users) {
-		this.users = users;
-	}
+//	public void setUsers(List<GetUserInfoResult> users) {
+//		this.users = users;
+//	}
 	
 	
 }

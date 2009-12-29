@@ -126,6 +126,10 @@ public class AdvancedImportSetOptionsAction extends AbstractUploadContextAware {
 			if (metadataProxy.isUniqueExternalId()) {
 				hasExternalId = true;
 			}
+			//2009-12-29 should make this user configurable at some point.
+			if (metadataProxy.getType() == FieldType.Checkbox) {
+				metadataProxy.setDefaultValue("false");
+			}
 			
 		}
 		
