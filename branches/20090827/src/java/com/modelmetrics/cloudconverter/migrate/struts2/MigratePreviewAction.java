@@ -32,6 +32,7 @@ import java.util.Iterator;
 
 import org.springframework.util.StringUtils;
 
+import com.modelmetrics.cloudconverter.admin.AdminBean;
 import com.modelmetrics.cloudconverter.migrate.DataMigrator;
 import com.modelmetrics.cloudconverter.migrate.DataMigratorFactory;
 import com.modelmetrics.common.sforce.dao.SalesforceDAO;
@@ -46,7 +47,8 @@ public class MigratePreviewAction extends AbstractMigrateContextAware {
 
 	public String execute() throws Exception {
 
-
+		// RSC Usability Tracking
+		AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo(), "Migrate" );
 		
 		SalesforceDAO dao = new SalesforceDAO();
 		dao.setSalesforceSession(this.getSalesforceSessionContext()

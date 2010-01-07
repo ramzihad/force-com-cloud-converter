@@ -11,11 +11,11 @@ public class AdminBean {
 	
 	private List<AdminUserInfoResult> users = new ArrayList<AdminUserInfoResult>();
 	
-	public void addUser(GetUserInfoResult user) {
-		if (users.size() == 400) {
+	public void addUser(GetUserInfoResult user, String what) {
+		if (users.size() == 1000) {
 			users.remove(0);
 		}
-		users.add(new AdminUserInfoResult(user));
+		users.add(new AdminUserInfoResult(user, what));
 	}
 
 	public List<AdminUserInfoResult> getUsers() {

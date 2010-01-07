@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.modelmetrics.cloudconverter.admin.AdminBean;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObject;
 import com.modelmetrics.cloudconverter.importxls.services.CloudConverterObjectBuilder;
 import com.modelmetrics.cloudconverter.importxls.services.ExcelWorksheetWrapperBean;
@@ -128,6 +129,10 @@ public class UploadActionComposite extends AbstractUploadContextAware {
 		this.getUploadContext().setCloudConverterObjects(targets);
 
 		log.info("Upload Completed Successfully");
+		
+		// RSC Usability Tracking
+		AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo(), "Import");
+
 		return SUCCESS;
 
 	}

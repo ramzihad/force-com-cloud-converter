@@ -7,10 +7,12 @@ import com.sforce.soap.partner.GetUserInfoResult;
 
 public class AdminUserInfoResult {
 	private final GetUserInfoResult getUserInfoResult;
+	private final String what;
 	private final Date date = new Date();
 	
-	public AdminUserInfoResult(GetUserInfoResult result ) {
+	public AdminUserInfoResult(GetUserInfoResult result, String what ) {
 		this.getUserInfoResult = result;
+		this.what = what;
 	}
 	public GetUserInfoResult getInfo() {
 		
@@ -23,5 +25,8 @@ public class AdminUserInfoResult {
 	}
 	public String getFormattedDate() {
 		return SimpleDateFormat.getDateTimeInstance().format(this.getDate());
+	}
+	public String getWhat() {
+		return this.what;
 	}
 }

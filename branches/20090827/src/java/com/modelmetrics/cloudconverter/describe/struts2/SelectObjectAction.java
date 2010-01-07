@@ -33,6 +33,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
+import com.modelmetrics.cloudconverter.admin.AdminBean;
 import com.modelmetrics.cloudconverter.util.InterestingSobjectFilter;
 import com.modelmetrics.cloudconverter.util.SelectObjectFilterProvider;
 import com.sforce.soap.partner.DescribeGlobalResult;
@@ -67,6 +68,9 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 					this.getExistingSessionId(), this.getExistingLocationUrl());
 
 		} 
+		
+		// RSC Usability Tracking
+		AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo(), "Metadata");
 
 		if (this.getTarget() == null) {
 			// get describe global
@@ -97,6 +101,8 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 
 			return INPUT;
 		}
+
+
 
 		this.getDescribeContext().setTarget(this.getTarget());
 

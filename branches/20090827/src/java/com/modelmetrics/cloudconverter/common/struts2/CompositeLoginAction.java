@@ -113,7 +113,8 @@ public class CompositeLoginAction extends AbstractDescribeContextAware {
 					this.getSalesforceSessionContext().getSalesforceSession()
 							.getSalesforceService().getUserInfo());
 			
-			AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo());
+			// RSC 2010-01-07 added the "what"
+			AdminBean.instance.addUser(this.getSalesforceSessionContext().getUserInfo(), "Composite Login");
 
 		} catch (Exception e) {
 
