@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>project-mgmt-adv</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">project-mgmt-adv</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/setup/org/orgstorageusage.jsp?id=00D80000000ZsaM&amp;setupid=CompanyResourceDisk&amp;retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DDataManagement</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=CC Test (Local)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectFrame</td>
+	<td>itarget</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Import Your App from Excel</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Click here to get started.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>processUpload_upload</td>
+	<td>/Users/reidcarlberg/Documents/EclipseWorkspace20081120/CloudConverter/src/sampledbs/excel/Project-Management-Demo-2009-05-26.xls</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>butSubmit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@id='importBranch_submit' and @name='submit' and @value='Show Advanced Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@id='importAdvancedOverride_submit' and @name='submit' and @value='Yes - Continue to Import']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause(30000)</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>nameUseAutonumber</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_nameUseField</td>
+	<td>label=Department</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>metadata[0].uniqueExternalId</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>importAdvancedOptions_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause(60000)</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>nameUseAutonumber</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_nameUseField</td>
+	<td>label=FullName</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>metadata[2].uniqueExternalId</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_3__typeString</td>
+	<td>label=Lookup</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupObjectList_[3]</td>
+	<td>label=Departments__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupFieldList[3]</td>
+	<td>label=Department__c</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>importAdvancedOptions_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause(60000)</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>nameUseAutonumber</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_nameUseField</td>
+	<td>label=ProjectName</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>metadata[0].uniqueExternalId</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_1__typeString</td>
+	<td>label=Lookup</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupObjectList_[1]</td>
+	<td>label=Departments__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupFieldList[1]</td>
+	<td>label=Department__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_5__typeString</td>
+	<td>label=Picklist</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_2__typeString</td>
+	<td>label=Lookup</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupObjectList_[2]</td>
+	<td>label=Resources__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupFieldList[2]</td>
+	<td>label=FullName__c</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>importAdvancedOptions_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause(60000)</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>nameUseAutonumber</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_nameUseField</td>
+	<td>label=Name</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>nameUseAutonumber</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_nameUseField</td>
+	<td>label=</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>metadata[0].uniqueExternalId</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_2__typeString</td>
+	<td>label=Lookup</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupObjectList_[2]</td>
+	<td>label=Projects__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupFieldList[2]</td>
+	<td>label=ProjectName__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_3__typeString</td>
+	<td>label=Lookup</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupObjectList_[3]</td>
+	<td>label=Departments__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lookupFieldList[3]</td>
+	<td>label=Department__c</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>importAdvancedOptions_metadata_5__typeString</td>
+	<td>label=Picklist</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>importAdvancedOptions_submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertConfirmation</td>
+	<td>Are you sure?</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause(60000)</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Click here to go to your profile list.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>name=null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[@id='bodyCell']/div[3]/div[1]/div/div[2]/table/tbody/tr[16]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>tab___01r800000004K84</td>
+	<td>label=Default On</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>tab___01r800000004K8B</td>
+	<td>label=Default On</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>tab___01r800000004K87</td>
+	<td>label=Default On</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>tab___01r800000004K83</td>
+	<td>label=Default On</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//table[@id='tabBar']/tbody/tr/td[4]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Projects</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>go</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Product 3.0</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
