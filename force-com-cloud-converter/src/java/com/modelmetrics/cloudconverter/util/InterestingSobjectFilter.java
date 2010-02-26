@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.sforce.soap.partner.DescribeGlobalResult;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
 
 public class InterestingSobjectFilter {
 	
@@ -11,10 +12,14 @@ public class InterestingSobjectFilter {
 		
 		Set<String> ret = new TreeSet<String>();
 		
-		for (String currentType : describeGlobalResult.getTypes()) {
+		/*
+		 * RSC have to change this to describeGlobalSObjectResults
+		 */
+		for (DescribeGlobalSObjectResult currentType : describeGlobalResult.getSobjects()) {
 		
-			if (this.isInteresting(currentType)) {
-				ret.add(currentType);
+			
+			if (this.isInteresting(currentType.getName())) {
+				ret.add(currentType.getName());
 			}
 		}
 		

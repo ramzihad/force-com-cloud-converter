@@ -45,8 +45,8 @@ public abstract class AbstractSalesforceService implements SalesforceService {
 
 		boolean foundType = false;
 		
-		for (int i = 0; i < result.getTypes().length; i++) {
-			String name = result.getTypes(i);
+		for (int i = 0; i < result.getSobjects().length; i++) {
+			String name = result.getSobjects(i).getName();
 			if (name.equalsIgnoreCase(objectName)) {
 				foundType = true;
 			}

@@ -35,6 +35,7 @@ import com.modelmetrics.cloudconverter.util.OperationStatusPublisherSupport;
 import com.modelmetrics.cloudconverter.util.OperationStatusSubscriber;
 import com.modelmetrics.common.sforce.SalesforceSession;
 import com.sforce.soap.partner.DescribeGlobalResult;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
 import com.sforce.soap.partner.DescribeSObjectResult;
 import com.sforce.soap.partner.Field;
 
@@ -57,10 +58,10 @@ public class ObjectToIdMapBuilder {
 		
 		this.getOperationStatusPublisherSupport().publishStatus("Refreshing metadata target list.");
 		
-		for (String current:describeGlobalResult.getTypes()) {
-			if (this.include(current)) {
-				objectToIdMap.put(current, new ArrayList<String>());
-				objectToFieldMap.put(current, new ArrayList<String>());
+		for (DescribeGlobalSObjectResult current:describeGlobalResult.getSobjects()) {
+			if (this.include(current.getName())) {
+				objectToIdMap.put(current.getName(), new ArrayList<String>());
+				objectToFieldMap.put(current.getName(), new ArrayList<String>());
 			}
 		}
 		
