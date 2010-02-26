@@ -37,6 +37,7 @@ import com.modelmetrics.cloudconverter.admin.AdminBean;
 import com.modelmetrics.cloudconverter.util.InterestingSobjectFilter;
 import com.modelmetrics.cloudconverter.util.SelectObjectFilterProvider;
 import com.sforce.soap.partner.DescribeGlobalResult;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
 
 public class SelectObjectAction extends AbstractDescribeContextAware {
 
@@ -82,11 +83,11 @@ public class SelectObjectAction extends AbstractDescribeContextAware {
 			if (StringUtils.hasText(this.getFilter())) {
 				Collection<String> types = new ArrayList<String>();
 
-				for (String type : describeGlobalResult.getTypes()) {
+				for (DescribeGlobalSObjectResult type : describeGlobalResult.getSobjects()) {
 					if (this.getFilter().equalsIgnoreCase("all")) {
-						types.add(type);
-					} else if (type.startsWith(this.getFilter())) {
-						types.add(type);
+						types.add(type.getName());
+					} else if (type.getName().startsWith(this.getFilter())) {
+						types.add(type.getName());
 					}
 				}
 				this.getDescribeContext().setTypes(types);
