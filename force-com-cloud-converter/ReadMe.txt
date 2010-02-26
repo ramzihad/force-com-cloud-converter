@@ -3,9 +3,9 @@ Converts dirt bound JDBC/ODBC to cloud based Force.com.
 
 IMPORTANT: This software is provided AS IS without warranty or 
 support of any kind. If you would like paid support, please
-contact rcarlberg@modelmetrics.com.
+contact cloudconverter@modelmetrics.com.
 
-Last Update: 2009-12-29 (See history below for details.)
+Last Update: 2010-02-25 (See history below for details.)
 
 
 ###################################################################
@@ -31,7 +31,7 @@ Look in the package "com.modelmetrics.cloudconverter" for the classes you might 
 
 You can add this to your org using the following Salesforce.com Web Tab URL:
 
-https://cloudconverter.modelmetrics.com/mmimport/home.action?s={!$Api.Session_ID}&u={!$Api.Partner_Server_URL_150}
+https://cloudconverter.modelmetrics.com/mmimport/home.action?s={!$Api.Session_ID}&u={!$Api.Partner_Server_URL_180}
 
 
 ###################################################################
@@ -81,6 +81,10 @@ dev org to get used to the general flow of the app.
 
 ###################################################################
 HISTORY:
+
+2010-02-25
+
+* Updated to support Spring 10.
 
 2009-06-16
 
